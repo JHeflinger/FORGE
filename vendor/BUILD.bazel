@@ -1,0 +1,65 @@
+cc_library(
+    name = "spdlog",
+    hdrs = glob([
+        "spdlog/include/**/*.h",
+    ]),
+    srcs = glob([
+        "spdlog/src/*.cpp"
+    ]),
+    includes = ["spdlog/include"],
+    copts = ["-DSPDLOG_COMPILED_LIB"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "glad",
+    hdrs = glob(["glad/**/*.h"]),
+    includes = ["glad/include"],
+    srcs = glob(["glad/**/*.c"]),
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "glfw",
+    hdrs = glob([
+        "glfw/include/**/*.h",
+        "glfw/src/*.h",
+    ]),
+    includes = ["glfw/include"],
+    srcs = glob([
+        "glfw/include/**/*.c",
+        "glfw/src/*.c",
+    ]),
+    deps = [":glad"],
+    linkopts = ["-lGL"],
+    copts = ["-D_GLFW_X11"],
+    visibility = ["//visibility:public"]
+)
+
+cc_library(
+    name = "imgui_backend",
+    hdrs = [
+        "imgui/backends/imgui_impl_glfw.h",
+        "imgui/backends/imgui_impl_opengl3.h",
+        "imgui/backends/imgui_impl_opengl3_loader.h"
+    ],
+    includes = ["imgui/backends"],
+    srcs = [
+        "imgui/backends/imgui_impl_glfw.cpp",
+        "imgui/backends/imgui_impl_opengl3.cpp"
+    ],
+    deps = [
+        ":glfw",
+        ":imgui"
+    ],
+    visibility = ["//visibility:public"]
+)
+
+cc_library(
+    name = "imgui",
+    hdrs = glob(["imgui/*.h"]),
+    includes = ["imgui"],
+    srcs = glob(["imgui/*.cpp"]),
+    deps = [":glfw"],
+    visibility = ["//visibility:public"]
+)

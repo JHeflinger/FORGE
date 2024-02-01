@@ -1,0 +1,10 @@
+[submodule "vendor/imgui"]
+	path = vendor/imgui
+	url = git@github.com:GreedyGauntlet/imgui.git
+	branch = docking
+[submodule "vendor/spdlog"]
+	path = vendor/spdlog
+	url = git@github.com:GreedyGauntlet/spdlog.git
+[submodule "vendor/glfw"]
+	path = vendor/glfw
+	url = git@github.com:GreedyGauntlet/glfw.git

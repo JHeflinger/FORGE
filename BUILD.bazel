@@ -1,0 +1,25 @@
+cc_library(
+    name = "ForgeLib",
+    srcs = glob([
+                "src/**/*.cpp",
+           ]),
+    hdrs = glob([
+                "src/**/*.h",
+           ]),
+    deps = [
+    	"//vendor:glad",
+        "//vendor:glfw",
+        "//vendor:spdlog",
+        "//vendor:imgui_backend",
+        "//vendor:imgui",
+    ],
+)
+
+cc_binary(
+    name = "Forge",
+    srcs = ["src/main.cpp"],
+    deps = [
+        ":ForgeLib",
+    ],
+)
+
