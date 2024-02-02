@@ -1,11 +1,46 @@
 #pragma once
 #include "../Core/Safety.h"
 
+enum class FramebufferTextureFormat {
+	None = 0,
+
+	//Color
+	RGBA8,
+	RED_INTEGER,
+
+	// Depth/stencil
+	DEPTH24STENCIL8,
+
+	// Defaults
+	Depth = DEPTH24STENCIL8
+};
+
+struct FramebufferTextureSpecification {
+	FramebufferTextureSpecification() = default;
+	FramebufferTextureSpecification(FramebufferTextureFormat format)
+		: TextureFormat(format) {}
+	FramebufferTextureFormat TextureFormat = FramebufferTextureFormat::None;
+};
+
+struct FramebufferAttatchmentSpecification {
+	FramebufferAttatchmentSpecification() = default;
+	FramebufferAttatchmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
+		: Attachments(attachments) {}
+	std::vector<FramebufferTextureSpecification> Attachments;
+};
+
+struct FramebufferSpecification {
+	uint32_t Width, Height = 0;
+	FramebufferAttatchmentSpecification Attachments;
+	uint32_t Samples = 1;
+	bool SwapChainTarget = false;
+};
+
 class Framebuffer {
 public:
 	Framebuffer(const FramebufferSpecification& spec);
 	~Framebuffer();
-	void Ivalidate();
+	void Invalidate();
 	void Bind();
 	void Unbind();
 	void Resize(uint32_t width, uint32_t height);

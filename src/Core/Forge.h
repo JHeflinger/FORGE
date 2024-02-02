@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Structures.h"
+#include "Safety.h"
 #include "../Panels/Panel.h"
 
 class Forge {
@@ -13,5 +14,5 @@ private:
     void InitializePanels();
     void UpdatePanels();
 private:
-    std::vector<Panel*> m_Panels;
+    std::vector<Ref<Panel>> m_Panels;
 };

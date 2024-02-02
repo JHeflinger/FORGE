@@ -49,16 +49,16 @@ static void AttachDepthTexture(uint32_t id, int samples, GLenum format, GLenum a
 static bool IsDepthFormat(FramebufferTextureFormat format) {
 	switch (format) {
 	case FramebufferTextureFormat::DEPTH24STENCIL8: return true;
+	default: return false;
 	}
-	return false;
 }
 
 static GLenum FloraFBTextureFormatToGL(FramebufferTextureFormat format) {
 	switch (format) {
 	case FramebufferTextureFormat::RGBA8: return GL_RGBA8;
 	case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+	default: ASSERT(false, "Invalid texture format!");
 	}
-	ASSERT(false, "Invalid texture format!");
 	return 0;
 }
 
@@ -105,6 +105,7 @@ void Framebuffer::Invalidate() {
 			case FramebufferTextureFormat::RED_INTEGER:
 				AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
 				break;
+			default: break;
 			}
 		}
 	}
@@ -116,6 +117,7 @@ void Framebuffer::Invalidate() {
 		case FramebufferTextureFormat::DEPTH24STENCIL8:
 			AttachDepthTexture(m_DepthAttachment, m_Specification.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, m_Specification.Width, m_Specification.Height);
 			break;
+		default: break;
 		}
 	}
 
@@ -162,7 +164,7 @@ int Framebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y) {
 }
 
 void Framebuffer::ClearAttachment(uint32_t attachmentIndex, int value) {
-	ASSERT(attachmentIndex < m_ColorAttachmets.size(), "Cannot clear an invalid attachment!");
+	ASSERT(attachmentIndex < m_ColorAttachments.size(), "Cannot clear an invalid attachment!");
 	auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
 	glClearTexImage(m_ColorAttachments[attachmentIndex], 0, 
 		FloraFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);

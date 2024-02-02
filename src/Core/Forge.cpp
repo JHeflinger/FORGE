@@ -1,7 +1,8 @@
 #include "Forge.h"
+#include "../Panels/ViewportPanel.h"
 
 Forge::Forge() {
-    m_Panels = {};
+    m_Panels = { CreateRef<ViewportPanel>() };
 }
 
 bool Forge::Initialize() {
