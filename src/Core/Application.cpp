@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Window.h"
+#include "Log.h"
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -9,6 +10,7 @@ Application::Application() {
 }
 
 bool Application::Initialize() {
+	Log::Init();
     return Window::Initialize();
 }
 
