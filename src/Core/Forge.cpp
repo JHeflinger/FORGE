@@ -1,4 +1,5 @@
 #include "Forge.h"
+#include "../Renderer/Renderer.h"
 #include "../Panels/ViewportPanel.h"
 
 Forge::Forge() {
@@ -6,6 +7,7 @@ Forge::Forge() {
 }
 
 bool Forge::Initialize() {
+	Renderer::Initialize();
     InitializePanels();
     return true;
 }

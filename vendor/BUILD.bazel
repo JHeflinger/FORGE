@@ -12,31 +12,6 @@ cc_library(
 )
 
 cc_library(
-    name = "glad",
-    hdrs = glob(["glad/**/*.h"]),
-    includes = ["glad/include"],
-    srcs = glob(["glad/**/*.c"]),
-    visibility = ["//visibility:public"],
-)
-
-cc_library(
-    name = "glfw",
-    hdrs = glob([
-        "glfw/include/**/*.h",
-        "glfw/src/*.h",
-    ]),
-    includes = ["glfw/include"],
-    srcs = glob([
-        "glfw/include/**/*.c",
-        "glfw/src/*.c",
-    ]),
-    deps = [":glad"],
-    linkopts = ["-lGL"],
-    copts = ["-D_GLFW_X11"],
-    visibility = ["//visibility:public"]
-)
-
-cc_library(
     name = "imgui_backend",
     hdrs = [
         "imgui/backends/imgui_impl_glfw.h",
@@ -49,7 +24,6 @@ cc_library(
         "imgui/backends/imgui_impl_opengl3.cpp"
     ],
     deps = [
-        ":glfw",
         ":imgui"
     ],
     visibility = ["//visibility:public"]
@@ -60,6 +34,5 @@ cc_library(
     hdrs = glob(["imgui/*.h"]),
     includes = ["imgui"],
     srcs = glob(["imgui/*.cpp"]),
-    deps = [":glfw"],
     visibility = ["//visibility:public"]
 )

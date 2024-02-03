@@ -7,12 +7,23 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
-    	"//vendor:glad",
-        "//vendor:glfw",
         "//vendor:spdlog",
         "//vendor:imgui_backend",
         "//vendor:imgui",
     ],
+	linkopts = [
+        "-lglfw",
+        "-lvulkan",
+        "-ldl",
+        "-lpthread",
+        "-lX11",
+        "-lXxf86vm",
+        "-lXrandr",
+        "-lXi",
+        "-lGL",
+        "-lGLU",
+        "-lglut",
+    ]
 )
 
 cc_binary(
