@@ -10,6 +10,7 @@ public:
 	ViewportPanel();
     virtual void Initialize() override;
     virtual void Update() override;
+	bool Resized();
 private:
 	Ref<Framebuffer> m_Framebuffer;
 	Dimensions m_Size = {0, 0};
