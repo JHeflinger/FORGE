@@ -8,8 +8,10 @@
 class ViewportPanel : public Panel {
 public:
 	ViewportPanel();
-    virtual void Initialize() override {};
+    virtual void Initialize() override;
     virtual void Update() override;
 private:
 	Ref<Framebuffer> m_Framebuffer;
+	Dimensions m_Size = {0, 0};
+	Dimensions m_Bounds[2];
 };

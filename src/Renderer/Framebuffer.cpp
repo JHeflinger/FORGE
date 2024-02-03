@@ -1,7 +1,6 @@
 #include "Framebuffer.h"
 #include "../Core/Safety.h"
-#include <GL/glew.h>
-#include <GL/gl.h>
+#include <glad/glad.h>
 
 static const uint32_t s_MaxFrameBufferSize = 8196;
 

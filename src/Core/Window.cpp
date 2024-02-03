@@ -3,8 +3,12 @@
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "Log.h"
+#include "Safety.h"
 #include <stdio.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <GL/gl.h>
 
 static GLFWwindow* s_Window;
 static std::string s_GLSL_VERSION;
@@ -48,6 +52,8 @@ void Window::CreateWindow(std::string name) {
     if (s_Window == nullptr)
         return;
     glfwMakeContextCurrent(s_Window);
+	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	ASSERT(status, "Failed to initialize Glad!");
     glfwSwapInterval(1); // Enable vsync
 
     // Setup Dear ImGui context

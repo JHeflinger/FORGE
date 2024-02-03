@@ -12,11 +12,40 @@ cc_library(
 )
 
 cc_library(
+    name = "glad",
+    hdrs = glob(["glad/**/*.h"]),
+    includes = ["glad/include"],
+    srcs = glob(["glad/**/*.c"]),
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "imgui",
+    hdrs = glob(["imgui/*.h", "imgui/misc/cpp/*.h"]) 
+    + [
+        "imgui/misc/cpp/imgui_stdlib.cpp",
+    ],
+    includes = ["imgui"],
+    srcs = glob(["imgui/*.cpp", "imgui/misc/cpp/*.cpp"]),
+    visibility = ["//visibility:public"]
+)
+
+cc_library(
+    name = "imgui_srcs",
+    hdrs = ["imgui/misc/cpp/imgui_stdlib.cpp"],
+    includes = ["imgui"],
+    deps = [":imgui"],
+    visibility = ["//visibility:public"]
+)
+
+cc_library(
     name = "imgui_backend",
     hdrs = [
         "imgui/backends/imgui_impl_glfw.h",
         "imgui/backends/imgui_impl_opengl3.h",
-        "imgui/backends/imgui_impl_opengl3_loader.h"
+        "imgui/backends/imgui_impl_opengl3_loader.h",
+        "imgui/backends/imgui_impl_opengl3.cpp",
+        "imgui/backends/imgui_impl_glfw.cpp",
     ],
     includes = ["imgui/backends"],
     srcs = [
@@ -26,13 +55,5 @@ cc_library(
     deps = [
         ":imgui"
     ],
-    visibility = ["//visibility:public"]
-)
-
-cc_library(
-    name = "imgui",
-    hdrs = glob(["imgui/*.h"]),
-    includes = ["imgui"],
-    srcs = glob(["imgui/*.cpp"]),
     visibility = ["//visibility:public"]
 )
