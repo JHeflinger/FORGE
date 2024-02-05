@@ -2,14 +2,17 @@
 #include <vector>
 #include "Structures.h"
 #include "Safety.h"
+#include "Timestep.h"
 #include "../Panels/Panel.h"
+#include "../Events/Event.h"
 
 class Forge {
 public:
     Forge();
     bool Initialize();
-    void Run();
+    void Update(Timestep ts);
     void Shutdown();
+	void OnEvent(Event& e) {}
 private:
     void InitializePanels();
     void UpdatePanels();

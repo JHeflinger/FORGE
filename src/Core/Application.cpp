@@ -1,118 +1,133 @@
 #include "Application.h"
-#include "Window.h"
 #include "Log.h"
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "../Renderer/Renderer.h"
 
 Application::Application() {
+	m_Forge = CreateRef<Forge>();
 }
 
 bool Application::Initialize() {
 	Log::Init();
-    return Window::Initialize();
+	return true;
 }
 
 void Application::Run() {
-    // create window
-    Window::CreateWindow("FORGE");
+	// Create window 
+	WindowProperties props;
+	props.Name = "FORGE";
+	props.Width = 1600;
+	props.Height = 900;
+	props.Fullscreen = false;
+	m_Window = CreateRef<Window>(props);
+	m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+	
+	// Create GUI 
+	m_GUI = CreateRef<GUI>(m_Window);
+	m_GUI->Initialize();
 
-	// initialize game
-	m_Forge.Initialize();
+	// Initialize Forge
+	m_Forge->Initialize();
+	
+	while (m_Running) {
+		float time = (float)glfwGetTime();
+		Timestep timestep = time - m_FrameTime;
+		m_FrameTime = time;
+		m_GUI->Begin();
+		Update(timestep);
+		m_GUI->End();
+		m_Window->Update();
+	}
+}
 
-    // update loop
-    while (Window::IsOpen()) {
-        glfwPollEvents();
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
+void Application::Update(Timestep ts) {
+	static bool dockspace_open = true;
+	static bool opt_fullscreen = true;
+	static bool opt_padding = false;
+	static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
 
-		static bool dockspace_open = true;
-		static bool opt_fullscreen = true;
-		static bool opt_padding = false;
-		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
-		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
-		if (opt_fullscreen) {
-			const ImGuiViewport* viewport = ImGui::GetMainViewport();
-			ImGui::SetNextWindowPos(viewport->WorkPos);
-		    ImGui::SetNextWindowSize(viewport->WorkSize);
-		    ImGui::SetNextWindowViewport(viewport->ID);
-		    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-		    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
-		    window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
-		    window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
-		} else {
-		    dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
-	    }
+	ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	if (opt_fullscreen) {
+		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+		ImGui::SetNextWindowPos(viewport->WorkPos);
+		ImGui::SetNextWindowSize(viewport->WorkSize);
+		ImGui::SetNextWindowViewport(viewport->ID);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+		window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+		window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	}
+	else {
+		dockspace_flags &= ~ImGuiDockNodeFlags_PassthruCentralNode;
+	}
 
-	    if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) window_flags |= ImGuiWindowFlags_NoBackground;
+	if (dockspace_flags & ImGuiDockNodeFlags_PassthruCentralNode) window_flags |= ImGuiWindowFlags_NoBackground;
 
-	    if (!opt_padding) ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	    ImGui::Begin("DockSpace", &dockspace_open, window_flags);
-	    if (!opt_padding) ImGui::PopStyleVar();
+	if (!opt_padding) ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Demo", &dockspace_open, window_flags);
+	if (!opt_padding) ImGui::PopStyleVar();
 
-	    if (opt_fullscreen) ImGui::PopStyleVar(2);
+	if (opt_fullscreen) ImGui::PopStyleVar(2);
 
-	    ImGuiIO& io = ImGui::GetIO();
-	    ImGuiStyle& style = ImGui::GetStyle();
-	    style.WindowMinSize.x = 380.0f;
-	    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
-		    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-		    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
-	    }
+	ImGuiIO& io = ImGui::GetIO();
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowMinSize.x = 380.0f;
+	if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+		ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+		ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+	}
 
-	    style.WindowMinSize.x = 32.0f;
+	style.WindowMinSize.x = 32.0f;
 
-	    if (ImGui::BeginMenuBar()) {
-		    if (ImGui::BeginMenu("File")) {
-			    ImGui::MenuItem("New", "Ctrl+N");
-			    ImGui::MenuItem("Open...", "Ctrl+O");
-			    ImGui::EndMenu();
-		    }
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("Project")) {
+			if (ImGui::MenuItem("New"))
+				ERROR("New Project not implemented!");
+			if (ImGui::MenuItem("Open"))
+				ERROR("Open Project not implemented!");
+			if (ImGui::MenuItem("Export"))
+				ERROR("Export not implemented!");
+			if (ImGui::MenuItem("Import"))
+				ERROR("Import not implemented!");
+			if (ImGui::MenuItem("Settings"))
+				ERROR("Settings not implemented!");
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 
-		    ImGui::SameLine(ImGui::GetWindowSize().x);
-		    std::string lastSaved = "Last Saved 0s ago";
-		    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - ImGui::CalcTextSize(lastSaved.c_str()).x - 10);
-		    ImGui::PushStyleColor(ImGuiCol_Text, {0.6, 0.6, 0.6, 1});
-		    ImGui::Text(lastSaved.c_str());
-		    ImGui::PopStyleColor();
+	m_Forge->Update(ts);
 
-		    ImGui::SameLine((ImGui::GetWindowSize().x) / 2);
-		    static std::string viewportName = "Untitled Project";
-		    ImGui::SetCursorPosX(ImGui::GetCursorPosX() - ImGui::CalcTextSize(viewportName.c_str()).x / 2);
-		    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
-		    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0, 0, 0, 0));
-		    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0, 0, 0, 0));
-		    static bool s_RenameScene = false;
-		    if (!s_RenameScene) {
-			    if (ImGui::Button(viewportName.c_str())) {
-				    s_RenameScene = true;
-			    }
-		    } else {
-			    static char newSceneName[256] = "";
-			    strncpy(newSceneName, viewportName.c_str(), 256);
-			    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0, 0, 0, 0));
-			    ImGui::SetNextItemWidth(500);
-			    s_RenameScene = !(ImGui::InputText("##Rename", newSceneName, 256, ImGuiInputTextFlags_EnterReturnsTrue));
-			    ImGui::PopStyleColor();
-			    if (!s_RenameScene)
-				    viewportName = newSceneName;
-		    }
-		    ImGui::PopStyleColor(3);
-
-		    ImGui::EndMenuBar();
-	    }
-
-        m_Forge.Run();
-
-	    ImGui::End();
-
-        Window::UpdateWindow();
-    }
+	ImGui::End();
 }
 
 void Application::Shutdown() {
-	m_Forge.Shutdown();
-    Window::Shutdown();
+	m_Forge->Shutdown();
+	m_GUI->Shutdown();
+}
+
+void Application::OnEvent(Event& e) {
+	EventDispatcher dispatcher(e);
+	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
+	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
+	m_GUI->OnEvent(e);
+	m_Forge->OnEvent(e);
+}
+
+bool Application::OnWindowClosed(WindowCloseEvent& e) {
+	m_Running = false;
+	return true;
+}
+
+bool Application::OnWindowResize(WindowResizeEvent& e) {
+	if (e.GetWidth() == 0 || e.GetHeight() == 0) {
+		m_Minimized = true;
+		return false;
+	}
+	m_Minimized = false;
+	Renderer::SetViewport({0, 0, e.GetWidth(), e.GetHeight()});
+	return false;
 }

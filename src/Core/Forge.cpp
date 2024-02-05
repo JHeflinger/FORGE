@@ -12,7 +12,7 @@ bool Forge::Initialize() {
     return true;
 }
 
-void Forge::Run() {
+void Forge::Update(Timestep ts) {
     UpdatePanels();
 }
 

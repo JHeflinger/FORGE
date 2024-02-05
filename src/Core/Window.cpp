@@ -1,112 +1,123 @@
 #include "Window.h"
-#define GL_SILENCE_DEPRECATION
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
+#include "../Events/KeyEvent.h"
+#include "../Events/MouseEvent.h"
+#include "../Events/ApplicationEvent.h"
 #include "Log.h"
 #include "Safety.h"
-#include <stdio.h>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <GL/gl.h>
 
-static GLFWwindow* s_Window;
-static std::string s_GLSL_VERSION;
-static ImVec4 s_ClearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
-
-static void glfw_error_callback(int error, const char* description) {
-    fprintf(stderr, "GLFW Error %d: %s\n", error, description);
-}
-    
-bool Window::Initialize() {
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit()) return false;
-
-    // Decide GL+GLSL versions
-    #if defined(IMGUI_IMPL_OPENGL_ES2)
-        // GL ES 2.0 + GLSL 100
-        s_GLSL_VERSION = "#version 100";
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-        glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
-    #elif defined(__APPLE__)
-        // GL 3.2 + GLSL 150
-        s_GLSL_VERSION = "#version 150";
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
-    #else
-        // GL 3.0 + GLSL 130
-        s_GLSL_VERSION = "#version 130";
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    #endif
-
-    return true;
+static bool s_GLFWInitialized = false;
+static void GLFWErrorCallback(int error, const char* desc) {
+	ERROR("GLFW Error ({0}): {1}", error, desc);
 }
 
-void Window::CreateWindow(std::string name) {
-    // Create window with graphics context
-    s_Window = glfwCreateWindow(1280, 720, name.c_str(), nullptr, nullptr);
-    if (s_Window == nullptr)
-        return;
-    glfwMakeContextCurrent(s_Window);
+Window::Window(const WindowProperties& properties) {
+	m_Data.Name = properties.Name;
+	m_Data.Width = properties.Width;
+	m_Data.Height = properties.Height;
+	m_Data.Fullscreen = properties.Fullscreen;
+	INFO("Creating window {0} {1}, {2}", properties.Name, properties.Width, properties.Height);
+	if (!s_GLFWInitialized) {
+		int success = glfwInit();
+		ASSERT(success, "Failed to initialize GLFW");
+		glfwSetErrorCallback(GLFWErrorCallback);
+		s_GLFWInitialized = true;
+	}
+
+	m_Window = glfwCreateWindow((int)properties.Width, (int)properties.Height, properties.Name.c_str(), nullptr, nullptr);
+	if (properties.Fullscreen) glfwMaximizeWindow(m_Window);
+	glfwMakeContextCurrent(m_Window);
 	int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-	ASSERT(status, "Failed to initialize Glad!");
-    glfwSwapInterval(1); // Enable vsync
+	ASSERT(status, "Failed to initialize glad");
+	INFO("OpenGL Info:\n\tVendor:{0}\n\tRenderer: {1}\n\tVersion: {2}", (char*)glGetString(GL_VENDOR), (char*)glGetString(GL_RENDERER), (char*)glGetString(GL_VERSION));
+	int versionMajor, versionMinor;
+	glGetIntegerv(GL_MAJOR_VERSION, &versionMajor);
+	glGetIntegerv(GL_MINOR_VERSION, &versionMinor);
+	ASSERT(versionMajor > 4 || (versionMajor == 4 && versionMinor >= 5), "Forge requires at least OpenGL version 4.5!");
 
-    // Setup Dear ImGui context
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
+	glfwSetWindowUserPointer(m_Window, &m_Data);
+	SetVSync(true);
 
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();
+	glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		data.Width = width;
+		data.Height = height;
+		WindowResizeEvent event(width, height);
+		data.EventCallback(event);
+	});
 
-    // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable) {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
+	glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {	
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		WindowCloseEvent event;
+		data.EventCallback(event);
+	});
 
-    // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(s_Window, true);
-    ImGui_ImplOpenGL3_Init(s_GLSL_VERSION.c_str());
+	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {	
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		switch(action) {
+			case GLFW_PRESS: {
+				KeyPressedEvent event(key, 0);
+				data.EventCallback(event);
+				break;
+			}
+			case GLFW_RELEASE: {
+				KeyReleasedEvent event(key);
+				data.EventCallback(event);
+				break;
+			}
+			case GLFW_REPEAT: {
+				KeyPressedEvent event(key, 1);
+				data.EventCallback(event);
+				break;
+			}
+			default: break;
+		}
+	});
+
+	glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {	
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		KeyTypedEvent event(keycode);
+		data.EventCallback(event);
+	});
+
+	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		switch(action) {
+			case GLFW_PRESS: {
+				MouseButtonPressedEvent event(button);
+				data.EventCallback(event);
+				break;
+			}
+			case GLFW_RELEASE: {
+				MouseButtonReleasedEvent event(button);
+				data.EventCallback(event);
+				break;
+			}
+		}
+	});
+
+	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		MouseScrolledEvent event((float)xOffset, (float)yOffset);
+		data.EventCallback(event);
+	});
+	
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
+		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+		MouseMovedEvent event((float)xPos, (float)yPos);
+		data.EventCallback(event);
+	});
 }
 
-void Window::UpdateWindow() {
-    ImGui::Render();
-    int display_w, display_h;
-    glfwGetFramebufferSize(s_Window, &display_w, &display_h);
-    glViewport(0, 0, display_w, display_h);
-    glClearColor(s_ClearColor.x * s_ClearColor.w, s_ClearColor.y * s_ClearColor.w, s_ClearColor.z * s_ClearColor.w, s_ClearColor.w);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        GLFWwindow* backup_current_context = glfwGetCurrentContext();
-        ImGui::UpdatePlatformWindows();
-        ImGui::RenderPlatformWindowsDefault();
-        glfwMakeContextCurrent(backup_current_context);
-    }
-    glfwSwapBuffers(s_Window);
+Window::~Window() {
+	glfwDestroyWindow(m_Window);
+}
+	
+void Window::Update() {
+	glfwPollEvents();
+	glfwSwapBuffers(m_Window);
 }
 
-void Window::Shutdown() {
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();
-    glfwDestroyWindow(s_Window);
-    glfwTerminate();
-}
-
-bool Window::IsOpen() {
-    return !glfwWindowShouldClose(s_Window);
+void Window::SetVSync(bool enabled) {
+	glfwSwapInterval(enabled? 1 : 0);
+	m_Data.VSync = enabled;
 }
