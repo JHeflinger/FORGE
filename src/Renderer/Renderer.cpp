@@ -2,6 +2,9 @@
 #include <glad/glad.h>
 #include "../Core/Log.h"
 
+static LineProperties s_LineProperties;
+static RendererStatistics s_Statistics;
+
 void Renderer::Initialize() {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -23,4 +26,36 @@ void Renderer::Clear() {
 
 void Renderer::Shutdown() {
 	
+}
+
+void Renderer::BeginScene(const Camera& camera) {
+	
+}
+
+void Renderer::EndScene() {
+
+}
+
+void Renderer::Flush() {
+
+}
+
+void Renderer::DrawLine(const Line& line) {
+
+}
+
+RendererStatistics Renderer::Stats() {
+	return s_Statistics;
+}
+
+void Renderer::ResetStats() {
+	s_Statistics = {};
+}
+
+LineProperties Renderer::GetLineProperties() {
+	return s_LineProperties;
+}
+
+void Renderer::SetLineProperties(const LineProperties& properties) {
+
 }

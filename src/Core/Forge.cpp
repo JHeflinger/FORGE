@@ -1,9 +1,10 @@
 #include "Forge.h"
 #include "../Renderer/Renderer.h"
 #include "../Panels/ViewportPanel.h"
+#include "../Panels/DeveloperPanel.h"
 
 Forge::Forge() {
-    m_Panels = { CreateRef<ViewportPanel>() };
+    m_Panels = { CreateRef<ViewportPanel>(), CreateRef<DeveloperPanel>() };
 }
 
 bool Forge::Initialize() {

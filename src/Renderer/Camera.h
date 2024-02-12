@@ -10,4 +10,4 @@ public:
 	const Projection& GetProjection() const { return m_Projection; }
 private:
 	Projection m_Projection = Projection(1.0f);
-}
+};

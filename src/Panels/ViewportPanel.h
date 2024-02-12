@@ -1,4 +1,3 @@
-
 #pragma once
 #include "Panel.h"
 #include "../Core/Safety.h"
