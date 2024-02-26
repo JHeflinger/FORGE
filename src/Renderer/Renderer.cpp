@@ -2,8 +2,7 @@
 #include <glad/glad.h>
 #include "../Core/Log.h"
 
-static LineProperties s_LineProperties;
-static RendererStatistics s_Statistics;
+static RendererData s_Data;
 
 void Renderer::Initialize() {
 	glEnable(GL_BLEND);
@@ -45,17 +44,17 @@ void Renderer::DrawLine(const Line& line) {
 }
 
 RendererStatistics Renderer::Stats() {
-	return s_Statistics;
+	return s_Data.Statistics;
 }
 
 void Renderer::ResetStats() {
-	s_Statistics = {};
+	s_Data.Statistics = {};
 }
 
 LineProperties Renderer::GetLineProperties() {
-	return s_LineProperties;
+	return s_Data.LineProps;
 }
 
 void Renderer::SetLineProperties(const LineProperties& properties) {
-
+	s_Data.LineProps = properties;
 }

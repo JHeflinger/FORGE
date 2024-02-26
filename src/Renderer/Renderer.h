@@ -1,5 +1,7 @@
 #pragma once
 #include "Camera.h"
+#include "Buffer.h"
+#include "VertexArray.h"
 #include "glm/glm.hpp"
 #include <utility>
 
@@ -20,6 +22,16 @@ struct LineProperties {
 
 struct RendererStatistics {
 	uint32_t LineCount = 0;
+};
+
+struct LineVertex {
+	glm::vec3 Position;
+	Color LineColor;
+};
+
+struct RendererData {
+	LineProperties LineProps;
+	RendererStatistics Statistics;
 };
 
 class Renderer {
