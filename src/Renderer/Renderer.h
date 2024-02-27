@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "Buffer.h"
 #include "VertexArray.h"
+#include "Shader.h"
 #include "glm/glm.hpp"
 #include <utility>
 
@@ -30,6 +31,14 @@ struct LineVertex {
 };
 
 struct RendererData {
+	// Maximum constraints (change if needed)
+	static const uint32_t MaxQuads = 20000;
+	static const uint32_t MaxVertices = MaxQuads * 4;
+	static const uint32_t MaxIndices = MaxQuads * 6;
+	static const uint32_t MaxTextures = 32;
+
+
+
 	LineProperties LineProps;
 	RendererStatistics Statistics;
 };
