@@ -78,7 +78,16 @@ void Renderer::Flush() {
 }
 
 void Renderer::DrawLine(const Line& line) {
+	s_Data.LineVertexBufferPtr->Position = line.first;
+	s_Data.LineVertexBufferPtr->LineColor = s_Data.LineProps.LineColor;
+	s_Data.LineVertexBufferPtr++;
 
+	s_Data.LineVertexBufferPtr->Position = line.second;
+	s_Data.LineVertexBufferPtr->LineColor = s_Data.LineProps.LineColor;
+	s_Data.LineVertexBufferPtr++;
+
+	s_Data.LineVertexCount += 2;
+	s_Data.Statistics.LineCount++;
 }
 
 RendererStatistics Renderer::Stats() {
@@ -98,9 +107,10 @@ void Renderer::SetLineProperties(const LineProperties& properties) {
 }
 
 void Renderer::SubmitLineProperties() {
-
+	glLineWidth(s_Data.LineProps.LineWidth);
 }
 
 void Renderer::SubmitLines() {
-
+	s_Data.LineVertexArray->Bind();
+	glDrawArrays(GL_LINES, 0, s_Data.LineVertexCount);
 }
