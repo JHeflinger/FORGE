@@ -23,6 +23,7 @@ struct LineProperties {
 
 struct RendererStatistics {
 	uint32_t LineCount = 0;
+	uint32_t DrawCalls = 0;
 };
 
 struct LineVertex {
@@ -37,8 +38,17 @@ struct RendererData {
 	static const uint32_t MaxIndices = MaxQuads * 6;
 	static const uint32_t MaxTextures = 32;
 
+	// Shaders
+	ShaderLibrary Shaders;
 
+	// Line resources
+	Ref<VertexArray> LineVertexArray;
+	Ref<VertexBuffer> LineVertexBuffer;
+	uint32_t LineVertexCount = 0;
+	LineVertex* LineVertexBufferBase = nullptr;
+	LineVertex* LineVertexBufferPtr = nullptr;
 
+	// Statistics and property tracking
 	LineProperties LineProps;
 	RendererStatistics Statistics;
 };
@@ -52,6 +62,8 @@ public:
 	static void Shutdown();
 	static void BeginScene(const Camera& camera);
 	static void EndScene();
+	static void StartBatch();
+	static void NextBatch();
 	static void Flush();
 	static void DrawLine(const Line& line);
 	static RendererStatistics Stats();
@@ -59,4 +71,7 @@ public:
 public:
 	static LineProperties GetLineProperties();
 	static void SetLineProperties(const LineProperties& properties);
+private:
+	static void SubmitLineProperties();
+	static void SubmitLines();
 };
