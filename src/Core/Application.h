@@ -9,17 +9,17 @@
 
 class Application {
 public:
-    Application();
-    bool Initialize();
-    void Run();
+	Application();
+	bool Initialize();
+	void Run();
 	void Update(Timestep ts);
-    void Shutdown();
+	void Shutdown();
 	void OnEvent(Event& e);
 private:
 	bool OnWindowClosed(WindowCloseEvent& e);
 	bool OnWindowResize(WindowResizeEvent& e);
 private:
-    Ref<Forge> m_Forge;
+	Ref<Forge> m_Forge;
 	Ref<Window> m_Window;
 	Ref<GUI> m_GUI;
 	bool m_Minimized = false;
