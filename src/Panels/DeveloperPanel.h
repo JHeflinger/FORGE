@@ -13,8 +13,8 @@ struct RendererArtifacts {
 class DeveloperPanel : public Panel {
 public:
 	DeveloperPanel();
-    virtual void Initialize() override;
-    virtual void Update() override;
+	virtual void Initialize() override;
+	virtual void Update() override;
 private:
 	RendererArtifacts m_Artifacts;
 };

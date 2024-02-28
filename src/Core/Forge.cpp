@@ -9,8 +9,8 @@ Forge::Forge() {
 
 bool Forge::Initialize() {
 	Renderer::Initialize();
-    InitializePanels();
-    return true;
+	InitializePanels();
+	return true;
 }
 
 void Forge::Update(Timestep ts) {
