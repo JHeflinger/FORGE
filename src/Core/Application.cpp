@@ -5,6 +5,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "../Renderer/Renderer.h"
+#include "../Events/Input.h"
 
 Application::Application() {
 	m_Forge = CreateRef<Forge>();
@@ -28,6 +29,9 @@ void Application::Run() {
 	// Create GUI 
 	m_GUI = CreateRef<GUI>(m_Window);
 	m_GUI->Initialize();
+
+	// Initialize Input handler
+	Input::Initialize(this);
 
 	// Initialize Forge
 	m_Forge->Initialize();

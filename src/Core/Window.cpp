@@ -55,17 +55,17 @@ Window::Window(const WindowProperties& properties) {
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 		switch(action) {
 			case GLFW_PRESS: {
-				KeyPressedEvent event(key, 0);
+				KeyPressedEvent event(static_cast<KeyCode>(key), 0);
 				data.EventCallback(event);
 				break;
 			}
 			case GLFW_RELEASE: {
-				KeyReleasedEvent event(key);
+				KeyReleasedEvent event(static_cast<KeyCode>(key));
 				data.EventCallback(event);
 				break;
 			}
 			case GLFW_REPEAT: {
-				KeyPressedEvent event(key, 1);
+				KeyPressedEvent event(static_cast<KeyCode>(key), 1);
 				data.EventCallback(event);
 				break;
 			}
@@ -75,7 +75,7 @@ Window::Window(const WindowProperties& properties) {
 
 	glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode) {	
 		WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-		KeyTypedEvent event(keycode);
+		KeyTypedEvent event(static_cast<KeyCode>(keycode));
 		data.EventCallback(event);
 	});
 

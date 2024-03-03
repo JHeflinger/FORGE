@@ -1,8 +1,6 @@
 #pragma once
 
-using MouseCode = uint16_t;
-
-enum : MouseCode {
+enum MouseCode : unsigned int {
 	Button0 = 0,
 	Button1 = 1,
 	Button2 = 2,

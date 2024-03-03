@@ -15,6 +15,8 @@ public:
 	void Update(Timestep ts);
 	void Shutdown();
 	void OnEvent(Event& e);
+public:
+	Ref<Window> GetWindow() { return m_Window; }
 private:
 	bool OnWindowClosed(WindowCloseEvent& e);
 	bool OnWindowResize(WindowResizeEvent& e);
