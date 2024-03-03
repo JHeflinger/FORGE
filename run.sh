@@ -1,2 +1,2 @@
 ./build.sh
-./bazel-bin/Forge
+./bazel-bin/arch_Forge

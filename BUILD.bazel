@@ -1,5 +1,9 @@
+######################################
+########## LINUX SPECIFIC ############
+######################################
+
 cc_library(
-    name = "ForgeLib",
+    name = "arch_ForgeLib",
     srcs = glob([
                 "src/**/*.cpp",
            ]),
@@ -7,7 +11,7 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
-		"//vendor:glad",
+	    "//vendor:glad",
         "//vendor:spdlog",
         "//vendor:imgui_backend",
         "//vendor:imgui",
@@ -29,10 +33,39 @@ cc_library(
 )
 
 cc_binary(
-    name = "Forge",
+    name = "arch_Forge",
     srcs = ["src/main.cpp"],
     deps = [
-        ":ForgeLib",
+        ":arch_ForgeLib",
+    ],
+)
+
+######################################
+######### WINDOWS SPECIFIC ###########
+######################################
+
+cc_library(
+    name = "win_ForgeLib",
+    srcs = glob([
+                "src/**/*.cpp",
+           ]),
+    hdrs = glob([
+                "src/**/*.h",
+           ]),
+    deps = [
+        "//vendor:win_glm",
+	    "//vendor:glad",
+        "//vendor:spdlog",
+        "//vendor:win_imgui_backend",
+        "//vendor:win_imgui",
+    ],
+)
+
+cc_binary(
+    name = "win_Forge",
+    srcs = ["src/main.cpp"],
+    deps = [
+        ":win_ForgeLib",
     ],
 )
 

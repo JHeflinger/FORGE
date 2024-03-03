@@ -4,7 +4,7 @@
 #define ENABLE_ASSERTS //TODO: remove this for the fully optimized build
 
 #ifdef ENABLE_ASSERTS
-	#define ASSERT(x, ...) { if (!(x)) {ERROR("Assertion Failed: {0}", __VA_ARGS__); exit(1); }}
+	#define ASSERT(x, ...) { if (!(x)) {FATAL("Assertion Failed: {0}", __VA_ARGS__); exit(1); }}
 #else
 	#define ASSERT(x, ...)
 #endif

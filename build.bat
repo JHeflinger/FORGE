@@ -1,0 +1,1 @@
+bazel build win_Forge

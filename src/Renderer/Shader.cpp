@@ -48,7 +48,7 @@ std::string Shader::ReadFile(const std::string& filepath) {
 		in.seekg(0, std::ios::beg);
 		in.read(&result[0], result.size());
 		in.close();
-	} else ERROR("Could not open file {0}", filepath);
+	} else FATAL("Could not open file {0}", filepath);
 	return result;
 }
 
@@ -92,7 +92,7 @@ void Shader::Compile(const std::unordered_map<GLenum, std::string>& shaderSource
 			std::vector<GLchar> infoLog(maxLength);
 			glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
 			glDeleteShader(shader);
-			ERROR("{0}", infoLog.data());
+			FATAL("{0}", infoLog.data());
 			ASSERT(false, "Shader compilation failure");
 			return;
 		}
@@ -111,7 +111,7 @@ void Shader::Compile(const std::unordered_map<GLenum, std::string>& shaderSource
 		glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
 		glDeleteProgram(program);
 		for (auto id : glShaderIDs) glDeleteShader(id);
-		ERROR("{0}", infoLog.data());
+		FATAL("{0}", infoLog.data());
 		ASSERT(false, "Shader link failure!");
 		return;
 	}

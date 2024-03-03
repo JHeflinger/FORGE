@@ -1,1 +1,1 @@
-bazel build Forge
+bazel build arch_Forge

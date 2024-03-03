@@ -85,15 +85,15 @@ void Application::Update(Timestep ts) {
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("Project")) {
 			if (ImGui::MenuItem("New"))
-				ERROR("New Project not implemented!");
+				FATAL("New Project not implemented!");
 			if (ImGui::MenuItem("Open"))
-				ERROR("Open Project not implemented!");
+				FATAL("Open Project not implemented!");
 			if (ImGui::MenuItem("Export"))
-				ERROR("Export not implemented!");
+				FATAL("Export not implemented!");
 			if (ImGui::MenuItem("Import"))
-				ERROR("Import not implemented!");
+				FATAL("Import not implemented!");
 			if (ImGui::MenuItem("Settings"))
-				ERROR("Settings not implemented!");
+				FATAL("Settings not implemented!");
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();

@@ -7,7 +7,7 @@
 
 static bool s_GLFWInitialized = false;
 static void GLFWErrorCallback(int error, const char* desc) {
-	ERROR("GLFW Error ({0}): {1}", error, desc);
+	FATAL("GLFW Error ({0}): {1}", error, desc);
 }
 
 Window::Window(const WindowProperties& properties) {
