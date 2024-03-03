@@ -14,7 +14,7 @@ class DeveloperPanel : public Panel {
 public:
 	DeveloperPanel();
 	virtual void Initialize() override;
-	virtual void Update() override;
+	virtual void Update(Forge* context) override;
 private:
 	RendererArtifacts m_Artifacts;
 };

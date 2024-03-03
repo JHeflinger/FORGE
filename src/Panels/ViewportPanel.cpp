@@ -1,5 +1,6 @@
 #include "ViewportPanel.h"
 #include "../Renderer/Renderer.h"
+#include "../Core/Forge.h"
 #include "imgui.h"
 
 ViewportPanel::ViewportPanel() {
@@ -14,17 +15,9 @@ void ViewportPanel::Initialize() {
 	m_Framebuffer = CreateRef<Framebuffer>(spec);
 }
 
-void ViewportPanel::Update() {
+void ViewportPanel::Update(Forge* context) {
 	m_Framebuffer->Bind();
-	Renderer::SetClearColor({0.1f, 0.5f, 0.3f, 1.0f});
-	Renderer::Clear();
-	Camera camera;
-	Renderer::BeginScene(camera);
-	Line line;
-	line.first = {-10.0f, -10.0f, -10.0f};
-	line.second = {10.0f, 10.0f, 10.0f};
-	Renderer::DrawLine(line);
-	Renderer::EndScene();
+	context->Render();
 	m_Framebuffer->ClearAttachment(1, -1);
 	
 	if (Resized()) {

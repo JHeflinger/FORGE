@@ -8,7 +8,7 @@ class ViewportPanel : public Panel {
 public:
 	ViewportPanel();
 	virtual void Initialize() override;
-	virtual void Update() override;
+	virtual void Update(Forge* context) override;
 	bool Resized();
 private:
 	Ref<Framebuffer> m_Framebuffer;

@@ -8,7 +8,7 @@ DeveloperPanel::DeveloperPanel() {
 void DeveloperPanel::Initialize() {
 }
 
-void DeveloperPanel::Update() {
+void DeveloperPanel::Update(Forge* context) {
 	const ImGuiTreeNodeFlags treeNodeFlags = 
 		ImGuiTreeNodeFlags_SpanAvailWidth | 
 		ImGuiTreeNodeFlags_AllowItemOverlap | 
