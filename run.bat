@@ -1,2 +1,2 @@
-./build.bat
-exec bazel-bin/win_Forge
+bazel build win_Forge
+start bazel-bin/win_Forge
