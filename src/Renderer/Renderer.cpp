@@ -45,7 +45,7 @@ void Renderer::Shutdown() {
 void Renderer::BeginScene(const Camera& camera) {
 	// set the view projection
 	s_Data.Shaders.Get("Line")->Bind();
-	s_Data.Shaders.Get("Line")->SetMat4("u_ViewProjection", camera.GetProjection());
+	s_Data.Shaders.Get("Line")->SetMat4("u_ViewProjection", camera.GetViewProjection());
 	
 	StartBatch();
 }

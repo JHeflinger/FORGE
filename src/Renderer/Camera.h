@@ -1,13 +1,36 @@
 #pragma once
+#include "../Core/Timestep.h"
+#include "../Events/Event.h"
 #include "glm/glm.hpp"
 
-typedef glm::mat4 Projection;
+enum class CameraTypes {
+	PERSPECTIVE = 0,
+	ORTHOGRAPHIC = 1,
+};
+
+struct CameraProperties {
+	float FOV;
+	float NearClip;
+	float FarClip;
+	glm::vec2 ViewportDimensions;
+	glm::mat4 Projection;
+	glm::mat4 View;
+	CameraTypes Type;
+};
 
 class Camera {
 public:
-	Camera() = default;
-	Camera(const Projection& projection) : m_Projection(projection) {}
-	const Projection& GetProjection() const { return m_Projection; }
+	Camera() { Reset(); }
+	const glm::mat4& GetViewProjection() const { return GetProjection(); }//{ return m_Properties.Projection * m_Properties.View; }
+	const glm::mat4& GetProjection() const { return m_Properties.Projection; }
+public:
+	void OnUpdate(Timestep ts, bool updateControl = true);
+	void OnEvent(Event& e);
+public:
+	void UpdateView();
+	void UpdateProjection();
+public:
+	void Reset();
 private:
-	Projection m_Projection = Projection(1.0f);
+	CameraProperties m_Properties;
 };
