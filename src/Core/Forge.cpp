@@ -15,6 +15,7 @@ bool Forge::Initialize() {
 
 void Forge::Update(Timestep ts) {
     UpdatePanels();
+	m_Camera.OnUpdate(ts);
 }
 
 void Forge::Shutdown() {

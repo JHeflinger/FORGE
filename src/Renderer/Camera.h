@@ -19,12 +19,14 @@ struct CameraProperties {
 	float Pitch;
 	float Yaw;
 	float Distance;
+	glm::vec2 MousePosition;
 	glm::vec2 ViewportDimensions;
 	glm::vec3 Position;
 	glm::vec3 FocalPoint;
 	glm::mat4 Projection;
 	glm::mat4 View;
 	CameraTypes Type;
+	bool ToggleBuffer;
 };
 
 class Camera {
@@ -44,11 +46,18 @@ private:
 	glm::quat GetOrientation() const;
 	glm::vec3 CalculatePosition() const;
 	glm::vec3 GetForwardDirection() const;
+	glm::vec3 GetUpDirection() const;
+	glm::vec3 GetRightDirection() const;
 	float ZoomSpeed() const;
+	glm::vec2 PanSpeed() const;
+	float RotationSpeed() const;
 private:
 	void MouseZoom(float delta);
+	void MousePan(const glm::vec2& delta);
+	void MouseRotate(const glm::vec2& delta);
 public:
 	void Reset();
+	void SoftReset();
 private:
 	CameraProperties m_Properties;
 };
