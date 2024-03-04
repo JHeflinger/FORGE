@@ -16,6 +16,15 @@ struct Viewport {
 typedef glm::vec4 Color;
 typedef std::pair<glm::vec3, glm::vec3> Line;
 
+struct Circle {
+	glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
+	glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
+	glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+	Color CircleColor = {1.0f, 1.0f, 1.0f, 1.0f};
+	float Thickness = 1.0f;
+	float Fade = 0.005f;
+};
+
 struct LineProperties {
 	float LineWidth = 1.0f;
 	Color LineColor = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -23,6 +32,7 @@ struct LineProperties {
 
 struct RendererStatistics {
 	uint32_t LineCount = 0;
+	uint32_t CircleCount = 0;
 	uint32_t DrawCalls = 0;
 };
 
@@ -31,12 +41,23 @@ struct LineVertex {
 	Color LineColor;
 };
 
+struct CircleVertex {
+	glm::vec3 WorldPosition;
+	glm::vec3 LocalPosition;
+	glm::vec4 Color;
+	float Thickness;
+	float Fade;
+};
+
 struct RendererData {
 	// Maximum constraints (change if needed)
 	static const uint32_t MaxQuads = 20000;
 	static const uint32_t MaxVertices = MaxQuads * 4;
 	static const uint32_t MaxIndices = MaxQuads * 6;
 	static const uint32_t MaxTextures = 32;
+
+	// Quad stuff
+	glm::vec4 QuadVertexPositions[4];
 
 	// Shaders
 	ShaderLibrary Shaders;
@@ -47,6 +68,13 @@ struct RendererData {
 	uint32_t LineVertexCount = 0;
 	LineVertex* LineVertexBufferBase = nullptr;
 	LineVertex* LineVertexBufferPtr = nullptr;
+
+	// Circle resources
+	Ref<VertexArray> CircleVertexArray;
+	Ref<VertexBuffer> CircleVertexBuffer;
+	uint32_t CircleIndexCount = 0;
+	CircleVertex* CircleVertexBufferBase = nullptr;
+	CircleVertex* CircleVertexBufferPtr = nullptr;
 
 	// Statistics and property tracking
 	LineProperties LineProps;
@@ -66,6 +94,7 @@ public:
 	static void NextBatch();
 	static void Flush();
 	static void DrawLine(const Line& line);
+	static void DrawCircle(const Circle& circle);
 	static RendererStatistics Stats();
 	static void ResetStats();
 public:
@@ -74,4 +103,5 @@ public:
 private:
 	static void SubmitLineProperties();
 	static void SubmitLines();
+	static void SubmitCircles();
 };
