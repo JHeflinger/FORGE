@@ -30,7 +30,9 @@ void Renderer::Initialize() {
 		quadIndices[i + 5] = offset + 0;
 		offset += 4;
 	}
-	Ref<IndexBuffer> quadIB = CreateRef<IndexBuffer>(quadIndices, s_Data.MaxIndices);
+
+	uint32_t indexcount = s_Data.MaxIndices; // note: redundant, but linux build breaks without buffering MaxIndices into an intermediate variable
+	Ref<IndexBuffer> quadIB = CreateRef<IndexBuffer>(quadIndices, indexcount);
 	delete[] quadIndices;
 
 	// internal shaders
