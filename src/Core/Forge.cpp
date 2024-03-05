@@ -31,6 +31,11 @@ void Forge::Render() {
 	Renderer::Clear();
 	Renderer::BeginScene(m_Camera);
 
+	LineProperties props = Renderer::GetLineProperties();
+	props.LineColor = { 0.3f, 0.2f, 0.9f, 1.0f };
+	props.LineWidth = 5.0f;
+	Renderer::SetLineProperties(props);
+
 	Renderer::DrawLine({{-5.0f, -5.0f, -5.0f}, {-5.0f, 5.0f, -5.0f}});
 	Renderer::DrawLine({{-5.0f, 5.0f, -5.0f}, {5.0f, 5.0f, -5.0f}});
 	Renderer::DrawLine({{5.0f, 5.0f, -5.0f}, {5.0f, -5.0f, -5.0f}});

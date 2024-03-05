@@ -36,6 +36,8 @@ public:
 	const glm::mat4& GetProjection() const { return m_Properties.Projection; }
 	const glm::vec3& GetPosition() const { return m_Properties.Position; }
 public:
+	inline void SetViewportSize(float width, float height) { m_Properties.ViewportDimensions.x = width; m_Properties.ViewportDimensions.y = height; UpdateProjection(); }
+public:
 	void OnUpdate(Timestep ts, bool updateControl = true);
 	void OnEvent(Event& e);
 	bool OnMouseScroll(MouseScrolledEvent& e);

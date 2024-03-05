@@ -15,6 +15,8 @@ public:
     void Shutdown();
 	void OnEvent(Event& e);
     void Render();
+public:
+    Camera& GetCamera() { return m_Camera; }
 private:
     void InitializePanels();
     void UpdatePanels();

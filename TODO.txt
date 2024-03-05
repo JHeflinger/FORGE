@@ -1,5 +1,5 @@
 MINOR:
     - camera tweaks
         a. mouse pan isn't scaling perfectly
-        b. viewport resizing squishes things
+        b. (DONE) viewport resizing squishes things
         c. mouse zooming (middle click, not scroll) is by y delta, make it based on both?

@@ -22,10 +22,12 @@ void ViewportPanel::Update(Forge* context) {
 	
 	if (Resized()) {
 		m_Framebuffer->Resize((uint32_t)m_Size.x, (uint32_t)m_Size.y);
+		context->GetCamera().SetViewportSize(m_Size.x, m_Size.y);
 	}
 
 	m_Framebuffer->Unbind();
 
+	// Start Viewport
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 	ImGui::Begin("Viewport");
 
