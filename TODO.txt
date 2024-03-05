@@ -1,5 +1,15 @@
 MINOR:
     - camera tweaks
         a. mouse pan isn't scaling perfectly
-        b. (DONE) viewport resizing squishes things
-        c. mouse zooming (middle click, not scroll) is by y delta, make it based on both?
+        b. mouse zooming (middle click, not scroll) is by y delta, make it based on both?
+
+MEDIUM:
+    - Hierarchy panel
+    - Simulation control panel
+
+MAJOR:
+    - Simulation class
+    - Serializer
+
+COMPLETED:
+    - viewport resizing squishes things
