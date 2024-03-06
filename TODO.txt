@@ -2,6 +2,7 @@ MINOR:
     - camera tweaks
         a. mouse pan isn't scaling perfectly
         b. mouse zooming (middle click, not scroll) is by y delta, make it based on both?
+    - maintain serializer
 
 MEDIUM:
     - Hierarchy panel
@@ -9,7 +10,7 @@ MEDIUM:
 
 MAJOR:
     - Simulation class
-    - Serializer
 
 COMPLETED:
     - viewport resizing squishes things
+    - Serializer

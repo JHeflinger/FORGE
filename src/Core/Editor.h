@@ -2,6 +2,7 @@
 #include <vector>
 #include "Safety.h"
 #include "Timestep.h"
+#include "Serializer.h"
 #include "../Renderer/Camera.h"
 #include "../Panels/Panel.h"
 #include "../Events/Event.h"

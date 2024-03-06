@@ -11,6 +11,7 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
+        "//vendor:yaml",
 	    "//vendor:glad",
         "//vendor:spdlog",
         "//vendor:imgui_backend",
@@ -53,6 +54,7 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
+        "//vendor:yaml",
         "//vendor:win_glm",
 	    "//vendor:glad",
         "//vendor:spdlog",
