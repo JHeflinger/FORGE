@@ -1,32 +1,32 @@
-#include "Forge.h"
+#include "Editor.h"
 #include "../Renderer/Renderer.h"
 #include "../Panels/ViewportPanel.h"
 #include "../Panels/HierarchyPanel.h"
 
-Forge::Forge() {
+Editor::Editor() {
     m_Panels = { CreateRef<ViewportPanel>(), CreateRef<HierarchyPanel>() };
 }
 
-bool Forge::Initialize() {
+bool Editor::Initialize() {
 	Renderer::Initialize();
 	InitializePanels();
 	return true;
 }
 
-void Forge::Update(Timestep ts) {
+void Editor::Update(Timestep ts) {
     UpdatePanels();
 	m_Camera.OnUpdate(ts);
 }
 
-void Forge::Shutdown() {
+void Editor::Shutdown() {
 
 }
 
-void Forge::OnEvent(Event& e) {
+void Editor::OnEvent(Event& e) {
     m_Camera.OnEvent(e);
 }
 
-void Forge::Render() {
+void Editor::Render() {
 	Renderer::SetClearColor({0.1f, 0.5f, 0.3f, 1.0f});
 	Renderer::Clear();
 	Renderer::BeginScene(m_Camera);
@@ -61,13 +61,13 @@ void Forge::Render() {
 	Renderer::EndScene();
 }
 
-void Forge::InitializePanels() {
+void Editor::InitializePanels() {
     for (auto panel : m_Panels) {
         panel->Initialize();
     }
 }
 
-void Forge::UpdatePanels() {
+void Editor::UpdatePanels() {
     for (auto panel : m_Panels) {
         panel->Update(this);
     }

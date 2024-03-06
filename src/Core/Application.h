@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Forge.h"
+#include "Editor.h"
 #include "Safety.h"
 #include "Window.h"
 #include "GUI.h"
@@ -21,7 +21,7 @@ private:
 	bool OnWindowClosed(WindowCloseEvent& e);
 	bool OnWindowResize(WindowResizeEvent& e);
 private:
-	Ref<Forge> m_Forge;
+	Ref<Editor> m_Editor;
 	Ref<Window> m_Window;
 	Ref<GUI> m_GUI;
 	bool m_Minimized = false;

@@ -5,5 +5,5 @@ class HierarchyPanel : public Panel {
 public:
 	HierarchyPanel();
 	virtual void Initialize() override;
-	virtual void Update(Forge* context) override;
+	virtual void Update(Editor* context) override;
 };

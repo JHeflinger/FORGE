@@ -8,7 +8,7 @@ HierarchyPanel::HierarchyPanel() {
 void HierarchyPanel::Initialize() {
 }
 
-void HierarchyPanel::Update(Forge* context) {
+void HierarchyPanel::Update(Editor* context) {
 	const ImGuiTreeNodeFlags treeNodeFlags = 
 		ImGuiTreeNodeFlags_SpanAvailWidth | 
 		ImGuiTreeNodeFlags_AllowItemOverlap | 

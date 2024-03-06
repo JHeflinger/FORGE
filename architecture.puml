@@ -1,3 +1,126 @@
-@startuml
-testdot
+@startuml Forge
+
+package "Main Application" <<Rectangle>> {
+    class Main {
+
+    }
+    class Application {
+
+    }
+    class Editor {
+
+    }
+    class GUI {
+
+    }
+    class Simulation {
+
+    }
+    class Window {
+
+    }
+    class Panel {
+
+    }
+    class HierarchyPanel {
+
+    }
+    class ViewportPanel {
+
+    }
+    class Camera {
+
+    }
+    class Framebuffer {
+
+    }
+}
+
+package "Renderer" <<Rectangle>> {
+    class BufferElement {
+
+    }
+    class BufferLayout {
+
+    }
+    class VertexBuffer {
+
+    }
+    class IndexBuffer {
+
+    }
+    class Renderer {
+
+    }
+    class Shader {
+
+    }
+    class VertexArray {
+
+    }
+}
+
+package "General Utility" <<Rectangle>> {
+    class Log {
+        
+    }
+    class Safety {
+
+    }
+    class Timestep {
+
+    }
+    class MathUtils {
+
+    }
+    class StaticShaders {
+
+    }
+    class Input {
+
+    }
+}
+
+package "Event System" <<Rectangle>> {
+    class EventDispatcher {
+
+    }
+    class Event {
+
+    }
+    class MouseEvent {
+
+    }
+    class KeyEvent {
+
+    }
+    class ApplicationEvent {
+
+    }
+}
+
+Application-u->Main
+Window-l->Application
+GUI-r->Application
+Editor-u->Application
+Panel-r->Editor : *
+Simulation-l->Editor
+Camera-u->Editor
+HierarchyPanel..r|>Panel
+ViewportPanel..u|>Panel
+Framebuffer-r->ViewportPanel
+
+IndexBuffer-u->Renderer
+VertexBuffer-u->Renderer
+VertexArray-u->Renderer
+Shader-u->Renderer
+BufferElement-u->BufferLayout : *
+BufferLayout-u->VertexBuffer
+BufferLayout-u->IndexBuffer
+
+Event-u->EventDispatcher
+MouseEvent-u->Event
+ApplicationEvent-u->Event
+KeyEvent-u->Event
+
 @enduml

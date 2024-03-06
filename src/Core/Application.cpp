@@ -8,7 +8,7 @@
 #include "../Events/Input.h"
 
 Application::Application() {
-	m_Forge = CreateRef<Forge>();
+	m_Editor = CreateRef<Editor>();
 }
 
 bool Application::Initialize() {
@@ -34,7 +34,7 @@ void Application::Run() {
 	Input::Initialize(this);
 
 	// Initialize Forge
-	m_Forge->Initialize();
+	m_Editor->Initialize();
 	
 	while (m_Running) {
 		float time = (float)glfwGetTime();
@@ -103,13 +103,13 @@ void Application::Update(Timestep ts) {
 		ImGui::EndMenuBar();
 	}
 
-	m_Forge->Update(ts);
+	m_Editor->Update(ts);
 
 	ImGui::End();
 }
 
 void Application::Shutdown() {
-	m_Forge->Shutdown();
+	m_Editor->Shutdown();
 	m_GUI->Shutdown();
 }
 
@@ -118,7 +118,7 @@ void Application::OnEvent(Event& e) {
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
 	dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 	m_GUI->OnEvent(e);
-	m_Forge->OnEvent(e);
+	m_Editor->OnEvent(e);
 }
 
 bool Application::OnWindowClosed(WindowCloseEvent& e) {

@@ -1,6 +1,6 @@
 #include "ViewportPanel.h"
 #include "../Renderer/Renderer.h"
-#include "../Core/Forge.h"
+#include "../Core/Editor.h"
 #include "imgui.h"
 
 ViewportPanel::ViewportPanel() {
@@ -15,7 +15,7 @@ void ViewportPanel::Initialize() {
 	m_Framebuffer = CreateRef<Framebuffer>(spec);
 }
 
-void ViewportPanel::Update(Forge* context) {
+void ViewportPanel::Update(Editor* context) {
 	m_Framebuffer->Bind();
 	context->Render();
 	m_Framebuffer->ClearAttachment(1, -1);

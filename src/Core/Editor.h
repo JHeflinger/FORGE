@@ -1,15 +1,14 @@
 #pragma once
 #include <vector>
-#include "Structures.h"
 #include "Safety.h"
 #include "Timestep.h"
 #include "../Renderer/Camera.h"
 #include "../Panels/Panel.h"
 #include "../Events/Event.h"
 
-class Forge {
+class Editor {
 public:
-    Forge();
+    Editor();
     bool Initialize();
     void Update(Timestep ts);
     void Shutdown();
