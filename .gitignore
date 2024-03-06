@@ -4,3 +4,5 @@ bazel-*
 architecture.png
 docs/html/
 docs/latex/
+*.fsim
+*.fconf
