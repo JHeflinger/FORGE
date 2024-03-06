@@ -7,6 +7,8 @@ MINOR:
 MEDIUM:
     - Hierarchy panel
     - Simulation control panel
+    - basic texture class
+    - basic quad rendering
 
 MAJOR:
     - Simulation class
