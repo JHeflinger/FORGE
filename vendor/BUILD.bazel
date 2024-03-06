@@ -62,6 +62,10 @@ cc_library(
     visibility = ["//visibility:public"]
 )
 
+######################################
+######### WINDOWS SPECIFIC ###########
+######################################
+
 cc_library(
     name = "yaml-internal",
     hdrs = glob(["yaml-cpp/src/**/*.h"]),
@@ -77,10 +81,6 @@ cc_library(
     defines = ["YAML_CPP_STATIC_DEFINE", "YAML_CPP_NO_CONTRIB"],
     visibility = ["//visibility:public"]
 )
-
-######################################
-######### WINDOWS SPECIFIC ###########
-######################################
 
 cc_library(
     name = "win_imgui",
