@@ -1,7 +1,0 @@
-<map id="MouseButtonReleasedEvent" name="MouseButtonReleasedEvent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="18,480,205,603"/>
-<area shape="rect" id="Node000002" href="$class_mouse_button_event.html" title=" " alt="" coords="36,309,187,432"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,447,114,480,109,480,109,447"/>
-<area shape="rect" id="Node000003" href="$class_event.html" title=" " alt="" coords="5,5,217,261"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="114,277,114,310,109,310,109,277"/>
-</map>
