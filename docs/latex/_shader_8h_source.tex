@@ -1,0 +1,56 @@
+\doxysection{Shader.\+h}
+\hypertarget{_shader_8h_source}{}\label{_shader_8h_source}\index{src/Renderer/Shader.h@{src/Renderer/Shader.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}../Core/Safety.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <glad/glad.h>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <glm/glm.hpp>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_shader}{Shader}}\ \{}
+\DoxyCodeLine{00007\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ vertexSrc,\ \textcolor{keyword}{const}\ std::string\&\ fragmentSrc);}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{class_shader}{Shader}}(\textcolor{keyword}{const}\ std::string\&\ content,\ \textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00011\ \ \ \ \ \mbox{\hyperlink{class_shader}{\string~Shader}}();}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{void}\ Bind()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{void}\ Unbind()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{const}\ std::string\&\ GetName()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_Name;\ \}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{void}\ SetInt(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIntArray(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}*\ values,\ uint32\_t\ count);}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{void}\ SetMat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::mat4\&\ value);}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFloat(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFloat3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec3\&\ value);}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ SetFloat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec4\&\ value);}
+\DoxyCodeLine{00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformInt(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformIntArray(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{int}*\ values,\ uint32\_t\ count);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformFloat(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keywordtype}{float}\ value);}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformFloat2(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec2\&\ values);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformFloat3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec3\&\ values);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformFloat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::vec4\&\ values);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformMat3(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::mat3\&\ matrix);}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{void}\ UploadUniformMat4(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ glm::mat4\&\ matrix);}
+\DoxyCodeLine{00031\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00032\ \ \ \ \ std::string\ ReadFile(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00033\ \ \ \ \ std::unordered\_map<GLenum,\ std::string>\ PreProcess(\textcolor{keyword}{const}\ std::string\&\ source);}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{void}\ Compile(\textcolor{keyword}{const}\ std::unordered\_map<GLenum,\ std::string>\&\ shaderSources);}
+\DoxyCodeLine{00035\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00036\ \ \ \ \ uint32\_t\ m\_RendererID;}
+\DoxyCodeLine{00037\ \ \ \ \ std::string\ m\_Name;}
+\DoxyCodeLine{00038\ \};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_shader_library}{ShaderLibrary}}\ \{}
+\DoxyCodeLine{00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ Add(\textcolor{keyword}{const}\ Ref<Shader>\&\ shader);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ Add(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ Ref<Shader>\&\ shader);}
+\DoxyCodeLine{00044\ \ \ \ \ Ref<Shader>\ Load(\textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00045\ \ \ \ \ Ref<Shader>\ Load(\textcolor{keyword}{const}\ std::string\&\ name,\ \textcolor{keyword}{const}\ std::string\&\ filepath);}
+\DoxyCodeLine{00046\ \ \ \ \ Ref<Shader>\ Get(\textcolor{keyword}{const}\ std::string\&\ name);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{bool}\ Exists(\textcolor{keyword}{const}\ std::string\&\ name)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00049\ \ \ \ \ std::unordered\_map<std::string,\ Ref<Shader>>\ m\_Shaders;}
+\DoxyCodeLine{00050\ \};}
+
+\end{DoxyCode}

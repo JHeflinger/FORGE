@@ -1,0 +1,77 @@
+\doxysection{Mouse\+Event.\+h}
+\hypertarget{_mouse_event_8h_source}{}\label{_mouse_event_8h_source}\index{src/Events/MouseEvent.h@{src/Events/MouseEvent.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Event.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00004\ \ \ \ \ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mouse_moved_event}{MouseMovedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_event}{Event}}\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{class_mouse_moved_event}{MouseMovedEvent}}(\textcolor{keywordtype}{float}\ x,\ \textcolor{keywordtype}{float}\ y)}
+\DoxyCodeLine{00008\ \ \ \ \ \ \ \ \ :\ m\_MouseX(x),\ m\_MouseY(y)\ \{\}}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ GetX()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_MouseX;\ \}}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ GetY()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_MouseY;\ \}}
+\DoxyCodeLine{00011\ \ \ \ \ std::string\ ToString()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ ss\ <<\ \textcolor{stringliteral}{"{}MouseMovedEvent:\ "{}}\ <<\ m\_MouseX\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ m\_MouseY;}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{00015\ \ \ \ \ \}}
+\DoxyCodeLine{00016\ \ \ \ \ EVENT\_CLASS\_TYPE(MouseMoved)}
+\DoxyCodeLine{00017\ \ \ \ \ EVENT\_CLASS\_CATEGORY(EventCategoryMouse\ |\ EventCategoryInput)}
+\DoxyCodeLine{00018\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_MouseX,\ m\_MouseY;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mouse_scrolled_event}{MouseScrolledEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_event}{Event}}\ \{}
+\DoxyCodeLine{00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{class_mouse_scrolled_event}{MouseScrolledEvent}}(\textcolor{keywordtype}{float}\ xOffset,\ \textcolor{keywordtype}{float}\ yOffset)}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ :\ m\_XOffset(xOffset),\ m\_YOffset(yOffset)\ \{\}}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ GetXOffset()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_XOffset;\ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{float}\ GetYOffset()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_YOffset;\ \}}
+\DoxyCodeLine{00028\ \ \ \ \ std::string\ ToString()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ ss\ <<\ \textcolor{stringliteral}{"{}MouseScrolledEvent:\ "{}}\ <<\ GetXOffset()\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ GetYOffset();}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ \ \ \ \ EVENT\_CLASS\_TYPE(MouseScrolled)}
+\DoxyCodeLine{00034\ \ \ \ \ EVENT\_CLASS\_CATEGORY(EventCategoryMouse\ |\ EventCategoryInput)}
+\DoxyCodeLine{00035\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{float}\ m\_XOffset,\ m\_YOffset;}
+\DoxyCodeLine{00037\ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_event}{Event}}\ \{}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ GetMouseButton()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_Button;\ \}}
+\DoxyCodeLine{00042\ \ \ \ \ EVENT\_CLASS\_CATEGORY(EventCategoryMouse\ |\ EventCategoryInput)}
+\DoxyCodeLine{00043\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00044\ \ \ \ \ \mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}(\textcolor{keywordtype}{int}\ button)}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ :\ m\_Button(button)\ \{\}}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ m\_Button;}
+\DoxyCodeLine{00047\ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mouse_button_pressed_event}{MouseButtonPressedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}\ \{}
+\DoxyCodeLine{00050\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_mouse_button_pressed_event}{MouseButtonPressedEvent}}(\textcolor{keywordtype}{int}\ button)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}(button)\ \{\}}
+\DoxyCodeLine{00053\ \ \ \ \ std::string\ ToString()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ ss\ <<\ \textcolor{stringliteral}{"{}MouseButtonPressedEvent:\ "{}}\ <<\ m\_Button;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ EVENT\_CLASS\_TYPE(MouseButtonPressed)}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_mouse_button_released_event}{MouseButtonReleasedEvent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}\ \{}
+\DoxyCodeLine{00062\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{class_mouse_button_released_event}{MouseButtonReleasedEvent}}(\textcolor{keywordtype}{int}\ button)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{class_mouse_button_event}{MouseButtonEvent}}(button)\ \{\}}
+\DoxyCodeLine{00065\ \ \ \ \ std::string\ ToString()\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ std::stringstream\ ss;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ ss\ <<\ \textcolor{stringliteral}{"{}MouseButtonReleasedEvent:\ "{}}\ <<\ m\_Button;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ss.str();}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ EVENT\_CLASS\_TYPE(MouseButtonReleased)}
+\DoxyCodeLine{00071\ \};}
+
+\end{DoxyCode}

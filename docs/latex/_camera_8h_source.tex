@@ -1,0 +1,71 @@
+\doxysection{Camera.\+h}
+\hypertarget{_camera_8h_source}{}\label{_camera_8h_source}\index{src/Renderer/Camera.h@{src/Renderer/Camera.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}../Core/Timestep.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../Events/Event.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../Events/MouseEvent.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}glm/glm.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{enum\ class}\ CameraTypes\ \{}
+\DoxyCodeLine{00008\ \ \ \ \ PERSPECTIVE\ =\ 0,}
+\DoxyCodeLine{00009\ \ \ \ \ ORTHOGRAPHIC\ =\ 1,}
+\DoxyCodeLine{00010\ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_camera_properties}{CameraProperties}}\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{float}\ FOV;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{float}\ NearClip;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{float}\ FarClip;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{float}\ OrthographicSize;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{float}\ OrthographicNear;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordtype}{float}\ OrthographicFar;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{float}\ Pitch;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{float}\ Yaw;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{float}\ Distance;}
+\DoxyCodeLine{00022\ \ \ \ \ glm::vec2\ MousePosition;}
+\DoxyCodeLine{00023\ \ \ \ \ glm::vec2\ ViewportDimensions;}
+\DoxyCodeLine{00024\ \ \ \ \ glm::vec3\ Position;}
+\DoxyCodeLine{00025\ \ \ \ \ glm::vec3\ FocalPoint;}
+\DoxyCodeLine{00026\ \ \ \ \ glm::mat4\ Projection;}
+\DoxyCodeLine{00027\ \ \ \ \ glm::mat4\ View;}
+\DoxyCodeLine{00028\ \ \ \ \ CameraTypes\ Type;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{bool}\ ToggleBuffer;}
+\DoxyCodeLine{00030\ \};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_camera}{Camera}}\ \{}
+\DoxyCodeLine{00033\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}()\ \{\ Reset();\ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{const}\ glm::mat4\ GetViewProjection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_Properties.Projection\ *\ m\_Properties.View;\ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{const}\ glm::mat4\&\ GetProjection()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_Properties.Projection;\ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{const}\ glm::vec3\&\ GetPosition()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_Properties.Position;\ \}}
+\DoxyCodeLine{00038\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ SetViewportSize(\textcolor{keywordtype}{float}\ width,\ \textcolor{keywordtype}{float}\ height)\ \{\ m\_Properties.ViewportDimensions.x\ =\ width;\ m\_Properties.ViewportDimensions.y\ =\ height;\ UpdateProjection();\ \}}
+\DoxyCodeLine{00040\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ OnUpdate(\mbox{\hyperlink{class_timestep}{Timestep}}\ ts,\ \textcolor{keywordtype}{bool}\ updateControl\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ OnEvent(\mbox{\hyperlink{class_event}{Event}}\&\ e);}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ OnMouseScroll(\mbox{\hyperlink{class_mouse_scrolled_event}{MouseScrolledEvent}}\&\ e);}
+\DoxyCodeLine{00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateView();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ UpdateProjection();}
+\DoxyCodeLine{00047\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00048\ \ \ \ \ glm::quat\ GetOrientation()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ \ \ \ \ glm::vec3\ CalculatePosition()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ glm::vec3\ GetForwardDirection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00051\ \ \ \ \ glm::vec3\ GetUpDirection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00052\ \ \ \ \ glm::vec3\ GetRightDirection()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{float}\ ZoomSpeed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00054\ \ \ \ \ glm::vec2\ PanSpeed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{float}\ RotationSpeed()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ MouseZoom(\textcolor{keywordtype}{float}\ delta);}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ MousePan(\textcolor{keyword}{const}\ glm::vec2\&\ delta);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{void}\ MouseRotate(\textcolor{keyword}{const}\ glm::vec2\&\ delta);}
+\DoxyCodeLine{00060\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{void}\ Reset();}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{void}\ SoftReset();}
+\DoxyCodeLine{00063\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{struct_camera_properties}{CameraProperties}}\ m\_Properties;}
+\DoxyCodeLine{00065\ \};}
+
+\end{DoxyCode}

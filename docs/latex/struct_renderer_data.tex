@@ -1,0 +1,77 @@
+\doxysection{Renderer\+Data Struct Reference}
+\hypertarget{struct_renderer_data}{}\label{struct_renderer_data}\index{RendererData@{RendererData}}
+
+
+Collaboration diagram for Renderer\+Data\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{struct_renderer_data__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_renderer_data_a491a6c29c7249f154ad15ae9a078d5e6}\label{struct_renderer_data_a491a6c29c7249f154ad15ae9a078d5e6} 
+glm\+::vec4 {\bfseries Quad\+Vertex\+Positions} \mbox{[}4\mbox{]}
+\item 
+\Hypertarget{struct_renderer_data_a745abb86861fc6f310619311546dcc25}\label{struct_renderer_data_a745abb86861fc6f310619311546dcc25} 
+\mbox{\hyperlink{class_shader_library}{Shader\+Library}} {\bfseries Shaders}
+\item 
+\Hypertarget{struct_renderer_data_a5af8e1c95993ae5982dbdde2c3498a04}\label{struct_renderer_data_a5af8e1c95993ae5982dbdde2c3498a04} 
+Ref$<$ \mbox{\hyperlink{class_vertex_array}{Vertex\+Array}} $>$ {\bfseries Line\+Vertex\+Array}
+\item 
+\Hypertarget{struct_renderer_data_a74d17b1483cbf8aa03e6b592c8388bbb}\label{struct_renderer_data_a74d17b1483cbf8aa03e6b592c8388bbb} 
+Ref$<$ \mbox{\hyperlink{class_vertex_buffer}{Vertex\+Buffer}} $>$ {\bfseries Line\+Vertex\+Buffer}
+\item 
+\Hypertarget{struct_renderer_data_a70f4bd7d61b52a45601070ab763896ce}\label{struct_renderer_data_a70f4bd7d61b52a45601070ab763896ce} 
+uint32\+\_\+t {\bfseries Line\+Vertex\+Count} = 0
+\item 
+\Hypertarget{struct_renderer_data_ae6846f862400feb0fc4bde0ab44a4a77}\label{struct_renderer_data_ae6846f862400feb0fc4bde0ab44a4a77} 
+\mbox{\hyperlink{struct_line_vertex}{Line\+Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries Line\+Vertex\+Buffer\+Base} = nullptr
+\item 
+\Hypertarget{struct_renderer_data_a6120fc4aeac1ac9b9874a13e78eb873a}\label{struct_renderer_data_a6120fc4aeac1ac9b9874a13e78eb873a} 
+\mbox{\hyperlink{struct_line_vertex}{Line\+Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries Line\+Vertex\+Buffer\+Ptr} = nullptr
+\item 
+\Hypertarget{struct_renderer_data_a4a8330886068b86530d168361412c2a0}\label{struct_renderer_data_a4a8330886068b86530d168361412c2a0} 
+Ref$<$ \mbox{\hyperlink{class_vertex_array}{Vertex\+Array}} $>$ {\bfseries Circle\+Vertex\+Array}
+\item 
+\Hypertarget{struct_renderer_data_af871ccb50da51bdddc05e035099210fd}\label{struct_renderer_data_af871ccb50da51bdddc05e035099210fd} 
+Ref$<$ \mbox{\hyperlink{class_vertex_buffer}{Vertex\+Buffer}} $>$ {\bfseries Circle\+Vertex\+Buffer}
+\item 
+\Hypertarget{struct_renderer_data_a0d175fe92fca64c30474d773d120b0b2}\label{struct_renderer_data_a0d175fe92fca64c30474d773d120b0b2} 
+uint32\+\_\+t {\bfseries Circle\+Index\+Count} = 0
+\item 
+\Hypertarget{struct_renderer_data_a98de933c28bdcd2edbe424a468aaadd6}\label{struct_renderer_data_a98de933c28bdcd2edbe424a468aaadd6} 
+\mbox{\hyperlink{struct_circle_vertex}{Circle\+Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries Circle\+Vertex\+Buffer\+Base} = nullptr
+\item 
+\Hypertarget{struct_renderer_data_a6139b95262c3b705a06751b3453af270}\label{struct_renderer_data_a6139b95262c3b705a06751b3453af270} 
+\mbox{\hyperlink{struct_circle_vertex}{Circle\+Vertex}} \texorpdfstring{$\ast$}{*} {\bfseries Circle\+Vertex\+Buffer\+Ptr} = nullptr
+\item 
+\Hypertarget{struct_renderer_data_a30dd3b048bbe9dbd65860a59a93d0bc5}\label{struct_renderer_data_a30dd3b048bbe9dbd65860a59a93d0bc5} 
+\mbox{\hyperlink{struct_line_properties}{Line\+Properties}} {\bfseries Line\+Props}
+\item 
+\Hypertarget{struct_renderer_data_aef50c5e1867be03364d0652c91375ed0}\label{struct_renderer_data_aef50c5e1867be03364d0652c91375ed0} 
+\mbox{\hyperlink{struct_renderer_statistics}{Renderer\+Statistics}} {\bfseries Statistics}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_renderer_data_aea87536258cad1994865390d1e738757}\label{struct_renderer_data_aea87536258cad1994865390d1e738757} 
+static const uint32\+\_\+t {\bfseries Max\+Quads} = 20000
+\item 
+\Hypertarget{struct_renderer_data_afbf1de60ae0d60616d83d0a423f5f68f}\label{struct_renderer_data_afbf1de60ae0d60616d83d0a423f5f68f} 
+static const uint32\+\_\+t {\bfseries Max\+Vertices} = Max\+Quads \texorpdfstring{$\ast$}{*} 4
+\item 
+\Hypertarget{struct_renderer_data_a3393a55817abde4c28bd55d872d4e244}\label{struct_renderer_data_a3393a55817abde4c28bd55d872d4e244} 
+static const uint32\+\_\+t {\bfseries Max\+Indices} = Max\+Quads \texorpdfstring{$\ast$}{*} 6
+\item 
+\Hypertarget{struct_renderer_data_a6f5f2e41aa9ed741588f1a9adf82ce94}\label{struct_renderer_data_a6f5f2e41aa9ed741588f1a9adf82ce94} 
+static const uint32\+\_\+t {\bfseries Max\+Textures} = 32
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Renderer/Renderer.\+h\end{DoxyCompactItemize}

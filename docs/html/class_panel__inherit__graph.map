@@ -1,0 +1,7 @@
+<map id="Panel" name="Panel">
+<area shape="rect" id="Node000001" title=" " alt="" coords="105,5,261,155"/>
+<area shape="rect" id="Node000002" href="$class_hierarchy_panel.html" title=" " alt="" coords="5,213,171,357"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,169,123,215,118,213,140,167"/>
+<area shape="rect" id="Node000003" href="$class_viewport_panel.html" title=" " alt="" coords="195,203,360,368"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,167,242,202,237,204,221,169"/>
+</map>

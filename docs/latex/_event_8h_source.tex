@@ -1,0 +1,71 @@
+\doxysection{Event.\+h}
+\hypertarget{_event_8h_source}{}\label{_event_8h_source}\index{src/Events/Event.h@{src/Events/Event.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}../Core/Safety.h"{}}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{keyword}{enum\ class}\ EventType\ \{}
+\DoxyCodeLine{00005\ \ \ \ \ None\ =\ 0,}
+\DoxyCodeLine{00006\ \ \ \ \ WindowClose,\ WindowResize,\ WindowFocus,\ WindowLostFocus,\ WindowMoved,}
+\DoxyCodeLine{00007\ \ \ \ \ AppTick,\ AppUpdate,\ AppRender,}
+\DoxyCodeLine{00008\ \ \ \ \ KeyPressed,\ KeyReleased,\ KeyTyped,}
+\DoxyCodeLine{00009\ \ \ \ \ MouseButtonPressed,\ MouseButtonReleased,\ MouseMoved,\ MouseScrolled}
+\DoxyCodeLine{00010\ \};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{enum}\ EventCategory\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ None\ =\ 0,}
+\DoxyCodeLine{00014\ \ \ \ \ EventCategoryApplication\ =\ BIT(0),}
+\DoxyCodeLine{00015\ \ \ \ \ EventCategoryInput\ \ \ \ \ \ \ =\ BIT(1),}
+\DoxyCodeLine{00016\ \ \ \ \ EventCategoryKeyboard\ \ \ \ =\ BIT(2),}
+\DoxyCodeLine{00017\ \ \ \ \ EventCategoryMouse\ \ \ \ \ \ \ =\ BIT(3),}
+\DoxyCodeLine{00018\ \ \ \ \ EventCategoryMouseButton\ =\ BIT(4)}
+\DoxyCodeLine{00019\ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ EVENT\_CLASS\_TYPE(type)\ static\ EventType\ GetStaticType()\ \{\ return\ EventType::type;\ \}\(\backslash\)}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ virtual\ EventType\ GetEventType()\ const\ override\ \{\ return\ GetStaticType();\ \}\(\backslash\)}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ virtual\ const\ char*\ GetName()\ const\ override\ \{\ return\ \#type;\ \}}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ EVENT\_CLASS\_CATEGORY(category)\ virtual\ int\ GetCategoryFlags()\ const\ override\ \{\ return\ category;\ \}}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ BIND\_EVENT\_FN(fn)\ [this](auto\&\&...\ args)\ -\/>\ decltype(auto)\ \{\ return\ this-\/>fn(std::forward<decltype(args)>(args)...);\ \}}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_event}{Event}}\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }EventDispacher;}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ Handled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{class_event}{\string~Event}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ EventType\ GetEventType()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ GetName()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{int}\ GetCategoryFlags()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ ToString()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ GetName();\ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ IsInCategory(EventCategory\ category)\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ GetCategoryFlags()\ \&\ category;}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_event_dispatcher}{EventDispatcher}}\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{using\ }EventFn\ =\ std::function<bool(T\&)>;}
+\DoxyCodeLine{00046\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{class_event_dispatcher}{EventDispatcher}}(\mbox{\hyperlink{class_event}{Event}}\&\ event)}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ :\ m\_Event(event)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ Dispatch(EventFn<T>\ func)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (m\_Event.GetEventType()\ ==\ T::GetStaticType())\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ m\_Event.Handled\ =\ func(*(T*)\&m\_Event);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{class_event}{Event}}\&\ m\_Event;}
+\DoxyCodeLine{00061\ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{keyword}{inline}\ std::ostream\&\ operator<<(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{class_event}{Event}}\&\ e)\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordflow}{return}\ os\ <<\ e.ToString();}
+\DoxyCodeLine{00065\ \}}
+
+\end{DoxyCode}

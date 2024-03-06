@@ -1,0 +1,26 @@
+\doxysection{Vertex\+Array.\+h}
+\hypertarget{_vertex_array_8h_source}{}\label{_vertex_array_8h_source}\index{src/Renderer/VertexArray.h@{src/Renderer/VertexArray.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Buffer.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../Core/Safety.h"{}}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_vertex_array}{VertexArray}}\ \{}
+\DoxyCodeLine{00006\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{class_vertex_array}{VertexArray}}();}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{class_vertex_array}{\string~VertexArray}}();}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{void}\ Bind()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{void}\ Unbind()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{void}\ AddVertexBuffer(\textcolor{keyword}{const}\ Ref<VertexBuffer>\&\ vertexBuffer);}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{void}\ SetIndexBuffer(\textcolor{keyword}{const}\ Ref<IndexBuffer>\&\ indexBuffer);}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Ref<VertexBuffer>>\&\ GetVertexBuffers()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_VertexBuffers;\ \}}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{const}\ Ref<IndexBuffer>\&\ GetIndexBuffer()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_IndexBuffer;\ \}}
+\DoxyCodeLine{00015\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00016\ \ \ \ \ uint32\_t\ m\_RendererID;}
+\DoxyCodeLine{00017\ \ \ \ \ uint32\_t\ m\_VertexBufferIndex\ =\ 0;}
+\DoxyCodeLine{00018\ \ \ \ \ std::vector<Ref<VertexBuffer>>\ m\_VertexBuffers;}
+\DoxyCodeLine{00019\ \ \ \ \ Ref<IndexBuffer>\ m\_IndexBuffer;}
+\DoxyCodeLine{00020\ \};}
+
+\end{DoxyCode}

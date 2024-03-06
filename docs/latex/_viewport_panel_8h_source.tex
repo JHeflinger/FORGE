@@ -1,0 +1,23 @@
+\doxysection{Viewport\+Panel.\+h}
+\hypertarget{_viewport_panel_8h_source}{}\label{_viewport_panel_8h_source}\index{src/Panels/ViewportPanel.h@{src/Panels/ViewportPanel.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#include\ "{}Panel.h"{}}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}../Core/Safety.h"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}../Renderer/Framebuffer.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}glm/glm.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_viewport_panel}{ViewportPanel}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{class_panel}{Panel}}\ \{}
+\DoxyCodeLine{00008\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{class_viewport_panel}{ViewportPanel}}();}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Initialize()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ Update(\mbox{\hyperlink{class_editor}{Editor}}*\ context)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{bool}\ Resized();}
+\DoxyCodeLine{00013\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00014\ \ \ \ \ Ref<Framebuffer>\ m\_Framebuffer;}
+\DoxyCodeLine{00015\ \ \ \ \ glm::vec2\ m\_Size\ =\ \{0,\ 0\};}
+\DoxyCodeLine{00016\ \ \ \ \ glm::vec2\ m\_Bounds[2];}
+\DoxyCodeLine{00017\ \};}
+
+\end{DoxyCode}
