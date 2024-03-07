@@ -67,22 +67,6 @@ cc_library(
 ######################################
 
 cc_library(
-    name = "yaml-internal",
-    hdrs = glob(["yaml-cpp/src/**/*.h"]),
-    strip_include_prefix = "src",
-    visibility = ["//visibility:public"]
-)
-
-cc_library(
-    name = "yaml",
-    includes = ["yaml-cpp/include"],
-    hdrs = glob(["yaml-cpp/include/**/*.h"]),
-    srcs = glob(["yaml-cpp/src/**/*.cpp", "src/**/*.h"]),
-    defines = ["YAML_CPP_STATIC_DEFINE", "YAML_CPP_NO_CONTRIB"],
-    visibility = ["//visibility:public"]
-)
-
-cc_library(
     name = "win_imgui",
     hdrs = glob(["imgui/*.h", "imgui/misc/cpp/*.h"]) 
     + [

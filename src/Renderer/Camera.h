@@ -2,6 +2,7 @@
 #include "../Core/Timestep.h"
 #include "../Events/Event.h"
 #include "../Events/MouseEvent.h"
+#include "../Core/Log.h"
 #include "glm/glm.hpp"
 
 enum class CameraTypes {
@@ -35,8 +36,10 @@ public:
 	const glm::mat4 GetViewProjection() const { return m_Properties.Projection * m_Properties.View; }
 	const glm::mat4& GetProjection() const { return m_Properties.Projection; }
 	const glm::vec3& GetPosition() const { return m_Properties.Position; }
+	const CameraProperties GetProperties() const { return m_Properties; }
 public:
 	inline void SetViewportSize(float width, float height) { m_Properties.ViewportDimensions.x = width; m_Properties.ViewportDimensions.y = height; UpdateProjection(); }
+	inline void SetProperties(CameraProperties properties) { m_Properties = properties; UpdateProjection(); UpdateView(); }
 public:
 	void OnUpdate(Timestep ts, bool updateControl = true);
 	void OnEvent(Event& e);

@@ -1,11 +1,13 @@
 #include "Application.h"
 #include "Log.h"
+#include "Serializer.h"
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "../Renderer/Renderer.h"
 #include "../Events/Input.h"
+#include "../Utils/FileUtils.h"
 
 Application::Application() {
 	m_Editor = CreateRef<Editor>();
@@ -13,6 +15,8 @@ Application::Application() {
 
 bool Application::Initialize() {
 	Log::Init();
+	if (FileUtils::Exists("settings.fconf"))
+		Serializer::DeserializeEditor(m_Editor, FileUtils::Read("settings.fconf"));
 	return true;
 }
 
@@ -122,6 +126,8 @@ void Application::OnEvent(Event& e) {
 }
 
 bool Application::OnWindowClosed(WindowCloseEvent& e) {
+	INFO("Saving editor...");
+	FileUtils::Write(Serializer::SerializeEditor(m_Editor), "settings.fconf");
 	m_Running = false;
 	return true;
 }

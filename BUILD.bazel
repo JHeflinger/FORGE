@@ -53,7 +53,7 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
-        "//vendor:yaml",
+        "//vendor/yaml-cpp:yaml-cpp",
         "//vendor:win_glm",
 	    "//vendor:glad",
         "//vendor:spdlog",

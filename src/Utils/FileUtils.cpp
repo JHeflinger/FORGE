@@ -16,8 +16,14 @@ std::string FileUtils::Read(const std::string& filepath) {
     std::ifstream inputFile(filepath);
     std::stringstream buffer;
     if (inputFile.is_open()) {
-        inputFile.rdbuf();
+        buffer << inputFile.rdbuf();
+        inputFile.close();
         return buffer.str();
     } else FATAL("Could not read content of file \"{}\"", filepath);
     return "";
+}
+
+bool FileUtils::Exists(const std::string& filepath) {
+    std::ifstream file(filepath);
+    return file.good();
 }
