@@ -11,13 +11,13 @@ cc_library(
                 "src/**/*.h",
            ]),
     deps = [
+        "//vendor/yaml-cpp:yaml-cpp",
 	    "//vendor:glad",
         "//vendor:spdlog",
         "//vendor:imgui_backend",
         "//vendor:imgui",
     ],
 	linkopts = [
-		"-lyaml-cpp",
         "-lglfw",
         "-lvulkan",
         "-ldl",
