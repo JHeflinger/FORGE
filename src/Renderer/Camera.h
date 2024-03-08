@@ -28,6 +28,7 @@ struct CameraProperties {
 	glm::mat4 View;
 	CameraTypes Type;
 	bool ToggleBuffer;
+	bool Focused;
 };
 
 class Camera {
@@ -40,8 +41,9 @@ public:
 public:
 	inline void SetViewportSize(float width, float height) { m_Properties.ViewportDimensions.x = width; m_Properties.ViewportDimensions.y = height; UpdateProjection(); }
 	inline void SetProperties(CameraProperties properties) { m_Properties = properties; UpdateProjection(); UpdateView(); }
+	inline void SetFocused(bool focused) { m_Properties.Focused = focused; }
 public:
-	void OnUpdate(Timestep ts, bool updateControl = true);
+	void OnUpdate(Timestep ts);
 	void OnEvent(Event& e);
 	bool OnMouseScroll(MouseScrolledEvent& e);
 public:

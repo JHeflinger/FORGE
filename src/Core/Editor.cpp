@@ -1,10 +1,11 @@
 #include "Editor.h"
 #include "../Renderer/Renderer.h"
 #include "../Panels/ViewportPanel.h"
-#include "../Panels/HierarchyPanel.h"
+#include "../Panels/OverviewPanel.h"
+#include "imgui.h"
 
 Editor::Editor() {
-    m_Panels = { CreateRef<ViewportPanel>(), CreateRef<HierarchyPanel>() };
+    m_Panels = { CreateRef<ViewportPanel>(), CreateRef<OverviewPanel>() };
 }
 
 bool Editor::Initialize() {
@@ -14,6 +15,7 @@ bool Editor::Initialize() {
 }
 
 void Editor::Update(Timestep ts) {
+	DrawMenuBar();
     UpdatePanels();
 	m_Camera.OnUpdate(ts);
 }
@@ -69,6 +71,31 @@ void Editor::InitializePanels() {
 
 void Editor::UpdatePanels() {
     for (auto panel : m_Panels) {
-        panel->Update(this);
+        panel->CallUpdate(this);
     }
+}
+
+void Editor::DrawMenuBar() {
+	if (ImGui::BeginMenuBar()) {
+		if (ImGui::BeginMenu("Project")) {
+			if (ImGui::MenuItem("New"))
+				FATAL("New Project not implemented!");
+			if (ImGui::MenuItem("Open"))
+				FATAL("Open Project not implemented!");
+			if (ImGui::MenuItem("Export"))
+				FATAL("Export not implemented!");
+			if (ImGui::MenuItem("Import"))
+				FATAL("Import not implemented!");
+			if (ImGui::MenuItem("Settings"))
+				FATAL("Settings not implemented!");
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Panels")) {
+			for (auto panel : m_Panels) {
+				ImGui::MenuItem(panel->Name().c_str(), NULL, &(panel->m_Enabled));
+			}
+			ImGui::EndMenu();
+		}
+		ImGui::EndMenuBar();
+	}
 }

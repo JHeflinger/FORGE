@@ -3,8 +3,8 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/quaternion.hpp"
 
-void Camera::OnUpdate(Timestep ts, bool updateControl) {
-	if (Input::IsKeyPressed(KeyCode::Space) && updateControl) {
+void Camera::OnUpdate(Timestep ts) {
+	if (Input::IsKeyPressed(KeyCode::Space) && m_Properties.Focused) {
 		const glm::vec2& mouse = Input::GetMousePosition();
 		glm::vec2 delta = (mouse - m_Properties.MousePosition) * 0.003f;
 		m_Properties.MousePosition = mouse;
@@ -31,8 +31,10 @@ void Camera::OnUpdate(Timestep ts, bool updateControl) {
 }
 
 void Camera::OnEvent(Event& e) {
-	EventDispatcher dispatcher(e);
-	dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(Camera::OnMouseScroll));
+	if (m_Properties.Focused) {
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_FN(Camera::OnMouseScroll));
+	}
 }
 
 bool Camera::OnMouseScroll(MouseScrolledEvent& e) {
@@ -149,6 +151,7 @@ void Camera::Reset() {
 	m_Properties.Yaw = 0.0f;
 	m_Properties.Distance = 10.0f;
 	m_Properties.ToggleBuffer = true;
+	m_Properties.Focused = false;
 	
 	UpdateProjection();
 	UpdateView();

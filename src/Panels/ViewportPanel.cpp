@@ -4,7 +4,7 @@
 #include "imgui.h"
 
 ViewportPanel::ViewportPanel() {
-
+	m_Name = "Viewport";
 }
 
 void ViewportPanel::Initialize() {
@@ -15,21 +15,28 @@ void ViewportPanel::Initialize() {
 	m_Framebuffer = CreateRef<Framebuffer>(spec);
 }
 
+void ViewportPanel::CallUpdate(Editor* context) {
+	if (m_Enabled) {
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		ImGui::Begin(m_Name.c_str(), &m_Enabled);
+		Update(context);
+		ImGui::End();
+		ImGui::PopStyleVar();
+	}
+}
+
 void ViewportPanel::Update(Editor* context) {
 	m_Framebuffer->Bind();
+
 	context->Render();
+	context->GetCamera().SetFocused(ImGui::IsWindowHovered() || ImGui::IsWindowFocused());
 	m_Framebuffer->ClearAttachment(1, -1);
-	
 	if (Resized()) {
 		m_Framebuffer->Resize((uint32_t)m_Size.x, (uint32_t)m_Size.y);
 		context->GetCamera().SetViewportSize(m_Size.x, m_Size.y);
 	}
 
 	m_Framebuffer->Unbind();
-
-	// Start Viewport
-	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-	ImGui::Begin("Viewport");
 
 	auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 	auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
@@ -40,10 +47,6 @@ void ViewportPanel::Update(Editor* context) {
 	m_Size = { viewportPanelSize.x, viewportPanelSize.y };
 	uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
 	ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_Size.x, m_Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-
-	// End Viewport
-	ImGui::End();
-	ImGui::PopStyleVar();
 }
 
 bool ViewportPanel::Resized() {

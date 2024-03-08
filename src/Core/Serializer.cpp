@@ -23,6 +23,13 @@ std::string Serializer::SerializeEditor(Ref<Editor>& editor) {
     out << YAML::Key << "Distance" << YAML::Value << editor->GetCamera().GetProperties().Distance;
     out << YAML::EndMap;
 
+    out << YAML::Key << "Panels" << YAML::Value;
+    out << YAML::BeginMap;
+    std::vector<Ref<Panel>> panels = editor->GetPanels();
+    for (auto panel : panels)
+        out << YAML::Key << panel->Name() << YAML::Value << panel->m_Enabled;
+    out << YAML::EndMap;
+
     out << YAML::EndMap;
     return std::string(out.c_str());
 }
@@ -77,6 +84,16 @@ bool Serializer::DeserializeEditor(Ref<Editor>& editor, const std::string& data)
         else WARN("Camera Distance not found in editor settings!");
         editor->GetCamera().SetProperties(cameraprops);
     } else WARN("Camera properties not found in editor settings!");
+
+    // Panel deserialization
+    if (yamldata["Panels"]) {
+        std::vector<Ref<Panel>> panels = editor->GetPanels();
+        for (auto panel : panels) {
+            if (yamldata["Panels"][panel->Name()]) {
+                panel->m_Enabled =yamldata["Panels"][panel->Name()].as<bool>();
+            } else WARN("\"{}\" panel setting not detected!", panel->Name());
+        }
+    } else WARN("panel settings not found in editor settings!");
 
     return true;
 }

@@ -8,6 +8,7 @@ class ViewportPanel : public Panel {
 public:
 	ViewportPanel();
 	virtual void Initialize() override;
+	virtual void CallUpdate(Editor* context) override;
 	virtual void Update(Editor* context) override;
 	bool Resized();
 private:

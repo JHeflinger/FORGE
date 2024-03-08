@@ -90,23 +90,6 @@ void Application::Update(Timestep ts) {
 
 	style.WindowMinSize.x = 32.0f;
 
-	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("Project")) {
-			if (ImGui::MenuItem("New"))
-				FATAL("New Project not implemented!");
-			if (ImGui::MenuItem("Open"))
-				FATAL("Open Project not implemented!");
-			if (ImGui::MenuItem("Export"))
-				FATAL("Export not implemented!");
-			if (ImGui::MenuItem("Import"))
-				FATAL("Import not implemented!");
-			if (ImGui::MenuItem("Settings"))
-				FATAL("Settings not implemented!");
-			ImGui::EndMenu();
-		}
-		ImGui::EndMenuBar();
-	}
-
 	m_Editor->Update(ts);
 
 	ImGui::End();

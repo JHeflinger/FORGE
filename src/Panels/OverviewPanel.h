@@ -1,9 +1,10 @@
 #pragma once
 #include "Panel.h"
+#include <string>
 
-class HierarchyPanel : public Panel {
+class OverviewPanel : public Panel {
 public:
-	HierarchyPanel();
+	OverviewPanel();
 	virtual void Initialize() override;
 	virtual void Update(Editor* context) override;
 };
