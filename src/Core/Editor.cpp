@@ -53,12 +53,15 @@ void Editor::Render() {
 	Renderer::DrawLine({{5.0f, 5.0f, -5.0f}, {5.0f, 5.0f, 5.0f}});
 	Renderer::DrawLine({{5.0f, -5.0f, -5.0f}, {5.0f, -5.0f, 5.0f}});
 
-	Circle circle;
-	circle.Scale = {10.0f, 10.0f, 1.0f};
-	circle.Thickness = 0.5f;
-	circle.Fade = 0.5f;
-	circle.CircleColor = {0.9f, 0.3f, 0.2f, 1.0f};
-	Renderer::DrawCircle(circle);
+	for (int i = 0; i < 90; i++) {
+		Circle circle;
+		circle.Scale = {(10.0f/90.0f) * i, (10.0f/90.0f) * i, 1.0f};
+		//circle.Thickness = 0.5f;
+		//circle.Fade = 0.5f;
+		circle.CircleColor = {0.4, 0.3f, 0.7f, 1.0f};
+		circle.Rotation = {glm::radians((float)i), glm::radians((float)i), 0.0f};
+		Renderer::DrawCircle(circle);
+	}
 
 	Renderer::EndScene();
 }
