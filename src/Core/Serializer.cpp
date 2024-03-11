@@ -9,18 +9,18 @@ std::string Serializer::SerializeEditor(Ref<Editor>& editor) {
 
     out << YAML::Key << "Camera Settings" << YAML::Value;
     out << YAML::BeginMap;
-    out << YAML::Key << "Type" << YAML::Value << static_cast<int>(editor->GetCamera().GetProperties().Type);
-    out << YAML::Key << "Position" << YAML::Value << editor->GetCamera().GetProperties().Position;
-    out << YAML::Key << "Focal Point" << YAML::Value << editor->GetCamera().GetProperties().FocalPoint;
-    out << YAML::Key << "FOV" << YAML::Value << editor->GetCamera().GetProperties().FOV;
-    out << YAML::Key << "NearClip" << YAML::Value << editor->GetCamera().GetProperties().NearClip;
-    out << YAML::Key << "FarClip" << YAML::Value << editor->GetCamera().GetProperties().FarClip;
-    out << YAML::Key << "OrthographicSize" << YAML::Value << editor->GetCamera().GetProperties().OrthographicSize;
-    out << YAML::Key << "OrthographicNear" << YAML::Value << editor->GetCamera().GetProperties().OrthographicNear;
-    out << YAML::Key << "OrthographicFar" << YAML::Value << editor->GetCamera().GetProperties().OrthographicFar;
-    out << YAML::Key << "Pitch" << YAML::Value << editor->GetCamera().GetProperties().Pitch;
-    out << YAML::Key << "Yaw" << YAML::Value << editor->GetCamera().GetProperties().Yaw;
-    out << YAML::Key << "Distance" << YAML::Value << editor->GetCamera().GetProperties().Distance;
+    out << YAML::Key << "Type" << YAML::Value << static_cast<int>(editor->GetCamera()->GetProperties().Type);
+    out << YAML::Key << "Position" << YAML::Value << editor->GetCamera()->GetProperties().Position;
+    out << YAML::Key << "Focal Point" << YAML::Value << editor->GetCamera()->GetProperties().FocalPoint;
+    out << YAML::Key << "FOV" << YAML::Value << editor->GetCamera()->GetProperties().FOV;
+    out << YAML::Key << "NearClip" << YAML::Value << editor->GetCamera()->GetProperties().NearClip;
+    out << YAML::Key << "FarClip" << YAML::Value << editor->GetCamera()->GetProperties().FarClip;
+    out << YAML::Key << "OrthographicSize" << YAML::Value << editor->GetCamera()->GetProperties().OrthographicSize;
+    out << YAML::Key << "OrthographicNear" << YAML::Value << editor->GetCamera()->GetProperties().OrthographicNear;
+    out << YAML::Key << "OrthographicFar" << YAML::Value << editor->GetCamera()->GetProperties().OrthographicFar;
+    out << YAML::Key << "Pitch" << YAML::Value << editor->GetCamera()->GetProperties().Pitch;
+    out << YAML::Key << "Yaw" << YAML::Value << editor->GetCamera()->GetProperties().Yaw;
+    out << YAML::Key << "Distance" << YAML::Value << editor->GetCamera()->GetProperties().Distance;
     out << YAML::EndMap;
 
     out << YAML::Key << "Panels" << YAML::Value;
@@ -45,7 +45,7 @@ bool Serializer::DeserializeEditor(Ref<Editor>& editor, const std::string& data)
     
     // Camera deserialization
     if (yamldata["Camera Settings"]) {
-        CameraProperties cameraprops = editor->GetCamera().GetProperties();
+        CameraProperties cameraprops = editor->GetCamera()->GetProperties();
         if (yamldata["Camera Settings"]["Type"])
             cameraprops.Type = static_cast<CameraTypes>(yamldata["Camera Settings"]["Type"].as<int>());
         else WARN("Camera type not found in editor settings!");
@@ -82,7 +82,7 @@ bool Serializer::DeserializeEditor(Ref<Editor>& editor, const std::string& data)
         if (yamldata["Camera Settings"]["Distance"])
             cameraprops.Distance = yamldata["Camera Settings"]["Distance"].as<float>();
         else WARN("Camera Distance not found in editor settings!");
-        editor->GetCamera().SetProperties(cameraprops);
+        editor->GetCamera()->SetProperties(cameraprops);
     } else WARN("Camera properties not found in editor settings!");
 
     // Panel deserialization

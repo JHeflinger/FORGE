@@ -29,11 +29,11 @@ void ViewportPanel::Update(Editor* context) {
 	m_Framebuffer->Bind();
 
 	context->Render();
-	context->GetCamera().SetFocused(ImGui::IsWindowHovered() || ImGui::IsWindowFocused());
+	context->GetCamera()->SetFocused(ImGui::IsWindowHovered() || ImGui::IsWindowFocused());
 	m_Framebuffer->ClearAttachment(1, -1);
 	if (Resized()) {
 		m_Framebuffer->Resize((uint32_t)m_Size.x, (uint32_t)m_Size.y);
-		context->GetCamera().SetViewportSize(m_Size.x, m_Size.y);
+		context->GetCamera()->SetViewportSize(m_Size.x, m_Size.y);
 	}
 
 	m_Framebuffer->Unbind();

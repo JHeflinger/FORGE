@@ -6,6 +6,8 @@
 
 Editor::Editor() {
     m_Panels = { CreateRef<ViewportPanel>(), CreateRef<OverviewPanel>() };
+	m_Camera = CreateRef<Camera>();
+	m_Simulation = CreateRef<Simulation>();
 }
 
 bool Editor::Initialize() {
@@ -17,7 +19,7 @@ bool Editor::Initialize() {
 void Editor::Update(Timestep ts) {
 	DrawMenuBar();
     UpdatePanels();
-	m_Camera.OnUpdate(ts);
+	m_Camera->OnUpdate(ts);
 }
 
 void Editor::Shutdown() {
@@ -25,13 +27,13 @@ void Editor::Shutdown() {
 }
 
 void Editor::OnEvent(Event& e) {
-    m_Camera.OnEvent(e);
+    m_Camera->OnEvent(e);
 }
 
 void Editor::Render() {
-	Renderer::SetClearColor({0.1f, 0.5f, 0.3f, 1.0f});
+	Renderer::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Renderer::Clear();
-	Renderer::BeginScene(m_Camera);
+	Renderer::BeginScene(*m_Camera);
 
 	LineProperties props = Renderer::GetLineProperties();
 	props.LineColor = { 0.3f, 0.2f, 0.9f, 1.0f };
@@ -55,11 +57,41 @@ void Editor::Render() {
 
 	for (int i = 0; i < 90; i++) {
 		Circle circle;
-		circle.Scale = {(10.0f/90.0f) * i, (10.0f/90.0f) * i, 1.0f};
+		circle.Scale = {10, 10, 1.0f};
 		//circle.Thickness = 0.5f;
 		//circle.Fade = 0.5f;
-		circle.CircleColor = {0.4, 0.3f, 0.7f, 1.0f};
-		circle.Rotation = {glm::radians((float)i), glm::radians((float)i), 0.0f};
+		circle.CircleColor = {0.2f/180.0f * i, 0.3f/180.0f * i, 0.7f/180.0f * i, 1.0f};
+		circle.Rotation = {glm::radians((float)i), 0.0f, 0.0f};
+		Renderer::DrawCircle(circle);
+	}
+
+	for (int i = 0; i < 90; i++) {
+		Circle circle;
+		circle.Scale = {10, 10, 1.0f};
+		//circle.Thickness = 0.5f;
+		//circle.Fade = 0.5f;
+		circle.CircleColor = {0.3f/180.0f * i, 0.7f/180.0f * i, 0.2f/180.0f * i, 1.0f};
+		circle.Rotation = {glm::radians((float)(i + 90)), 0.0f, 0.0f};
+		Renderer::DrawCircle(circle);
+	}
+
+	for (int i = 0; i < 90; i++) {
+		Circle circle;
+		circle.Scale = {10, 10, 1.0f};
+		//circle.Thickness = 0.5f;
+		//circle.Fade = 0.5f;
+		circle.CircleColor = {0.7f/180.0f * i, 0.3f/180.0f * i, 0.2f/180.0f * i, 1.0f};
+		circle.Rotation = {0.0f, glm::radians((float)i), 0.0f};
+		Renderer::DrawCircle(circle);
+	}
+
+	for (int i = 0; i < 90; i++) {
+		Circle circle;
+		circle.Scale = {10, 10, 1.0f};
+		//circle.Thickness = 0.5f;
+		//circle.Fade = 0.5f;
+		circle.CircleColor = {0.7f/180.0f * i, 0.7f/180.0f * i, 0.7f/180.0f * i, 1.0f};
+		circle.Rotation = {0.0f, glm::radians((float)i), 0.0f};
 		Renderer::DrawCircle(circle);
 	}
 
