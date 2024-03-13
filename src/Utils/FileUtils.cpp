@@ -37,7 +37,7 @@ bool FileUtils::Exists(const std::string& filepath) {
 
 bool FileUtils::Save(const std::string& content, const std::string& filepath) {
     std::string file = filepath;
-    if (file == "") file = DialogUtils::FileDialog("Simulation (*.fsim)\0*.fsim\0");
+    if (file == "") file = DialogUtils::FileDialog("Simulation (*.fsim)\0*.fsim\0", false);
     if (file != "") {
         if (!EndsWith(file, ".fsim")) file += ".fsim";
         Write(content, file);

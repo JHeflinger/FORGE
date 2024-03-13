@@ -42,8 +42,9 @@ std::string DialogUtils::FileDialog(const char* filter, bool open) {
 
 std::string DialogUtils::FileDialog(const char* filter, bool open) {
     char filename[2048];
-    FILE *f = open ? popen("zenity --file-selection --file-filter=*.fsim", "r") : popen("zenity --file-selection --save --confirm-overwrite --file-filter=*.fsim", "r");
+    FILE *f = open ? popen("zenity --file-selection --file-filter=*.fsim", "r") : popen("zenity --file-selection --save --file-filter=*.fsim", "r");
     fgets(filename, 2048, f);
+	for (int i = 0; i < 2048; i++) if (filename[i] == '\n') filename[i] = '\0';
     pclose(f);
 	return std::string(filename);
 }
