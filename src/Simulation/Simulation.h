@@ -1,22 +1,10 @@
 #pragma once
-#include "Safety.h"
+#include "Grid.h"
+#include "Particle.h"
+#include "Sink.h"
+#include "Source.h"
+#include "../Core/Safety.h"
 #include <vector>
-
-struct Source {
-
-};
-
-struct Sink {
-
-};
-
-struct Particle {
-
-};
-
-struct Grid {
-
-};
 
 class Simulation {
 public:

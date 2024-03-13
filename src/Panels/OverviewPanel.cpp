@@ -80,7 +80,6 @@ void OverviewPanel::Initialize() {
 }
 
 void OverviewPanel::Update(Editor* context) {
-	uint64_t tid = 1;
 	const ImGuiTreeNodeFlags treeNodeFlags = 
 		ImGuiTreeNodeFlags_SpanAvailWidth | 
 		ImGuiTreeNodeFlags_AllowItemOverlap | 
@@ -90,12 +89,11 @@ void OverviewPanel::Update(Editor* context) {
 	if (ImGui::TreeNodeEx("Sources", treeNodeFlags)) {
 		DrawAddSource(context, false);
 		for (Ref<Source> source : context->GetSimulation()->Sources()) {
-			tid++;
-			ImGuiTreeNodeFlags flags = (false ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-			if (ImGui::TreeNodeEx(reinterpret_cast<void*>(tid), flags, "Untitled Source")) {
-
-				ImGui::TreePop();
-			}
+			ImGuiTreeNodeFlags flags = (source->ID() == context->SelectedID() ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(source->ID()), flags, "Untitled Source");
+			if (ImGui::IsItemClicked())
+				context->SetSelectedID(source->ID());
+			if (opened) ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	} else DrawAddSource(context);
@@ -104,12 +102,11 @@ void OverviewPanel::Update(Editor* context) {
 	if (ImGui::TreeNodeEx("Sinks", treeNodeFlags)) {
 		DrawAddSink(context, false);
 		for (Ref<Sink> sink : context->GetSimulation()->Sinks()) {
-			tid++;
-			ImGuiTreeNodeFlags flags = (false ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-			if (ImGui::TreeNodeEx(reinterpret_cast<void*>(tid), flags, "Untitled Sink")) {
-
-				ImGui::TreePop();
-			}
+			ImGuiTreeNodeFlags flags = (sink->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(sink->ID()), flags, "Untitled Sink");
+			if (ImGui::IsItemClicked())
+				context->SetSelectedID(sink->ID());
+			if (opened) ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	} else DrawAddSink(context);
@@ -118,12 +115,11 @@ void OverviewPanel::Update(Editor* context) {
 	if (ImGui::TreeNodeEx("Grid", treeNodeFlags)) {
 		DrawAddGrid(context, false);
 		for (Ref<Grid> grid : context->GetSimulation()->Grids()) {
-			tid++;
-			ImGuiTreeNodeFlags flags = (false ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-			if (ImGui::TreeNodeEx(reinterpret_cast<void*>(tid), flags, "Untitled Grid")) {
-
-				ImGui::TreePop();
-			}
+			ImGuiTreeNodeFlags flags = (grid->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(grid->ID()), flags, "Untitled Grid");
+			if (ImGui::IsItemClicked()) 
+				context->SetSelectedID(grid->ID());
+			if (opened) ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	} else DrawAddGrid(context);
@@ -132,12 +128,11 @@ void OverviewPanel::Update(Editor* context) {
 	if (ImGui::TreeNodeEx("Particles", treeNodeFlags)) {
 		DrawAddParticle(context, false);
 		for (Ref<Particle> particle : context->GetSimulation()->Particles()) {
-			tid++;
-			ImGuiTreeNodeFlags flags = (false ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
-			if (ImGui::TreeNodeEx(reinterpret_cast<void*>(tid), flags, "Untitled Particle")) {
-
-				ImGui::TreePop();
-			}
+			ImGuiTreeNodeFlags flags = (particle->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(particle->ID()), flags, "Untitled Particle");
+			if (ImGui::IsItemClicked())
+				context->SetSelectedID(particle->ID());
+			if (opened) ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	} else DrawAddParticle(context);
