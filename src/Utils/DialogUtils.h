@@ -5,6 +5,6 @@ class Application;
 
 class DialogUtils {
 public:
-    static bool DialogUtils::Initialize(Application* app);
+    static bool Initialize(Application* app);
     static std::string FileDialog(const char* filter);
 };
