@@ -90,7 +90,7 @@ void OverviewPanel::Update(Editor* context) {
 		DrawAddSource(context, false);
 		for (Ref<Source> source : context->GetSimulation()->Sources()) {
 			ImGuiTreeNodeFlags flags = (source->ID() == context->SelectedID() ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
-			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(source->ID()), flags, "Untitled Source");
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(source->ID()), flags, source->Name().c_str());
 			if (ImGui::IsItemClicked())
 				context->SetSelectedID(source->ID());
 			if (opened) ImGui::TreePop();
@@ -103,7 +103,7 @@ void OverviewPanel::Update(Editor* context) {
 		DrawAddSink(context, false);
 		for (Ref<Sink> sink : context->GetSimulation()->Sinks()) {
 			ImGuiTreeNodeFlags flags = (sink->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
-			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(sink->ID()), flags, "Untitled Sink");
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(sink->ID()), flags, sink->Name().c_str());
 			if (ImGui::IsItemClicked())
 				context->SetSelectedID(sink->ID());
 			if (opened) ImGui::TreePop();
@@ -116,7 +116,7 @@ void OverviewPanel::Update(Editor* context) {
 		DrawAddGrid(context, false);
 		for (Ref<Grid> grid : context->GetSimulation()->Grids()) {
 			ImGuiTreeNodeFlags flags = (grid->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
-			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(grid->ID()), flags, "Untitled Grid");
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(grid->ID()), flags, grid->Name().c_str());
 			if (ImGui::IsItemClicked()) 
 				context->SetSelectedID(grid->ID());
 			if (opened) ImGui::TreePop();
@@ -129,7 +129,7 @@ void OverviewPanel::Update(Editor* context) {
 		DrawAddParticle(context, false);
 		for (Ref<Particle> particle : context->GetSimulation()->Particles()) {
 			ImGuiTreeNodeFlags flags = (particle->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
-			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(particle->ID()), flags, "Untitled Particle");
+			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(particle->ID()), flags, particle->Name().c_str());
 			if (ImGui::IsItemClicked())
 				context->SetSelectedID(particle->ID());
 			if (opened) ImGui::TreePop();

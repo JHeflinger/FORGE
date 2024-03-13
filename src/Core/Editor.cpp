@@ -2,10 +2,15 @@
 #include "../Renderer/Renderer.h"
 #include "../Panels/ViewportPanel.h"
 #include "../Panels/OverviewPanel.h"
+#include "../Panels/ResourcePanel.h"
 #include "imgui.h"
 
 Editor::Editor() {
-    m_Panels = { CreateRef<ViewportPanel>(), CreateRef<OverviewPanel>() };
+    m_Panels = { 
+		CreateRef<ViewportPanel>(), 
+		CreateRef<OverviewPanel>(),
+		CreateRef<ResourcePanel>(),
+	};
 	m_Camera = CreateRef<Camera>();
 	m_Simulation = CreateRef<Simulation>();
 }
