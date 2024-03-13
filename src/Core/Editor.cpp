@@ -3,6 +3,7 @@
 #include "../Panels/ViewportPanel.h"
 #include "../Panels/OverviewPanel.h"
 #include "../Panels/ResourcePanel.h"
+#include "../Events/Input.h"
 #include "imgui.h"
 
 Editor::Editor() {
@@ -25,6 +26,7 @@ void Editor::Update(Timestep ts) {
 	DrawMenuBar();
     UpdatePanels();
 	m_Camera->OnUpdate(ts);
+	ProcessInput();
 }
 
 void Editor::Shutdown() {
@@ -59,6 +61,31 @@ void Editor::Render() {
 	Renderer::DrawLine({{-5.0f, 5.0f, -5.0f}, {-5.0f, 5.0f, 5.0f}});
 	Renderer::DrawLine({{5.0f, 5.0f, -5.0f}, {5.0f, 5.0f, 5.0f}});
 	Renderer::DrawLine({{5.0f, -5.0f, -5.0f}, {5.0f, -5.0f, 5.0f}});
+
+	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-8.0f, 8.0f, -8.0f}});
+	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {8.0f, 8.0f, -8.0f}});
+	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {8.0f, -8.0f, -8.0f}});
+	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {-8.0f, -8.0f, -8.0f}});
+
+	Renderer::DrawLine({{-8.0f, -8.0f, 8.0f}, {-8.0f, 8.0f, 8.0f}});
+	Renderer::DrawLine({{-8.0f, 8.0f, 8.0f}, {8.0f, 8.0f, 8.0f}});
+	Renderer::DrawLine({{8.0f, 8.0f, 8.0f}, {8.0f, -8.0f, 8.0f}});
+	Renderer::DrawLine({{8.0f, -8.0f, 8.0f}, {-8.0f, -8.0f, 8.0f}});
+    
+	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-8.0f, -8.0f, 8.0f}});
+	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {-8.0f, 8.0f, 8.0f}});
+	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {8.0f, 8.0f, 8.0f}});
+	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {8.0f, -8.0f, 8.0f}});
+
+	Renderer::DrawLine({{-8.0f, -8.0f, 8.0f}, {-5.0f, -5.0f, 5.0f}});
+	Renderer::DrawLine({{-8.0f, 8.0f, 8.0f}, {-5.0f, 5.0f, 5.0f}});
+	Renderer::DrawLine({{8.0f, 8.0f, 8.0f}, {5.0f, 5.0f, 5.0f}});
+	Renderer::DrawLine({{8.0f, -8.0f, 8.0f}, {5.0f, -5.0f, 5.0f}});
+	
+	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-5.0f, -5.0f, -5.0f}});
+	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {-5.0f, 5.0f, -5.0f}});
+	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {5.0f, 5.0f, -5.0f}});
+	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {5.0f, -5.0f, -5.0f}});
 
 	for (int i = 0; i < 90; i++) {
 		Circle circle;
@@ -117,16 +144,16 @@ void Editor::UpdatePanels() {
 
 void Editor::DrawMenuBar() {
 	if (ImGui::BeginMenuBar()) {
-		if (ImGui::BeginMenu("Project")) {
-			if (ImGui::MenuItem("New"))
-				FATAL("New Project not implemented!");
-			if (ImGui::MenuItem("Open"))
-				FATAL("Open Project not implemented!");
-			if (ImGui::MenuItem("Export"))
-				FATAL("Export not implemented!");
-			if (ImGui::MenuItem("Import"))
-				FATAL("Import not implemented!");
-			if (ImGui::MenuItem("Settings"))
+		if (ImGui::BeginMenu("Simulation")) {
+			if (ImGui::MenuItem("New", "Ctrl+N"))
+				m_Prompt = EditorPrompts::NEW;
+			if (ImGui::MenuItem("Open", "Ctrl+O"))
+				m_Prompt = EditorPrompts::OPEN;
+			if (ImGui::MenuItem("Save", "Ctrl+S"))
+				m_Prompt = EditorPrompts::SAVE;
+			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
+				m_Prompt = EditorPrompts::SAVEAS;
+			if (ImGui::MenuItem("Settings", "Ctrl+E"))
 				FATAL("Settings not implemented!");
 			ImGui::EndMenu();
 		}
@@ -137,5 +164,31 @@ void Editor::DrawMenuBar() {
 			ImGui::EndMenu();
 		}
 		ImGui::EndMenuBar();
+	}
+}
+
+void Editor::ProcessInput() {
+	if (Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl)) {
+		if (m_InputPrimer) {
+			if (Input::IsKeyPressed(KeyCode::N)) {
+				m_Prompt = EditorPrompts::NEW;
+				m_InputPrimer = false;
+			} else if (Input::IsKeyPressed(KeyCode::O)) {
+				m_Prompt = EditorPrompts::OPEN;
+				m_InputPrimer = false;
+			} else if (Input::IsKeyPressed(KeyCode::S)) {
+				if (Input::IsKeyPressed(KeyCode::LeftShift) || Input::IsKeyPressed(KeyCode::RightShift)) {
+					m_Prompt = EditorPrompts::SAVEAS;
+				} else {
+					m_Prompt = EditorPrompts::SAVE;
+				}
+				m_InputPrimer = false;
+			} else if (Input::IsKeyPressed(KeyCode::E)) {
+				FATAL("ERROR: NOT IMPLEMENTED");
+				m_InputPrimer = false;
+			}
+		}
+	} else {
+		m_InputPrimer = true;
 	}
 }

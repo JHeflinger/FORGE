@@ -58,6 +58,7 @@ void ResourcePanel::Update(Editor* context) {
 		DrawEditName(grid);
 	} else if ((particle = GetSelectedParticle(context))) {
 		DrawEditName(particle);
+		ImGui::Dummy({0, 2});
 		ImGuiUtils::DrawVec3Control("Position", particle->RawPosition());
 	} else {
 		ImVec2 winsize = ImGui::GetContentRegionAvail();

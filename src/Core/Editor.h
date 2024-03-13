@@ -8,6 +8,14 @@
 #include "../Panels/Panel.h"
 #include "../Events/Event.h"
 
+enum class EditorPrompts {
+    NONE,
+    NEW,
+    SAVE,
+    SAVEAS,
+    OPEN,
+};
+
 class Editor {
 public:
     Editor();
@@ -27,9 +35,13 @@ private:
     void InitializePanels();
     void UpdatePanels();
     void DrawMenuBar();
+    void ProcessInput();
+    void DrawPrompts();
 private:
     std::vector<Ref<Panel>> m_Panels;
     Ref<Simulation> m_Simulation;
     Ref<Camera> m_Camera;
 	uint64_t m_SelectedID = 0;
+    bool m_InputPrimer = true;
+    EditorPrompts m_Prompt = EditorPrompts::NONE;
 };

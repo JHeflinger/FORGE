@@ -17,4 +17,6 @@ private:
     std::vector<Ref<Sink>> m_Sinks;
     std::vector<Ref<Particle>> m_Particles;
     std::vector<Ref<Grid>> m_Grids;
+private:
+    std::string m_Filepath = "";
 };
