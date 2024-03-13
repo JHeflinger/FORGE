@@ -43,5 +43,6 @@ private:
     Ref<Camera> m_Camera;
 	uint64_t m_SelectedID = 0;
     bool m_InputPrimer = true;
+    bool m_SimulationSaved = false;
     EditorPrompts m_Prompt = EditorPrompts::NONE;
 };

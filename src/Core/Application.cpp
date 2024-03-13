@@ -8,6 +8,7 @@
 #include "../Renderer/Renderer.h"
 #include "../Events/Input.h"
 #include "../Utils/FileUtils.h"
+#include "../Utils/DialogUtils.h"
 
 Application::Application() {
 	m_Editor = CreateRef<Editor>();
@@ -36,6 +37,9 @@ void Application::Run() {
 
 	// Initialize Input handler
 	Input::Initialize(this);
+
+	// Initialize file dialog system
+	DialogUtils::Initialize(this);
 
 	// Initialize Forge
 	m_Editor->Initialize();

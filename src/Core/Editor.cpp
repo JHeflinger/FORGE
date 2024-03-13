@@ -4,6 +4,7 @@
 #include "../Panels/OverviewPanel.h"
 #include "../Panels/ResourcePanel.h"
 #include "../Events/Input.h"
+#include "../Utils/FileUtils.h"
 #include "imgui.h"
 
 Editor::Editor() {
@@ -27,6 +28,7 @@ void Editor::Update(Timestep ts) {
     UpdatePanels();
 	m_Camera->OnUpdate(ts);
 	ProcessInput();
+	DrawPrompts();
 }
 
 void Editor::Shutdown() {
@@ -145,10 +147,14 @@ void Editor::UpdatePanels() {
 void Editor::DrawMenuBar() {
 	if (ImGui::BeginMenuBar()) {
 		if (ImGui::BeginMenu("Simulation")) {
-			if (ImGui::MenuItem("New", "Ctrl+N"))
+			if (ImGui::MenuItem("New", "Ctrl+N")) {
+				m_SimulationSaved = Serializer::SimulationSaved(m_Simulation);
 				m_Prompt = EditorPrompts::NEW;
-			if (ImGui::MenuItem("Open", "Ctrl+O"))
+			}
+			if (ImGui::MenuItem("Open", "Ctrl+O")) {
+				m_SimulationSaved = Serializer::SimulationSaved(m_Simulation);
 				m_Prompt = EditorPrompts::OPEN;
+			}
 			if (ImGui::MenuItem("Save", "Ctrl+S"))
 				m_Prompt = EditorPrompts::SAVE;
 			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
@@ -171,9 +177,11 @@ void Editor::ProcessInput() {
 	if (Input::IsKeyPressed(KeyCode::LeftControl) || Input::IsKeyPressed(KeyCode::RightControl)) {
 		if (m_InputPrimer) {
 			if (Input::IsKeyPressed(KeyCode::N)) {
+				m_SimulationSaved = Serializer::SimulationSaved(m_Simulation);
 				m_Prompt = EditorPrompts::NEW;
 				m_InputPrimer = false;
 			} else if (Input::IsKeyPressed(KeyCode::O)) {
+				m_SimulationSaved = Serializer::SimulationSaved(m_Simulation);
 				m_Prompt = EditorPrompts::OPEN;
 				m_InputPrimer = false;
 			} else if (Input::IsKeyPressed(KeyCode::S)) {
@@ -190,5 +198,80 @@ void Editor::ProcessInput() {
 		}
 	} else {
 		m_InputPrimer = true;
+	}
+}
+
+void Editor::DrawPrompts() {
+	switch (m_Prompt) {
+	case EditorPrompts::NONE: return;
+	case EditorPrompts::NEW:
+		if (!m_SimulationSaved) {
+			ImGui::OpenPopup("WARNING");
+			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+			if (ImGui::BeginPopupModal("WARNING", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+				ImGui::SetItemDefaultFocus();
+				ImGui::Text("You have not saved this scene! Would you like to save first?\n\n");
+				ImGui::Separator();
+				ImGui::Dummy({ 0, 3 });
+				if (ImGui::Button("YES", {60, 25})) {
+					FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
+					m_Prompt = EditorPrompts::NONE;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("NO", {60, 25})) {
+					m_Simulation = CreateRef<Simulation>();
+					m_Camera->SoftReset();
+					m_Prompt = EditorPrompts::NONE;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::EndPopup();
+			}
+		} else {
+			m_Simulation = CreateRef<Simulation>();
+			m_Camera->SoftReset();
+			m_Prompt = EditorPrompts::NONE;
+		}
+		break;
+	case EditorPrompts::OPEN:
+		if (!m_SimulationSaved) {
+			ImGui::OpenPopup("WARNING");
+			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+			if (ImGui::BeginPopupModal("WARNING", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+				ImGui::SetItemDefaultFocus();
+				ImGui::Text("You have not saved this scene! Would you like to save first?\n\n");
+				ImGui::Separator();
+				ImGui::Dummy({ 0, 3 });
+				if (ImGui::Button("YES", {60, 25})) {
+					FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
+					Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+					m_Prompt = EditorPrompts::NONE;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::SameLine();
+				if (ImGui::Button("NO", {60, 25})) {
+					Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+					m_Prompt = EditorPrompts::NONE;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::EndPopup();
+			}
+		} else {
+			Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+			m_Prompt = EditorPrompts::NONE;
+		}
+		break;
+	case EditorPrompts::SAVE:
+		FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
+		m_Prompt = EditorPrompts::NONE;
+		break;
+	case EditorPrompts::SAVEAS:
+		FileUtils::Save(Serializer::SerializeSimulation(m_Simulation));
+		m_Prompt = EditorPrompts::NONE;
+		break;
+	default:
+		FATAL("Invalid editor prompt detected!");
 	}
 }
