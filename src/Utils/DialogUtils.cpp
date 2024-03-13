@@ -22,7 +22,7 @@ bool DialogUtils::Initialize(Application* app) {
 #include <Windows.h>
 #include <shlobj.h>
 
-std::string DialogUtils::FileDialog(const char* filter) {
+std::string DialogUtils::FileDialog(const char* filter, bool open) {
     OPENFILENAMEA ofn;
 	CHAR szFile[260] = { 0 };
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
@@ -40,9 +40,9 @@ std::string DialogUtils::FileDialog(const char* filter) {
 
 #elif LINUX_BUILD
 
-std::string DialogUtils::FileDialog(const char* filter) {
+std::string DialogUtils::FileDialog(const char* filter, bool open) {
     char filename[2048];
-    FILE *f = popen("zenity --file-selection --file-filter=*.fsim", "r");
+    FILE *f = open ? popen("zenity --file-selection --file-filter=*.fsim", "r") : popen("zenity --file-selection --save --confirm-overwrite --file-filter=*.fsim", "r");
     fgets(filename, 2048, f);
     pclose(f);
 	return std::string(filename);
