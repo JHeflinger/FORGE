@@ -33,8 +33,13 @@ std::string DialogUtils::FileDialog(const char* filter, bool open) {
 	ofn.lpstrFilter = filter;
 	ofn.nFilterIndex = 1;
 	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_NOCHANGEDIR;
-	if (GetSaveFileNameA(&ofn) == TRUE)
-		return ofn.lpstrFile;
+    if (open) {
+	    if (GetOpenFileNameA(&ofn) == TRUE)
+		    return ofn.lpstrFile;
+    } else {
+	    if (GetSaveFileNameA(&ofn) == TRUE)
+		    return ofn.lpstrFile;
+    }
 	return std::string();
 }
 

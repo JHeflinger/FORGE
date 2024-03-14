@@ -5,6 +5,7 @@
 class Particle : public Resource {
 public:
 	Particle() { Initialize(); }
+	Particle(uint64_t id) { Initialize(id); }
 public:
 	glm::vec3 Position() { return m_Position; }
 	void SetPosition(glm::vec3 position) { m_Position = position; }

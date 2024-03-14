@@ -27,6 +27,7 @@ void Editor::Update(Timestep ts) {
 	DrawMenuBar();
     UpdatePanels();
 	m_Camera->OnUpdate(ts);
+	m_LastSavedTime += ts.GetSeconds();
 	ProcessInput();
 	DrawPrompts();
 }
@@ -169,6 +170,12 @@ void Editor::DrawMenuBar() {
 			}
 			ImGui::EndMenu();
 		}
+		ImGui::SameLine(ImGui::GetWindowSize().x);
+		std::string lastSaved = "Last Saved " + GetLastSavedString() + " ago";
+		ImGui::SetCursorPosX(ImGui::GetCursorPosX() - ImGui::CalcTextSize(lastSaved.c_str()).x - 5);
+		ImGui::PushStyleColor(ImGuiCol_Text, {0.6, 0.6, 0.6, 1});
+		ImGui::Text(lastSaved.c_str());
+		ImGui::PopStyleColor();
 		ImGui::EndMenuBar();
 	}
 }
@@ -215,15 +222,25 @@ void Editor::DrawPrompts() {
 				ImGui::Separator();
 				ImGui::Dummy({ 0, 3 });
 				if (ImGui::Button("YES", {60, 25})) {
-					FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
-					m_Prompt = EditorPrompts::NONE;
-					ImGui::CloseCurrentPopup();
+					if (FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath()) == "") {
+						m_Prompt = EditorPrompts::NONE;
+						m_LastSavedTime = 0.0f;
+						ImGui::CloseCurrentPopup();
+					}
 				}
 				ImGui::SameLine();
 				if (ImGui::Button("NO", {60, 25})) {
 					m_Simulation = CreateRef<Simulation>();
 					m_Camera->SoftReset();
 					m_Prompt = EditorPrompts::NONE;
+					m_LastSavedTime = 0.0f;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::SameLine();
+				ImGui::SetCursorPosX(ImGui::GetWindowSize().x - 68);
+				if (ImGui::Button("Cancel", {60, 25})) {
+					m_Prompt = EditorPrompts::NONE;
+					m_LastSavedTime = 0.0f;
 					ImGui::CloseCurrentPopup();
 				}
 				ImGui::EndPopup();
@@ -231,6 +248,7 @@ void Editor::DrawPrompts() {
 		} else {
 			m_Simulation = CreateRef<Simulation>();
 			m_Camera->SoftReset();
+			m_LastSavedTime = 0.0f;
 			m_Prompt = EditorPrompts::NONE;
 		}
 		break;
@@ -245,14 +263,24 @@ void Editor::DrawPrompts() {
 				ImGui::Separator();
 				ImGui::Dummy({ 0, 3 });
 				if (ImGui::Button("YES", {60, 25})) {
-					FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
-					Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
-					m_Prompt = EditorPrompts::NONE;
-					ImGui::CloseCurrentPopup();
+					if (FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath()) != "") {
+						Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+						m_LastSavedTime = 0.0f;
+						m_Prompt = EditorPrompts::NONE;
+						ImGui::CloseCurrentPopup();
+					}
 				}
 				ImGui::SameLine();
 				if (ImGui::Button("NO", {60, 25})) {
 					Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+					m_LastSavedTime = 0.0f;
+					m_Prompt = EditorPrompts::NONE;
+					ImGui::CloseCurrentPopup();
+				}
+				ImGui::SameLine();
+				ImGui::SetCursorPosX(ImGui::GetWindowSize().x - 68);
+				if (ImGui::Button("Cancel", {60, 25})) {
+					m_LastSavedTime = 0.0f;
 					m_Prompt = EditorPrompts::NONE;
 					ImGui::CloseCurrentPopup();
 				}
@@ -260,18 +288,32 @@ void Editor::DrawPrompts() {
 			}
 		} else {
 			Serializer::DeserializeSimulation(m_Simulation, FileUtils::Open());
+			m_LastSavedTime = 0.0f;
 			m_Prompt = EditorPrompts::NONE;
 		}
 		break;
 	case EditorPrompts::SAVE:
-		FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath());
+		m_Simulation->SetFilepath(FileUtils::Save(Serializer::SerializeSimulation(m_Simulation), m_Simulation->Filepath()));
 		m_Prompt = EditorPrompts::NONE;
+		m_LastSavedTime = 0.0f;
 		break;
 	case EditorPrompts::SAVEAS:
-		FileUtils::Save(Serializer::SerializeSimulation(m_Simulation));
+		m_Simulation->SetFilepath(FileUtils::Save(Serializer::SerializeSimulation(m_Simulation)));
 		m_Prompt = EditorPrompts::NONE;
+		m_LastSavedTime = 0.0f;
 		break;
 	default:
 		FATAL("Invalid editor prompt detected!");
 	}
+}
+
+std::string Editor::GetLastSavedString() {
+	float time = m_LastSavedTime;
+	std::stringstream ss;
+	if (time < 60.0)
+		ss << (int)time << " seconds";
+	else if (time / 60.0f < 60.0)
+		ss << (int)(time / 60.0f) << " minutes";
+	else ss << (int)(time / 3600.0f) << " hours";
+	return ss.str();
 }

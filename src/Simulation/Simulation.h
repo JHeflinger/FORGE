@@ -14,6 +14,7 @@ public:
     std::vector<Ref<Grid>>& Grids() { return m_Grids; }
 public:
     std::string Filepath() { return m_Filepath; }
+    void SetFilepath(std::string path) { m_Filepath = path; }
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;

@@ -35,14 +35,15 @@ bool FileUtils::Exists(const std::string& filepath) {
     return file.good();
 }
 
-bool FileUtils::Save(const std::string& content, const std::string& filepath) {
+std::string FileUtils::Save(const std::string& content, const std::string& filepath) {
     std::string file = filepath;
     if (file == "") file = DialogUtils::FileDialog("Simulation (*.fsim)\0*.fsim\0", false);
     if (file != "") {
         if (!EndsWith(file, ".fsim")) file += ".fsim";
         Write(content, file);
+        return file;
     } else FATAL("Unable to save file to disk!");
-    return false;
+    return "";
 }
 
 std::string FileUtils::Open() {

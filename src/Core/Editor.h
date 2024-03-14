@@ -37,6 +37,7 @@ private:
     void DrawMenuBar();
     void ProcessInput();
     void DrawPrompts();
+    std::string GetLastSavedString();
 private:
     std::vector<Ref<Panel>> m_Panels;
     Ref<Simulation> m_Simulation;
@@ -45,4 +46,5 @@ private:
     bool m_InputPrimer = true;
     bool m_SimulationSaved = false;
     EditorPrompts m_Prompt = EditorPrompts::NONE;
+    float m_LastSavedTime = 0.0f;
 };
