@@ -3,7 +3,7 @@
 #include "../Core/Editor.h"
 #include "../Simulation/Simulation.h"
 
-std::string Serializer::SerializeEditor(const Ref<Editor>& editor) {
+std::string Serializer::SerializeEditor(const Ref<Editor> editor) {
     YAML::Emitter out;
     out << YAML::BeginMap;
 
@@ -37,7 +37,7 @@ std::string Serializer::SerializeEditor(const Ref<Editor>& editor) {
     return std::string(out.c_str());
 }
 
-std::string Serializer::SerializeSimulation(const Ref<Simulation>& simulation) {
+std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
     YAML::Emitter out;
     out << YAML::BeginMap;
 
@@ -86,7 +86,7 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation>& simulation) {
     return std::string(out.c_str());
 }
 
-bool Serializer::DeserializeEditor(Ref<Editor>& editor, const std::string& data) {
+bool Serializer::DeserializeEditor(Ref<Editor> editor, const std::string& data) {
     YAML::Node yamldata = YAML::Load(data);
     
     // General editor settings
@@ -155,7 +155,7 @@ bool Serializer::DeserializeEditor(Ref<Editor>& editor, const std::string& data)
     return true;
 }
 
-bool Serializer::DeserializeSimulation(Ref<Simulation>& simulation, const std::string& filepath) {
+bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::string& filepath) {
     YAML::Node yamldata = YAML::Load(FileUtils::Read(filepath));
     simulation->SetFilepath(filepath);
 
@@ -212,7 +212,7 @@ bool Serializer::DeserializeSimulation(Ref<Simulation>& simulation, const std::s
     return true;
 }
 
-bool Serializer::SimulationSaved(const Ref<Simulation>& simulation) {
+bool Serializer::SimulationSaved(const Ref<Simulation> simulation) {
     if (simulation->Filepath() == "") return false;
     std::string saved_content = FileUtils::Read(simulation->Filepath());
     if (saved_content == SerializeSimulation(simulation)) return true;
