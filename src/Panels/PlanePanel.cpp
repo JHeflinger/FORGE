@@ -7,10 +7,6 @@ PlanePanel::PlanePanel() {
 	m_Name = "Coordinate Plane Properties";
 }
 
-void PlanePanel::Initialize() {
-
-}
-
 void PlanePanel::Update(Editor* context) {
     float gapsize = 8.0f;
     ImGui::Columns(2);
@@ -32,75 +28,75 @@ void PlanePanel::Update(Editor* context) {
     ImGui::NextColumn();
     gapsize = 2.0f;
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##show", &m_ShowGrid);
+    ImGui::Checkbox("##show", &m_Settings.ShowGrid);
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##mirror", &m_Mirror);
+    ImGui::Checkbox("##mirror", &m_Settings.Mirror);
     ImGui::Dummy({0, gapsize});
-    ImGui::DragFloat("##size", &m_Length, 1.0f, 0.01f, FLT_MAX, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+    ImGui::DragFloat("##size", &m_Settings.Length, 1.0f, 0.01f, FLT_MAX, "%.2f", ImGuiSliderFlags_AlwaysClamp);
     ImGui::Dummy({0, gapsize});
-    ImGui::DragFloat("##stepsize", &m_StepSize, 1.0f, 0.01f, FLT_MAX, "%.2f", ImGuiSliderFlags_AlwaysClamp);
+    ImGui::DragFloat("##stepsize", &m_Settings.StepSize, 1.0f, 0.01f, FLT_MAX, "%.2f", ImGuiSliderFlags_AlwaysClamp);
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##xax", &m_XAxis);
+    ImGui::Checkbox("##xax", &m_Settings.XAxis);
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##yax", &m_YAxis);
+    ImGui::Checkbox("##yax", &m_Settings.YAxis);
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##zax", &m_ZAxis);
+    ImGui::Checkbox("##zax", &m_Settings.ZAxis);
     ImGui::Dummy({0, gapsize});
     ImGui::Columns(1);
 }
 
 void PlanePanel::Render() {
-    if (m_ShowGrid) {
+    if (m_Settings.ShowGrid) {
         float tracker = 0.0f;
         LineProperties lps = Renderer::GetLineProperties();
         lps.LineColor = { 0.3f, 0.3f, 0.3f, 0.5f };
         lps.LineWidth = 2.0f;
         Renderer::SetLineProperties(lps);
-        if (m_XAxis)
-            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {m_Length, 0.0f, 0.0f}});
-        if (m_YAxis)
-            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {0.0f, m_Length, 0.0f}});
-        if (m_ZAxis)
-            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, m_Length}});
+        if (m_Settings.XAxis)
+            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {m_Settings.Length, 0.0f, 0.0f}});
+        if (m_Settings.YAxis)
+            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {0.0f, m_Settings.Length, 0.0f}});
+        if (m_Settings.ZAxis)
+            Renderer::DrawLine({{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, m_Settings.Length}});
         int maxgrid = 1000;
-        while (tracker <= m_Length && maxgrid > 0) {
-            if (m_XAxis) {
-                if (m_YAxis) {
-                    Renderer::DrawLine({{tracker, m_Mirror ? -1 * m_Length : 0.0f, 0.0f}, {tracker, m_Length, 0.0f}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{-1.0f * tracker, -1.0f * m_Length, 0.0f}, {-1.0f * tracker, m_Length, 0.0f}});
+        while (tracker <= m_Settings.Length && maxgrid > 0) {
+            if (m_Settings.XAxis) {
+                if (m_Settings.YAxis) {
+                    Renderer::DrawLine({{tracker, m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f, 0.0f}, {tracker, m_Settings.Length, 0.0f}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{-1.0f * tracker, -1.0f * m_Settings.Length, 0.0f}, {-1.0f * tracker, m_Settings.Length, 0.0f}});
                 }
-                if (m_ZAxis) {
-                    Renderer::DrawLine({{tracker, 0.0f,  m_Mirror ? -1 * m_Length : 0.0f}, {tracker, 0.0f, m_Length}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{-1.0f * tracker, 0.0f, -1.0f * m_Length}, {-1.0f * tracker, 0.0f, m_Length}});
-                }
-            }
-            if (m_YAxis) {
-                if (m_XAxis) {
-                    Renderer::DrawLine({{ m_Mirror ? -1 * m_Length : 0.0f, tracker, 0.0f}, {m_Length, tracker, 0.0f}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{-1.0f * m_Length, -1.0f * tracker, 0.0f}, {m_Length, -1.0f * tracker, 0.0f}});
-                }
-                if (m_ZAxis) {
-                    Renderer::DrawLine({{0.0f, tracker,  m_Mirror ? -1 * m_Length : 0.0f}, {0.0f, tracker, m_Length}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{0.0f, -1.0f * tracker, -1.0f * m_Length}, {0.0f, -1.0f * tracker, m_Length}});
+                if (m_Settings.ZAxis) {
+                    Renderer::DrawLine({{tracker, 0.0f,  m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f}, {tracker, 0.0f, m_Settings.Length}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{-1.0f * tracker, 0.0f, -1.0f * m_Settings.Length}, {-1.0f * tracker, 0.0f, m_Settings.Length}});
                 }
             }
-            if (m_ZAxis) {
-                if (m_XAxis) {
-                    Renderer::DrawLine({{ m_Mirror ? -1 * m_Length : 0.0f, 0.0f, tracker}, {m_Length, 0.0f, tracker}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{-1.0f * m_Length, 0.0f, -1.0f * tracker}, {m_Length, 0.0f, -1.0f * tracker}});
+            if (m_Settings.YAxis) {
+                if (m_Settings.XAxis) {
+                    Renderer::DrawLine({{ m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f, tracker, 0.0f}, {m_Settings.Length, tracker, 0.0f}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{-1.0f * m_Settings.Length, -1.0f * tracker, 0.0f}, {m_Settings.Length, -1.0f * tracker, 0.0f}});
                 }
-                if (m_YAxis) {
-                    Renderer::DrawLine({{0.0f,  m_Mirror ? -1 * m_Length : 0.0f, tracker}, { 0.0f, m_Length, tracker}});
-                    if (m_Mirror)
-                        Renderer::DrawLine({{0.0f, -1.0f * m_Length, -1.0f * tracker}, { 0.0f, m_Length, -1.0f * tracker}});
+                if (m_Settings.ZAxis) {
+                    Renderer::DrawLine({{0.0f, tracker,  m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f}, {0.0f, tracker, m_Settings.Length}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{0.0f, -1.0f * tracker, -1.0f * m_Settings.Length}, {0.0f, -1.0f * tracker, m_Settings.Length}});
                 }
             }
-            tracker += m_StepSize;
+            if (m_Settings.ZAxis) {
+                if (m_Settings.XAxis) {
+                    Renderer::DrawLine({{ m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f, 0.0f, tracker}, {m_Settings.Length, 0.0f, tracker}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{-1.0f * m_Settings.Length, 0.0f, -1.0f * tracker}, {m_Settings.Length, 0.0f, -1.0f * tracker}});
+                }
+                if (m_Settings.YAxis) {
+                    Renderer::DrawLine({{0.0f,  m_Settings.Mirror ? -1 * m_Settings.Length : 0.0f, tracker}, { 0.0f, m_Settings.Length, tracker}});
+                    if (m_Settings.Mirror)
+                        Renderer::DrawLine({{0.0f, -1.0f * m_Settings.Length, -1.0f * tracker}, { 0.0f, m_Settings.Length, -1.0f * tracker}});
+                }
+            }
+            tracker += m_Settings.StepSize;
             maxgrid--;
         }
     }

@@ -76,9 +76,6 @@ OverviewPanel::OverviewPanel() {
 	m_Name = "Simulation Overview";
 }
 
-void OverviewPanel::Initialize() {
-}
-
 void OverviewPanel::Update(Editor* context) {
 	const ImGuiTreeNodeFlags treeNodeFlags = 
 		ImGuiTreeNodeFlags_SpanAvailWidth | 

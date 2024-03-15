@@ -1,18 +1,23 @@
 #pragma once
 #include "Panel.h"
 
+struct PlanePanelSettings {
+	bool ShowGrid = false;
+	bool Mirror = true;
+	bool XAxis = true;
+	bool YAxis = true;
+	bool ZAxis = true;
+	float Length = 10.0f;
+	float StepSize = 1.0f;
+};
+
 class PlanePanel : public Panel {
 public:
 	PlanePanel();
-	virtual void Initialize() override;
 	virtual void Update(Editor* context) override;
 	virtual void Render() override;
+public:
+	PlanePanelSettings& Settings() { return m_Settings; }
 private:
-	bool m_ShowGrid = true;
-	bool m_Mirror = true;
-	bool m_XAxis = true;
-	bool m_YAxis = true;
-	bool m_ZAxis = true;
-	float m_Length = 10.0f;
-	float m_StepSize = 1.0f;
+	PlanePanelSettings m_Settings;
 };

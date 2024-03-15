@@ -2,6 +2,7 @@
 #include "../Utils/FileUtils.h"
 #include "../Core/Editor.h"
 #include "../Simulation/Simulation.h"
+#include "../Panels/PlanePanel.h"
 
 std::string Serializer::SerializeEditor(const Ref<Editor> editor) {
     YAML::Emitter out;
@@ -32,6 +33,26 @@ std::string Serializer::SerializeEditor(const Ref<Editor> editor) {
     for (auto panel : panels)
         out << YAML::Key << panel->Name() << YAML::Value << panel->m_Enabled;
     out << YAML::EndMap;
+
+	out << YAML::Key << "Panel Settings" << YAML::Value;
+	out << YAML::BeginMap;
+	for (auto panel : panels) {
+		out << YAML::Key << panel->Name() << YAML::Value;
+		out << YAML::BeginMap;
+		if (panel->Name() == "Coordinate Plane Properties") {
+			Ref<PlanePanel> pp = std::dynamic_pointer_cast<PlanePanel>(panel);
+			PlanePanelSettings settings = pp->Settings();
+			out << YAML::Key << "ShowGrid" << YAML::Value << settings.ShowGrid;
+			out << YAML::Key << "Mirror" << YAML::Value << settings.Mirror;
+			out << YAML::Key << "XAxis" << YAML::Value << settings.XAxis;
+			out << YAML::Key << "YAxis" << YAML::Value << settings.YAxis;
+			out << YAML::Key << "ZAxis" << YAML::Value << settings.ZAxis;
+			out << YAML::Key << "Length" << YAML::Value << settings.Length;
+			out << YAML::Key << "StepSize" << YAML::Value << settings.StepSize;
+		}
+		out << YAML::EndMap;
+	}
+	out << YAML::EndMap;
 
     out << YAML::EndMap;
     return std::string(out.c_str());

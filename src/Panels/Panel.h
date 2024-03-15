@@ -6,7 +6,7 @@ class Editor;
 class Panel {
 public:
     virtual ~Panel() = default;
-    virtual void Initialize() = 0;
+    virtual void Initialize() {};
     virtual void CallUpdate(Editor* context);
     virtual void Update(Editor* context) = 0;
     virtual void Render() {};

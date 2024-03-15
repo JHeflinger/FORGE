@@ -40,10 +40,6 @@ ResourcePanel::ResourcePanel() {
 	m_Name = "Resource Properties";
 }
 
-void ResourcePanel::Initialize() {
-
-}
-
 void ResourcePanel::Update(Editor* context) {
 	Ref<Grid> grid;
 	Ref<Sink> sink;
