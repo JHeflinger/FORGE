@@ -181,7 +181,27 @@ bool Serializer::DeserializeEditor(Ref<Editor> editor, const std::string& data) 
 				if (yamldata["Panel Settings"][panel->Name()]) {
 					Ref<PlanePanel> pp = std::dynamic_pointer_cast<PlanePanel>(panel);
 					PlanePanelSettings& settings = pp->Settings();
-						
+					if (yamldata["Panel Settings"][panel->Name()]["ShowGrid"]) {
+                        settings.ShowGrid = yamldata["Panel Settings"][panel->Name()]["ShowGrid"].as<bool>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["Mirror"]) {
+                        settings.Mirror = yamldata["Panel Settings"][panel->Name()]["Mirror"].as<bool>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["XAxis"]) {
+                        settings.XAxis = yamldata["Panel Settings"][panel->Name()]["XAxis"].as<bool>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["YAxis"]) {
+                        settings.YAxis = yamldata["Panel Settings"][panel->Name()]["YAxis"].as<bool>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["ZAxis"]) {
+                        settings.ZAxis = yamldata["Panel Settings"][panel->Name()]["ZAxis"].as<bool>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["Length"]) {
+                        settings.Length = yamldata["Panel Settings"][panel->Name()]["Length"].as<float>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
+					if (yamldata["Panel Settings"][panel->Name()]["StepSize"]) {
+                        settings.StepSize = yamldata["Panel Settings"][panel->Name()]["StepSize"].as<float>();
+                    } else WARN("Missing setting detected for the coodinate plane properties panel");
 				} else WARN("Custom settings for the coordinate plane properties panel not found!");
 			}
 		}
