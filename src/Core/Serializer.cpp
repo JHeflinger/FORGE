@@ -173,6 +173,20 @@ bool Serializer::DeserializeEditor(Ref<Editor> editor, const std::string& data) 
         }
     } else WARN("panel settings not found in editor settings!");
 
+	// Custom panel deserialization
+	if (yamldata["Panel Settings"]) {
+		std::vector<Ref<Panel>> panels = editor->GetPanels();
+		for (auto panel : panels) {
+			if (panel->Name() == "Coordinate Plane Properties") {
+				if (yamldata["Panel Settings"][panel->Name()]) {
+					Ref<PlanePanel> pp = std::dynamic_pointer_cast<PlanePanel>(panel);
+					PlanePanelSettings& settings = pp->Settings();
+						
+				} else WARN("Custom settings for the coordinate plane properties panel not found!");
+			}
+		}
+	} else WARN("Custom panel settings not found in editor settings!");
+
     return true;
 }
 
