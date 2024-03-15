@@ -39,6 +39,8 @@ private:
     void DrawPrompts();
     std::string GetLastSavedString();
 private:
+    void DrawStaticParticles();
+private:
     std::vector<Ref<Panel>> m_Panels;
     Ref<Simulation> m_Simulation;
     Ref<Camera> m_Camera;

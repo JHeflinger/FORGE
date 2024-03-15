@@ -9,6 +9,7 @@ public:
     virtual void Initialize() = 0;
     virtual void CallUpdate(Editor* context);
     virtual void Update(Editor* context) = 0;
+    virtual void Render() {};
     virtual void Toggle() { m_Enabled = !m_Enabled; }
     virtual std::string Name() { return m_Name; }
 public:

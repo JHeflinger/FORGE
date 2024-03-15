@@ -3,6 +3,7 @@
 #include "../Panels/ViewportPanel.h"
 #include "../Panels/OverviewPanel.h"
 #include "../Panels/ResourcePanel.h"
+#include "../Panels/PlanePanel.h"
 #include "../Events/Input.h"
 #include "../Utils/FileUtils.h"
 #include "imgui.h"
@@ -12,6 +13,7 @@ Editor::Editor() {
 		CreateRef<ViewportPanel>(), 
 		CreateRef<OverviewPanel>(),
 		CreateRef<ResourcePanel>(),
+		CreateRef<PlanePanel>(),
 	};
 	m_Camera = CreateRef<Camera>();
 	m_Simulation = CreateRef<Simulation>();
@@ -44,92 +46,10 @@ void Editor::Render() {
 	Renderer::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Renderer::Clear();
 	Renderer::BeginScene(*m_Camera);
-
-	LineProperties props = Renderer::GetLineProperties();
-	props.LineColor = { 0.3f, 0.2f, 0.9f, 1.0f };
-	props.LineWidth = 5.0f;
-	Renderer::SetLineProperties(props);
-
-	Renderer::DrawLine({{-5.0f, -5.0f, -5.0f}, {-5.0f, 5.0f, -5.0f}});
-	Renderer::DrawLine({{-5.0f, 5.0f, -5.0f}, {5.0f, 5.0f, -5.0f}});
-	Renderer::DrawLine({{5.0f, 5.0f, -5.0f}, {5.0f, -5.0f, -5.0f}});
-	Renderer::DrawLine({{5.0f, -5.0f, -5.0f}, {-5.0f, -5.0f, -5.0f}});
-
-	Renderer::DrawLine({{-5.0f, -5.0f, 5.0f}, {-5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{-5.0f, 5.0f, 5.0f}, {5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{5.0f, 5.0f, 5.0f}, {5.0f, -5.0f, 5.0f}});
-	Renderer::DrawLine({{5.0f, -5.0f, 5.0f}, {-5.0f, -5.0f, 5.0f}});
-    
-	Renderer::DrawLine({{-5.0f, -5.0f, -5.0f}, {-5.0f, -5.0f, 5.0f}});
-	Renderer::DrawLine({{-5.0f, 5.0f, -5.0f}, {-5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{5.0f, 5.0f, -5.0f}, {5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{5.0f, -5.0f, -5.0f}, {5.0f, -5.0f, 5.0f}});
-
-	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-8.0f, 8.0f, -8.0f}});
-	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {8.0f, 8.0f, -8.0f}});
-	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {8.0f, -8.0f, -8.0f}});
-	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {-8.0f, -8.0f, -8.0f}});
-
-	Renderer::DrawLine({{-8.0f, -8.0f, 8.0f}, {-8.0f, 8.0f, 8.0f}});
-	Renderer::DrawLine({{-8.0f, 8.0f, 8.0f}, {8.0f, 8.0f, 8.0f}});
-	Renderer::DrawLine({{8.0f, 8.0f, 8.0f}, {8.0f, -8.0f, 8.0f}});
-	Renderer::DrawLine({{8.0f, -8.0f, 8.0f}, {-8.0f, -8.0f, 8.0f}});
-    
-	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-8.0f, -8.0f, 8.0f}});
-	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {-8.0f, 8.0f, 8.0f}});
-	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {8.0f, 8.0f, 8.0f}});
-	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {8.0f, -8.0f, 8.0f}});
-
-	Renderer::DrawLine({{-8.0f, -8.0f, 8.0f}, {-5.0f, -5.0f, 5.0f}});
-	Renderer::DrawLine({{-8.0f, 8.0f, 8.0f}, {-5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{8.0f, 8.0f, 8.0f}, {5.0f, 5.0f, 5.0f}});
-	Renderer::DrawLine({{8.0f, -8.0f, 8.0f}, {5.0f, -5.0f, 5.0f}});
-	
-	Renderer::DrawLine({{-8.0f, -8.0f, -8.0f}, {-5.0f, -5.0f, -5.0f}});
-	Renderer::DrawLine({{-8.0f, 8.0f, -8.0f}, {-5.0f, 5.0f, -5.0f}});
-	Renderer::DrawLine({{8.0f, 8.0f, -8.0f}, {5.0f, 5.0f, -5.0f}});
-	Renderer::DrawLine({{8.0f, -8.0f, -8.0f}, {5.0f, -5.0f, -5.0f}});
-
-	for (int i = 0; i < 90; i++) {
-		Circle circle;
-		circle.Scale = {10, 10, 1.0f};
-		//circle.Thickness = 0.5f;
-		//circle.Fade = 0.5f;
-		circle.CircleColor = {0.2f/180.0f * i, 0.3f/180.0f * i, 0.7f/180.0f * i, 1.0f};
-		circle.Rotation = {glm::radians((float)i), 0.0f, 0.0f};
-		Renderer::DrawCircle(circle);
-	}
-
-	for (int i = 0; i < 90; i++) {
-		Circle circle;
-		circle.Scale = {10, 10, 1.0f};
-		//circle.Thickness = 0.5f;
-		//circle.Fade = 0.5f;
-		circle.CircleColor = {0.3f/180.0f * i, 0.7f/180.0f * i, 0.2f/180.0f * i, 1.0f};
-		circle.Rotation = {glm::radians((float)(i + 90)), 0.0f, 0.0f};
-		Renderer::DrawCircle(circle);
-	}
-
-	for (int i = 0; i < 90; i++) {
-		Circle circle;
-		circle.Scale = {10, 10, 1.0f};
-		//circle.Thickness = 0.5f;
-		//circle.Fade = 0.5f;
-		circle.CircleColor = {0.7f/180.0f * i, 0.3f/180.0f * i, 0.2f/180.0f * i, 1.0f};
-		circle.Rotation = {0.0f, glm::radians((float)i), 0.0f};
-		Renderer::DrawCircle(circle);
-	}
-
-	for (int i = 0; i < 90; i++) {
-		Circle circle;
-		circle.Scale = {10, 10, 1.0f};
-		//circle.Thickness = 0.5f;
-		//circle.Fade = 0.5f;
-		circle.CircleColor = {0.7f/180.0f * i, 0.7f/180.0f * i, 0.7f/180.0f * i, 1.0f};
-		circle.Rotation = {0.0f, glm::radians((float)i), 0.0f};
-		Renderer::DrawCircle(circle);
-	}
-
+	DrawStaticParticles();
+	for (auto panel : m_Panels) {
+        panel->Render();
+    }
 	Renderer::EndScene();
 }
 
@@ -316,4 +236,17 @@ std::string Editor::GetLastSavedString() {
 		ss << (int)(time / 60.0f) << " minutes";
 	else ss << (int)(time / 3600.0f) << " hours";
 	return ss.str();
+}
+
+void Editor::DrawStaticParticles() {
+	for (Ref<Particle> particle : m_Simulation->Particles()) {
+		Renderer::DrawCircle({
+			particle->Position(),
+			{ 0.0f, 0.0f, 0.0f },
+			{ 1.0f, 1.0f, 1.0f },
+			{1.0f, 1.0f, 1.0f, 1.0f},
+			1.0f,
+			0.005f
+		});
+	}
 }
