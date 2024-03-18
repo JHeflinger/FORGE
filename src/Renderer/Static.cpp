@@ -82,3 +82,34 @@ void main() {
 }
 	)";
 }
+
+std::string StaticShaders::SphereGLSL() {
+	return R"(
+//Basic Sphere Shader
+
+#type vertex
+#version 450 core
+
+layout(location = 0) in vec3 a_WorldPosition;
+layout(location = 1) in vec3 a_LocalPosition;
+layout(location = 2) in float a_Radius;
+
+uniform mat4 u_ViewProjection;
+
+out vec3 v_LocalPosition;
+out float v_Radius;
+
+void main() {
+	v_LocalPosition = a_LocalPosition;
+	v_Radius = a_Radius;
+	gl_Position = u_ViewProjection * vec4(a_WorldPosition, 1.0);
+}
+
+#type fragment
+#version 450 core
+
+layout(location = 0) out vec4 color;
+
+
+	)";
+}

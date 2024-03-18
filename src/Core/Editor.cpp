@@ -6,7 +6,9 @@
 #include "../Panels/PlanePanel.h"
 #include "../Events/Input.h"
 #include "../Utils/FileUtils.h"
+#include "../Utils/MathUtils.h"
 #include "imgui.h"
+#include <cmath>
 
 Editor::Editor() {
     m_Panels = { 
@@ -242,7 +244,7 @@ void Editor::DrawStaticParticles() {
 	for (Ref<Particle> particle : m_Simulation->Particles()) {
 		Renderer::DrawCircle({
 			particle->Position(),
-			{ 0.0f, 0.0f, 0.0f },
+	  		MathUtils::LookAt(m_Camera->GetPosition(), particle->Position()),
 			{ 1.0f, 1.0f, 1.0f },
 			{1.0f, 1.0f, 1.0f, 1.0f},
 			1.0f,
