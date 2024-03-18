@@ -244,7 +244,7 @@ void Editor::DrawStaticParticles() {
 	for (Ref<Particle> particle : m_Simulation->Particles()) {
 		Renderer::DrawCircle({
 			particle->Position(),
-	  		MathUtils::LookAt(m_Camera->GetPosition(), particle->Position()),
+			{0, 0, 0},
 			{ 1.0f, 1.0f, 1.0f },
 			{1.0f, 1.0f, 1.0f, 1.0f},
 			1.0f,
