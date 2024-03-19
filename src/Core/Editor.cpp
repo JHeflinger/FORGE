@@ -242,13 +242,9 @@ std::string Editor::GetLastSavedString() {
 
 void Editor::DrawStaticParticles() {
 	for (Ref<Particle> particle : m_Simulation->Particles()) {
-		Renderer::DrawCircle({
+		Renderer::DrawSphere({
 			particle->Position(),
-			{0, 0, 0},
-			{ 1.0f, 1.0f, 1.0f },
-			{1.0f, 1.0f, 1.0f, 1.0f},
-			1.0f,
-			0.005f
+			0.5f
 		});
 	}
 }

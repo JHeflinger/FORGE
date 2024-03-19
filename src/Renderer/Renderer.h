@@ -25,6 +25,11 @@ struct Circle {
 	float Fade = 0.005f;
 };
 
+struct Sphere {
+	glm::vec3 Position = { 0.0f, 0.0f, 0.0f };
+	float Radius = 0.5f;
+};
+
 struct LineProperties {
 	float LineWidth = 1.0f;
 	Color LineColor = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -33,6 +38,7 @@ struct LineProperties {
 struct RendererStatistics {
 	uint32_t LineCount = 0;
 	uint32_t CircleCount = 0;
+	uint32_t SphereCount = 0;
 	uint32_t DrawCalls = 0;
 };
 
@@ -47,6 +53,11 @@ struct CircleVertex {
 	glm::vec4 Color;
 	float Thickness;
 	float Fade;
+};
+
+struct SphereVertex {
+	glm::vec3 Position;
+	float Radius;
 };
 
 struct RendererData {
@@ -76,6 +87,13 @@ struct RendererData {
 	CircleVertex* CircleVertexBufferBase = nullptr;
 	CircleVertex* CircleVertexBufferPtr = nullptr;
 
+	// Sphere resources
+	Ref<VertexArray> SphereVertexArray;
+	Ref<VertexBuffer> SphereVertexBuffer;
+	uint32_t SphereVertexCount = 0;
+	SphereVertex* SphereVertexBufferBase = nullptr;
+	SphereVertex* SphereVertexBufferPtr = nullptr;
+
 	// Statistics and property tracking
 	LineProperties LineProps;
 	RendererStatistics Statistics;
@@ -95,6 +113,7 @@ public:
 	static void Flush();
 	static void DrawLine(const Line& line);
 	static void DrawCircle(const Circle& circle);
+	static void DrawSphere(const Sphere& sphere);
 	static RendererStatistics Stats();
 	static void ResetStats();
 public:
@@ -104,4 +123,5 @@ private:
 	static void SubmitLineProperties();
 	static void SubmitLines();
 	static void SubmitCircles();
+	static void SubmitSpheres();
 };

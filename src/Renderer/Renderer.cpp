@@ -12,6 +12,7 @@ void Renderer::Initialize() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
 
 	// quad stuff
 	s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
@@ -38,6 +39,7 @@ void Renderer::Initialize() {
 	// internal shaders
 	s_Data.Shaders.Add(CreateRef<Shader>(StaticShaders::LineGLSL(), "Line"));
 	s_Data.Shaders.Add(CreateRef<Shader>(StaticShaders::CircleGLSL(), "Circle"));
+	s_Data.Shaders.Add(CreateRef<Shader>(StaticShaders::SphereGLSL(), "Sphere"));
 
 	// lines 
 	s_Data.LineVertexArray = CreateRef<VertexArray>();
@@ -62,6 +64,16 @@ void Renderer::Initialize() {
 	s_Data.CircleVertexArray->AddVertexBuffer(s_Data.CircleVertexBuffer);
 	s_Data.CircleVertexArray->SetIndexBuffer(quadIB); // note: using quad ib on purpose
 	s_Data.CircleVertexBufferBase = new CircleVertex[s_Data.MaxVertices];
+
+	// spheres 
+	s_Data.SphereVertexArray = CreateRef<VertexArray>();
+	s_Data.SphereVertexBuffer = CreateRef<VertexBuffer>(s_Data.MaxVertices * sizeof(SphereVertex));
+	s_Data.SphereVertexBuffer->SetLayout({
+		{ ShaderDataTypes::FLOAT3, "a_Position" },
+		{ ShaderDataTypes::FLOAT, "a_Radius" }
+	});
+	s_Data.SphereVertexArray->AddVertexBuffer(s_Data.SphereVertexBuffer);
+	s_Data.SphereVertexBufferBase = new SphereVertex[s_Data.MaxVertices];
 }
 
 void Renderer::SetViewport(const Viewport& viewport) {
@@ -79,6 +91,7 @@ void Renderer::Clear() {
 void Renderer::Shutdown() {
 	delete[] s_Data.LineVertexBufferBase;
 	delete[] s_Data.CircleVertexBufferBase;
+	delete[] s_Data.SphereVertexBufferBase;
 }
 
 void Renderer::BeginScene(const Camera& camera) {
@@ -87,6 +100,8 @@ void Renderer::BeginScene(const Camera& camera) {
 	s_Data.Shaders.Get("Line")->SetMat4("u_ViewProjection", camera.GetViewProjection());
 	s_Data.Shaders.Get("Circle")->Bind();
 	s_Data.Shaders.Get("Circle")->SetMat4("u_ViewProjection", camera.GetViewProjection());
+	s_Data.Shaders.Get("Sphere")->Bind();
+	s_Data.Shaders.Get("Sphere")->SetMat4("u_ViewProjection", camera.GetViewProjection());
 	
 	StartBatch();
 }
@@ -103,6 +118,10 @@ void Renderer::StartBatch() {
 	// Prepare circles
 	s_Data.CircleIndexCount = 0;
 	s_Data.CircleVertexBufferPtr = s_Data.CircleVertexBufferBase;
+
+	// Prepare spheres
+	s_Data.SphereVertexCount = 0;
+	s_Data.SphereVertexBufferPtr = s_Data.SphereVertexBufferBase;
 }
 
 void Renderer::NextBatch() {
@@ -131,6 +150,16 @@ void Renderer::Flush() {
 		SubmitLines();
 		drawcall = true;
 	}
+
+	// draw spheres
+	if (s_Data.SphereVertexCount) {
+		uint32_t datasize = (uint32_t)((uint8_t*)s_Data.SphereVertexBufferPtr - (uint8_t*)s_Data.SphereVertexBufferBase);
+		s_Data.SphereVertexBuffer->SetData(s_Data.SphereVertexBufferBase, datasize);
+		s_Data.Shaders.Get("Sphere")->Bind();
+		SubmitSpheres();
+		drawcall = true;
+	}
+
 	if (drawcall) s_Data.Statistics.DrawCalls++;
 }
 
@@ -164,6 +193,14 @@ void Renderer::DrawCircle(const Circle& circle) {
 	s_Data.Statistics.CircleCount++;
 }
 
+void Renderer::DrawSphere(const Sphere& sphere) {
+	s_Data.SphereVertexBufferPtr->Position = sphere.Position;
+	s_Data.SphereVertexBufferPtr->Radius = sphere.Radius;
+	s_Data.SphereVertexBufferPtr++;
+	s_Data.SphereVertexCount++;
+	s_Data.Statistics.SphereCount++;
+}
+
 RendererStatistics Renderer::Stats() {
 	return s_Data.Statistics;
 }
@@ -193,4 +230,9 @@ void Renderer::SubmitCircles() {
 	s_Data.CircleVertexArray->Bind();
 	uint32_t count = s_Data.CircleIndexCount ? s_Data.CircleIndexCount : s_Data.CircleVertexArray->GetIndexBuffer()->GetCount();
 	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+}
+
+void Renderer::SubmitSpheres() {
+	s_Data.SphereVertexArray->Bind();
+	glDrawArrays(GL_POINTS, 0, s_Data.SphereVertexCount);
 }
