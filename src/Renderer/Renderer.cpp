@@ -13,6 +13,8 @@ void Renderer::Initialize() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_VERTEX_PROGRAM_POINT_SIZE);
+	glEnable(GL_POINT_SMOOTH);
+	glEnable(GL_POINT_SPRITE);
 
 	// quad stuff
 	s_Data.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
