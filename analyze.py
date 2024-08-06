@@ -68,61 +68,7 @@ def analyze_code(directory):
             "│8. INCLUDES       │" + pad_num(total_includes) + "│\n" +
             "└──────────────────┴───────────────┘\n")
 
-def analyze_progress():
-    stage = ""
-    minor_tasks = 0
-    medium_tasks = 0
-    major_tasks = 0
-    completed_tasks = 0
-    sub_tasks = 0
-    total_tasks = 0
-    with open("TODO.txt", 'r') as file:
-       for line in file:
-            if "MINOR" in line:
-                stage = "MINOR"
-                continue
-            elif "MEDIUM" in line:
-                stage = "MEDIUM"
-                continue
-            elif "MAJOR" in line:
-                stage = "MAJOR"
-                continue
-            elif "COMPLETED" in line:
-                stage = "COMPLETED"
-                continue
-            elif len(line) > 3:
-                total_tasks += 1
-                if "\t\t" == line[0:2] or "        " == line[0:8]:
-                    sub_tasks += 1
-                elif "\t" == line[0:1] or "    " == line[0:4]:
-                    if stage == "MINOR":
-                        minor_tasks += 1
-                    if stage == "MEDIUM":
-                        medium_tasks += 1
-                    if stage == "MAJOR":
-                        major_tasks += 1
-                    if stage == "COMPLETED":
-                        completed_tasks += 1
-    return ("PROGRESS ANALYSIS: \n" + 
-            "┌──────────────────┬───────────────┐\n"
-            "│1. TOTAL TASKS    │" + pad_num(total_tasks) + "│\n" +
-            "├──────────────────┼───────────────┤\n"
-            "│2. MAJOR TASKS    │" + pad_num(major_tasks) + "│\n" +
-            "├──────────────────┼───────────────┤\n"
-            "│3. MEDIUM TASKS   │" + pad_num(medium_tasks) + "│\n" +
-            "├──────────────────┼───────────────┤\n"
-            "│4. MINOR TASKS    │" + pad_num(minor_tasks) + "│\n" +
-            "├──────────────────┼───────────────┤\n"
-            "│5. SUBTASKS       │" + pad_num(sub_tasks) + "│\n" +
-            "├──────────────────┼───────────────┤\n"
-            "│6. COMPLETED      │" + pad_num(completed_tasks) + "│\n" +
-            "└──────────────────┴───────────────┘\n")
-
-
 print("Performing project analysis...")
-print("Analyzing SLOC...")
 statement += analyze_code("src") + "\n"
-statement += analyze_progress()
-
 
 print(statement)

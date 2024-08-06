@@ -1,3 +1,3 @@
 @echo off
-bazel build win_Forge
+call build.bat
 start bazel-bin/win_Forge

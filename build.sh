@@ -1,1 +1,2 @@
-bazel build arch_Forge
+./help.sh audit
+bazel build linux_Forge

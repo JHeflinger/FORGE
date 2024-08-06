@@ -3,7 +3,7 @@
 ######################################
 
 cc_library(
-    name = "arch_ForgeLib",
+    name = "linux_ForgeLib",
     srcs = glob([
                 "src/**/*.cpp",
            ]),
@@ -34,10 +34,10 @@ cc_library(
 )
 
 cc_binary(
-    name = "arch_Forge",
+    name = "linux_Forge",
     srcs = ["src/main.cpp"],
     deps = [
-        ":arch_ForgeLib",
+        ":linux_ForgeLib",
     ],
 )
 
