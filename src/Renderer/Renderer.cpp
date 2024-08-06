@@ -45,7 +45,7 @@ void Renderer::Initialize() {
 
 	// lines 
 	s_Data.LineVertexArray = CreateRef<VertexArray>();
-	s_Data.LineVertexBuffer = CreateRef<VertexBuffer>(s_Data.MaxVertices * sizeof(LineVertex));
+	s_Data.LineVertexBuffer = CreateRef<VertexBuffer>((uint32_t)(s_Data.MaxVertices * sizeof(LineVertex)));
 	s_Data.LineVertexBuffer->SetLayout({
 		{ ShaderDataTypes::FLOAT3, "a_Position" },
 		{ ShaderDataTypes::FLOAT4, "a_Color" }
@@ -55,7 +55,7 @@ void Renderer::Initialize() {
 
 	// circles
 	s_Data.CircleVertexArray = CreateRef<VertexArray>();
-	s_Data.CircleVertexBuffer = CreateRef<VertexBuffer>(s_Data.MaxVertices * sizeof(CircleVertex));
+	s_Data.CircleVertexBuffer = CreateRef<VertexBuffer>((uint32_t)(s_Data.MaxVertices * sizeof(CircleVertex)));
 	s_Data.CircleVertexBuffer->SetLayout({
 			{ ShaderDataTypes::FLOAT3, "a_WorldPosition" },
 			{ ShaderDataTypes::FLOAT3, "a_LocalPosition" },
@@ -69,7 +69,7 @@ void Renderer::Initialize() {
 
 	// spheres 
 	s_Data.SphereVertexArray = CreateRef<VertexArray>();
-	s_Data.SphereVertexBuffer = CreateRef<VertexBuffer>(s_Data.MaxVertices * sizeof(SphereVertex));
+	s_Data.SphereVertexBuffer = CreateRef<VertexBuffer>((uint32_t)(s_Data.MaxVertices * sizeof(SphereVertex)));
 	s_Data.SphereVertexBuffer->SetLayout({
 		{ ShaderDataTypes::FLOAT3, "a_Position" },
 		{ ShaderDataTypes::FLOAT, "a_Radius" }

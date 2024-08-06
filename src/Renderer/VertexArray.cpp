@@ -52,7 +52,7 @@ void VertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) {
 									  ConvertShaderDataType(element.Type),
 									  element.Normalized ? GL_TRUE : GL_FALSE,
 									  layout.GetStride(),
-									  reinterpret_cast<const void*>(element.Offset));
+									  reinterpret_cast<const void*>((uint64_t)element.Offset));
 				m_VertexBufferIndex++;
 				break;
 			}
@@ -66,7 +66,7 @@ void VertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer) {
 									   element.GetComponentCount(),
 									   ConvertShaderDataType(element.Type),
 									   layout.GetStride(),
-									   reinterpret_cast<const void*>(element.Offset));
+									   reinterpret_cast<const void*>((uint64_t)element.Offset));
 				m_VertexBufferIndex++;
 				break;
 			}

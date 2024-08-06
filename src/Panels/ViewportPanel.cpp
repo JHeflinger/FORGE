@@ -46,7 +46,7 @@ void ViewportPanel::Update(Editor* context) {
 	ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 	m_Size = { viewportPanelSize.x, viewportPanelSize.y };
 	uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-	ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ m_Size.x, m_Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+	ImGui::Image(reinterpret_cast<void*>((uint64_t)textureID), ImVec2{ m_Size.x, m_Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 }
 
 bool ViewportPanel::Resized() {
