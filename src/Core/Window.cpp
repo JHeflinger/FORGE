@@ -7,6 +7,7 @@
 
 static bool s_GLFWInitialized = false;
 static void GLFWErrorCallback(int error, const char* desc) {
+	if (error == 65548) return;
 	FATAL("GLFW Error ({0}): {1}", error, desc);
 }
 
