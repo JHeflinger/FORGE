@@ -1,6 +1,4 @@
 #include "Input.h"
-#include "KeyCodes.h"
-#include "MouseCodes.h"
 #include <GLFW/glfw3.h>
 
 static Ref<Window> s_Window;

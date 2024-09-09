@@ -1,7 +1,7 @@
 #pragma once
-#include "Panel.h"
-#include "../Core/Safety.h"
-#include "../Renderer/Framebuffer.h"
+#include "Panels/Panel.h"
+#include "Core/Safety.h"
+#include "Renderer/Framebuffer.h"
 #include "glm/glm.hpp"
 
 class ViewportPanel : public Panel {

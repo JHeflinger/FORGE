@@ -1,9 +1,9 @@
 #pragma once
-#include "Grid.h"
-#include "Particle.h"
-#include "Sink.h"
-#include "Source.h"
-#include "../Core/Safety.h"
+#include "Simulation/Grid.h"
+#include "Simulation/Particle.h"
+#include "Simulation/Sink.h"
+#include "Simulation/Source.h"
+#include "Core/Safety.h"
 #include <vector>
 
 class Simulation {

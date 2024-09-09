@@ -1,11 +1,11 @@
 #pragma once
 #include <vector>
-#include "Editor.h"
-#include "Safety.h"
-#include "Window.h"
-#include "GUI.h"
-#include "Timestep.h"
-#include "../Events/ApplicationEvent.h"
+#include "Core/Editor.h"
+#include "Core/Safety.h"
+#include "Core/Window.h"
+#include "Core/GUI.h"
+#include "Core/Timestep.h"
+#include "Events/ApplicationEvent.h"
 
 class Application {
 public:

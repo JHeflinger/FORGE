@@ -1,5 +1,5 @@
 #include "Framebuffer.h"
-#include "../Core/Safety.h"
+#include "Core/Safety.h"
 #include <glad/glad.h>
 
 static const uint32_t s_MaxFrameBufferSize = 8196;
@@ -153,7 +153,6 @@ void Framebuffer::Resize(uint32_t width, uint32_t height) {
 	m_Specification.Height = height;
 	Invalidate();
 }
-
 
 int Framebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y) {
 	ASSERT(attachmentIndex < m_ColorAttachments.size(), "Cannot read pixel from invalid attachment!");

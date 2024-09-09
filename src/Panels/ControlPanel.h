@@ -1,8 +1,8 @@
 #pragma once
 #include "Panels/Panel.h"
 
-class OverviewPanel : public Panel {
+class ControlPanel : public Panel {
 public:
-	OverviewPanel();
+	ControlPanel();
 	virtual void Update(Editor* context) override;
 };

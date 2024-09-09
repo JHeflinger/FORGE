@@ -1,6 +1,6 @@
 #pragma once
-#include "Safety.h"
-#include "../Utils/YamlUtils.h"
+#include "Core/Safety.h"
+#include "Utils/YamlUtils.h"
 
 class Editor;
 class Simulation;

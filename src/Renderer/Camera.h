@@ -1,8 +1,8 @@
 #pragma once
-#include "../Core/Timestep.h"
-#include "../Events/Event.h"
-#include "../Events/MouseEvent.h"
-#include "../Core/Log.h"
+#include "Core/Timestep.h"
+#include "Events/Event.h"
+#include "Events/MouseEvent.h"
+#include "Core/Log.h"
 #include "glm/glm.hpp"
 
 enum class CameraTypes {

@@ -1,9 +1,9 @@
 #include "Window.h"
-#include "../Events/KeyEvent.h"
-#include "../Events/MouseEvent.h"
-#include "../Events/ApplicationEvent.h"
-#include "Log.h"
-#include "Safety.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
+#include "Events/ApplicationEvent.h"
+#include "Core/Log.h"
+#include "Core/Safety.h"
 
 static bool s_GLFWInitialized = false;
 static void GLFWErrorCallback(int error, const char* desc) {

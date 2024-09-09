@@ -1,8 +1,8 @@
 #include "Renderer.h"
 #include <glad/glad.h>
-#include "../Core/Log.h"
-#include "../Utils/MathUtils.h"
-#include "Static.h"
+#include "Core/Log.h"
+#include "Utils/MathUtils.h"
+#include "Renderer/Static.h"
 
 static RendererData s_Data;
 

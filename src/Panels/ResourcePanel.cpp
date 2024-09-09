@@ -1,6 +1,6 @@
 #include "ResourcePanel.h"
-#include "../Core/Editor.h"
-#include "../Utils/ImGuiUtils.h"
+#include "Core/Editor.h"
+#include "Utils/ImGuiUtils.h"
 #include "imgui.h"
 
 Ref<Grid> GetSelectedGrid(Editor* context) {

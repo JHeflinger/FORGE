@@ -1,7 +1,7 @@
 #include "DialogUtils.h"
-#include "../Core/Safety.h"
-#include "../Core/Window.h"
-#include "../Core/Application.h"
+#include "Core/Safety.h"
+#include "Core/Window.h"
+#include "Core/Application.h"
 
 static Ref<Window> s_Window;
 

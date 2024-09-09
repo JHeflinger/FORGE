@@ -1,6 +1,6 @@
 #pragma once
-#include "Buffer.h"
-#include "../Core/Safety.h"
+#include "Renderer/Buffer.h"
+#include "Core/Safety.h"
 
 class VertexArray {
 public:

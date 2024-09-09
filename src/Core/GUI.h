@@ -1,6 +1,6 @@
 #pragma once
-#include "Window.h"
-#include "Safety.h"
+#include "Core/Window.h"
+#include "Core/Safety.h"
 
 class GUI {
 public:

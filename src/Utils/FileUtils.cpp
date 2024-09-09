@@ -1,6 +1,6 @@
 #include "FileUtils.h"
-#include "DialogUtils.h"
-#include "../Core/Log.h"
+#include "Utils/DialogUtils.h"
+#include "Core/Log.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>

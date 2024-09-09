@@ -1,14 +1,14 @@
 #include "Application.h"
-#include "Log.h"
-#include "Serializer.h"
+#include "Core/Log.h"
+#include "Core/Serializer.h"
 #include <GLFW/glfw3.h>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
-#include "../Renderer/Renderer.h"
-#include "../Events/Input.h"
-#include "../Utils/FileUtils.h"
-#include "../Utils/DialogUtils.h"
+#include "Renderer/Renderer.h"
+#include "Events/Input.h"
+#include "Utils/FileUtils.h"
+#include "Utils/DialogUtils.h"
 
 Application::Application() {
 	m_Editor = CreateRef<Editor>();

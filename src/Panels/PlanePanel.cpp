@@ -1,6 +1,6 @@
 #include "PlanePanel.h"
-#include "../Core/Editor.h"
-#include "../Renderer/Renderer.h"
+#include "Core/Editor.h"
+#include "Renderer/Renderer.h"
 #include "imgui.h"
 
 PlanePanel::PlanePanel() {

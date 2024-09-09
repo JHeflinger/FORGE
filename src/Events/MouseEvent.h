@@ -1,5 +1,5 @@
 #pragma once
-#include "Event.h"
+#include "Events/Event.h"
 #include <sstream>
 	
 class MouseMovedEvent : public Event {

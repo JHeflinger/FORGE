@@ -1,5 +1,5 @@
 #pragma once
-#include "Panel.h"
+#include "Panels/Panel.h"
 
 class ResourcePanel : public Panel {
 public:

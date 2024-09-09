@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core/Safety.h"
+#include "Core/Safety.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 

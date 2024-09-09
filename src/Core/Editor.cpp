@@ -1,12 +1,13 @@
 #include "Editor.h"
-#include "../Renderer/Renderer.h"
-#include "../Panels/ViewportPanel.h"
-#include "../Panels/OverviewPanel.h"
-#include "../Panels/ResourcePanel.h"
-#include "../Panels/PlanePanel.h"
-#include "../Events/Input.h"
-#include "../Utils/FileUtils.h"
-#include "../Utils/MathUtils.h"
+#include "Renderer/Renderer.h"
+#include "Panels/ViewportPanel.h"
+#include "Panels/OverviewPanel.h"
+#include "Panels/ResourcePanel.h"
+#include "Panels/ControlPanel.h"
+#include "Panels/PlanePanel.h"
+#include "Events/Input.h"
+#include "Utils/FileUtils.h"
+#include "Utils/MathUtils.h"
 #include "imgui.h"
 #include <cmath>
 
@@ -16,6 +17,7 @@ Editor::Editor() {
 		CreateRef<OverviewPanel>(),
 		CreateRef<ResourcePanel>(),
 		CreateRef<PlanePanel>(),
+		CreateRef<ControlPanel>(),
 	};
 	m_Camera = CreateRef<Camera>();
 	m_Simulation = CreateRef<Simulation>();
@@ -82,8 +84,6 @@ void Editor::DrawMenuBar() {
 				m_Prompt = EditorPrompts::SAVE;
 			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
 				m_Prompt = EditorPrompts::SAVEAS;
-			if (ImGui::MenuItem("Settings", "Ctrl+E"))
-				FATAL("Settings not implemented!");
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Panels")) {
@@ -119,9 +119,6 @@ void Editor::ProcessInput() {
 				} else {
 					m_Prompt = EditorPrompts::SAVE;
 				}
-				m_InputPrimer = false;
-			} else if (Input::IsKeyPressed(KeyCode::E)) {
-				FATAL("ERROR: NOT IMPLEMENTED");
 				m_InputPrimer = false;
 			}
 		}

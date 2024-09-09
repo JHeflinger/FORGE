@@ -1,5 +1,5 @@
 #pragma once
-#include "Log.h"
+#include "Core/Log.h"
 
 #define ENABLE_ASSERTS //TODO: remove this for the fully optimized build
 

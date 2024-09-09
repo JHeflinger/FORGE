@@ -1,5 +1,5 @@
 #pragma once
-#include "Panel.h"
+#include "Panels/Panel.h"
 
 struct PlanePanelSettings {
 	bool ShowGrid = false;

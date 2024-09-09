@@ -1,5 +1,5 @@
 #pragma once
-#include "../Utils/ObjectUtils.h"
+#include "Utils/ObjectUtils.h"
 #include <string>
 
 class Resource {

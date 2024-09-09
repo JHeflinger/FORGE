@@ -1,8 +1,8 @@
 #include "Serializer.h"
-#include "../Utils/FileUtils.h"
-#include "../Core/Editor.h"
-#include "../Simulation/Simulation.h"
-#include "../Panels/PlanePanel.h"
+#include "Utils/FileUtils.h"
+#include "Core/Editor.h"
+#include "Simulation/Simulation.h"
+#include "Panels/PlanePanel.h"
 
 std::string Serializer::SerializeEditor(const Ref<Editor> editor) {
     YAML::Emitter out;

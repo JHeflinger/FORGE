@@ -1,5 +1,5 @@
 #include "Panel.h"
-#include "../Core/Editor.h"
+#include "Core/Editor.h"
 #include "imgui.h"
 
 void Panel::CallUpdate(Editor* context) {

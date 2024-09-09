@@ -25,7 +25,7 @@ def handle():
         for root, dirs, files in os.walk("src"):
             for file in files:
                 filepath = os.path.join(root, file)
-                if ".h" in filepath:
+                if ".h" in filepath or ".cpp" in filepath:
                     prev_line = ""
                     with open(filepath, 'r') as file:
                         linecount = 0
@@ -36,16 +36,24 @@ def handle():
                                 vulnerabilities += 1
                             prev_line = line
         
+        # empty files
+        for root, dirs, files in os.walk("src"):
+            for file in files:
+                filepath = os.path.join(root, file)
+                if ".h" in filepath or ".cpp" in filepath:
+                    with open(filepath, 'r') as file:
+                        lines = file.readlines()
+                        if len(lines) < 1:
+                            vulnerabilities += 1
+                            print("Empty file detected: " + filepath)
+                            continue
+
         # header guards
         for root, dirs, files in os.walk("src"):
             for file in files:
                 filepath = os.path.join(root, file)
                 if ".h" in filepath:
-                    prev_line = ""
                     with open(filepath, 'r') as file:
-                        slash = "/"
-                        if "\\" in filepath:
-                            slash = "\\"
                         lines = file.readlines()
                         if len(lines) < 1:
                             continue
@@ -54,7 +62,22 @@ def handle():
                             found = True
                             print("Missing or incorrect header guard (#pragma once) detected in " + filepath)
                         if found:
-                            vulnerabilities += 1                
+                            vulnerabilities += 1      
+
+        # relative includes
+        for root, dirs, files in os.walk("src"):
+            for file in files:
+                filepath = os.path.join(root, file)
+                if ".h" in filepath or ".cpp" in filepath:
+                    with open(filepath, 'r') as file:
+                        lines = file.readlines()
+                        linenum = 0
+                        for line in lines:
+                            linenum += 1
+                            if "#include \".." in line:
+                                print("Relative include path detected on line " + str(linenum) + " in " + filepath + ":")
+                                print("    " + line.strip())
+                                vulnerabilities += 1
 
         quality = "\033[32m"
         if (vulnerabilities > 10):

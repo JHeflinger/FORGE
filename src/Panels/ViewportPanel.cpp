@@ -1,6 +1,6 @@
 #include "ViewportPanel.h"
-#include "../Renderer/Renderer.h"
-#include "../Core/Editor.h"
+#include "Renderer/Renderer.h"
+#include "Core/Editor.h"
 #include "imgui.h"
 
 ViewportPanel::ViewportPanel() {

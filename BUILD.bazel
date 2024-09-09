@@ -5,11 +5,12 @@
 cc_library(
     name = "linux_ForgeLib",
     srcs = glob([
-                "src/**/*.cpp",
-           ]),
+        "src/**/*.cpp",
+    ]),
     hdrs = glob([
-                "src/**/*.h",
-           ]),
+        "src/**/*.h",
+    ]),
+	includes = ["src"],
     deps = [
         "//vendor/yaml-cpp:yaml-cpp",
 	    "//vendor:glad",
@@ -48,11 +49,12 @@ cc_binary(
 cc_library(
     name = "win_ForgeLib",
     srcs = glob([
-                "src/**/*.cpp",
-           ]),
+        "src/**/*.cpp",
+    ]),
     hdrs = glob([
-                "src/**/*.h",
-           ]),
+        "src/**/*.h",
+    ]),
+	includes = ["src"],
     deps = [
         "//vendor/yaml-cpp:yaml-cpp",
         "//vendor:win_glm",

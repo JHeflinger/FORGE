@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../Events/Event.h"
+#include "Events/Event.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 

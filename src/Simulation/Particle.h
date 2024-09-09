@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "Simulation/Resource.h"
 #include "glm/glm.hpp"
 
 class Particle : public Resource {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Resource.h"
+#include "Simulation/Resource.h"
 
 class Source : public Resource {
 public:

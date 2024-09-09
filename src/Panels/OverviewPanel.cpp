@@ -1,5 +1,5 @@
 #include "OverviewPanel.h"
-#include "../Core/Editor.h"
+#include "Core/Editor.h"
 #include "imgui.h"
 
 #define WIDE_SEP() ImGui::Dummy({0, 1}); ImGui::Separator(); ImGui::Dummy({0, 1});

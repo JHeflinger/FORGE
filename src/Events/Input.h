@@ -1,7 +1,7 @@
 #pragma once
-#include "KeyCodes.h"
-#include "MouseCodes.h"
-#include "../Core/Application.h"
+#include "Events/KeyCodes.h"
+#include "Events/MouseCodes.h"
+#include "Core/Application.h"
 #include "glm/glm.hpp"
 
 class Input {

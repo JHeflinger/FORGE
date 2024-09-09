@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
-#include "Safety.h"
-#include "Timestep.h"
-#include "Serializer.h"
-#include "../Simulation/Simulation.h"
-#include "../Renderer/Camera.h"
-#include "../Panels/Panel.h"
-#include "../Events/Event.h"
+#include "Core/Safety.h"
+#include "Core/Timestep.h"
+#include "Core/Serializer.h"
+#include "Simulation/Simulation.h"
+#include "Renderer/Camera.h"
+#include "Panels/Panel.h"
+#include "Events/Event.h"
 
 enum class EditorPrompts {
     NONE,
