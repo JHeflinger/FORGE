@@ -115,7 +115,7 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
 
 bool Serializer::DeserializeEditor(Ref<Editor> editor, const std::string& data) {
     YAML::Node yamldata = YAML::Load(data);
-    
+
     // General editor settings
     if (yamldata["Selected Resource"]) {
         editor->SetSelectedID(yamldata["Selected Resource"].as<uint64_t>());
