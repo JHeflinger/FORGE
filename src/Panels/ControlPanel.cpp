@@ -16,8 +16,6 @@ void ControlPanel::Initialize() {
 }
 
 void ControlPanel::Update(Editor* context) {
-	static uint64_t temp = 0;
-	static bool temp1 = false;
     float gapsize = 8.0f;
     ImGui::Columns(2);
     ImGui::Dummy({0, gapsize});
@@ -32,17 +30,25 @@ void ControlPanel::Update(Editor* context) {
     ImGui::NextColumn();
     gapsize = 2.0f;
     ImGui::Dummy({0, gapsize});
-	ImGui::DragScalar("##simulationlength", ImGuiDataType_U64, &temp, 1.0f);
+	uint64_t simulationlength = context->GetSimulation()->Length();
+	if (ImGui::DragScalar("##simulationlength", ImGuiDataType_U64, &simulationlength, 1.0f))
+		context->GetSimulation()->SetLength(simulationlength);
 	ImGui::SameLine();
-	static int current_item_0 = 0;
-    const char* items_0[] = { "ticks", "us", "ms", "s" };
-    ImGui::Combo("##lengthunits", &current_item_0, items_0, IM_ARRAYSIZE(items_0));
+    const char* length_units[] = { "ticks", "us", "ms", "s" };
+	int current_length_unit = (int)context->GetSimulation()->LengthUnit();
+    if (ImGui::Combo("##lengthunits", &current_length_unit, length_units, IM_ARRAYSIZE(length_units)))
+		context->GetSimulation()->SetLengthUnit((SimulationLengthUnit)current_length_unit);
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##safeguardcache", &temp1);
+	bool checkbox = context->GetSimulation()->SafeguardCacheEnabled();
+    if (ImGui::Checkbox("##safeguardcache", &checkbox))
+		context->GetSimulation()->SetSafeguardCache(checkbox);
+	checkbox = context->GetSimulation()->SimulationRecordEnabled();
     ImGui::Dummy({0, gapsize});
-    ImGui::Checkbox("##simulationrecord", &temp1);
+    if (ImGui::Checkbox("##simulationrecord", &checkbox))
+		context->GetSimulation()->SetSimulationRecord(checkbox);
     ImGui::Dummy({0, gapsize});
-	static int current_item = 0;
-    const char* items[] = { "rkh45", "coolsolver", "???", "footbar" };
-    ImGui::Combo("##simulationsolver", &current_item, items, IM_ARRAYSIZE(items));
+	int current_solver = (int)context->GetSimulation()->Solver();
+    const char* solver_options[] = { "RKF45", "Euler" };
+    if (ImGui::Combo("##simulationsolver", &current_solver, solver_options, IM_ARRAYSIZE(solver_options)))
+		context->GetSimulation()->SetSolver((SimulationSolver)current_solver);
 }
