@@ -45,9 +45,4 @@ void ControlPanel::Update(Editor* context) {
 	static int current_item = 0;
     const char* items[] = { "rkh45", "coolsolver", "???", "footbar" };
     ImGui::Combo("##simulationsolver", &current_item, items, IM_ARRAYSIZE(items));
-
-	// Simulation length | █# of units█ █unit type dropdown█
-	// Safeguard Cache   | ■ Enabled
-	// Simulation Record | ■ Enabled
-	// Simulation Solver | █solver dropdown█
 }
