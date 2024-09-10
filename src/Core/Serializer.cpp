@@ -103,6 +103,12 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
     }
     out << YAML::EndSeq;
 
+	out << YAML::Key << "Length Unit" << YAML::Value << (int)simulation->LengthUnit();
+	out << YAML::Key << "Simulation Length" << YAML::Value << simulation->Length();
+	out << YAML::Key << "Safeguard Cache Enabled" << YAML::Value << simulation->SafeguardCacheEnabled();
+	out << YAML::Key << "Simulation Record Enabled" << YAML::Value << simulation->SimulationRecordEnabled();
+	out << YAML::Key << "Solver" << YAML::Value << (int)simulation->Solver();
+
     out << YAML::EndMap;
     return std::string(out.c_str());
 }
@@ -263,6 +269,26 @@ bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::st
             } else WARN("Resource data for serialized source is missing critical data - deserialization for this resource will be skipped");
         }
     } else WARN("No sources found to serialize into simulation!");
+
+	if (yamldata["Length Unit"]) {
+		simulation->SetLengthUnit((SimulationLengthUnit)yamldata["Length Unit"].as<int>());
+	} else WARN("No length unit found to serialize into simulation!");
+
+	if (yamldata["Simulation Length"]) {
+		simulation->SetLength(yamldata["Simulation Length"].as<uint64_t>());
+	} else WARN("No dedicated simulation length found to serialize into simulation!");
+
+	if (yamldata["Safeguard Cache Enabled"]) {
+		simulation->SetSafeguardCache(yamldata["Safeguard Cache Enabled"].as<bool>());
+	} else WARN("No safeguard cache setting found to serialize into simulation!");
+
+	if (yamldata["Simulation Record Enabled"]) {
+		simulation->SetSimulationRecord(yamldata["Simulation Record Enabled"].as<bool>());
+	} else WARN("No simulation record setting found to serialize into simulation!");
+
+	if (yamldata["Solver"]) {
+		simulation->SetSolver((SimulationSolver)yamldata["Solver"].as<int>());
+	} else WARN("No solver found to serialize into simulation!");
 
     return true;
 }
