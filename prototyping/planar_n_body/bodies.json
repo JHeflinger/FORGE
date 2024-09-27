@@ -1,39 +1,29 @@
 {
   "bodies": [
     {
-      "name": "P1",
-      "mass_kg": 1,
-      "diam_m": 0.01,
-      "init_vel_x_ms": 0.39295,
-      "init_vel_y_ms": 0.09758,
-      "init_pos_x_m": 4,
-      "init_pos_y_m": 5
+      "name": "Earth",
+      "mass_kg": 5972000000000000000000000,
+      "diam_m": 12742000,
+      "init_vel_x_ms": 0,
+      "init_vel_y_ms": -12.5865197104,
+      "init_pos_x_m": 500000000,
+      "init_pos_y_m": 500000000
     },
     {
-      "name": "P2",
-      "mass_kg": 1,
-      "diam_m": 0.01,
-      "init_vel_x_ms": 0.39295,
-      "init_vel_y_ms": 0.09758,
-      "init_pos_x_m": 6,
-      "init_pos_y_m": 5
-
-    },
-    {
-      "name": "P3",
-      "mass_kg": 1,
-      "diam_m": 0.01,
-      "init_vel_x_ms": -0.7859,
-      "init_vel_y_ms": -0.19516,
-      "init_pos_x_m": 5,
-      "init_pos_y_m": 5
+      "name": "Moon",
+      "mass_kg": 73476730900000000000000,
+      "diam_m": 3474800,
+      "init_vel_x_ms": 0,
+      "init_vel_y_ms": 1023,
+      "init_pos_x_m": 884000000,
+      "init_pos_y_m": 500000000
 
     }
   ],
   "globals": {
-    "sim_dim_x_m": 10,
-    "sim_dim_y_m": 10,
-    "time_step_s": 0.002,
-    "sim_duration_s":25
+    "sim_dim_x_m": 1000000000,
+    "sim_dim_y_m": 1000000000,
+    "time_step_s": 3000,
+    "sim_duration_s":20000000
   } 
 }
