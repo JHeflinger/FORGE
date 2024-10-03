@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib import animation, colors, colormaps
 from matplotlib.collections import LineCollection
 from simulation import *
+from time import time
 
 DT = 3000  # timestep
 N = 2  # number of particles
@@ -18,8 +19,12 @@ mass = np.array([[5972000000000000000000000], [73476730900000000000000]])
 
 state = np.array([[0, 0, 0, -12.5865197104], [384000000, 0, 0, 1023]])
 
+print("Starting simulation...")
+start_time = time()
 simulation = simulate_steps(state, mass, DT, SIM_LEN)
-print("Done with simulation.")
+end_time = time()
+elapsed = end_time - start_time
+print(f"Done with simulation in {elapsed:.3f}s")
 
 # custom colormap for positive and negative charges
 seismic = colormaps["seismic"].resampled(255)
@@ -38,8 +43,8 @@ X, Y = np.meshgrid(x, y)
 Ex, Ey = G_field(state, mass, bound, E_PLOT_N)
 G_strength = np.log(Ex**2 + Ey**2 + EPS)
 # print(G_strength)
-print(np.max(G_strength))
-print(np.min(G_strength))
+# print(np.max(G_strength))
+# print(np.min(G_strength))
 # print(G_strength)
 
 # plot initial particles and electric field
@@ -73,8 +78,11 @@ def bake_g_fields():
 
 
 print("Baking g fields...")
+start_time = time()
 baked_g_fields = bake_g_fields()
-print("Finished cook'n.")
+end_time = time()
+elapsed = end_time - start_time
+print(f"Finished cook'n. in {elapsed:.3f}s.")
 
 
 def animate_func(i):
