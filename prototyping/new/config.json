@@ -1,0 +1,10 @@
+{
+"particles": "bodies.json",
+"bounds": 500000000,
+"timestep": 3000,
+"duration": 20000000,
+"solver": "RK45",
+"softening": 3,
+"speed": 8,
+"density": 2
+}
