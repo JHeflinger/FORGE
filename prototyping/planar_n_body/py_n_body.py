@@ -373,11 +373,11 @@ def run_sim(bodies: Dict[str, Dict]) -> List[Dict]:
             state_vector = np.array([t_pos_x, t_pos_y, t_vel_x, t_vel_y], dtype=float)
             arg_vector = np.array([accel_x, accel_y], dtype=float)
 
-            # new_t_vel_x = t_vel_x + time_step_s * accel_x
-            # new_t_vel_y = t_vel_y + time_step_s * accel_y
+            new_t_vel_x = t_vel_x + time_step_s * accel_x
+            new_t_vel_y = t_vel_y + time_step_s * accel_y
 
-            # new_t_pos_x = t_pos_x + new_t_vel_x * time_step_s
-            # new_t_pos_y = t_pos_y + new_t_vel_y * time_step_s
+            new_t_pos_x = t_pos_x + new_t_vel_x * time_step_s
+            new_t_pos_y = t_pos_y + new_t_vel_y * time_step_s
 
             # Leap Forg.
             # new_t_vel_x = t_vel_x
@@ -394,9 +394,9 @@ def run_sim(bodies: Dict[str, Dict]) -> List[Dict]:
             # new_t_vel_y += time_step_s * accel_y / 2
 
 
-            new_t_pos_x, new_t_pos_y, new_t_vel_x, new_t_vel_y = _rk4_step(
-                _update_body_pos, state_vector, arg_vector, time_step_s, time
-            ).tolist()
+            # new_t_pos_x, new_t_pos_y, new_t_vel_x, new_t_vel_y = _rk4_step(
+            #     _update_body_pos, state_vector, arg_vector, time_step_s, time
+            # ).tolist()
 
             # epsilon = 0.0001  # meters
 
