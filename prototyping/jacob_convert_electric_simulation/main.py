@@ -4,7 +4,7 @@ from matplotlib import animation, colors, colormaps
 from matplotlib.collections import LineCollection
 from simulation import *
 from time import time
-
+from AnimationWrapper import InteractiveAnimation, PLOT_POS
 DT = 3000  # timestep
 N = 2  # number of particles
 SIM_LEN = 1000  # number of steps to simulate
@@ -49,13 +49,13 @@ G_strength = np.log(Ex**2 + Ey**2 + EPS)
 
 # plot initial particles and electric field
 fig = plt.figure()
+main_ax = fig.add_axes(PLOT_POS)
 norm = colors.PowerNorm(gamma=0.3, vmin=-136, vmax=-110)
-mesh = plt.pcolormesh(X, Y, G_strength, cmap="inferno", norm=norm)
+mesh = main_ax.pcolormesh(X, Y, G_strength, cmap="inferno", norm=norm)
 tmp = np.float64(mass / np.min(mass) + 1)
-scatter = plt.scatter(
+scatter = main_ax.scatter(
     state[:, 0], state[:, 1], s=np.log(tmp) * 15, c=mass, cmap=cmap, vmin=-3, vmax=3
 )
-axs = fig.get_axes()
 
 
 def bake_g_fields():
@@ -96,18 +96,18 @@ def animate_func(i):
     return scatter, mesh
 
 
-anim = animation.FuncAnimation(
-    fig, animate_func, frames=range(SIM_LEN // SIM_SPEED), interval=40
+anim = InteractiveAnimation(
+    0, SIM_LEN//SIM_SPEED, fig, animate_func, interval=100
 )
 
-axs[0].set_xlim(-bound, bound)
-axs[0].set_ylim(-bound, bound)
-fig.set_size_inches(6, 6)
-fig.subplots_adjust(
-    left=0, bottom=0, right=1, top=1, wspace=None, hspace=None
-)  # remove white border
-plt.gca().set_aspect("equal")
-plt.axis("off")
+main_ax.set_xlim(-bound, bound)
+main_ax.set_ylim(-bound, bound)
+# fig.set_size_inches(6, 6)
+# fig.subplots_adjust(
+#     left=0, bottom=0, right=1, top=1, wspace=None, hspace=None
+# )  # remove white border
+fig.get_axes()[0].set_aspect("equal")
+# plt.axis("off")
 
 plt.show()
 # anim.save('./animation.gif', dpi=50) # dpi=50 for lower quality to reduce file size
