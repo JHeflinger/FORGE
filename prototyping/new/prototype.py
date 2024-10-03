@@ -2,13 +2,14 @@ from serial import *
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation, colors, colormaps
-from matplotlib.colors import Normalize
 from matplotlib.collections import LineCollection
 from scipy.constants import G
 from scipy.integrate import RK45
+from timer import *
 
 # Initialize particles and their states
 EPS = 1e-12 # epsilon for numerical stability
+g_timer = Timer()
 g_config = globals()
 g_state = np.zeros((len(g_config["particles"]), 4))
 g_mass = np.zeros(len(g_config["particles"]))
@@ -54,7 +55,7 @@ def simulate_steps():
     return np.array(simulation)
 
 # Field calculation
-def g_field():
+def g_field(cstate):
     x = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
     y = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
     X, Y = np.meshgrid(x, y)
@@ -62,9 +63,9 @@ def g_field():
     Y = Y.astype(np.float128)
     u = np.zeros_like(X, dtype=np.float128)
     v = np.zeros_like(Y, dtype=np.float128)
-    for i in range(g_state.shape[0]):
-        xi = g_state[i, 0]
-        yi = g_state[i, 1]
+    for i in range(cstate.shape[0]):
+        xi = cstate[i, 0]
+        yi = cstate[i, 1]
         r2 = np.square(X-xi) + np.square(Y-yi)
         r2 = r2.astype(np.float128)
         u += (G*g_mass[i]*(X-xi) / (r2**3/2 + EPS))
@@ -72,30 +73,59 @@ def g_field():
     return u, v
 
 # Do simulation
+g_timer.start("Starting simulation")
 simulation = simulate_steps()
+g_timer.end("Finished simulation")
+
+# Bake Fields
+g_minmax_init = False
+g_field_min = 0 
+g_field_max = 0
+def bake_g_fields():
+    global g_field_max
+    global g_field_min
+    global g_minmax_init
+    numframes = int(g_config["duration"]/g_config["timestep"])
+    baked_fields = np.zeros([numframes, g_config["density"], g_config["density"]])
+
+    for i in range(numframes):
+        gx, gy = g_field(simulation[i])
+        gstrength = np.log(gx**2 + gy**2)
+        baked_fields[i] = gstrength
+        cmin = np.min(gstrength)
+        cmax = np.max(gstrength)
+        if cmin < g_field_min or not g_minmax_init:
+            g_field_min = cmin
+        if cmax > g_field_max or not g_minmax_init:
+            g_field_max = cmax
+        g_minmax_init = True
+    return baked_fields
+g_timer.start("Baking fields")
+g_baked = bake_g_fields()
+g_timer.end("Baked fields")
+print(g_field_min)
+print(g_field_max)
+
+# Animation function
+def animate_func(i):
+    gstr = g_baked[i*g_config["speed"]]
+    mesh.set_array(gstr)
+    g_scatter.set_offsets(simulation[i*g_config["speed"]]) # update particles scatter plot
+    return g_scatter, mesh
 
 # Set up figure
 g_fig = plt.figure()
-ex, ey = g_field()
-e_str = np.log(ex**2 + ey**2 + EPS)
 x = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
 y = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
+gx, gy = g_field(g_state)
+gstr = np.log(gx**2 + gy**2)
 X, Y = np.meshgrid(x, y)
-mesh = plt.pcolormesh(X, Y, e_str, cmap='inferno', norm=Normalize(vmin=-136, vmax=-110))
-g_scatter = plt.scatter(g_state[:,0], g_state[:,1], s=np.log(g_mass/np.min(g_mass)+1)*15)
+mesh = plt.pcolormesh(X, Y, gstr, cmap='inferno', norm=colors.PowerNorm(gamma=0.3, vmin=int(g_field_min), vmax=int(g_field_max)))
+g_scatter = plt.scatter(g_state[:,0], g_state[:,1], s=np.log(np.float64(g_mass/np.min(g_mass)+1))*15)
 axs = g_fig.get_axes()
 axs[0].set_xlim(-g_config["bounds"], g_config["bounds"])
 axs[0].set_ylim(-g_config["bounds"], g_config["bounds"])
 plt.gca().set_aspect('equal')
-
-# Animation function
-def animate_func(i):
-    ex, ey = g_field()
-    e_str = np.log(ex**2 + ey**2 + EPS)
-    print(e_str)
-    mesh.set_array(e_str)
-    g_scatter.set_offsets(simulation[i*g_config["speed"]]) # update particles scatter plot
-    return g_scatter
 
 # Set up animation
 g_anim = animation.FuncAnimation(g_fig, animate_func, frames=range((g_config["duration"])//(g_config["speed"])), interval=40)
