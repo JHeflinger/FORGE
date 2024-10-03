@@ -21,32 +21,35 @@ for i, particle in enumerate(g_config["particles"]):
     g_state[i][2] = particle["velocity"][0]
     g_state[i][3] = particle["velocity"][1]
 
+# Solvers
+g_solvers = dict()
+steps = int(g_config["duration"] / g_config["timestep"])
+def rk45_get_derivative(vec):
+    state = np.reshape(vec, g_state.shape)
+    x_pos = state[:,0:1]
+    y_pos = state[:,1:2]
+    x_vel = state[:,2:3]
+    y_vel = state[:,3:4]
+    dx = x_pos.T - x_pos
+    dy = y_pos.T - y_pos
+    inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
+    ax = G * (dx * inv_r3) @ g_mass.reshape(-1, 1)
+    ay = G * (dy * inv_r3) @ g_mass.reshape(-1, 1)
+    d = np.hstack((x_vel, y_vel, ax,ay))
+    d = np.reshape(d, g_state.shape)
+    d = d.flatten()
+    return d
+g_solvers.update({
+    "RK45":
+    RK45(lambda t,y: rk45_get_derivative(y), 0, g_state.flatten(), t_bound=g_config["timestep"]*(steps+1), max_step=g_config["timestep"])
+})
+
 # Simulation function
 def simulate_steps():
-    y0 = g_state.flatten()
-
-    def get_derivative(vec):
-        state = np.reshape(vec, g_state.shape)
-        x_pos = state[:,0:1]
-        y_pos = state[:,1:2]
-        x_vel = state[:,2:3]
-        y_vel = state[:,3:4]
-        dx = x_pos.T - x_pos
-        dy = y_pos.T - y_pos
-        inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
-        ax = G * (dx * inv_r3) @ g_mass.reshape(-1, 1)
-        ay = G * (dy * inv_r3) @ g_mass.reshape(-1, 1)
-        d = np.hstack((x_vel, y_vel, ax,ay))
-        d = np.reshape(d, g_state.shape)
-        d = d.flatten()
-        return d
-
     simulation = [g_state]
     steps = int(g_config["duration"] / g_config["timestep"])
-    solver = RK45(
-        lambda t,y: get_derivative(y), 0, y0, t_bound=g_config["timestep"]*(steps+1), max_step=g_config["timestep"]
-    )
-    y = y0
+    solver = g_solvers[g_config["solver"]]
+    y = g_state.flatten()
     for _ in range(steps):
         solver.step()
         y = solver.y
@@ -87,7 +90,6 @@ def bake_g_fields():
     global g_minmax_init
     numframes = int(g_config["duration"]/g_config["timestep"])
     baked_fields = np.zeros([numframes, g_config["density"], g_config["density"]])
-
     for i in range(numframes):
         gx, gy = g_field(simulation[i])
         gstrength = np.log(gx**2 + gy**2)
@@ -103,8 +105,6 @@ def bake_g_fields():
 g_timer.start("Baking fields")
 g_baked = bake_g_fields()
 g_timer.end("Baked fields")
-print(g_field_min)
-print(g_field_max)
 
 # Animation function
 def animate_func(i):

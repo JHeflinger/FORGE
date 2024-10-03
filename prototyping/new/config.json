@@ -6,5 +6,5 @@
 "solver": "RK45",
 "softening": 3,
 "speed": 8,
-"density": 100
+"density": 50
 }
