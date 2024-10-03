@@ -2,6 +2,8 @@ import numpy as np
 from scipy.integrate import RK45
 from scipy.constants import G
 
+from line_profiler import profile
+
 EPS = 1e-12 # epsilon for numerical stability
 softening = 3
 
@@ -52,20 +54,52 @@ def simulate_steps(state0, mass, h, steps):
         simulation.append(np.copy(state))
     return np.array(simulation)
 
-def G_field(state, mass, bound, n):
+def pre_compute_r2(bound, n, ignore_lut=False):
+    x_lin = np.linspace(-bound, bound, n)
+    y_lin = np.linspace(-bound, bound, n)
+
+    X, Y = np.meshgrid(x_lin, y_lin)
+    
+    X = X.astype(np.float64)
+    Y = Y.astype(np.float64)
+
+    r2_lut = np.zeros([n,n,n,n], dtype=np.float64)
+    if not ignore_lut:
+        for x in range(n):
+            for y in range(n):
+                r2_lut[x][y] = np.square(X-x) + np.square(Y-y)
+    
+    return X,Y,r2_lut
+
+
+
+@profile
+def G_field(state, mass, bound, n, X, Y, r2_lut):
     # returns x- and y-direction Gravity fields at each point given a state
-    x = np.linspace(-bound, bound, n)
-    y = np.linspace(-bound, bound, n)
-    X, Y = np.meshgrid(x, y)
-    X = X.astype(np.float128)
-    Y = Y.astype(np.float128)
-    u = np.zeros_like(X, dtype=np.float128)
-    v = np.zeros_like(Y, dtype=np.float128)
+    u = np.zeros_like(X, dtype=np.float64)
+    v = np.zeros_like(Y, dtype=np.float64)
+    # round_denom = bound
+    # half_n = n//2
+
     for i in range(state.shape[0]):
         xi = state[i,0]
         yi = state[i,1]
+
         r2 = np.square(X-xi) + np.square(Y-yi)
-        r2 = r2.astype(np.float128)
-        u += G*mass[i][0]*(X-xi) / (r2**3/2 + EPS)
-        v += G*mass[i][0]*(Y-yi) / (r2**3/2 + EPS)
-    return u, v
+        r2 = r2.astype(np.float64)
+
+        # rounded_y = int((half_n * yi)//round_denom) + half_n
+        # rounded_x = int((half_n * xi)//round_denom) + half_n
+        # r2 = r2_lut[rounded_x][rounded_y]
+
+        xDiff = X - xi
+        yDiff = Y - yi
+
+        x_num = mass[i][0]*xDiff
+        y_num =  mass[i][0]*yDiff
+
+        denom = (r2**3/2 + EPS)
+
+        u +=  x_num / denom
+        v += y_num / denom
+    return G*u, G*v

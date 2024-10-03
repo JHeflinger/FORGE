@@ -6,6 +6,7 @@ import mpl_toolkits.axes_grid1
 from time import time
 import re
 
+
 PLOT_POS = [0.05,0.05,0.9,0.80]
 
 class InteractiveAnimation(animation.FuncAnimation):
@@ -31,8 +32,8 @@ class InteractiveAnimation(animation.FuncAnimation):
         forward_button_ax = divider.append_axes("right", size="80%", pad=0.05)
         step_forward_ax = divider.append_axes("right", size="100%", pad=0.05)
 
-        fps_field_ax = divider.append_axes("right", size="100%", pad=0.8)
-        self.text_box =TextBox(fps_field_ax, 'Target FPS', initial=10)
+        self.fps_field_ax = divider.append_axes("right", size="100%", pad=0.8)
+        self.text_box =TextBox(self.fps_field_ax, 'Target FPS', initial=10)
         self.text_box.on_submit(self.submit)
         
         slider_ax = divider.append_axes("right", size="500%", pad=0.07)
@@ -48,6 +49,23 @@ class InteractiveAnimation(animation.FuncAnimation):
         self.button_oneforward.on_clicked(self.oneforward)
         self.slider = Slider(slider_ax, '', self.min, self.max, valinit=self.i, valstep=1)
         self.slider.on_changed(self.set_pos)
+        self.fig.canvas.mpl_connect('key_press_event', self.on_press)
+
+    def on_press(self, event):
+        if event.key == 'left':
+            self.onebackward()
+        elif event.key == 'right':
+            self.oneforward()
+        elif event.key == ' ':
+            self.runs = not self.runs
+        elif event.key in '0123456789':
+            if event.inaxes in [self.fps_field_ax]:
+                return
+            target_i = int((self.max-self.min)* (eval(event.key)/10))
+            self.i=target_i
+            self.update(self.i)
+            self._func(self.i)
+
 
     def play(self):
         while self.runs:
