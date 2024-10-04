@@ -13,6 +13,7 @@ g_timer = Timer()
 g_config = globals()
 g_state = np.zeros((len(g_config["particles"]), 4))
 g_mass = np.zeros(len(g_config["particles"]))
+g_vec_mass = g_mass.reshape(-1, 1)
 g_softening = g_config["softening"]
 for i, particle in enumerate(g_config["particles"]):
     g_mass[i] = particle["mass"]
@@ -24,7 +25,7 @@ for i, particle in enumerate(g_config["particles"]):
 # Solvers
 g_solvers = dict()
 steps = int(g_config["duration"] / g_config["timestep"])
-def rk45_get_derivative(vec):
+def get_derivative(vec):
     state = np.reshape(vec, g_state.shape)
     x_pos = state[:,0:1]
     y_pos = state[:,1:2]
@@ -33,15 +34,42 @@ def rk45_get_derivative(vec):
     dx = x_pos.T - x_pos
     dy = y_pos.T - y_pos
     inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
-    ax = G * (dx * inv_r3) @ g_mass.reshape(-1, 1)
-    ay = G * (dy * inv_r3) @ g_mass.reshape(-1, 1)
+    ax = G * (dx * inv_r3) @ g_vec_mass
+    ay = G * (dy * inv_r3) @ g_vec_mass
     d = np.hstack((x_vel, y_vel, ax,ay))
     d = np.reshape(d, g_state.shape)
     d = d.flatten()
     return d
 g_solvers.update({
     "RK45":
-    RK45(lambda t,y: rk45_get_derivative(y), 0, g_state.flatten(), t_bound=g_config["timestep"]*(steps+1), max_step=g_config["timestep"])
+    RK45(lambda t,y: get_derivative(y), 0, g_state.flatten(), t_bound=g_config["timestep"]*(steps+1), max_step=g_config["timestep"])
+})
+def leapfrog_accel(pos):
+    x_pos = pos[:,0:1]
+    y_pos = pos[:,1:2]
+    dx = x_pos.T - x_pos
+    dy = y_pos.T - y_pos
+    inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
+    ax = G * (dx * inv_r3) @ g_vec_mass
+    ay = G * (dy * inv_r3) @ g_vec_mass
+    a = np.hstack((ax,ay))
+    return a
+class Leapfrog:
+    def __init__(self):
+        self.y = g_state.flatten()
+        self.vel = np.hstack((g_state[:,2:3],g_state[:,3:4]))
+        self.pos = np.hstack((g_state[:,0:1],g_state[:,1:2]))
+        self.acc = leapfrog_accel(self.pos)
+    def step(self):
+        self.vel += self.acc * g_config["timestep"]/2.0
+        self.pos += self.vel * g_config["timestep"]
+        self.acc = leapfrog_accel(self.pos)
+        self.vel += self.acc * g_config["timestep"]/2.0
+        self.y = np.hstack((self.pos, self.vel))
+        return
+g_solvers.update({
+    "Leapfrog":
+    Leapfrog()
 })
 
 # Simulation function
@@ -62,15 +90,15 @@ def g_field(cstate):
     x = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
     y = np.linspace(-g_config["bounds"], g_config["bounds"], g_config["density"])
     X, Y = np.meshgrid(x, y)
-    X = X.astype(np.float128)
-    Y = Y.astype(np.float128)
-    u = np.zeros_like(X, dtype=np.float128)
-    v = np.zeros_like(Y, dtype=np.float128)
+    X = X.astype(np.float64)
+    Y = Y.astype(np.float64)
+    u = np.zeros_like(X, dtype=np.float64)
+    v = np.zeros_like(Y, dtype=np.float64)
     for i in range(cstate.shape[0]):
         xi = cstate[i, 0]
         yi = cstate[i, 1]
         r2 = np.square(X-xi) + np.square(Y-yi)
-        r2 = r2.astype(np.float128)
+        r2 = r2.astype(np.float64)
         u += (G*g_mass[i]*(X-xi) / (r2**3/2 + EPS))
         v += (G*g_mass[i]*(Y-yi) / (r2**3/2 + EPS))
     return u, v
