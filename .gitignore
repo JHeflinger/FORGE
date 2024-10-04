@@ -7,3 +7,5 @@ docs/latex/
 *.fsim
 *.fconf
 __pycache__
+*.bakedstate
+*.simstate
