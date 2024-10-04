@@ -17,7 +17,7 @@ class InteractiveAnimation(animation.FuncAnimation):
         self.i = 0
         self.min = min_i
         self.max = max_i
-        self.old_text = "10"
+        self.old_text = "15"
         self.forwards = True
         self.event_source.stop()
         self.fig=args[0]
@@ -33,7 +33,7 @@ class InteractiveAnimation(animation.FuncAnimation):
         step_forward_ax = divider.append_axes("right", size="100%", pad=0.05)
 
         self.fps_field_ax = divider.append_axes("right", size="100%", pad=0.8)
-        self.text_box =TextBox(self.fps_field_ax, 'Target FPS', initial=10)
+        self.text_box =TextBox(self.fps_field_ax, 'Target FPS', initial=15)
         self.text_box.on_submit(self.submit)
         
         slider_ax = divider.append_axes("right", size="500%", pad=0.07)
@@ -167,7 +167,7 @@ if __name__ == "__main__":
         line.set_ydata(np.sin(x + i / 10.0))
         return line,
 
-    ani = InteractiveAnimation(0, 10, fig, animate, interval=100)
+    ani = InteractiveAnimation(0, 10, fig, animate, interval=67)
     ani.new_interval(100)
 
     plt.show()
