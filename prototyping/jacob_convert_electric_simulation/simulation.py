@@ -1,11 +1,12 @@
 import numpy as np
 from scipy.integrate import RK45
-from scipy.constants import G
+# from scipy.constants import G
+G = 1
 
 from line_profiler import profile
 
 EPS = 1e-12 # epsilon for numerical stability
-softening = 3
+softening = EPS
 
 def simulate_steps(state0, mass, h, steps):
     # state0 is an array of shape (N,4) for N objects
@@ -72,6 +73,37 @@ def pre_compute_r2(bound, n, ignore_lut=False):
     return X,Y,r2_lut
 
 
+def getEnergy(state, mass):
+	"""
+	Get kinetic energy (KE) and potential energy (PE) of simulation
+	pos is N x 2 matrix of positions
+	vel is N x 2 matrix of velocities
+	mass is an N x 1 vector of masses
+	G is Newton's Gravitational constant
+	KE is the kinetic energy of the system
+	PE is the potential energy of the system
+	"""
+	
+	pos = state[:,0:2]
+	vel = state[:,2:4]
+
+	# Kinetic Energy:
+	KE = 0.5 * np.sum(np.sum( mass * vel**2 ))
+
+	# Potential Energy:
+	# positions r = [x,y,z] for all particles
+	x = pos[:,0:1]
+	y = pos[:,1:2]
+	# matrix that stores all pairwise particle separations: r_j - r_i
+	dx = x.T - x
+	dy = y.T - y
+	# matrix that stores 1/r for all particle pairwise particle separations 
+	inv_r = np.sqrt(dx**2 + dy**2 )
+	inv_r[inv_r>0] = 1.0/inv_r[inv_r>0]
+	# sum over upper triangle, to count each interaction only once
+	PE = G * np.sum(np.sum(np.triu(-(mass*mass.T)*inv_r,1)))
+	
+	return KE, PE;
 
 @profile
 def G_field(state, mass, bound, n, X, Y, r2_lut):
