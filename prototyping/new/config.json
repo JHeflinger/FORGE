@@ -6,5 +6,13 @@
 "solver": "Leapfrog",
 "softening": 3,
 "speed": 8,
-"density": 20
+"density": 20,
+"save": {
+    "enabled": "true",
+    "path": "truth"
+},
+"load": {
+    "enabled": "false",
+    "path": "truth"
+}
 }

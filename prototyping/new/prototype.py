@@ -6,6 +6,7 @@ from matplotlib.collections import LineCollection
 from scipy.constants import G
 from scipy.integrate import RK45
 from timer import *
+import os
 
 # Initialize particles and their states
 EPS = 1e-12 # epsilon for numerical stability
@@ -133,6 +134,19 @@ def bake_g_fields():
 g_timer.start("Baking fields")
 g_baked = bake_g_fields()
 g_timer.end("Baked fields")
+
+# Save final simulation
+if g_config["save"]["enabled"] == "true":
+    g_timer.start("Saving simulation state...")
+    os.makedirs(g_config["save"]["path"], exist_ok=True)
+    savestate(simulation, os.path.join(g_config["save"]["path"], ".simstate"))
+    savestate(g_baked, os.path.join(g_config["save"]["path"], ".bakedstate"))
+    g_timer.end("Saved simulation state")
+if g_config["load"]["enabled"] == "true":
+    g_timer.start("Loading simulation state...")
+    simulation = loadstate(os.path.join(g_config["load"]["path"], ".simstate"))
+    g_baked = loadstate(os.path.join(g_config["load"]["path"], ".bakedstate"))
+    g_timer.end("Loaded simulation state")
 
 # Animation function
 def animate_func(i):
