@@ -161,21 +161,24 @@ plt.show()
 
 # --------------- PLOT ENERGY ------------------
 
-# fig = plt.figure()
-# print("Calculating energy...")
-# ke, pe, total_e = calc_energy()
-# fake_time = [x for x in range(len(ke))]
-# # fake_time = [x*DT for x in range(len(ke))]
-# fig, (ax1, ax2, ax3) = plt.subplots(3)
-# ax1.plot(fake_time, ke)
-# ax1.set_title("Total Kinetic Energy")
+fig = plt.figure()
+print("Calculating energy...")
+ke, pe, total_e = calc_energy()
+fake_time = [x for x in range(len(ke))]
+# fake_time = [x*DT for x in range(len(ke))]
+fig, (ax1, ax2, ax3) = plt.subplots(3)
+ax1.plot(fake_time, ke)
+ax1.set_title("Total Kinetic Energy")
 
-# ax2.plot(fake_time, pe)
-# ax2.set_title("Total Potential Energy")
+ax2.plot(fake_time, pe)
+ax2.set_title("Total Potential Energy")
 
-# ax3.plot(fake_time, total_e)
-# ax3.set_title("Total Energy")
-# plt.show()
+ax3.plot(fake_time, total_e)
+ax3.set_title("Total Energy")
+print(total_e[-1])
+print(total_e[0])
+print(total_e[-1] - total_e[0])
+plt.show()
 
 
 # --------------- PLOT Paths ------------------
