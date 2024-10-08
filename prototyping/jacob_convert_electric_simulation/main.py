@@ -2,9 +2,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation, colors, colormaps
 from matplotlib.collections import LineCollection
+import mpl_toolkits.axes_grid1
+
 from simulation import *
 from time import time
 from AnimationWrapper import InteractiveAnimation, PLOT_POS
+
+
+def get_cmap(n, name="hsv"):
+    """Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
+    RGB color; the keyword argument name must be a standard mpl colormap name."""
+    return plt.cm.get_cmap(name, n)
+
 
 # DT = 3000  # timestep
 # N = 2  # number of particles
@@ -17,11 +26,11 @@ from AnimationWrapper import InteractiveAnimation, PLOT_POS
 # mass = np.array([[5972000000000000000000000], [73476730900000000000000]])
 # state = np.array([[0, 0, 0, -12.5865197104], [384000000, 0, 0, 1023]])
 
-DT = 0.01 # timestep
+DT = 0.01  # timestep
 N = 3  # number of particles
 SIM_LEN = 2000  # number of steps to simulate
 SIM_SPEED = 3  # number of steps to skip in the animation
-E_PLOT_N = 120  # number of X and Y values in the electric field plot
+E_PLOT_N = 50  # number of X and Y values in the electric field plot
 # N particles each have a state consisting of four values:
 # x position, y position, x velocity, y velocity
 state = np.zeros((N, 4))
@@ -123,6 +132,9 @@ print(f"Finished cook'n. in {elapsed:.3f}s.")
 # plot initial particles and electric field
 fig = plt.figure()
 main_ax = fig.add_axes(PLOT_POS)
+main_ax.set_xlim(-bound, bound)
+main_ax.set_ylim(-bound, bound)
+main_ax.set_aspect("equal")
 field_range = 0
 # field_range = (g_field_max - g_field_min) * 0.1
 norm = colors.PowerNorm(
@@ -134,10 +146,21 @@ scatter = main_ax.scatter(
     state[:, 0], state[:, 1], s=np.log(tmp) * 15, c=mass, cmap=cmap, vmin=-3, vmax=3
 )
 
+divider = mpl_toolkits.axes_grid1.make_axes_locatable(main_ax)
+trace_axis = divider.append_axes("right", size="100%", pad=0.05)
+trace_axis.set_aspect("equal")
+cmap = get_cmap(N)
+
+for particle_num in range(N):
+    px = simulation[:, particle_num, 0]
+    py = simulation[:, particle_num, 1]
+    trace_axis.scatter(px, py, s=0.05, c=cmap(particle_num))
+
 
 def animate_func(i):
     # simulation[i*SIM_SPEED] represents the new state in frame i of the animation
     # recalculate electric field for the new state
+    print(f"\n\nGot it {i}\n\n")
     E_strength = baked_g_fields[i * SIM_SPEED]
     # print(set(E_strength.flatten().tolist()))
 
@@ -146,15 +169,19 @@ def animate_func(i):
     return scatter, mesh
 
 
-anim = InteractiveAnimation(0, SIM_LEN // SIM_SPEED, fig, animate_func, interval=67)
-
-main_ax.set_xlim(-bound, bound)
-main_ax.set_ylim(-bound, bound)
+anim = InteractiveAnimation(
+    0,
+    SIM_LEN // SIM_SPEED,
+    fig,
+    animate_func,
+    interval=67,
+    save_count=SIM_LEN // SIM_SPEED,
+    cache_frame_data=True,
+)
 # fig.set_size_inches(6, 6)
 # fig.subplots_adjust(
 #     left=0, bottom=0, right=1, top=1, wspace=None, hspace=None
 # )  # remove white border
-fig.get_axes()[0].set_aspect("equal")
 # plt.axis("off")
 
 plt.show()
@@ -182,21 +209,21 @@ plt.show()
 
 
 # --------------- PLOT Paths ------------------
-particle_one_x = simulation[:,0,0]
-particle_one_y = simulation[:,0,1]
+# particle_one_x = simulation[:,0,0]
+# particle_one_y = simulation[:,0,1]
 
-particle_two_x = simulation[:,1,0]
-particle_two_y = simulation[:,1,1]
+# particle_two_x = simulation[:,1,0]
+# particle_two_y = simulation[:,1,1]
 
-particle_three_x = simulation[:,2,0]
-particle_three_y = simulation[:,2,1]
+# particle_three_x = simulation[:,2,0]
+# particle_three_y = simulation[:,2,1]
 
-fig,ax = plt.subplots()
-ax.scatter(particle_one_x, particle_one_y)
-ax.scatter(particle_two_x, particle_two_y)
-ax.scatter(particle_three_x, particle_three_y)
-ax.set_aspect("equal")
-plt.show()
+# fig,ax = plt.subplots()
+# ax.scatter(particle_one_x, particle_one_y, s=0.05)
+# ax.scatter(particle_two_x, particle_two_y, s=0.05)
+# ax.scatter(particle_three_x, particle_three_y, s=0.05)
+# ax.set_aspect("equal")
+# plt.show()
 
 
 # save_anim = animation.FuncAnimation(fig, animate_func, interval=67)

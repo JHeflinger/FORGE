@@ -1,16 +1,39 @@
-[
 {
-	"name": "Earth",
-    "mass": 5972000000000000000000000,
-    "diameter": 12742000,
-    "velocity": [0, -12.5865197104],
-    "position": [500000000, 500000000]
-},
-{
-    "name": "Moon",
-    "mass": 73476730900000000000000,
-    "diameter": 3474800,
-    "velocity": [0, 1023],
-    "position": [884000000, 500000000]
+  "bodies": [
+    {
+      "name": "P1",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": 0.3471128135672417,
+      "init_vel_y_ms": 0.532726851767674,
+      "init_pos_x_m": 0.5,
+      "init_pos_y_m": 1.5
+    },
+    {
+      "name": "P2",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": 0.3471128135672417,
+      "init_vel_y_ms": 0.532726851767674,
+      "init_pos_x_m": 2.5,
+      "init_pos_y_m": 1.5
+
+    },
+    {
+      "name": "P3",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": -0.69422562713,
+      "init_vel_y_ms": -1.06545370354,
+      "init_pos_x_m": 1.5,
+      "init_pos_y_m": 1.5
+
+    }
+  ],
+  "globals": {
+    "sim_dim_x_m": 3,
+    "sim_dim_y_m": 3,
+    "time_step_s": 0.005,
+    "sim_duration_s":25
+  } 
 }
-]

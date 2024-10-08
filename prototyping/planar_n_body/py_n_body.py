@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import json
 import math
 import time
-from scipy.constants import G
+# from scipy.constants import G
+G = 1
 import numpy as np
 
 SIM_PARAM_PATH = "./bodies.json"
@@ -17,7 +18,7 @@ sim_duration_s: int
 
 def _init() -> Dict[str, Dict]:
     global sim_dim_x_m, sim_dim_y_m, time_step_s, sim_duration_s
-    json_rslt = None
+    json_rslt = dict()
     with open(SIM_PARAM_PATH, "r") as infile:
         json_string = infile.read()
         json_rslt = json.loads(json_string)
@@ -113,7 +114,7 @@ def display_result(
                     x_points = onion_dict[body_name][0][max(0,(idx * jump_frames) - onion_skin*jump_frames):(idx * jump_frames)]
                     y_points = onion_dict[body_name][1][max(0,(idx * jump_frames) - onion_skin*jump_frames):(idx * jump_frames)]
 
-                    ax.scatter(x_points,y_points, color=color, zorder = z_order-1, alpha=0.1)
+                    ax.scatter(x_points,y_points, color=color, zorder = z_order-1, alpha=0.75, s=0.021)
 
 
             fig.canvas.draw()
@@ -164,7 +165,7 @@ def _sum_of_accel(
         r_x = pos_x_2 - pos_x_1
         r_y = pos_y_2 - pos_y_1
 
-        inv_r3 = (r_x ** 2 + r_y ** 2 + 4) ** -1.5 # Delete the 4 and do softening properly.
+        inv_r3 = (r_x ** 2 + r_y ** 2) ** -1.5 # Delete the 4 and do softening properly.
 
         ret_x += (r_x * inv_r3) * mass_kg
         ret_y += (r_y * inv_r3) * mass_kg
@@ -447,7 +448,7 @@ def run_sim(bodies: Dict[str, Dict]) -> List[Dict]:
         tmp_frame_b_center["b_center"] = {
             "pos_x": barycenter_x,
             "pos_y": barycenter_y,
-            "diam_m": 1000000,
+            "diam_m": 0.01,
         }
         # print(f"Barycenter x, rel pos {barycenter_x/sim_dim_x_m:.2f}, {barycenter_y/sim_dim_y_m:.2f}")
         frame_buffer.append(tmp_frame_b_center)
@@ -512,7 +513,7 @@ def main() -> None:
     result_frames = run_sim(sim_bodies)
 
     _display_energy_velocity_graphs(result_frames, time_step=time_step_s,show_vel=True)
-    display_result(result_frames, fps=3000, jump_frames=200,onion_skin=10)
+    display_result(result_frames, fps=3000, jump_frames=20,onion_skin=100)
 
 
 if __name__ == "__main__":
