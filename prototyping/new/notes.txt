@@ -1,0 +1,7 @@
+Distributed method
+    - Initial setup
+        1. Split particles across workers
+    - Simulation step
+        1. Each worker calculate worker-specific field 
+        2. everyone share their fields 
+        3. everyone apply the fields and move the particles

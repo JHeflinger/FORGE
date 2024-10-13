@@ -14,5 +14,6 @@
 "load": {
     "enabled": "false",
     "path": "truth"
-}
+},
+"workers": 4
 }
