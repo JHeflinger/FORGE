@@ -118,16 +118,26 @@ def calculate_acceleration(x, y):
     joby = int(y/g_default_jobsize)
     indx = x % g_default_jobsize
     indy = y % g_default_jobsize
-    r = np.linalg.norm(g_jobs[jobx]["state"][indx] - g_jobs[joby]["state"][indy])
+    x_pos = g_jobs[jobx]["state"][indx]
+    y_pos = g_jobs[joby]["state"][indy]
+    x_mass = g_jobs[jobx]["mass"][indx]
+    y_mass = g_jobs[joby]["mass"][indy]
+    r = np.linalg.norm(x_pos - y_pos)
     if r == 0:
         r = EPS
-    force = G * g_jobs[jobx]["mass"][indx] * g_jobs[joby]["mass"][indy] / (r**2)
+    force = G * x_mass * y_mass / (r**2)
     x_to_y = np.zeros(2)
     y_to_x = np.zeros(2)
-    x_to_y[0] = (force / g_jobs[jobx]["mass"][indx]) * (g_jobs[joby]["state"][indy][0] - g_jobs[jobx]["state"][indx][0]) / r
-    x_to_y[1] = (force / g_jobs[jobx]["mass"][indx]) * (g_jobs[joby]["state"][indy][1] - g_jobs[jobx]["state"][indx][1]) / r
-    y_to_x[0] = (force / g_jobs[joby]["mass"][indy]) * (g_jobs[jobx]["state"][indx][0] - g_jobs[joby]["state"][indy][0]) / r
-    y_to_x[1] = (force / g_jobs[joby]["mass"][indy]) * (g_jobs[jobx]["state"][indx][1] - g_jobs[joby]["state"][indy][1]) / r
+    x_to_y[0] = (force / x_mass) * (y_pos[0] - x_pos[0]) / r
+    x_to_y[1] = (force / x_mass) * (y_pos[1] - x_pos[1]) / r
+    y_to_x[0] = (force / y_mass) * (x_pos[0] - y_pos[0]) / r
+    y_to_x[1] = (force / y_mass) * (x_pos[1] - y_pos[1]) / r
+    r2 = np.square(y_pos[0] - x_pos[0]) + np.square(y_pos[1] - x_pos[1])
+    r2 = r2.astype(np.float64)
+    xaccel_x = (G*y_mass*(y_pos[0] - x_pos[0]) / (r2**3/2 + EPS))
+    xaccel_y = (G*y_mass*(y_pos[1] - x_pos[1]) / (r2**3/2 + EPS))
+    yaccel_x = (G*x_mass*(x_pos[0] - y_pos[0]) / (r2**3/2 + EPS))
+    yaccel_y = (G*y_mass*(y_pos[1] - x_pos[1]) / (r2**3/2 + EPS))
     with g_lock:
         g_forcematrix[x][y][0] = x_to_y[0]
         g_forcematrix[x][y][1] = x_to_y[1]
