@@ -15,5 +15,5 @@
     "enabled": "false",
     "path": "truth"
 },
-"workers": 4
+"workers": 1
 }

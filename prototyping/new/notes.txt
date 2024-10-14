@@ -5,3 +5,8 @@ Distributed method
         1. Each worker calculate worker-specific field 
         2. everyone share their fields 
         3. everyone apply the fields and move the particles
+
+
+Naive approach:
+    - each worker will calculate the impact of the other particles on the particles it is in charge of 
+        ^ this approach does redundant info, maybe we can distribute by edges in the connected graph for the force grid calculation, and then distribute by particles for the position update?
