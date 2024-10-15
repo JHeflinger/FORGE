@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from matplotlib import animation, colors, colormaps
 from matplotlib.collections import LineCollection
 from scipy.constants import G
-from scipy.integrate import RK45
 from timer import *
 import threading
 import os
@@ -111,38 +110,25 @@ def leapfrog_step():
             state[(i*g_default_jobsize) + j] = g_jobs[i]["state"][j]
     return state
 
-def calculate_acceleration(x, y):
-    if x == y or g_forcematrix[x][y][0] != 0 or g_forcematrix[x][y][1] != 0:
+def calculate_acceleration(p1, p2):
+    if p1 == p2 or g_forcematrix[p1][p2][0] != 0 or g_forcematrix[p1][p2][1] != 0:
         return
-    jobx = int(x/g_default_jobsize)
-    joby = int(y/g_default_jobsize)
-    indx = x % g_default_jobsize
-    indy = y % g_default_jobsize
-    x_pos = g_jobs[jobx]["state"][indx]
-    y_pos = g_jobs[joby]["state"][indy]
-    x_mass = g_jobs[jobx]["mass"][indx]
-    y_mass = g_jobs[joby]["mass"][indy]
-    r = np.linalg.norm(x_pos - y_pos)
-    if r == 0:
-        r = EPS
-    force = G * x_mass * y_mass / (r**2)
-    x_to_y = np.zeros(2)
-    y_to_x = np.zeros(2)
-    x_to_y[0] = (force / x_mass) * (y_pos[0] - x_pos[0]) / r
-    x_to_y[1] = (force / x_mass) * (y_pos[1] - x_pos[1]) / r
-    y_to_x[0] = (force / y_mass) * (x_pos[0] - y_pos[0]) / r
-    y_to_x[1] = (force / y_mass) * (x_pos[1] - y_pos[1]) / r
-    r2 = np.square(y_pos[0] - x_pos[0]) + np.square(y_pos[1] - x_pos[1])
-    r2 = r2.astype(np.float64)
-    xaccel_x = (G*y_mass*(y_pos[0] - x_pos[0]) / (r2**3/2 + EPS))
-    xaccel_y = (G*y_mass*(y_pos[1] - x_pos[1]) / (r2**3/2 + EPS))
-    yaccel_x = (G*x_mass*(x_pos[0] - y_pos[0]) / (r2**3/2 + EPS))
-    yaccel_y = (G*y_mass*(y_pos[1] - x_pos[1]) / (r2**3/2 + EPS))
+    p1_pos = g_jobs[int(p1/g_default_jobsize)]["state"][p1 % g_default_jobsize]
+    p2_pos = g_jobs[int(p2/g_default_jobsize)]["state"][p2 % g_default_jobsize]
+    p1_mass = g_jobs[int(p1/g_default_jobsize)]["mass"][p1 % g_default_jobsize]
+    p2_mass = g_jobs[int(p2/g_default_jobsize)]["mass"][p2 % g_default_jobsize]
+    dx = p2_pos[0] - p1_pos[0]
+    dy = p2_pos[1] - p1_pos[1]
+    inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
+    p1_ax = G * (dx * inv_r3) * p2_mass * 2
+    p1_ay = G * (dy * inv_r3) * p2_mass * 2
+    p2_ax = -1.0 * p1_ax * p1_mass / p2_mass
+    p2_ay = -1.0 * p1_ay * p1_mass / p2_mass
     with g_lock:
-        g_forcematrix[x][y][0] = x_to_y[0]
-        g_forcematrix[x][y][1] = x_to_y[1]
-        g_forcematrix[y][x][0] = y_to_x[0]
-        g_forcematrix[y][x][1] = y_to_x[1]
+        g_forcematrix[p1][p2][0] = p1_ax
+        g_forcematrix[p1][p2][1] = p1_ay
+        g_forcematrix[p2][p1][0] = p2_ax
+        g_forcematrix[p2][p1][1] = p2_ay
 
 def simulate_leapfrog():
     # set initial state
