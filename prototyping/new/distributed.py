@@ -92,6 +92,7 @@ def simstep_three(jobid):
 def leapfrog_step():
     step1_threads = []
     step2_threads = []
+    step3_threads = []
     for i in range(g_numworkers):
         step1_threads.append(threading.Thread(target=simstep_one(i)))
         step1_threads[-1].start()
@@ -103,6 +104,11 @@ def leapfrog_step():
         step2_threads.append(threading.Thread(target=simstep_two(i)))
         step2_threads[-1].start()
     for thread in step2_threads:
+        thread.join()
+    for i in range(g_numworkers):
+        step3_threads.append(threading.Thread(target=simstep_three(i)))
+        step3_threads[-1].start()
+    for thread in step3_threads:
         thread.join()
     state = np.zeros((g_numparticles, 4))
     for i in range(g_numworkers):
@@ -120,8 +126,8 @@ def calculate_acceleration(p1, p2):
     dx = p2_pos[0] - p1_pos[0]
     dy = p2_pos[1] - p1_pos[1]
     inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
-    p1_ax = G * (dx * inv_r3) * p2_mass * 2
-    p1_ay = G * (dy * inv_r3) * p2_mass * 2
+    p1_ax = G * (dx * inv_r3) * p2_mass
+    p1_ay = G * (dy * inv_r3) * p2_mass
     p2_ax = -1.0 * p1_ax * p1_mass / p2_mass
     p2_ay = -1.0 * p1_ay * p1_mass / p2_mass
     with g_lock:
