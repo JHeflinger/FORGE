@@ -6,6 +6,15 @@ Distributed method
         2. everyone share their fields 
         3. everyone apply the fields and move the particles
 
+Test suite measurements:
+- accuracy against singlton matrix appraoch
+- energy analysis
+- timing analysis
+  - the big o analysis 
+  - how does it scale up (does it scale linearly with sim length? what about particles?)
+  - how does it scale up across workers?
+  - efficinecy analysis
+
 
 Naive approach:
     - each worker will calculate the impact of the other particles on the particles it is in charge of 
