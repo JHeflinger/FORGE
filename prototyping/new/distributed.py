@@ -12,9 +12,7 @@ import os
 EPS = 1e-12 # epsilon for numerical stability
 g_timer = Timer()
 g_config = globals()
-## REMOVE LATER
 g_config["particles"] = g_config["particles"][0:2]
-## REMOVE LATER
 g_numworkers = g_config["workers"]
 g_numparticles = len(g_config["particles"])
 g_default_jobsize = int(g_numparticles/g_numworkers)
@@ -75,11 +73,11 @@ def simstep_two(jobid):
         if i != jobid:
             for x in range(len(g_jobs[i]["state"])):
                 for y in range(len(g_jobs[jobid]["state"])):
-                    calculate_acceleration(x, y)
+                    print(calculate_acceleration(x, y))
     for x in range(len(g_jobs[jobid]["state"])):
         for y in range(len(g_jobs[jobid]["state"])):
             if x != y:
-                calculate_acceleration(x, y)
+                print(calculate_acceleration(x, y))
     return
 
 def simstep_three(jobid):
@@ -89,27 +87,36 @@ def simstep_three(jobid):
             g_jobs[jobid]["state"][i][3] += g_forcematrix[jobid*g_default_jobsize + i][j][1] * g_config["timestep"]/2.0
     return
 
-def leapfrog_step():
-    step1_threads = []
-    step2_threads = []
-    step3_threads = []
+def launch_step1():
+    threads = []
     for i in range(g_numworkers):
-        step1_threads.append(threading.Thread(target=simstep_one(i)))
-        step1_threads[-1].start()
-    for thread in step1_threads:
+        threads.append(threading.Thread(target=simstep_one(i)))
+        threads[-1].start()
+    for thread in threads:
         thread.join()
+
+def launch_step2():
+    threads = []
     global g_forcematrix
     g_forcematrix = np.zeros((g_numparticles, g_numparticles, 2))
     for i in range(g_numworkers):
-        step2_threads.append(threading.Thread(target=simstep_two(i)))
-        step2_threads[-1].start()
-    for thread in step2_threads:
+        threads.append(threading.Thread(target=simstep_two(i)))
+        threads[-1].start()
+    for thread in threads:
         thread.join()
+
+def launch_step3():
+    threads = []
     for i in range(g_numworkers):
-        step3_threads.append(threading.Thread(target=simstep_three(i)))
-        step3_threads[-1].start()
-    for thread in step3_threads:
+        threads.append(threading.Thread(target=simstep_three(i)))
+        threads[-1].start()
+    for thread in threads:
         thread.join()
+
+def leapfrog_step():
+    launch_step1()
+    launch_step2()
+    launch_step3()
     state = np.zeros((g_numparticles, 4))
     for i in range(g_numworkers):
         for j in range(len(g_jobs[i]["state"])):
@@ -117,6 +124,8 @@ def leapfrog_step():
     return state
 
 def calculate_acceleration(p1, p2):
+    global g_forcematrix
+    global g_lock
     if p1 == p2 or g_forcematrix[p1][p2][0] != 0 or g_forcematrix[p1][p2][1] != 0:
         return
     p1_pos = g_jobs[int(p1/g_default_jobsize)]["state"][p1 % g_default_jobsize]
@@ -135,6 +144,7 @@ def calculate_acceleration(p1, p2):
         g_forcematrix[p1][p2][1] = p1_ay
         g_forcematrix[p2][p1][0] = p2_ax
         g_forcematrix[p2][p1][1] = p2_ay
+    return ((p1_ax, p1_ay),(p2_ax, p2_ay))
 
 def simulate_leapfrog():
     # set initial state
@@ -145,13 +155,7 @@ def simulate_leapfrog():
     simulation = [state]
     
     # calculate initial force grid
-    first_accel_threads = []
-    for i in range(g_numworkers):
-        first_accel_threads.append(threading.Thread(target=simstep_two(i)))
-        first_accel_threads[-1].start()
-    for thread in first_accel_threads:
-        thread.join()
-    print_forcematrix()
+    launch_step2()
 
     # simulate
     steps = int(g_config["duration"] / g_config["timestep"])
