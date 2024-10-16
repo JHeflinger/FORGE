@@ -6,7 +6,7 @@
 "solver": "Leapfrog",
 "softening": 3,
 "speed": 15,
-"density": 50,
+"density": 4,
 "save": {
     "enabled": "false",
     "path": "truth"

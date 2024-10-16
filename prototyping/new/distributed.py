@@ -128,12 +128,21 @@ def leapfrog_step():
 def calculate_acceleration(p1, p2):
     global g_forcematrix
     global g_lock
-    if p1 == p2 or g_forcematrix[p1][p2][0] != 0 or g_forcematrix[p1][p2][1] != 0:
-        return
-    p1_pos = g_jobs[int(p1/g_default_jobsize)]["state"][p1 % g_default_jobsize]
-    p2_pos = g_jobs[int(p2/g_default_jobsize)]["state"][p2 % g_default_jobsize]
-    p1_mass = g_jobs[int(p1/g_default_jobsize)]["mass"][p1 % g_default_jobsize]
-    p2_mass = g_jobs[int(p2/g_default_jobsize)]["mass"][p2 % g_default_jobsize]
+    with g_lock:
+        if p1 == p2 or g_forcematrix[p1][p2][0] != 0 or g_forcematrix[p1][p2][1] != 0:
+            return
+    if p1 >= g_default_jobsize*g_numworkers:
+        p1_pos = g_jobs[g_numworkers - 1]["state"][p1 - g_default_jobsize*g_numworkers]
+        p1_mass = g_jobs[g_numworkers - 1]["mass"][p1 - g_default_jobsize*g_numworkers]
+    else:
+        p1_pos = g_jobs[int(p1/g_default_jobsize)]["state"][p1 % g_default_jobsize]
+        p1_mass = g_jobs[int(p1/g_default_jobsize)]["mass"][p1 % g_default_jobsize]
+    if p2 >= g_default_jobsize*g_numworkers:
+        p2_pos = g_jobs[g_numworkers - 1]["state"][p2 - g_default_jobsize*g_numworkers]
+        p2_mass = g_jobs[g_numworkers - 1]["mass"][p2 - g_default_jobsize*g_numworkers]
+    else:
+        p2_pos = g_jobs[int(p2/g_default_jobsize)]["state"][p2 % g_default_jobsize]
+        p2_mass = g_jobs[int(p2/g_default_jobsize)]["mass"][p2 % g_default_jobsize]
     dx = p2_pos[0] - p1_pos[0]
     dy = p2_pos[1] - p1_pos[1]
     inv_r3 = (dx**2 + dy**2 + g_config["softening"]**2)**(-1.5)
