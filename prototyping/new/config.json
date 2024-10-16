@@ -5,7 +5,7 @@
 "duration": 20000000,
 "solver": "Leapfrog",
 "softening": 3,
-"speed": 8,
+"speed": 20,
 "density": 20,
 "save": {
     "enabled": "true",

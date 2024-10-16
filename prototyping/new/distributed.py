@@ -244,7 +244,7 @@ axs[0].set_ylim(-g_config["bounds"], g_config["bounds"])
 plt.gca().set_aspect('equal')
 
 # Set up animation
-g_anim = animation.FuncAnimation(g_fig, animate_func, frames=range((g_config["duration"])//(g_config["speed"])), interval=40)
+g_anim = animation.FuncAnimation(g_fig, animate_func, frames=range(int(g_config["duration"] / (g_config["speed"] * g_config["timestep"]))), interval=40)
 
 # Show animation
 plt.show()
