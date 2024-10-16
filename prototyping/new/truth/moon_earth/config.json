@@ -5,15 +5,15 @@
 "duration": 20000000,
 "solver": "Leapfrog",
 "softening": 3,
-"speed": 15,
-"density": 50,
+"speed": 8,
+"density": 150,
 "save": {
-    "enabled": "false",
-    "path": "truth"
+    "enabled": "true",
+    "path": "truth/moon_earth"
 },
 "load": {
     "enabled": "false",
-    "path": "truth"
+    "path": "truth/moon_earth"
 },
-"workers": 9
+"workers": 1
 }

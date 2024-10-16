@@ -5,15 +5,15 @@
 "duration": 20000000,
 "solver": "Leapfrog",
 "softening": 3,
-"speed": 15,
-"density": 50,
+"speed": 8,
+"density": 150,
 "save": {
-    "enabled": "false",
-    "path": "truth"
+    "enabled": "true",
+    "path": "truth/eight_moon"
 },
 "load": {
     "enabled": "false",
-    "path": "truth"
+    "path": "truth/eight_moon"
 },
-"workers": 9
+"workers": 1
 }

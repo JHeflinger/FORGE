@@ -6,13 +6,13 @@ from matplotlib.collections import LineCollection
 from scipy.constants import G
 from timer import *
 import threading
+from tqdm import tqdm
 import os
 
 # Initialize particles and their states
 EPS = 1e-12 # epsilon for numerical stability
 g_timer = Timer()
 g_config = globals()
-g_config["particles"] = g_config["particles"][0:2]
 g_numworkers = g_config["workers"]
 g_numparticles = len(g_config["particles"])
 g_default_jobsize = int(g_numparticles/g_numworkers)
@@ -73,11 +73,13 @@ def simstep_two(jobid):
         if i != jobid:
             for x in range(len(g_jobs[i]["state"])):
                 for y in range(len(g_jobs[jobid]["state"])):
-                    print(calculate_acceleration(x, y))
+                    #print(f"{jobid*g_default_jobsize + x}, {i*g_default_jobsize + y}")
+                    calculate_acceleration(jobid*g_default_jobsize + x, i*g_default_jobsize + y)
     for x in range(len(g_jobs[jobid]["state"])):
         for y in range(len(g_jobs[jobid]["state"])):
             if x != y:
-                print(calculate_acceleration(x, y))
+                #print(f"um {jobid*g_default_jobsize + x}, {jobid*g_default_jobsize + y}")
+                calculate_acceleration(jobid*g_default_jobsize + x, jobid*g_default_jobsize + y)
     return
 
 def simstep_three(jobid):
@@ -144,7 +146,6 @@ def calculate_acceleration(p1, p2):
         g_forcematrix[p1][p2][1] = p1_ay
         g_forcematrix[p2][p1][0] = p2_ax
         g_forcematrix[p2][p1][1] = p2_ay
-    return ((p1_ax, p1_ay),(p2_ax, p2_ay))
 
 def simulate_leapfrog():
     # set initial state
@@ -159,9 +160,12 @@ def simulate_leapfrog():
 
     # simulate
     steps = int(g_config["duration"] / g_config["timestep"])
+    progress = tqdm(total = steps)
     for _ in range(steps):
         state = leapfrog_step()
         simulation.append(np.copy(state))
+        progress.update(1)
+    progress.close()
     return np.array(simulation)
 
 # Do simulation
@@ -197,6 +201,7 @@ def bake_g_fields():
     global g_minmax_init
     numframes = int(g_config["duration"]/g_config["timestep"])
     baked_fields = np.zeros([numframes, g_config["density"], g_config["density"]])
+    progress = tqdm(total = numframes)
     for i in range(numframes):
         gx, gy = g_field(simulation[i])
         gstrength = np.log(gx**2 + gy**2)
@@ -208,6 +213,8 @@ def bake_g_fields():
         if cmax > g_field_max or not g_minmax_init:
             g_field_max = cmax
         g_minmax_init = True
+        progress.update(1)
+    progress.close()
     return baked_fields
 g_timer.start("Baking fields")
 g_baked = bake_g_fields()

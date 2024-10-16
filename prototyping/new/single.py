@@ -9,33 +9,20 @@ from timer import *
 import os
 
 # Initialize particles and their states
+# Initialize particles and their states
 EPS = 1e-12 # epsilon for numerical stability
 g_timer = Timer()
 g_config = globals()
-g_numworkers = g_config["workers"]
-g_jobs = []
-for i in range(g_numworkers):
-    default_jobsize = int(len(g_config["particles"])/g_numworkers)
-    joblen = default_jobsize
-    if i == g_numworkers - 1:
-        joblen += len(g_config["particles"]) % g_numworkers
-    job = {
-        "state" : np.zeros((joblen, 4)),
-        "mass" : np.zeros(joblen),
-        "vmass" : np.zeros(joblen).reshape(-1, 1)
-    }
-    for j in range(joblen):
-        print(g_config["particles"][(i*default_jobsize) + j]["name"])
-        job["mass"][j] = g_config["particles"][(i*default_jobsize) + j]["mass"]
-        job["state"][j][0] = g_config["particles"][(i*default_jobsize) + j]["position"][0]
-        job["state"][j][1] = g_config["particles"][(i*default_jobsize) + j]["position"][1]
-        job["state"][j][2] = g_config["particles"][(i*default_jobsize) + j]["velocity"][0]
-        job["state"][j][3] = g_config["particles"][(i*default_jobsize) + j]["velocity"][1]
-    job["vmass"] = job["mass"].reshape(-1, 1)
-    g_jobs.append(job)
-g_state = g_jobs[0]["state"]
-g_mass = g_jobs[0]["mass"]
-g_vec_mass = g_jobs[0]["vmass"]
+g_state = np.zeros((len(g_config["particles"]), 4))
+g_mass = np.zeros(len(g_config["particles"]))
+g_vec_mass = g_mass.reshape(-1, 1)
+g_softening = g_config["softening"]
+for i, particle in enumerate(g_config["particles"]):
+    g_mass[i] = particle["mass"]
+    g_state[i][0] = particle["position"][0]
+    g_state[i][1] = particle["position"][1]
+    g_state[i][2] = particle["velocity"][0]
+    g_state[i][3] = particle["velocity"][1]
 
 # Solvers
 g_solvers = dict()
@@ -119,7 +106,7 @@ def g_field(cstate):
     return u, v
 
 # Do simulation
-g_timer.start(f"Starting simulation on {g_numworkers} worker(s)")
+g_timer.start("Starting simulation")
 simulation = simulate_steps()
 g_timer.end("Finished simulation")
 
@@ -184,7 +171,7 @@ axs[0].set_ylim(-g_config["bounds"], g_config["bounds"])
 plt.gca().set_aspect('equal')
 
 # Set up animation
-g_anim = animation.FuncAnimation(g_fig, animate_func, frames=range((g_config["duration"])//(g_config["speed"])), interval=40)
+g_anim = animation.FuncAnimation(g_fig, animate_func, frames=range(int(g_config["duration"] / (g_config["speed"] * g_config["timestep"]))), interval=40)
 
 # Show animation
 plt.show()
