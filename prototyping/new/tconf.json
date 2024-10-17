@@ -1,12 +1,8 @@
 {
 "tests": {
-	"earth_moon": {
-		"test": "test/earth_moon",
-		"truth": "truth/earth_moon"
-	},
 	"eight_moon": {
 		"test": "test/eight_moon",
-		"truth": "truth/earth_moon"
+		"truth": "truth/eight_moon"
 	}
 },
 "flags": {

@@ -1,5 +1,6 @@
 from serial import *
 from timer import *
+import os
 
 g_config = tglobals()
 
@@ -27,6 +28,15 @@ g_energy = []
 g_timer = Timer()
 
 for i, test in enumerate(g_config["tests"]):
-    info(f"Starting {test} test...")
+    info(f"Loading {test} test states...")
     g_timer.end()
-    info(f"Finished {test} test in {Green}{g_timer.end()}{Reset} seconds")
+    test_simulation = loadstate(os.path.join(g_config["tests"][test]["test"], ".simstate"))
+    truth_simulation = loadstate(os.path.join(g_config["tests"][test]["truth"], ".simstate"))
+    info(f"Finished loading {test} test in {Green}{g_timer.end()}{Reset} seconds")
+    info(f"Verifying {test} test...")
+    verified = False
+    
+    if verified:
+        info(f"Verified {test} test in {Green}{g_timer.end()}{Reset} seconds")
+    else:
+        error(f"{test} was unable to be verified as a valid test.")
