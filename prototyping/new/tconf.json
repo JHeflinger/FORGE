@@ -1,0 +1,28 @@
+{
+"tests": {
+	"earth_moon": {
+		"test": "test/earth_moon",
+		"truth": "truth/earth_moon"
+	},
+	"eight_moon": {
+		"test": "test/eight_moon",
+		"truth": "truth/earth_moon"
+	}
+},
+"flags": {
+	"accuracy": true,
+	"energy": true,
+	"visualize": true
+},
+"timing": {
+	"enabled": true,
+	"config": "config.json",
+	"efficiency": true,
+	"scale": true,
+	"workers": {
+		"enabled": true,
+		"count": 8,
+		"step": 2
+	}
+}
+}
