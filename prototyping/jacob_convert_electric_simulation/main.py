@@ -12,7 +12,7 @@ from AnimationWrapper import InteractiveAnimation, PLOT_POS
 def get_cmap(n, name="hsv"):
     """Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
     RGB color; the keyword argument name must be a standard mpl colormap name."""
-    return plt.cm.get_cmap(name, n)
+    return plt.get_cmap(name, n)
 
 
 # DT = 3000  # timestep
@@ -146,38 +146,43 @@ scatter = main_ax.scatter(
     state[:, 0], state[:, 1], s=np.log(tmp) * 15, c=mass, cmap=cmap, vmin=-3, vmax=3
 )
 
-divider = mpl_toolkits.axes_grid1.make_axes_locatable(main_ax)
-trace_axis = divider.append_axes("right", size="100%", pad=0.05)
-trace_axis.set_aspect("equal")
 cmap = get_cmap(N)
 
-for particle_num in range(N):
-    px = simulation[:, particle_num, 0]
-    py = simulation[:, particle_num, 1]
-    trace_axis.scatter(px, py, s=0.05, c=cmap(particle_num))
+# divider = mpl_toolkits.axes_grid1.make_axes_locatable(main_ax)
+# trace_axis = divider.append_axes("right", size="100%", pad=0.05)
+# trace_axis.set_aspect("equal")
+
+# for particle_num in range(N):
+#     px = simulation[:, particle_num, 0]
+#     py = simulation[:, particle_num, 1]
+#     trace_axis.scatter(px, py, s=0.05, color=cmap(particle_num))
 
 
 def animate_func(i):
-    # simulation[i*SIM_SPEED] represents the new state in frame i of the animation
-    # recalculate electric field for the new state
-    print(f"\n\nGot it {i}\n\n")
     E_strength = baked_g_fields[i * SIM_SPEED]
-    # print(set(E_strength.flatten().tolist()))
-
     mesh.set_array(E_strength)  # update electric field plot
     scatter.set_offsets(simulation[i * SIM_SPEED])  # update particles scatter plot
     return scatter, mesh
 
 
-anim = InteractiveAnimation(
-    0,
-    SIM_LEN // SIM_SPEED,
+# anim = InteractiveAnimation(
+#     0,
+#     SIM_LEN // SIM_SPEED,
+#     fig,
+#     animate_func,
+#     interval=67,
+#     save_count=SIM_LEN //SIM_SPEED,
+#     cache_frame_data=True,
+#     init_func=lambda : (scatter,mesh),
+# )
+
+anim = animation.FuncAnimation(
     fig,
     animate_func,
-    interval=67,
-    save_count=SIM_LEN // SIM_SPEED,
-    cache_frame_data=True,
+    frames=range(SIM_LEN //SIM_SPEED),
+    interval=10,
 )
+
 # fig.set_size_inches(6, 6)
 # fig.subplots_adjust(
 #     left=0, bottom=0, right=1, top=1, wspace=None, hspace=None
