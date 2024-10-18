@@ -1,14 +1,14 @@
 {
+"output": "runs/.results",
 "tests": {
 	"eight_moon": {
 		"test": "test/eight_moon",
 		"truth": "truth/eight_moon"
+	},
+	"moon_earth": {
+		"test": "test/moon_earth",
+		"truth": "truth/moon_earth"
 	}
-},
-"flags": {
-	"accuracy": true,
-	"energy": true,
-	"visualize": true
 },
 "timing": {
 	"enabled": true,

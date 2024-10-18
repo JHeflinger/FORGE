@@ -142,11 +142,13 @@ if g_config["save"]["enabled"] == "true":
     os.makedirs(g_config["save"]["path"], exist_ok=True)
     savestate(simulation, os.path.join(g_config["save"]["path"], ".simstate"))
     savestate(g_baked, os.path.join(g_config["save"]["path"], ".bakedstate"))
+    savestate(g_mass, os.path.join(g_config["save"]["path"], ".mass"))
     g_timer.end("Saved simulation state")
 if g_config["load"]["enabled"] == "true":
     g_timer.start("Loading simulation state...")
     simulation = loadstate(os.path.join(g_config["load"]["path"], ".simstate"))
     g_baked = loadstate(os.path.join(g_config["load"]["path"], ".bakedstate"))
+    g_mass = loadstate(os.path.join(g_config["load"]["path"], ".mass"))
     g_timer.end("Loaded simulation state")
 
 # Animation function

@@ -8,8 +8,8 @@
 "speed": 8,
 "density": 30,
 "save": {
-    "enabled": "true",
-    "path": "truth/eight_moon"
+    "enabled": "false",
+    "path": "truth/moon_earth"
 },
 "load": {
     "enabled": "false",
