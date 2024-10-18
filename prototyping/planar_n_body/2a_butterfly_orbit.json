@@ -1,0 +1,39 @@
+{
+  "bodies": [
+    {
+      "name": "P1",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": 0.306893,
+      "init_vel_y_ms": 0.125507,
+      "init_pos_x_m": 0.5,
+      "init_pos_y_m": 1.5
+    },
+    {
+      "name": "P2",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": 0.306893,
+      "init_vel_y_ms": 0.125507,
+      "init_pos_x_m": 2.5,
+      "init_pos_y_m": 1.5
+
+    },
+    {
+      "name": "P3",
+      "mass_kg": 1,
+      "diam_m": 0.01,
+      "init_vel_x_ms": -0.613786,
+      "init_vel_y_ms": -1.251014,
+      "init_pos_x_m": 1.5,
+      "init_pos_y_m": 1.5
+
+    }
+  ],
+  "globals": {
+    "sim_dim_x_m": 3,
+    "sim_dim_y_m": 3,
+    "time_step_s": 0.005,
+    "sim_duration_s":25
+  } 
+}
