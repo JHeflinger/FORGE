@@ -1,0 +1,37 @@
+cc_library(
+    name = "linux_OrbitViz_library",
+    # visibility = ["//visibility:public"],
+    srcs = glob([
+        "src/*.cpp",
+    ]),
+    hdrs = glob([
+        "src/*.h",
+    ]),
+	includes = ["src"],
+    deps = [
+        "//vendor/yaml-cpp:yaml-cpp",
+        "//vendor:spdlog",
+        "//vendor:imgui_backend",
+        "//vendor:imgui",
+    ],
+	linkopts = [
+        "-lglfw",
+        "-lX11",
+        "-lXxf86vm",
+        "-lXrandr",
+        "-lXi",
+        "-lGL",
+        "-lGLU",
+        "-lglut",
+    ],
+    copts = ["-DLINUX_BUILD"],
+)
+
+cc_binary(
+    name = "linux_OrbitViz",
+    visibility = ["//visibility:public"],
+    srcs = ["src/main.cpp"],
+    deps = [
+        ":linux_OrbitViz_library",
+    ],
+)
