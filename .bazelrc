@@ -3,3 +3,6 @@ build --java_language_version=11
 build --tool_java_language_version=11
 run --tool_java_runtime_version=remotejdk_11
 run --java_runtime_version=remotejdk_11
+
+# Don't source environment from shell
+build --incompatible_strict_action_env
