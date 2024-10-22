@@ -55,6 +55,11 @@ def visualize_test(path):
     plt.tight_layout()
     plt.show()
 
+def visualize_sim(path):
+    simulation = loadstate(os.path.join(path, ".simstate"))
+    fields = loadstate(os.path.join(path, ".bakedstate"))
+    fig = plt.figure()
+    print("ok not supported yet")
 
 if __name__ == "__main__":
     if len(sys.argv) != 3 or (sys.argv[1] != '-t' and sys.argv[1] != '-v'):
@@ -62,3 +67,5 @@ if __name__ == "__main__":
         exit()
     if sys.argv[1] == '-t':
         visualize_test(sys.argv[2])
+    if sys.argv[1] == '-v':
+        visualize_sim(sys.argv[2])
