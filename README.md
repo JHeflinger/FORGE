@@ -71,8 +71,3 @@ On Linux systems, this will be
 ```
 
 Happy simulating!
-
-## Docs
-This project supports doxygen documentation! However, the direct documentation files have not been included due to the bloat that it generates
-in the repository. If you'd like to view the documentation, be sure to install doxygen and use the provided "doxygen_config" doxyfile to generate
-the documentation! This doxyfile has been preconfigured to generate the correct documentation, and will output the documentation into the `docs/` folder.
