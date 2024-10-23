@@ -17,6 +17,7 @@ enum class SimulationLengthUnit {
 enum class SimulationSolver {
 	RKF45 = 0,
 	EULER = 1,
+	LEAPFROG = 2,
 };
 
 class Simulation {

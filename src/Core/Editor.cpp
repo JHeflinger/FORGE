@@ -255,7 +255,46 @@ void Editor::DrawPrompts() {
 			ImGui::NextColumn();
 			ImGui::SetColumnWidth(0, 200);
 			char tbuffer[2048];
-			snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Length(), "ms");
+			const char* length_units[] = { "ticks", "us", "ms", "s" };
+			snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Length(), length_units[(int)m_Simulation->LengthUnit()]);
+			ImGui::Text(tbuffer);
+			ImGui::Dummy({0, gapsize});
+			if (m_Simulation->SafeguardCacheEnabled()) {
+				snprintf(tbuffer, 2048, "TRUE");
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,255,0,255));
+			} else {
+				snprintf(tbuffer, 2048, "FALSE");
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
+			}
+			ImGui::Text(tbuffer);
+			ImGui::PopStyleColor();
+			ImGui::Dummy({0, gapsize});
+			if (m_Simulation->SimulationRecordEnabled()) {
+				snprintf(tbuffer, 2048, "TRUE");
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,255,0,255));
+			} else {
+				snprintf(tbuffer, 2048, "FALSE");
+				ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
+			}
+			ImGui::Text(tbuffer);
+			ImGui::PopStyleColor();
+			const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
+			ImGui::Dummy({0, gapsize});
+			ImGui::Text(solver_options[(int)m_Simulation->Solver()]);
+			ImGui::Dummy({0, gapsize});
+			snprintf(tbuffer, 2048, "%.3f by %.3f", m_Simulation->Bounds().x, m_Simulation->Bounds().y);
+			ImGui::Text(tbuffer);
+			ImGui::Dummy({0, gapsize});
+			if (m_Simulation->DynamicTimestep())
+				snprintf(tbuffer, 2048, "DYNAMIC");
+			else
+				snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Timestep(), length_units[(int)m_Simulation->LengthUnit()]);
+			ImGui::Text(tbuffer);
+			ImGui::Dummy({0, gapsize});
+			snprintf(tbuffer, 2048, "%lu", (long unsigned int)m_Simulation->NumLocalWorkers());
+			ImGui::Text(tbuffer);
+			ImGui::Dummy({0, gapsize});
+			snprintf(tbuffer, 2048, "%lu", (long unsigned int)m_Simulation->NumRemoteWorkers());
 			ImGui::Text(tbuffer);
 
 			ImGui::Columns(1);

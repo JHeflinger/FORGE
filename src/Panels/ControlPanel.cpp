@@ -62,7 +62,7 @@ void ControlPanel::Update(Editor* context) {
 	    context->GetSimulation()->SetSimulationRecord(checkbox);
     ImGui::Dummy({0, gapsize});
 	int current_solver = (int)context->GetSimulation()->Solver();
-    const char* solver_options[] = { "RKF45", "Euler" };
+    const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
     if (ImGui::Combo("##simulationsolver", &current_solver, solver_options, IM_ARRAYSIZE(solver_options)))
 	    context->GetSimulation()->SetSolver((SimulationSolver)current_solver);
     ImGui::Dummy({0, gapsize});
