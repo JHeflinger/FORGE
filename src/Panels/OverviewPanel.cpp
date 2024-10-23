@@ -132,7 +132,7 @@ void OverviewPanel::Update(Editor* context) {
 			if (ImGui::IsItemClicked())
 				context->SetSelectedID(particle->ID());
 			char buff[1024];
-			sprintf(buff, "##particle_number_%I64u", particle->ID());
+			sprintf(buff, "##particle_number_%llu", (long long unsigned int)particle->ID());
 			if (ImGui::BeginPopupContextItem(buff)) {
 				if (ImGui::MenuItem("Delete")) {
 					remove_particle = true;
@@ -142,10 +142,12 @@ void OverviewPanel::Update(Editor* context) {
         	}
 			if (opened) ImGui::TreePop();
 		}
-		for (int i = 0; i < context->GetSimulation()->Particles().size(); i++) {
-			if (context->GetSimulation()->Particles()[i]->ID() == particle_to_remove) {
-				context->GetSimulation()->Particles().erase(context->GetSimulation()->Particles().begin() + i);
-				break;
+		if (remove_particle) {
+			for (size_t i = 0; i < context->GetSimulation()->Particles().size(); i++) {
+				if (context->GetSimulation()->Particles()[i]->ID() == particle_to_remove) {
+					context->GetSimulation()->Particles().erase(context->GetSimulation()->Particles().begin() + i);
+					break;
+				}
 			}
 		}
 		ImGui::TreePop();

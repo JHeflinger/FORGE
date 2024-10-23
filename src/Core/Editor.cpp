@@ -255,7 +255,7 @@ void Editor::DrawPrompts() {
 			ImGui::NextColumn();
 			ImGui::SetColumnWidth(0, 200);
 			char tbuffer[2048];
-			snprintf(tbuffer, 2048, "%I64u %s", m_Simulation->Length(), "ms");
+			snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Length(), "ms");
 			ImGui::Text(tbuffer);
 
 			ImGui::Columns(1);

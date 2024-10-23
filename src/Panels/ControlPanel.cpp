@@ -86,15 +86,17 @@ void ControlPanel::Update(Editor* context) {
     if (ImGui::Checkbox("Dynamic", &dynamic_timestep))
         context->GetSimulation()->SetDynamicTimestep(dynamic_timestep);
     ImGui::Dummy({0, gapsize});
-    if (dynamic_timestep)
+    if (dynamic_timestep) {
         ImGui::BeginDisabled();
+	}
 	uint64_t timestep = context->GetSimulation()->Timestep();
 	if (ImGui::DragScalar("##timestep", ImGuiDataType_U64, &timestep, 1.0f))
 	    context->GetSimulation()->SetTimestep(timestep);
 	ImGui::SameLine();
     ImGui::Text(length_units[current_length_unit]);
-    if (dynamic_timestep)
+    if (dynamic_timestep) {
         ImGui::EndDisabled();
+	}
     ImGui::Dummy({0, gapsize});
     uint32_t workers = context->GetSimulation()->NumLocalWorkers();
     if (ImGui::DragScalar("##localworkers", ImGuiDataType_U32, &workers, 1.0))
