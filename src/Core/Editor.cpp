@@ -122,6 +122,9 @@ void Editor::ProcessInput() {
 					m_Prompt = EditorPrompts::SAVE;
 				}
 				m_InputPrimer = false;
+			} else if (Input::IsKeyPressed(KeyCode::R)) {
+				m_Prompt = EditorPrompts::RUN;
+				m_InputPrimer = false;
 			}
 		}
 	} else {
@@ -225,14 +228,46 @@ void Editor::DrawPrompts() {
 	case EditorPrompts::RUN:
 		ImGui::OpenPopup("Run Simulation");
 		ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		ImGui::SetNextWindowSize({400, 0});
 		if (ImGui::BeginPopupModal("Run Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
 			ImGui::SetItemDefaultFocus();
-			ImGui::Text("Who's ready to RRRRRRRUMBLEEE!!!11\n\n");
+			ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Confirm Simulation Details").x / 2.0));
+			ImGui::Text("Confirm Simulation Details");
 			ImGui::Separator();
-			ImGui::Dummy({ 0, 3 });
+			ImGui::Columns(2);
+    		float gapsize = 8.0f;
+			ImGui::SetColumnWidth(0, 200);
+			ImGui::Text("Simulation Length");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Safeguard Cache Enabled");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Simulation Record Enabled");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Simulation Solver");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Bounds");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Timestep");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Local Workers");
+    		ImGui::Dummy({0, gapsize});
+			ImGui::Text("Remote Workers");
+			ImGui::NextColumn();
+			ImGui::SetColumnWidth(0, 200);
+			char tbuffer[2048];
+			snprintf(tbuffer, 2048, "%I64u %s", m_Simulation->Length(), "ms");
+			ImGui::Text(tbuffer);
+
+			ImGui::Columns(1);
+    		ImGui::Dummy({0, gapsize});
 			if (ImGui::Button("Cancel", {60, 25})) {
 				m_Prompt = EditorPrompts::NONE;
 				ImGui::CloseCurrentPopup();
+			}
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
+			if (ImGui::Button("Next", {60, 25})) {
+
 			}
 			ImGui::EndPopup();
 		}
