@@ -124,12 +124,29 @@ void OverviewPanel::Update(Editor* context) {
 
 	if (ImGui::TreeNodeEx("Particles", treeNodeFlags)) {
 		DrawAddParticle(context, false);
+		uint64_t particle_to_remove = 0;
+		bool remove_particle = false;
 		for (Ref<Particle> particle : context->GetSimulation()->Particles()) {
 			ImGuiTreeNodeFlags flags = (particle->ID() == context->SelectedID()  ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_SpanAvailWidth;
 			bool opened = ImGui::TreeNodeEx(reinterpret_cast<void*>(particle->ID()), flags, particle->Name().c_str());
 			if (ImGui::IsItemClicked())
 				context->SetSelectedID(particle->ID());
+			char buff[1024];
+			sprintf(buff, "##particle_number_%I64u", particle->ID());
+			if (ImGui::BeginPopupContextItem(buff)) {
+				if (ImGui::MenuItem("Delete")) {
+					remove_particle = true;
+					particle_to_remove = particle->ID();
+				}
+            	ImGui::EndPopup();
+        	}
 			if (opened) ImGui::TreePop();
+		}
+		for (int i = 0; i < context->GetSimulation()->Particles().size(); i++) {
+			if (context->GetSimulation()->Particles()[i]->ID() == particle_to_remove) {
+				context->GetSimulation()->Particles().erase(context->GetSimulation()->Particles().begin() + i);
+				break;
+			}
 		}
 		ImGui::TreePop();
 	} else DrawAddParticle(context);
