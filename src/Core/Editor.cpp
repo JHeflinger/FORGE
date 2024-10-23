@@ -257,7 +257,7 @@ void Editor::DrawStaticParticles() {
 	for (Ref<Particle> particle : m_Simulation->Particles()) {
 		Renderer::DrawSphere({
 			particle->Position(),
-			0.5f
+			particle->Radius()
 		});
 	}
 }

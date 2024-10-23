@@ -10,6 +10,18 @@ public:
 	glm::vec3 Position() { return m_Position; }
 	void SetPosition(glm::vec3 position) { m_Position = position; }
 	glm::vec3& RawPosition() { return m_Position; }
+	glm::vec3 Velocity() { return m_Velocity; }
+	void SetVelocity(glm::vec3 velocity) { m_Velocity = velocity; }
+	glm::vec3& RawVelocity() { return m_Velocity; }
+	float Mass() { return m_Mass; }
+	void SetMass(float mass) { m_Mass = mass; }
+	float* RawMass() { return &m_Mass; }
+	float Radius() { return m_Radius; }
+	void SetRadius(float radius) { m_Radius = radius; }
+	float* RawRadius() { return &m_Radius; }
 private:
 	glm::vec3 m_Position;
+	glm::vec3 m_Velocity;
+	float m_Mass;
+	float m_Radius = 0.5f;
 };

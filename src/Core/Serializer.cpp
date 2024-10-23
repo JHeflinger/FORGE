@@ -99,6 +99,9 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
         out << YAML::Key << "ID" << YAML::Value << particle->ID();
         out << YAML::Key << "Name" << YAML::Value << particle->Name();
         out << YAML::Key << "Position" << YAML::Value << particle->Position();
+        out << YAML::Key << "Velocity" << YAML::Value << particle->Velocity();
+        out << YAML::Key << "Mass" << YAML::Value << particle->Mass();
+        out << YAML::Key << "Radius" << YAML::Value << particle->Radius();
         out << YAML::EndMap;
     }
     out << YAML::EndSeq;
@@ -266,10 +269,16 @@ bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::st
         for (auto particledata : particles) {
             if (particledata["ID"] && 
                 particledata["Name"] &&
-                particledata["Position"]) {
+                particledata["Position"] &&
+                particledata["Velocity"] &&
+                particledata["Radius"] &&
+                particledata["Mass"]) {
                 Ref<Particle> particle = CreateRef<Particle>(particledata["ID"].as<uint64_t>());
                 particle->SetName(particledata["Name"].as<std::string>());
                 particle->SetPosition(particledata["Position"].as<glm::vec3>());
+                particle->SetVelocity(particledata["Velocity"].as<glm::vec3>());
+                particle->SetRadius(particledata["Radius"].as<float>());
+                particle->SetMass(particledata["Mass"].as<float>());
                 simulation->Particles().push_back(particle);
             } else WARN("Resource data for serialized source is missing critical data - deserialization for this resource will be skipped");
         }
