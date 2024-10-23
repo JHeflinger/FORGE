@@ -176,8 +176,7 @@ void Editor::DrawPrompts() {
 	case EditorPrompts::OPEN:
 		if (!m_SimulationSaved) {
 			ImGui::OpenPopup("WARNING");
-			ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-			ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+			ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
 			if (ImGui::BeginPopupModal("WARNING", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
 				ImGui::SetItemDefaultFocus();
 				ImGui::Text("You have not saved this scene! Would you like to save first?\n\n");
@@ -222,6 +221,21 @@ void Editor::DrawPrompts() {
 		m_Simulation->SetFilepath(FileUtils::Save(Serializer::SerializeSimulation(m_Simulation)));
 		m_Prompt = EditorPrompts::NONE;
 		m_LastSavedTime = 0.0f;
+		break;
+	case EditorPrompts::RUN:
+		ImGui::OpenPopup("Run Simulation");
+		ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		if (ImGui::BeginPopupModal("Run Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+			ImGui::SetItemDefaultFocus();
+			ImGui::Text("Who's ready to RRRRRRRUMBLEEE!!!11\n\n");
+			ImGui::Separator();
+			ImGui::Dummy({ 0, 3 });
+			if (ImGui::Button("Cancel", {60, 25})) {
+				m_Prompt = EditorPrompts::NONE;
+				ImGui::CloseCurrentPopup();
+			}
+			ImGui::EndPopup();
+		}
 		break;
 	default:
 		FATAL("Invalid editor prompt detected!");
