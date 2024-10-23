@@ -84,6 +84,8 @@ void Editor::DrawMenuBar() {
 				m_Prompt = EditorPrompts::SAVE;
 			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
 				m_Prompt = EditorPrompts::SAVEAS;
+			if (ImGui::MenuItem("Run", "Ctrl+R"))
+				m_Prompt = EditorPrompts::RUN;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Panels")) {

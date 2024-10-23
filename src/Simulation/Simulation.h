@@ -4,6 +4,7 @@
 #include "Simulation/Sink.h"
 #include "Simulation/Source.h"
 #include "Core/Safety.h"
+#include "glm/glm.hpp"
 #include <vector>
 
 enum class SimulationLengthUnit {
@@ -37,6 +38,16 @@ public:
 	void SetSimulationRecord(bool enabled) { m_EnableSimulationRecord = enabled; }
 	SimulationSolver Solver() { return m_Solver; }
 	void SetSolver(SimulationSolver solver) { m_Solver = solver; }
+	glm::vec2 Bounds() { return m_Bounds; }
+	void SetBounds(glm::vec2 bounds) { m_Bounds = bounds; } 
+	uint64_t Timestep() { return m_Timestep; }
+	void SetTimestep(uint64_t ts) { m_Timestep = ts; }
+	bool DynamicTimestep() { return m_DynamicTimestep; }
+	void SetDynamicTimestep(bool dynamic) { m_DynamicTimestep = dynamic; }
+	uint32_t NumLocalWorkers() { return m_NumLocalWorkers; }
+	void SetNumLocalWorkers(uint32_t workers) { m_NumLocalWorkers = workers; }
+	uint32_t NumRemoteWorkers() { return m_NumRemoteWorkers; }
+	void SetNumRemoteWorkers(uint32_t workers) { m_NumRemoteWorkers = workers; }
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
@@ -48,5 +59,10 @@ private:
 	uint64_t m_SimulationLength = 0;
 	bool m_EnableSafeguardCache = false;
 	bool m_EnableSimulationRecord = false;
+	glm::vec2 m_Bounds = { 0, 0 };
+	bool m_DynamicTimestep = false;
+	uint64_t m_Timestep = 0;
+	uint32_t m_NumLocalWorkers = 0;
+	uint32_t m_NumRemoteWorkers = 0;
 	SimulationSolver m_Solver = SimulationSolver::RKF45;
 };

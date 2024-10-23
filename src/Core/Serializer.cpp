@@ -108,6 +108,11 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
 	out << YAML::Key << "Safeguard Cache Enabled" << YAML::Value << simulation->SafeguardCacheEnabled();
 	out << YAML::Key << "Simulation Record Enabled" << YAML::Value << simulation->SimulationRecordEnabled();
 	out << YAML::Key << "Solver" << YAML::Value << (int)simulation->Solver();
+	out << YAML::Key << "Bounds" << YAML::Value << simulation->Bounds();
+	out << YAML::Key << "Dynamic Timestep" << YAML::Value << simulation->DynamicTimestep();
+	out << YAML::Key << "Timestep" << YAML::Value << simulation->Timestep();
+	out << YAML::Key << "Local Workers" << YAML::Value << simulation->NumLocalWorkers();
+	out << YAML::Key << "Remote Workers" << YAML::Value << simulation->NumRemoteWorkers();
 
     out << YAML::EndMap;
     return std::string(out.c_str());
@@ -289,6 +294,26 @@ bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::st
 	if (yamldata["Solver"]) {
 		simulation->SetSolver((SimulationSolver)yamldata["Solver"].as<int>());
 	} else WARN("No solver found to serialize into simulation!");
+
+	if (yamldata["Bounds"]) {
+		simulation->SetBounds(yamldata["Bounds"].as<glm::vec2>());
+	} else WARN("No bounds found to serialize into simulation!");
+
+	if (yamldata["Dynamic Timestep"]) {
+		simulation->SetDynamicTimestep(yamldata["Dynamic Timestep"].as<bool>());
+	} else WARN("No dynamic timestep found to serialize into simulation!");
+
+	if (yamldata["Timestep"]) {
+		simulation->SetTimestep(yamldata["Timestep"].as<uint64_t>());
+	} else WARN("No timestep found to serialize into simulation!");
+
+	if (yamldata["Local Workers"]) {
+		simulation->SetNumLocalWorkers(yamldata["Local Workers"].as<uint32_t>());
+	} else WARN("No local workers found to serialize into simulation!");
+
+	if (yamldata["Remote Workers"]) {
+		simulation->SetNumRemoteWorkers(yamldata["Remote Workers"].as<uint32_t>());
+	} else WARN("No remote workers found to serialize into simulation!");
 
     return true;
 }

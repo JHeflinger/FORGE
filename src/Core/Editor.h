@@ -14,6 +14,7 @@ enum class EditorPrompts {
     SAVE,
     SAVEAS,
     OPEN,
+    RUN
 };
 
 class Editor {
