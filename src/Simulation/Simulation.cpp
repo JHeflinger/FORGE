@@ -22,12 +22,17 @@ std::string GetCurrentTimeString() {
 
 void Simulation::Simulate() {
 	std::vector<std::vector<glm::vec2>> force_matrix(m_Particles.size(), std::vector<glm::vec2>(m_Particles.size(), {0, 0}));
-	
+	std::vector<std::vector<Particle>> simulation_progress;
+	std::vector<Particle> particle_slice;
+	for (size_t i = 0; i < m_Particles.size(); i++) particle_slice.push_back(*m_Particles[i]);
+
 	uint64_t steps = m_SimulationLength / m_Timestep;
+	simulation_progress.push_back(particle_slice);
 
 	for (uint64_t i = 0; i < steps; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
+		// TODO: make copying the current slice multi-threaded so its non-blocking
+		simulation_progress.push_back(particle_slice);
 		m_MutexLock.lock();
 		m_Progress = (float)((float)(i + 1) / (float)steps);
 		m_MutexLock.unlock();
