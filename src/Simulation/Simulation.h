@@ -6,6 +6,8 @@
 #include "Core/Safety.h"
 #include "glm/glm.hpp"
 #include <vector>
+#include <mutex>
+#include <thread>
 
 enum class SimulationLengthUnit {
 	TICKS = 0,
@@ -65,8 +67,11 @@ private:
     std::vector<Ref<Particle>> m_Particles;
     std::vector<Ref<Grid>> m_Grids;
 	std::vector<std::string> m_Logs;
-private:
+public:
+	std::thread m_MainProcess;
+	std::mutex m_MutexLock;
 	float m_Progress = 0.0f;
+private:
 	bool m_Started = false;
 	bool m_Paused = false;
     std::string m_Filepath = "";

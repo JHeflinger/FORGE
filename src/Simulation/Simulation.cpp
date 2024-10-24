@@ -17,33 +17,50 @@ std::string GetCurrentTimeString() {
     return timeStream.str();
 }
 
+void temp_run_simulation(Simulation* sim) {
+    for (int i = 0; i < 100; i++) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::lock_guard<std::mutex> guard(sim->m_MutexLock);
+        sim->m_Progress += 0.01f;
+    }
+}
+
 void Simulation::Log(std::string log) {
     m_Logs.push_back(GetCurrentTimeString() + " " + log); 
     if (m_Logs.size() > 10000) 
         m_Logs.erase(m_Logs.begin());
 }
 
-bool Simulation::Started() { 
+bool Simulation::Started() {
     return m_Started; 
 }
 
-bool Simulation::Paused() { 
+bool Simulation::Paused() {
     return m_Paused; 
 }
 
-void Simulation::Start() { 
+void Simulation::Start() {
+    this->Log("starting simulation...");
+    m_MainProcess = std::thread(temp_run_simulation, this);
     m_Started = true; m_Paused = false; 
 }
 
-void Simulation::Pause() { 
+void Simulation::Pause() {
+    this->Log("pausing simulation...");
+
+    this->Log("paused simulation");
     m_Paused = true; 
 }
 
-void Simulation::Resume() { 
+void Simulation::Resume() {
+    this->Log("resuming simulation...");
     m_Paused = false; 
 }
 
-void Simulation::Abort() { 
+void Simulation::Abort() {
+    this->Log("aborting simulation...");
+
+    this->Log("aborted simulation");
     m_Started = false; 
     m_Paused = false; 
 }
