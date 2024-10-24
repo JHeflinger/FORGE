@@ -49,12 +49,26 @@ public:
 	void SetNumLocalWorkers(uint32_t workers) { m_NumLocalWorkers = workers; }
 	uint32_t NumRemoteWorkers() { return m_NumRemoteWorkers; }
 	void SetNumRemoteWorkers(uint32_t workers) { m_NumRemoteWorkers = workers; }
+public:
+	void Log(std::string log);
+	std::vector<std::string>& Logs() { return m_Logs; }
+	float Progress() { return m_Progress; }
+	bool Started();
+	bool Paused();
+	void Start();
+	void Pause();
+	void Resume();
+	void Abort();
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
     std::vector<Ref<Particle>> m_Particles;
     std::vector<Ref<Grid>> m_Grids;
+	std::vector<std::string> m_Logs;
 private:
+	float m_Progress = 0.0f;
+	bool m_Started = false;
+	bool m_Paused = false;
     std::string m_Filepath = "";
 	SimulationLengthUnit m_LengthUnit = SimulationLengthUnit::TICKS;
 	uint64_t m_SimulationLength = 0;
