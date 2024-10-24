@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "Core/Log.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -19,10 +20,14 @@ std::string GetCurrentTimeString() {
 
 void temp_run_simulation(Simulation* sim) {
     for (int i = 0; i < 100; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        std::lock_guard<std::mutex> guard(sim->m_MutexLock);
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        sim->m_MutexLock.lock();
         sim->m_Progress += 0.01f;
+		sim->m_MutexLock.unlock();
     }
+    sim->m_MutexLock.lock();
+	sim->m_Finished = true;
+	sim->m_MutexLock.unlock();
 }
 
 void Simulation::Log(std::string log) {
@@ -63,4 +68,13 @@ void Simulation::Abort() {
     this->Log("aborted simulation");
     m_Started = false; 
     m_Paused = false; 
+}
+
+void Simulation::Checkup() {
+	if (m_Finished) {
+		m_MainProcess.join();
+		m_Started = false;
+		m_Paused = false;
+		this->Log("finished simulation!");
+	}
 }

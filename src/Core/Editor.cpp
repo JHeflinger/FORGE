@@ -325,7 +325,7 @@ void Editor::DrawPrompts() {
 					ImGui::Text("Simulation Log");
 					ImGui::Dummy({0, 2});
 					ImGui::BeginChild("logs", {0, 300}, true, ImGuiWindowFlags_HorizontalScrollbar);
-					for (int i = 0; i < m_Simulation->Logs().size(); i++)
+					for (size_t i = 0; i < m_Simulation->Logs().size(); i++)
 						ImGui::Text(m_Simulation->Logs()[i].c_str());
 					ImGui::EndChild();
 					ImGui::Dummy({0, 2});
@@ -338,7 +338,7 @@ void Editor::DrawPrompts() {
 					ImGui::PopStyleColor();
 					ImGui::PopFont();
 					ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - 53);
-					if (m_Simulation->Progress() == 1.0f)
+					if (m_Simulation->Finished())
 						ImGui::BeginDisabled();
 					if (!m_Simulation->Started()) {
 						if (ImGui::Button("START", {60, 25})) {
@@ -353,7 +353,7 @@ void Editor::DrawPrompts() {
 							m_Simulation->Pause();
 						}
 					}
-					if (m_Simulation->Progress() == 1.0f)
+					if (m_Simulation->Finished())
 						ImGui::EndDisabled();
 					ImGui::SameLine();
 					ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 135);
@@ -369,14 +369,14 @@ void Editor::DrawPrompts() {
 			}
 			
 			ImGui::Dummy({0, 10});
-			if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Progress() == 1.0))
+			if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 				ImGui::BeginDisabled();
 			if (ImGui::Button("Cancel", {60, 25})) {
 				m_Prompt = EditorPrompts::NONE;
 				s_substate = 0; 
 				ImGui::CloseCurrentPopup();
 			}
-			if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Progress() == 1.0))
+			if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 				ImGui::EndDisabled();
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
@@ -385,25 +385,28 @@ void Editor::DrawPrompts() {
 					s_substate++;
 				}
 			} else {
-				if (m_Simulation->Progress() != 1.0f)
+				if (!m_Simulation->Finished())
 					ImGui::BeginDisabled();
 				if (ImGui::Button("Finish", {60, 25})) {
 					m_Prompt = EditorPrompts::NONE;
 					s_substate = 0; 
 					ImGui::CloseCurrentPopup();
 				}
-				if (m_Simulation->Progress() != 1.0f)
+				if (!m_Simulation->Finished())
 					ImGui::EndDisabled();
+				if (m_Simulation->Started() && !m_Simulation->Paused()) {
+					m_Simulation->Checkup();
+				}
 			}
 			if (s_substate > 0) {
 				ImGui::SameLine();
 				ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 135);
-				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Progress() == 1.0f))
+				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::BeginDisabled();
 				if (ImGui::Button("Back", {60, 25})) {
 					s_substate--;
 				}
-				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Progress() == 1.0f))
+				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::EndDisabled();
 			}
 			ImGui::EndPopup();

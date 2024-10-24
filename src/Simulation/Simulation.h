@@ -55,12 +55,14 @@ public:
 	void Log(std::string log);
 	std::vector<std::string>& Logs() { return m_Logs; }
 	float Progress() { return m_Progress; }
+	bool Finished() { return m_Finished; }
 	bool Started();
 	bool Paused();
 	void Start();
 	void Pause();
 	void Resume();
 	void Abort();
+	void Checkup();
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
@@ -71,9 +73,10 @@ public:
 	std::thread m_MainProcess;
 	std::mutex m_MutexLock;
 	float m_Progress = 0.0f;
-private:
 	bool m_Started = false;
 	bool m_Paused = false;
+	bool m_Finished = false;
+private:
     std::string m_Filepath = "";
 	SimulationLengthUnit m_LengthUnit = SimulationLengthUnit::TICKS;
 	uint64_t m_SimulationLength = 0;
