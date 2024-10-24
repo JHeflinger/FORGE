@@ -30,9 +30,20 @@ void Simulation::Simulate() {
 	simulation_progress.push_back(particle_slice);
 
 	for (uint64_t i = 0; i < steps; i++) {
+        std::vector<Particle> old_slice(particle_slice);
+        for (size_t j = 0; j < old_slice.size(); j++) {
+            particle_slice[i].SetPosition(particle_slice[i].Position() + particle_slice[i].Velocity());
+            particle_slice[i].SetVelocity(particle_slice[i].Velocity() + (0.5f * m_Timestep * particle_slice[i].Acceleration()));
+        }
+
+        
+
+        for (size_t j = 0; j < old_slice.size(); j++) {
+            particle_slice[i].SetVelocity(particle_slice[i].Velocity() + (0.5f * m_Timestep * particle_slice[i].Acceleration()));
+        }
 
 		// TODO: make copying the current slice multi-threaded so its non-blocking
-		simulation_progress.push_back(particle_slice);
+		simulation_progress.push_back(std::vector<Particle>(particle_slice));
 		m_MutexLock.lock();
 		m_Progress = (float)((float)(i + 1) / (float)steps);
 		m_MutexLock.unlock();

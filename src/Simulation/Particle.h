@@ -19,9 +19,13 @@ public:
 	float Radius() { return m_Radius; }
 	void SetRadius(float radius) { m_Radius = radius; }
 	float* RawRadius() { return &m_Radius; }
+public:
+	glm::vec3 Acceleration() { return m_Acceleration; }
+	void SetAcceleration(glm::vec3 acceleration) { m_Acceleration = acceleration; }
 private:
-	glm::vec3 m_Position;
-	glm::vec3 m_Velocity;
+	glm::vec3 m_Acceleration = { 0, 0, 0 };
+	glm::vec3 m_Position = { 0, 0, 0 };
+	glm::vec3 m_Velocity = { 0, 0, 0 };
 	float m_Mass;
 	float m_Radius = 0.5f;
 };
