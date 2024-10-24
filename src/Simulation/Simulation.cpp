@@ -6,6 +6,8 @@
 #include <chrono>
 #include <ctime>
 
+#define EPS 0.0000000000001 // epsilon for numerical stability
+
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
     std::time_t currentTime = std::chrono::system_clock::to_time_t(now);
@@ -18,16 +20,22 @@ std::string GetCurrentTimeString() {
     return timeStream.str();
 }
 
-void temp_run_simulation(Simulation* sim) {
-    for (int i = 0; i < 100; i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        sim->m_MutexLock.lock();
-        sim->m_Progress += 0.01f;
-		sim->m_MutexLock.unlock();
-    }
-    sim->m_MutexLock.lock();
-	sim->m_Finished = true;
-	sim->m_MutexLock.unlock();
+void Simulation::Simulate() {
+	std::vector<std::vector<glm::vec2>> force_matrix(m_Particles.size(), std::vector<glm::vec2>(m_Particles.size(), {0, 0}));
+	
+	uint64_t steps = m_SimulationLength / m_Timestep;
+
+	for (uint64_t i = 0; i < steps; i++) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+		m_MutexLock.lock();
+		m_Progress = (float)((float)(i + 1) / (float)steps);
+		m_MutexLock.unlock();
+	}
+
+    m_MutexLock.lock();
+	m_Finished = true;
+	m_MutexLock.unlock();
 }
 
 void Simulation::Log(std::string log) {
@@ -46,7 +54,7 @@ bool Simulation::Paused() {
 
 void Simulation::Start() {
     this->Log("starting simulation...");
-    m_MainProcess = std::thread(temp_run_simulation, this);
+    m_MainProcess = std::thread(&Simulation::Simulate, this);
     m_Started = true; m_Paused = false; 
 }
 

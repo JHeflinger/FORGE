@@ -63,20 +63,20 @@ public:
 	void Resume();
 	void Abort();
 	void Checkup();
+	void Simulate();
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
     std::vector<Ref<Particle>> m_Particles;
     std::vector<Ref<Grid>> m_Grids;
 	std::vector<std::string> m_Logs;
-public:
+private:
 	std::thread m_MainProcess;
 	std::mutex m_MutexLock;
 	float m_Progress = 0.0f;
 	bool m_Started = false;
 	bool m_Paused = false;
 	bool m_Finished = false;
-private:
     std::string m_Filepath = "";
 	SimulationLengthUnit m_LengthUnit = SimulationLengthUnit::TICKS;
 	uint64_t m_SimulationLength = 0;
