@@ -43,6 +43,7 @@ private:
     std::string GetLastSavedString();
 private:
     void DrawStaticParticles();
+    void DrawPlaybackParticles();
 private:
     std::vector<Ref<Panel>> m_Panels;
     Ref<Simulation> m_Simulation;
@@ -53,4 +54,5 @@ private:
     EditorPrompts m_Prompt = EditorPrompts::NONE;
     float m_LastSavedTime = 0.0f;
 	uint64_t m_PlaybackFrame = 0;
+    bool m_PlaybackStarted = false;
 };

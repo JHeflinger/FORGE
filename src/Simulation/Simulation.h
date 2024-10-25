@@ -64,6 +64,8 @@ public:
 	void Abort();
 	void Checkup();
 	void Simulate();
+	void Prime();
+	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;

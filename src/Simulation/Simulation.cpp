@@ -33,7 +33,7 @@ void Simulation::Simulate() {
 
 	for (uint64_t i = 0; i < steps; i++) {
         for (size_t j = 0; j < particle_slice.size(); j++) {
-            particle_slice[j].SetPosition(particle_slice[j].Position() + particle_slice[j].Velocity());
+            particle_slice[j].SetPosition(particle_slice[j].Position() + ((float)m_Timestep * particle_slice[j].Velocity()));
             particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5f * m_Timestep * particle_slice[j].Acceleration()));
         }
 
@@ -56,7 +56,7 @@ void Simulation::Simulate() {
 					pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
 					pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
 					particle_slice[j].SetAcceleration(px.Acceleration() + pxa);
-					particle_slice[j].SetAcceleration(py.Acceleration() + pya);
+					particle_slice[k].SetAcceleration(py.Acceleration() + pya);
 				}
 			}
 		}
@@ -115,6 +115,13 @@ void Simulation::Abort() {
     this->Log("aborted simulation");
     m_Started = false; 
     m_Paused = false; 
+}
+
+void Simulation::Prime() {   
+	m_Progress = 0.0f;
+	m_Started = false;
+	m_Paused = false;
+	m_Finished = false;
 }
 
 void Simulation::Checkup() {

@@ -52,7 +52,10 @@ void Editor::Render() {
 	Renderer::SetClearColor({0.1f, 0.1f, 0.1f, 1.0f});
 	Renderer::Clear();
 	Renderer::BeginScene(*m_Camera);
-	DrawStaticParticles();
+	if (m_PlaybackStarted)
+		DrawPlaybackParticles();
+	else
+		DrawStaticParticles();
 	for (auto panel : m_Panels) {
         panel->Render();
     }
@@ -86,8 +89,9 @@ void Editor::DrawMenuBar() {
 				m_Prompt = EditorPrompts::SAVE;
 			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
 				m_Prompt = EditorPrompts::SAVEAS;
-			if (ImGui::MenuItem("Run", "Ctrl+R"))
+			if (ImGui::MenuItem("Run", "Ctrl+R")) {
 				m_Prompt = EditorPrompts::RUN;
+			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Panels")) {
@@ -385,6 +389,9 @@ void Editor::DrawPrompts() {
 			if (s_substate != 2) {
 				if (ImGui::Button("Next", {60, 25})) {
 					s_substate++;
+					if (s_substate == 2) {
+						m_Simulation->Prime();
+					}
 				}
 			} else {
 				if (!m_Simulation->Finished())
@@ -439,6 +446,21 @@ void Editor::DrawStaticParticles() {
 	}
 }
 
-void Editor::StartPlayback() {
+void Editor::DrawPlaybackParticles() {
+	if (m_Simulation->SimulationRecord().size() <= m_PlaybackFrame) {
+		m_PlaybackStarted = false;
+		return;
+	}
+	for (Particle particle : m_Simulation->SimulationRecord()[m_PlaybackFrame]) {
+		Renderer::DrawSphere({
+			particle.Position(),
+			particle.Radius()
+		});
+	}
+	m_PlaybackFrame++;
+}
 
+void Editor::StartPlayback() {
+	m_PlaybackFrame = 0;
+	m_PlaybackStarted = true;
 }
