@@ -5,8 +5,10 @@
 #include <sstream>
 #include <chrono>
 #include <ctime>
+#include <cmath>
 
 #define EPS 0.0000000000001 // epsilon for numerical stability
+#define G 0.0000000000667430
 
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
@@ -30,16 +32,37 @@ void Simulation::Simulate() {
 	simulation_progress.push_back(particle_slice);
 
 	for (uint64_t i = 0; i < steps; i++) {
-        std::vector<Particle> old_slice(particle_slice);
-        for (size_t j = 0; j < old_slice.size(); j++) {
-            particle_slice[i].SetPosition(particle_slice[i].Position() + particle_slice[i].Velocity());
-            particle_slice[i].SetVelocity(particle_slice[i].Velocity() + (0.5f * m_Timestep * particle_slice[i].Acceleration()));
+        for (size_t j = 0; j < particle_slice.size(); j++) {
+            particle_slice[j].SetPosition(particle_slice[j].Position() + particle_slice[j].Velocity());
+            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5f * m_Timestep * particle_slice[j].Acceleration()));
         }
 
-        
+		for (size_t j = 0; j < particle_slice.size(); j++) {
+			particle_slice[j].SetAcceleration({ 0, 0, 0 });
+		}
 
-        for (size_t j = 0; j < old_slice.size(); j++) {
-            particle_slice[i].SetVelocity(particle_slice[i].Velocity() + (0.5f * m_Timestep * particle_slice[i].Acceleration()));
+		for (size_t j = 0; j < particle_slice.size(); j++) {
+			for (size_t k = 0; k < particle_slice.size(); k++) {
+				if (j != k) {
+					Particle px = particle_slice[j];
+					Particle py = particle_slice[k];
+					float dx = py.Position().x - px.Position().x;
+					float dy = py.Position().y - px.Position().y;
+					float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+					glm::vec3 pxa = { 0, 0, 0 };
+					glm::vec3 pya = { 0, 0, 0 };
+					pxa.x = G * (dx * inv_r3) * py.Mass();
+					pxa.y = G * (dy * inv_r3) * py.Mass();
+					pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
+					pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
+					particle_slice[j].SetAcceleration(px.Acceleration() + pxa);
+					particle_slice[j].SetAcceleration(py.Acceleration() + pya);
+				}
+			}
+		}
+
+        for (size_t j = 0; j < particle_slice.size(); j++) {
+            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5f * m_Timestep * particle_slice[j].Acceleration()));
         }
 
 		// TODO: make copying the current slice multi-threaded so its non-blocking
