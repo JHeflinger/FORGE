@@ -32,6 +32,8 @@ public:
 public:
 	uint64_t SelectedID() { return m_SelectedID; }
 	void SetSelectedID(uint64_t id) { m_SelectedID = id; }
+public:
+	void StartPlayback();
 private:
     void InitializePanels();
     void UpdatePanels();
@@ -50,4 +52,5 @@ private:
     bool m_SimulationSaved = false;
     EditorPrompts m_Prompt = EditorPrompts::NONE;
     float m_LastSavedTime = 0.0f;
+	uint64_t m_PlaybackFrame = 0;
 };

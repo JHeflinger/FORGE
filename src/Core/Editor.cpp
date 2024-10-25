@@ -3,6 +3,7 @@
 #include "Panels/ViewportPanel.h"
 #include "Panels/OverviewPanel.h"
 #include "Panels/ResourcePanel.h"
+#include "Panels/PlaybackPanel.h"
 #include "Panels/ControlPanel.h"
 #include "Panels/PlanePanel.h"
 #include "Events/Input.h"
@@ -18,6 +19,7 @@ Editor::Editor() {
 		CreateRef<ResourcePanel>(),
 		CreateRef<PlanePanel>(),
 		CreateRef<ControlPanel>(),
+		CreateRef<PlaybackPanel>(),
 	};
 	m_Camera = CreateRef<Camera>();
 	m_Simulation = CreateRef<Simulation>();
@@ -435,4 +437,8 @@ void Editor::DrawStaticParticles() {
 			particle->Radius()
 		});
 	}
+}
+
+void Editor::StartPlayback() {
+
 }

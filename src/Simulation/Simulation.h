@@ -71,6 +71,8 @@ private:
     std::vector<Ref<Grid>> m_Grids;
 	std::vector<std::string> m_Logs;
 private:
+	std::vector<std::vector<Particle>> m_SimulationRecord;
+private:
 	std::thread m_MainProcess;
 	std::mutex m_MutexLock;
 	float m_Progress = 0.0f;

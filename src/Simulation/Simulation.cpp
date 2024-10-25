@@ -23,7 +23,7 @@ std::string GetCurrentTimeString() {
 }
 
 void Simulation::Simulate() {
-	std::vector<std::vector<glm::vec2>> force_matrix(m_Particles.size(), std::vector<glm::vec2>(m_Particles.size(), {0, 0}));
+	//std::vector<std::vector<glm::vec2>> force_matrix(m_Particles.size(), std::vector<glm::vec2>(m_Particles.size(), {0, 0}));
 	std::vector<std::vector<Particle>> simulation_progress;
 	std::vector<Particle> particle_slice;
 	for (size_t i = 0; i < m_Particles.size(); i++) particle_slice.push_back(*m_Particles[i]);
@@ -71,9 +71,9 @@ void Simulation::Simulate() {
 		m_Progress = (float)((float)(i + 1) / (float)steps);
 		m_MutexLock.unlock();
 	}
-
     m_MutexLock.lock();
 	m_Finished = true;
+	m_SimulationRecord = simulation_progress;
 	m_MutexLock.unlock();
 }
 
