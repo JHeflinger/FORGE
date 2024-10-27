@@ -4,62 +4,67 @@
 
 cc_library(
     name = "spdlog",
+    srcs = glob([
+        "spdlog/src/*.cpp",
+    ]),
     hdrs = glob([
         "spdlog/include/**/*.h",
     ]),
-    srcs = glob([
-        "spdlog/src/*.cpp"
-    ]),
-    includes = ["spdlog/include"],
     copts = ["-DSPDLOG_COMPILED_LIB"],
+    includes = ["spdlog/include"],
     visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "glad",
+    srcs = glob(["glad/**/*.c"]),
     hdrs = glob(["glad/**/*.h"]),
     includes = ["glad/include"],
-    srcs = glob(["glad/**/*.c"]),
     visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "imgui",
-    hdrs = glob(["imgui/*.h", "imgui/misc/cpp/*.h"]) 
-    + [
+    srcs = glob([
+        "imgui/*.cpp",
+        "imgui/misc/cpp/*.cpp",
+    ]),
+    hdrs = glob([
+        "imgui/*.h",
+        "imgui/misc/cpp/*.h",
+    ]) + [
         "imgui/misc/cpp/imgui_stdlib.cpp",
     ],
     includes = ["imgui"],
-    srcs = glob(["imgui/*.cpp", "imgui/misc/cpp/*.cpp"]),
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "imgui_srcs",
     hdrs = ["imgui/misc/cpp/imgui_stdlib.cpp"],
     includes = ["imgui"],
+    visibility = ["//visibility:public"],
     deps = [":imgui"],
-    visibility = ["//visibility:public"]
 )
 
 cc_library(
     name = "imgui_backend",
-    hdrs = [
-        "imgui/backends/imgui_impl_glfw.h",
-        "imgui/backends/imgui_impl_opengl3.h",
-        "imgui/backends/imgui_impl_opengl3_loader.h",
-        "imgui/backends/imgui_impl_opengl3.cpp",
-        "imgui/backends/imgui_impl_glfw.cpp",
-    ],
-    includes = ["imgui/backends"],
     srcs = [
         "imgui/backends/imgui_impl_glfw.cpp",
-        "imgui/backends/imgui_impl_opengl3.cpp"
+        "imgui/backends/imgui_impl_opengl3.cpp",
     ],
+    hdrs = [
+        "imgui/backends/imgui_impl_glfw.cpp",
+        "imgui/backends/imgui_impl_glfw.h",
+        "imgui/backends/imgui_impl_opengl3.cpp",
+        "imgui/backends/imgui_impl_opengl3.h",
+        "imgui/backends/imgui_impl_opengl3_loader.h",
+    ],
+    includes = ["imgui/backends"],
+    visibility = ["//visibility:public"],
     deps = [
-        ":imgui"
+        ":imgui",
     ],
-    visibility = ["//visibility:public"]
 )
 
 ######################################
@@ -68,58 +73,63 @@ cc_library(
 
 cc_library(
     name = "win_imgui",
-    hdrs = glob(["imgui/*.h", "imgui/misc/cpp/*.h"]) 
-    + [
+    srcs = glob([
+        "imgui/*.cpp",
+        "imgui/misc/cpp/*.cpp",
+    ]),
+    hdrs = glob([
+        "imgui/*.h",
+        "imgui/misc/cpp/*.h",
+    ]) + [
         "imgui/misc/cpp/imgui_stdlib.cpp",
     ],
     includes = ["imgui"],
-    srcs = glob(["imgui/*.cpp", "imgui/misc/cpp/*.cpp"]),
+    visibility = ["//visibility:public"],
     deps = [
-        "//platform:win_GLFW"
+        "//platform:win_GLFW",
     ],
-    visibility = ["//visibility:public"]
 )
 
 cc_library(
     name = "win_imgui_srcs",
     hdrs = ["imgui/misc/cpp/imgui_stdlib.cpp"],
     includes = ["imgui"],
+    visibility = ["//visibility:public"],
     deps = [
+        ":win_imgui",
         "//platform:win_GLFW",
-        ":win_imgui"
     ],
-    visibility = ["//visibility:public"]
 )
 
 cc_library(
     name = "win_imgui_backend",
-    hdrs = [
-        "imgui/backends/imgui_impl_glfw.h",
-        "imgui/backends/imgui_impl_opengl3.h",
-        "imgui/backends/imgui_impl_opengl3_loader.h",
-        "imgui/backends/imgui_impl_opengl3.cpp",
-        "imgui/backends/imgui_impl_glfw.cpp",
-    ],
-    includes = ["imgui/backends"],
     srcs = [
         "imgui/backends/imgui_impl_glfw.cpp",
-        "imgui/backends/imgui_impl_opengl3.cpp"
+        "imgui/backends/imgui_impl_opengl3.cpp",
     ],
+    hdrs = [
+        "imgui/backends/imgui_impl_glfw.cpp",
+        "imgui/backends/imgui_impl_glfw.h",
+        "imgui/backends/imgui_impl_opengl3.cpp",
+        "imgui/backends/imgui_impl_opengl3.h",
+        "imgui/backends/imgui_impl_opengl3_loader.h",
+    ],
+    includes = ["imgui/backends"],
+    visibility = ["//visibility:public"],
     deps = [
+        ":win_imgui",
         "//platform:win_GLFW",
-        ":win_imgui"
     ],
-    visibility = ["//visibility:public"]
 )
 
 cc_library(
-    name="win_glm",
+    name = "win_glm",
     hdrs = glob([
-        "glm/glm/*.hpp", 
-        "glm/glm/*.h", 
-        "glm/glm/**/*.hpp", 
-        "glm/glm/**/*.h"
+        "glm/glm/*.hpp",
+        "glm/glm/*.h",
+        "glm/glm/**/*.hpp",
+        "glm/glm/**/*.h",
     ]),
     includes = ["glm"],
-    visibility = ["//visibility:public"]
+    visibility = ["//visibility:public"],
 )

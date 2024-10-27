@@ -1,3 +1,4 @@
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 ######################################
 ########## LINUX SPECIFIC ############
 ######################################
@@ -10,15 +11,9 @@ cc_library(
     hdrs = glob([
         "src/**/*.h",
     ]),
-	includes = ["src"],
-    deps = [
-        "//vendor/yaml-cpp:yaml-cpp",
-	    "//vendor:glad",
-        "//vendor:spdlog",
-        "//vendor:imgui_backend",
-        "//vendor:imgui",
-    ],
-	linkopts = [
+    copts = ["-DLINUX_BUILD"],
+    includes = ["src"],
+    linkopts = [
         "-lglfw",
         "-lvulkan",
         "-ldl",
@@ -31,7 +26,13 @@ cc_library(
         "-lGLU",
         "-lglut",
     ],
-    copts = ["-DLINUX_BUILD"],
+    deps = [
+        "//vendor:glad",
+        "//vendor:imgui",
+        "//vendor:imgui_backend",
+        "//vendor:spdlog",
+        "//vendor/yaml-cpp",
+    ],
 )
 
 cc_binary(
@@ -54,26 +55,47 @@ cc_library(
     hdrs = glob([
         "src/**/*.h",
     ]),
-	includes = ["src"],
-    deps = [
-        "//vendor/yaml-cpp:yaml-cpp",
-        "//vendor:win_glm",
-	    "//vendor:glad",
-        "//vendor:spdlog",
-        "//vendor:win_imgui_backend",
-        "//vendor:win_imgui",
-    ],
     copts = ["-DWINDOWS_BUILD"],
+    includes = ["src"],
     linkopts = [
         "-DEFAULTLIB:comdlg32.lib",
     ],
-)
-
-cc_binary(
-    name = "win_Forge",
-    srcs = ["src/main.cpp"],
     deps = [
-        ":win_ForgeLib",
+        "//vendor:glad",
+        "//vendor:spdlog",
+        "//vendor:win_glm",
+        "//vendor:win_imgui",
+        "//vendor:win_imgui_backend",
+        "//vendor/yaml-cpp",
     ],
 )
 
+############################
+######### GLOBAL ###########
+############################
+
+buildifier(
+    name = "buildifier",
+)
+
+# py_test(
+#     name = "py_audit",
+#     srcs = ["//:help.py"],
+#     args = ["audit"],
+#     main = "//:help.py",
+# )
+
+cc_binary(
+    name = "forge",
+    srcs = ["src/main.cpp"],
+    data = [
+        "//:assets",
+        "//:imgui.ini",
+    ],
+    deps = select({
+        "@bazel_tools//src/conditions:windows": [":win_ForgeLib"],
+        "//conditions:default": [
+            ":linux_ForgeLib",
+        ],
+    }),
+)

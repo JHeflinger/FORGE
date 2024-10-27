@@ -1,13 +1,13 @@
 cc_import(
     name = "win_GLFW_lib",
-    static_library = "windows/GLFW/glfw3.lib",
     linkopts = [
         "-DEFAULTLIB:opengl32.lib",
         "-DEFAULTLIB:user32.lib",
         "-DEFAULTLIB:gdi32.lib",
         "-DEFAULTLIB:shell32.lib",
     ],
-    visibility = ["//visibility:public"]
+    static_library = "windows/GLFW/glfw3.lib",
+    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -16,6 +16,6 @@ cc_library(
     includes = ["windows/GLFW/include"],
     visibility = ["//visibility:public"],
     deps = [
-        ":win_GLFW_lib"
-    ]
+        ":win_GLFW_lib",
+    ],
 )

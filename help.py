@@ -1,7 +1,5 @@
 import sys
 import os
-import re
-from PIL import Image
 
 if (len(sys.argv) <= 1):
     print("Available syntax:")
@@ -20,6 +18,11 @@ def handle():
     if (precursor == "audit"):
         print("Performing audit...")
         vulnerabilities = 0
+
+        if not os.path.isdir("src"):
+            print("src not detected. Running from wrong location!")
+            print("pass -- $(pwd) to test command")
+            exit(1)
 
         # excessive white space
         for root, dirs, files in os.walk("src"):

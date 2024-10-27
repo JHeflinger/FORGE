@@ -1,8 +1,14 @@
 --cxxopt='-std=c++20'
-build --java_language_version=11
-build --tool_java_language_version=11
-run --tool_java_runtime_version=remotejdk_11
-run --java_runtime_version=remotejdk_11
+--java_language_version=11
+--tool_java_language_version=11
+--tool_java_runtime_version=remotejdk_11
+--java_runtime_version=remotejdk_11
+
+build --enable_runfiles
 
 # Don't source environment from shell
 build --incompatible_strict_action_env
+run --incompatible_strict_action_env
+test --incompatible_strict_action_env
+
+test --test_output=errors
