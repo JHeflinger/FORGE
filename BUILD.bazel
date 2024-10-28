@@ -1,4 +1,5 @@
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
+load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
 ######################################
 ########## LINUX SPECIFIC ############
 ######################################
@@ -78,12 +79,19 @@ buildifier(
     name = "buildifier",
 )
 
-# py_test(
-#     name = "py_audit",
-#     srcs = ["//:help.py"],
-#     args = ["audit"],
-#     main = "//:help.py",
-# )
+py_test(
+    name = "code_audit",
+    size = "small",
+    srcs = ["//:help.py"],
+    args = ["audit"],
+    data = glob([
+        "src/**/*.cpp",
+    ]) + glob([
+        "src/**/*.h",
+    ]),
+    main = "//:help.py",
+    stamp = 1,
+)
 
 cc_binary(
     name = "forge",

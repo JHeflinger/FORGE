@@ -16,7 +16,7 @@ if sys.argv[1] == 'all':
 def handle():
     precursor = sys.argv[1]
     if (precursor == "audit"):
-        print("Performing audit...")
+        print(f"Performing audit in {os.getcwd()}...")
         vulnerabilities = 0
 
         if not os.path.isdir("src"):
@@ -82,13 +82,16 @@ def handle():
                                 print("    " + line.strip())
                                 vulnerabilities += 1
 
+        retval = True
         quality = "\033[32m"
         if (vulnerabilities > 10):
             quality = "\033[31m"
+            retval = False
         elif (vulnerabilities > 0):
             quality = "\033[33m"
+            retval = False
         print("Audit finished - detected " + quality + str(vulnerabilities) + "\033[0m vulnerabilities")
-        return True
+        return retval
     return False
 
 if (handle() == False):
