@@ -2,6 +2,7 @@
 # setup hermetic toolchains later on if we care.
 
 startup --host_jvm_args=-Xmx2g
+startup --host_jvm_args=-DBAZEL_TRACK_SOURCE_DIRECTORIES=1
 common --java_language_version=11
 common --tool_java_language_version=11
 common --tool_java_runtime_version=remotejdk_11
