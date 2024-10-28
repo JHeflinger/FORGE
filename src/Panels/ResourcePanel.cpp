@@ -64,14 +64,14 @@ void ResourcePanel::Update(Editor* context) {
 		ImGui::SetColumnWidth(0, 100);
 		ImGui::Text("Mass");
 		ImGui::NextColumn();
-		ImGui::DragFloat("##mass", particle->RawMass(), 1.0f, 0, std::numeric_limits<float>::max(), "%.3f");
+		ImGui::InputDouble("##mass", particle->RawMass(), 0, std::numeric_limits<double>::max(), "%.10f");
 		ImGui::Columns(1);
 		ImGui::Dummy({0, 2});
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, 100);
 		ImGui::Text("Radius");
 		ImGui::NextColumn();
-		ImGui::DragFloat("##radius", particle->RawRadius(), 1.0f, 0, std::numeric_limits<float>::max(), "%.3f");
+		ImGui::InputDouble("##radius", particle->RawRadius(), 0, std::numeric_limits<double>::max(), "%.10f");
 		ImGui::Columns(1);
 		ImGui::Dummy({0, 2});
 	} else {

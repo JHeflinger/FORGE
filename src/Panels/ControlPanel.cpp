@@ -66,18 +66,18 @@ void ControlPanel::Update(Editor* context) {
     if (ImGui::Combo("##simulationsolver", &current_solver, solver_options, IM_ARRAYSIZE(solver_options)))
 	    context->GetSimulation()->SetSolver((SimulationSolver)current_solver);
     ImGui::Dummy({0, gapsize});
-    float bounds_x = context->GetSimulation()->Bounds().x;
-    float bounds_y = context->GetSimulation()->Bounds().y;
+    double bounds_x = context->GetSimulation()->Bounds().x;
+    double bounds_y = context->GetSimulation()->Bounds().y;
     bool bounds_set = false;
     float availableWidth = ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("by").x;
     ImGui::SetNextItemWidth(availableWidth * 0.5f);
-    if (ImGui::DragFloat("##bounds_x", &bounds_x, 1.0f))
+    if (ImGui::InputDouble("##bounds_x", &bounds_x, 0.0, 0.0, "%.3f"))
 	    bounds_set = true;
     ImGui::SameLine();
     ImGui::Text("by");
     ImGui::SameLine();
     ImGui::SetNextItemWidth(availableWidth * 0.5f);
-    if (ImGui::DragFloat("##bounds_y", &bounds_y, 1.0f))
+    if (ImGui::InputDouble("##bounds_y", &bounds_y, 0.0, 0.0, "%.3f"))
         bounds_set = true;
     if (bounds_set)
 	    context->GetSimulation()->SetBounds({bounds_x, bounds_y});

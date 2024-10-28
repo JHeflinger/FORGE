@@ -41,7 +41,7 @@ public:
 	void SetSimulationRecord(bool enabled) { m_EnableSimulationRecord = enabled; }
 	SimulationSolver Solver() { return m_Solver; }
 	void SetSolver(SimulationSolver solver) { m_Solver = solver; }
-	glm::vec2 Bounds() { return m_Bounds; }
+	glm::dvec2 Bounds() { return m_Bounds; }
 	void SetBounds(glm::vec2 bounds) { m_Bounds = bounds; } 
 	uint64_t Timestep() { return m_Timestep; }
 	void SetTimestep(uint64_t ts) { m_Timestep = ts; }
@@ -86,7 +86,7 @@ private:
 	uint64_t m_SimulationLength = 0;
 	bool m_EnableSafeguardCache = false;
 	bool m_EnableSimulationRecord = false;
-	glm::vec2 m_Bounds = { 0, 0 };
+	glm::dvec2 m_Bounds = { 0, 0 };
 	bool m_DynamicTimestep = false;
 	uint64_t m_Timestep = 0;
 	uint32_t m_NumLocalWorkers = 0;

@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
-bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::vec2& values, float resetValue, float columnWidth) {
+bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::dvec2& values, float resetValue, float columnWidth) {
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	bool changed = false;
@@ -32,7 +32,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::vec2& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -48,7 +48,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::vec2& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -59,7 +59,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::vec2& values, fl
 	return changed;
 }
 
-bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, float resetValue, float columnWidth) {
+bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, float resetValue, float columnWidth) {
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	bool changed = false;
@@ -90,7 +90,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -106,7 +106,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
@@ -123,7 +123,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -139,7 +139,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##W", &values.w, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##W", &values.w, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
@@ -150,7 +150,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::vec4& values, fl
 	return changed;
 }
 
-bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue, float columnWidth ) {
+bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::dvec3& values, float resetValue, float columnWidth ) {
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	bool changed = false;
@@ -180,7 +180,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::vec3& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -196,7 +196,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::vec3& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -212,7 +212,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::vec3& values, fl
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f")) changed = true;
+	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0, "%.5f")) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
