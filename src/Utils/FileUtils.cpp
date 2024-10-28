@@ -49,7 +49,7 @@ std::string FileUtils::Save(const std::string& content, const std::string& filep
 std::string FileUtils::Open() {
     std::string file = DialogUtils::FileDialog("Simulation (*.fsim)\0*.fsim\0");
     if (file != "") {
-        return Read(file);
+        return file;
     } else FATAL("Unable to save file to disk!");
     return "";
 }
