@@ -1,6 +1,7 @@
 # common --cxxopt='-std=c++20' This doesn't work on windows
 # setup hermetic toolchains later on if we care.
 
+startup --host_jvm_args=-Xmx2g
 common --java_language_version=11
 common --tool_java_language_version=11
 common --tool_java_runtime_version=remotejdk_11
