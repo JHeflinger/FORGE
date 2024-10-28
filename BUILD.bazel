@@ -73,5 +73,5 @@ cc_binary(
         "//:imgui.ini",
         "//:settings.fconf",
     ],
-    deps = [":ForgeLib"]
+    deps = [":ForgeLib"],
 )
