@@ -31,8 +31,8 @@ cc_library(
         "//vendor:glad",
         "//vendor:imgui",
         "//vendor:imgui_backend",
-        "//vendor:spdlog",
-        "//vendor/yaml-cpp",
+        "@spdlog",
+        "@yaml-cpp",
     ],
 )
 

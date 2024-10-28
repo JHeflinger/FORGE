@@ -2,12 +2,6 @@
 	path = vendor/imgui
 	url = git@github.com:GreedyGauntlet/imgui.git
 	branch = docking
-[submodule "vendor/spdlog"]
-	path = vendor/spdlog
-	url = git@github.com:GreedyGauntlet/spdlog.git
 [submodule "vendor/glm"]
 	path = vendor/glm
 	url = https://github.com/g-truc/glm
-[submodule "vendor/yaml-cpp"]
-	path = vendor/yaml-cpp
-	url = https://github.com/jbeder/yaml-cpp.git
