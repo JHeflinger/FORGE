@@ -440,8 +440,8 @@ std::string Editor::GetLastSavedString() {
 void Editor::DrawStaticParticles() {
 	for (Ref<Particle> particle : m_Simulation->Particles()) {
 		Renderer::DrawSphere({
-			particle->Position(),
-			particle->Radius()
+			(glm::vec3)particle->Position(),
+			(float)particle->Radius()
 		});
 	}
 }
@@ -453,8 +453,8 @@ void Editor::DrawPlaybackParticles() {
 	}
 	for (Particle particle : m_Simulation->SimulationRecord()[m_PlaybackFrame]) {
 		Renderer::DrawSphere({
-			particle.Position(),
-			particle.Radius()
+			(glm::vec3)particle.Position(),
+			(float)particle.Radius()
 		});
 	}
 	m_PlaybackFrame++;

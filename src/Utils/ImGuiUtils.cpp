@@ -32,7 +32,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::dvec2& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -48,7 +48,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::dvec2& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -90,7 +90,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -106,7 +106,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
@@ -123,7 +123,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -139,7 +139,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##W", &values.w, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##W", &values.w, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();
@@ -180,7 +180,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::dvec3& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##X", &values.x, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -196,7 +196,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::dvec3& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##Y", &values.y, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 	ImGui::SameLine();
 
@@ -212,7 +212,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::dvec3& values, f
 	ImGui::PopFont();
 
 	ImGui::SameLine();
-	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0, "%.5f")) changed = true;
+	if (ImGui::InputDouble("##Z", &values.z, 0.0, 0.0)) changed = true;
 	ImGui::PopItemWidth();
 
 	ImGui::PopStyleVar();

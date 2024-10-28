@@ -51,6 +51,8 @@ public:
 	void SetNumLocalWorkers(uint32_t workers) { m_NumLocalWorkers = workers; }
 	uint32_t NumRemoteWorkers() { return m_NumRemoteWorkers; }
 	void SetNumRemoteWorkers(uint32_t workers) { m_NumRemoteWorkers = workers; }
+	double UnitSize() { return m_UnitSize; }
+	void SetUnitSize(double unitsize) { m_UnitSize = unitsize; }
 public:
 	void Log(std::string log);
 	std::vector<std::string>& Logs() { return m_Logs; }
@@ -91,5 +93,6 @@ private:
 	uint64_t m_Timestep = 0;
 	uint32_t m_NumLocalWorkers = 0;
 	uint32_t m_NumRemoteWorkers = 0;
+	double m_UnitSize = 1.0;
 	SimulationSolver m_Solver = SimulationSolver::RKF45;
 };

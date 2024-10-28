@@ -116,6 +116,7 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
 	out << YAML::Key << "Timestep" << YAML::Value << simulation->Timestep();
 	out << YAML::Key << "Local Workers" << YAML::Value << simulation->NumLocalWorkers();
 	out << YAML::Key << "Remote Workers" << YAML::Value << simulation->NumRemoteWorkers();
+	out << YAML::Key << "Unit Size" << YAML::Value << simulation->UnitSize();
 
     out << YAML::EndMap;
     return std::string(out.c_str());
@@ -323,6 +324,10 @@ bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::st
 	if (yamldata["Remote Workers"]) {
 		simulation->SetNumRemoteWorkers(yamldata["Remote Workers"].as<uint32_t>());
 	} else WARN("No remote workers found to serialize into simulation!");
+
+	if (yamldata["Unit Size"]) {
+		simulation->SetUnitSize(yamldata["Unit Size"].as<double>());
+	} else WARN("No unit size found to serialize into simulation!");
 
     return true;
 }

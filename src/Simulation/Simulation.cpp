@@ -31,10 +31,12 @@ void Simulation::Simulate() {
 	uint64_t steps = m_SimulationLength / m_Timestep;
 	simulation_progress.push_back(particle_slice);
 
+	if (m_UnitSize <= 0) m_UnitSize = EPS;
+
 	for (uint64_t i = 0; i < steps; i++) {
         for (size_t j = 0; j < particle_slice.size(); j++) {
             particle_slice[j].SetPosition(particle_slice[j].Position() + ((double)m_Timestep * particle_slice[j].Velocity()));
-            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration()));
+            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration())/m_UnitSize);
         }
 
 		for (size_t j = 0; j < particle_slice.size(); j++) {
@@ -46,8 +48,8 @@ void Simulation::Simulate() {
 				if (j != k) {
 					Particle px = particle_slice[j];
 					Particle py = particle_slice[k];
-					float dx = py.Position().x - px.Position().x;
-					float dy = py.Position().y - px.Position().y;
+					float dx = m_UnitSize * (py.Position().x - px.Position().x);
+					float dy = m_UnitSize * (py.Position().y - px.Position().y);
 					float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
 					glm::dvec3 pxa = { 0, 0, 0 };
 					glm::dvec3 pya = { 0, 0, 0 };
@@ -62,7 +64,7 @@ void Simulation::Simulate() {
 		}
 
         for (size_t j = 0; j < particle_slice.size(); j++) {
-            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration()));
+            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration())/m_UnitSize);
         }
 
 		// TODO: make copying the current slice multi-threaded so its non-blocking

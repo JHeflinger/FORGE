@@ -41,6 +41,8 @@ void ControlPanel::Update(Editor* context) {
     ImGui::Dummy({0, gapsize});
     ImGui::Text("Remote Workers");
     ImGui::Dummy({0, gapsize});
+    ImGui::Text("Unit Size");
+    ImGui::Dummy({0, gapsize});
     ImGui::NextColumn();
     gapsize = 2.0f;
     ImGui::Dummy({0, gapsize});
@@ -99,10 +101,17 @@ void ControlPanel::Update(Editor* context) {
 	}
     ImGui::Dummy({0, gapsize});
     uint32_t workers = context->GetSimulation()->NumLocalWorkers();
-    if (ImGui::DragScalar("##localworkers", ImGuiDataType_U32, &workers, 1.0))
+    if (ImGui::DragScalar("##localworkers", ImGuiDataType_U32, &workers, 1.0)) {
         context->GetSimulation()->SetNumLocalWorkers(workers);
+	}
     ImGui::Dummy({0, gapsize});
     workers = context->GetSimulation()->NumRemoteWorkers();
-    if (ImGui::DragScalar("##remoteworkers", ImGuiDataType_U32, &workers, 1.0))
+    if (ImGui::DragScalar("##remoteworkers", ImGuiDataType_U32, &workers, 1.0)) {
         context->GetSimulation()->SetNumRemoteWorkers(workers);
+	}
+    ImGui::Dummy({0, gapsize});
+	double unitsize = context->GetSimulation()->UnitSize();
+    if (ImGui::InputDouble("##unitsize", &unitsize, 0.0, 0.0, "%.3f")) {
+	    context->GetSimulation()->SetUnitSize(unitsize);
+	}
 }
