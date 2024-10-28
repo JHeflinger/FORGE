@@ -1,2 +1,2 @@
 ./build.sh
-./bazel-bin/forge
+bazel run forge

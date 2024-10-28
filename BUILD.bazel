@@ -47,7 +47,6 @@ cc_library(
     }),
 )
 
-
 buildifier(
     name = "buildifier",
 )
@@ -72,6 +71,7 @@ cc_binary(
     data = [
         "//:assets",
         "//:imgui.ini",
+        "//:settings.fconf",
     ],
     deps = [":ForgeLib"]
 )

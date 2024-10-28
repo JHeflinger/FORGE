@@ -11,3 +11,5 @@ __pycache__
 *.simstate
 *.mass
 *.results
+*.jar
+prof.gz
