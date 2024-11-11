@@ -95,11 +95,6 @@ void Simulation::Start() {
     this->Log("starting simulation...");
     m_MainProcess = std::thread(&Simulation::Simulate, this);
     m_Started = true; m_Paused = false;
-	m_Particles[1]->SetPosition({3.84, 0.0, 0.0});
-	m_Particles[1]->SetVelocity({0.0, 0.00001024, 0.0});
-	m_Particles[0]->SetVelocity({0.0, -0.000000125865197104, 0.0});
-	m_Particles[0]->SetMass(5972000000000000000000000.0);
-	m_Particles[1]->SetMass(73476730900000000000000.0);
 }
 
 void Simulation::Pause() {
