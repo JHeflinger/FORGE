@@ -34,32 +34,30 @@ void Simulation::Simulate() {
 	if (m_UnitSize <= 0) m_UnitSize = EPS;
 
 	for (uint64_t i = 0; i < steps; i++) {
-        for (size_t j = 0; j < particle_slice.size(); j++) {
-            particle_slice[j].SetPosition(particle_slice[j].Position() + ((double)m_Timestep * particle_slice[j].Velocity()));
-            particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration())/m_UnitSize);
-        }
+		for (size_t j = 0; j < particle_slice.size(); j++) {
+			particle_slice[j].SetPosition(particle_slice[j].Position() + ((double)m_Timestep * particle_slice[j].Velocity()));
+			particle_slice[j].SetVelocity(particle_slice[j].Velocity() + (0.5 * m_Timestep * particle_slice[j].Acceleration())/m_UnitSize);
+		}
 
 		for (size_t j = 0; j < particle_slice.size(); j++) {
 			particle_slice[j].SetAcceleration({ 0, 0, 0 });
 		}
 
 		for (size_t j = 0; j < particle_slice.size(); j++) {
-			for (size_t k = 0; k < particle_slice.size(); k++) {
-				if (j != k) {
-					Particle px = particle_slice[j];
-					Particle py = particle_slice[k];
-					float dx = m_UnitSize * (py.Position().x - px.Position().x);
-					float dy = m_UnitSize * (py.Position().y - px.Position().y);
-					float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
-					glm::dvec3 pxa = { 0, 0, 0 };
-					glm::dvec3 pya = { 0, 0, 0 };
-					pxa.x = G * (dx * inv_r3) * py.Mass();
-					pxa.y = G * (dy * inv_r3) * py.Mass();
-					pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
-					pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
-					particle_slice[j].SetAcceleration(px.Acceleration() + pxa);
-					particle_slice[k].SetAcceleration(py.Acceleration() + pya);
-				}
+			for (size_t k = j + 1; k < particle_slice.size(); k++) {
+				Particle px = particle_slice[j];
+				Particle py = particle_slice[k];
+				float dx = m_UnitSize * (py.Position().x - px.Position().x);
+				float dy = m_UnitSize * (py.Position().y - px.Position().y);
+				float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+				glm::dvec3 pxa = { 0, 0, 0 };
+				glm::dvec3 pya = { 0, 0, 0 };
+				pxa.x = G * (dx * inv_r3) * py.Mass();
+				pxa.y = G * (dy * inv_r3) * py.Mass();
+				pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
+				pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
+				particle_slice[j].SetAcceleration(px.Acceleration() + pxa);
+				particle_slice[k].SetAcceleration(py.Acceleration() + pya);
 			}
 		}
 
@@ -96,7 +94,12 @@ bool Simulation::Paused() {
 void Simulation::Start() {
     this->Log("starting simulation...");
     m_MainProcess = std::thread(&Simulation::Simulate, this);
-    m_Started = true; m_Paused = false; 
+    m_Started = true; m_Paused = false;
+	m_Particles[1]->SetPosition({3.84, 0.0, 0.0});
+	m_Particles[1]->SetVelocity({0.0, 0.00001024, 0.0});
+	m_Particles[0]->SetVelocity({0.0, -0.000000125865197104, 0.0});
+	m_Particles[0]->SetMass(5972000000000000000000000.0);
+	m_Particles[1]->SetMass(73476730900000000000000.0);
 }
 
 void Simulation::Pause() {
