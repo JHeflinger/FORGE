@@ -17,6 +17,13 @@ enum class EditorPrompts {
     RUN
 };
 
+enum class EditorPlaybackState {
+    NONE,
+    READY,
+    STARTED,
+    PAUSED
+};
+
 class Editor {
 public:
     Editor();
@@ -34,6 +41,14 @@ public:
 	void SetSelectedID(uint64_t id) { m_SelectedID = id; }
 public:
 	void StartPlayback();
+	void StopPlayback();
+	void PausePlayback();
+	void ResumePlayback();
+	void StepPlayback(int steps);
+    float PlaybackProgression();
+    void SetPlaybackSpeed(float speed) { m_PlaybackSpeed = speed; };
+    float PlaybackSpeed() { return m_PlaybackSpeed; };
+    EditorPlaybackState PlaybackState() { return m_PlaybackState; }
 private:
     void InitializePanels();
     void UpdatePanels();
@@ -53,6 +68,8 @@ private:
     bool m_SimulationSaved = false;
     EditorPrompts m_Prompt = EditorPrompts::NONE;
     float m_LastSavedTime = 0.0f;
-	uint64_t m_PlaybackFrame = 0;
+	float m_PlaybackFrameTime = 0.0f;
     bool m_PlaybackStarted = false;
+    float m_PlaybackSpeed = 1.0f;
+    EditorPlaybackState m_PlaybackState = EditorPlaybackState::READY;
 };

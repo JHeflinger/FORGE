@@ -24,6 +24,12 @@ def handle():
             print("pass -- $(pwd) to test command")
             exit(1)
 
+        # check if settings.fconf exists
+        if not os.path.exists("settings.fconf"):
+            print("No configuration file detected... implicitly creating one now")
+            with open("settings.fconf", 'w') as file:
+                file.write("\n")
+
         # excessive white space
         for root, dirs, files in os.walk("src"):
             for file in files:

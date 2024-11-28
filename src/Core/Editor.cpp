@@ -447,20 +447,48 @@ void Editor::DrawStaticParticles() {
 }
 
 void Editor::DrawPlaybackParticles() {
-	if (m_Simulation->SimulationRecord().size() <= m_PlaybackFrame) {
+	if (m_Simulation->SimulationRecord().size() <= (uint64_t)m_PlaybackFrameTime) {
 		m_PlaybackStarted = false;
+		m_PlaybackState = EditorPlaybackState::READY;
 		return;
 	}
-	for (Particle particle : m_Simulation->SimulationRecord()[m_PlaybackFrame]) {
+	for (Particle particle : m_Simulation->SimulationRecord()[(size_t)m_PlaybackFrameTime]) {
 		Renderer::DrawSphere({
 			(glm::vec3)particle.Position(),
 			(float)particle.Radius()
 		});
 	}
-	m_PlaybackFrame++;
+	if (m_PlaybackState != EditorPlaybackState::PAUSED)
+		m_PlaybackFrameTime += m_PlaybackSpeed;
 }
 
 void Editor::StartPlayback() {
-	m_PlaybackFrame = 0;
+	m_PlaybackFrameTime = 0.0f;
 	m_PlaybackStarted = true;
+	m_PlaybackState = EditorPlaybackState::STARTED;
+}
+
+void Editor::StopPlayback() {
+	m_PlaybackState = EditorPlaybackState::READY;
+	m_PlaybackStarted = false;
+}
+
+void Editor::PausePlayback() {
+	m_PlaybackState = EditorPlaybackState::PAUSED;
+}
+
+void Editor::ResumePlayback() {
+	m_PlaybackState = EditorPlaybackState::STARTED;
+}
+
+void Editor::StepPlayback(int steps) {
+	m_PlaybackFrameTime += (float)steps;
+	if (m_PlaybackFrameTime < 0.0f) m_PlaybackFrameTime = 0.0f;
+	if (m_PlaybackFrameTime > m_Simulation->SimulationRecord().size()) m_PlaybackFrameTime = m_Simulation->SimulationRecord().size();
+}
+
+float Editor::PlaybackProgression() {
+	if (m_Simulation->SimulationRecord().size() == 0) return 0.0f;
+	if (m_PlaybackState == EditorPlaybackState::READY) return 1.0f;
+	return (float)(m_PlaybackFrameTime/m_Simulation->SimulationRecord().size());
 }
