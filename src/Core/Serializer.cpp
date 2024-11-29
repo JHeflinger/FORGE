@@ -111,6 +111,7 @@ std::string Serializer::SerializeSimulation(const Ref<Simulation> simulation) {
 	out << YAML::Key << "Safeguard Cache Enabled" << YAML::Value << simulation->SafeguardCacheEnabled();
 	out << YAML::Key << "Simulation Record Enabled" << YAML::Value << simulation->SimulationRecordEnabled();
 	out << YAML::Key << "Solver" << YAML::Value << (int)simulation->Solver();
+	out << YAML::Key << "Technique" << YAML::Value << (int)simulation->Technique();
 	out << YAML::Key << "Bounds" << YAML::Value << simulation->Bounds();
 	out << YAML::Key << "Dynamic Timestep" << YAML::Value << simulation->DynamicTimestep();
 	out << YAML::Key << "Timestep" << YAML::Value << simulation->Timestep();
@@ -304,6 +305,10 @@ bool Serializer::DeserializeSimulation(Ref<Simulation> simulation, const std::st
 	if (yamldata["Solver"]) {
 		simulation->SetSolver((SimulationSolver)yamldata["Solver"].as<int>());
 	} else WARN("No solver found to serialize into simulation!");
+
+	if (yamldata["Technique"]) {
+		simulation->SetTechnique((SimulationTechnique)yamldata["Technique"].as<int>());
+	} else WARN("No technique found to serialize into simulation!");
 
 	if (yamldata["Bounds"]) {
 		simulation->SetBounds(yamldata["Bounds"].as<glm::vec2>());

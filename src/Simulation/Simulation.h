@@ -8,6 +8,7 @@
 #include <vector>
 #include <mutex>
 #include <thread>
+#include <condition_variable>
 
 enum class SimulationLengthUnit {
 	TICKS = 0,
@@ -20,6 +21,13 @@ enum class SimulationSolver {
 	RKF45 = 0,
 	EULER = 1,
 	LEAPFROG = 2,
+};
+
+enum class SimulationTechnique {
+	BARNESHUT = 0,
+	GRIDSPACE = 1,
+	PARTICLE = 2,
+	EDGE = 3,
 };
 
 class Simulation {
@@ -41,6 +49,8 @@ public:
 	void SetSimulationRecord(bool enabled) { m_EnableSimulationRecord = enabled; }
 	SimulationSolver Solver() { return m_Solver; }
 	void SetSolver(SimulationSolver solver) { m_Solver = solver; }
+	SimulationTechnique Technique() { return m_Technique; }
+	void SetTechnique(SimulationTechnique technique) { m_Technique = technique; }
 	glm::dvec2 Bounds() { return m_Bounds; }
 	void SetBounds(glm::vec2 bounds) { m_Bounds = bounds; } 
 	uint64_t Timestep() { return m_Timestep; }
@@ -68,6 +78,8 @@ public:
 	void Simulate();
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
+public:
+	void ParticleJob(size_t index, size_t range);
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
@@ -77,8 +89,14 @@ private:
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
+	std::vector<std::vector<glm::dvec3>> m_ForceMatrix;
+	std::vector<Particle> m_ParticleSlice;
+	std::vector<std::thread> m_SubProcesses;
 	std::thread m_MainProcess;
 	std::mutex m_MutexLock;
+	std::condition_variable m_WorkerAlert;
+	std::condition_variable m_ControllerAlert;
+	std::vector<uint32_t> m_FinishedWorkers;
 	float m_Progress = 0.0f;
 	bool m_Started = false;
 	bool m_Paused = false;
@@ -95,4 +113,5 @@ private:
 	uint32_t m_NumRemoteWorkers = 0;
 	double m_UnitSize = 1.0;
 	SimulationSolver m_Solver = SimulationSolver::RKF45;
+	SimulationTechnique m_Technique = SimulationTechnique::BARNESHUT;
 };

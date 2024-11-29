@@ -31,6 +31,8 @@ void ControlPanel::Update(Editor* context) {
     ImGui::Dummy({0, gapsize});
     ImGui::Text("Simulation Solver");
     ImGui::Dummy({0, gapsize});
+    ImGui::Text("Simulation Technique");
+    ImGui::Dummy({0, gapsize});
     ImGui::Text("Bounds");
     ImGui::Dummy({0, gapsize});
     ImGui::Text("Timestep");
@@ -67,6 +69,11 @@ void ControlPanel::Update(Editor* context) {
     const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
     if (ImGui::Combo("##simulationsolver", &current_solver, solver_options, IM_ARRAYSIZE(solver_options)))
 	    context->GetSimulation()->SetSolver((SimulationSolver)current_solver);
+    ImGui::Dummy({0, gapsize});
+	int current_technique = (int)context->GetSimulation()->Technique();
+    const char* technique_options[] = { "Barnes-Hut", "Gridspace", "Naive Particle", "Edge Distribution" };
+    if (ImGui::Combo("##simulationtechnique", &current_technique, technique_options, IM_ARRAYSIZE(technique_options)))
+	    context->GetSimulation()->SetTechnique((SimulationTechnique)current_technique);
     ImGui::Dummy({0, gapsize});
     double bounds_x = context->GetSimulation()->Bounds().x;
     double bounds_y = context->GetSimulation()->Bounds().y;
