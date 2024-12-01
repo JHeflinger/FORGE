@@ -5,6 +5,7 @@ architecture.png
 docs/html/
 docs/latex/
 *.fsim
+!examples/*.fsim
 *.fconf
 __pycache__
 *.bakedstate

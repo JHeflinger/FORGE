@@ -1,0 +1,73 @@
+Sources:
+  []
+Sinks:
+  []
+Grids:
+  []
+Particles:
+  - ID: 1
+    Name: Earth
+    Position: [0, 0, 0]
+    Velocity: [0, 0, 0]
+    Mass: 5.9720002314296852e+24
+    Radius: 0.5
+  - ID: 2
+    Name: Moon
+    Position: [3.8399999141693115, 0, 0]
+    Velocity: [0, 1.0230000043520704e-05, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 3
+    Name: Moon
+    Position: [2.71528997906, 2.71528997906, 0]
+    Velocity: [-7.2337024023e-06, 7.2337024023e-06, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 4
+    Name: Moon
+    Position: [0, 3.8399999141693115, 0]
+    Velocity: [-1.0230000043520704e-05, 0, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 5
+    Name: Moon
+    Position: [-2.71528997906, 2.71528997906, 0]
+    Velocity: [-7.2337024023e-06, -7.2337024023e-06, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 6
+    Name: Moon
+    Position: [-3.8399999141693115, 0, 0]
+    Velocity: [0, -1.0230000043520704e-05, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 7
+    Name: Moon
+    Position: [-2.71528997906, -2.71528997906, 0]
+    Velocity: [7.2337024023e-06, -7.2337024023e-06, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 8
+    Name: Moon
+    Position: [0, -3.8399999141693115, 0]
+    Velocity: [1.0230000043520704e-05, 0, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+  - ID: 9
+    Name: Moon
+    Position: [2.71528997906, -2.71528997906, 0]
+    Velocity: [7.2337024023e-06, 7.2337024023e-06, 0]
+    Mass: 7.3476732323707908e+22
+    Radius: 0.25
+Length Unit: 3
+Simulation Length: 20000000
+Safeguard Cache Enabled: true
+Simulation Record Enabled: true
+Solver: 2
+Technique: 2
+Bounds: [128, 64]
+Dynamic Timestep: false
+Timestep: 3000
+Local Workers: 20
+Remote Workers: 8
+Unit Size: 100000000

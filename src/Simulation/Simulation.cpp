@@ -185,24 +185,31 @@ bool Simulation::Paused() {
 
 void Simulation::Start() {
     this->Log("starting simulation...");
-	m_FinishedWorkers.push_back(0);
-	m_FinishedWorkers.push_back(0);
-	m_FinishedWorkers.push_back(0);
-	m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
-    m_MainProcess = std::thread(&Simulation::Simulate, this);
-	m_SubProcesses.clear();
-	if (m_NumLocalWorkers > m_Particles.size()) {
-		m_NumLocalWorkers = m_Particles.size();
-		this->Log("more workers than possible jobs detected. truncating extra workers...");
-	}
-	bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
-	size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
-	for (int i = 0; i < m_NumLocalWorkers; i++) {
-		if (i == m_NumLocalWorkers - 1 && uneven) {
-			m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, (m_Particles.size() % jobsize)));
-		} else {
-			m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, jobsize));
+	if (m_Technique == SimulationTechnique::PARTICLE) {
+		m_MainProcess = std::thread(&Simulation::Simulate, this);
+		m_SubProcesses.clear();
+		m_FinishedWorkers.push_back(0);
+		m_FinishedWorkers.push_back(0);
+		m_FinishedWorkers.push_back(0);
+		m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
+		if (m_NumLocalWorkers > m_Particles.size()) {
+			m_NumLocalWorkers = m_Particles.size();
+			this->Log("more workers than possible jobs detected. truncating extra workers...");
 		}
+		bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
+		size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
+		for (int i = 0; i < m_NumLocalWorkers; i++) {
+			if (i == m_NumLocalWorkers - 1 && uneven) {
+				m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, (m_Particles.size() % jobsize)));
+			} else {
+				m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, jobsize));
+			}
+		}
+	} else if (m_Technique == SimulationTechnique::EDGE) {
+
+	} else {
+		this->Log("Technique selected has not been implemented. Unable to start simulation.");
+		return;
 	}
     m_Started = true;
 	m_Paused = false;
