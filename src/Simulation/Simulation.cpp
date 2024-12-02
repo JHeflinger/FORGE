@@ -284,7 +284,7 @@ void Simulation::Start() {
 			this->Log("more workers than possible jobs needed. truncating additional workers...");
 			m_NumLocalWorkers = optimal_workers;
 		}
-		for (int i = 0; i < m_NumLocalWorkers; i++) {
+		for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
 			if (i == m_NumLocalWorkers - 1 && uneven) {
 				m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, (m_Particles.size() % jobsize)));
 			} else {
@@ -381,7 +381,7 @@ void Simulation::Prime() {
 void Simulation::Checkup() {
 	if (m_Finished) {
 		m_MainProcess.join();
-		for (int i = 0; i < m_SubProcesses.size(); i++) {
+		for (size_t i = 0; i < m_SubProcesses.size(); i++) {
 			m_SubProcesses[i].join();
 		}
 		m_TimeTrack = TIMENOW() - m_TimeTrack;
