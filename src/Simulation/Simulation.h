@@ -112,6 +112,7 @@ private:
 	uint64_t m_Timestep = 0;
 	uint32_t m_NumLocalWorkers = 0;
 	uint32_t m_NumRemoteWorkers = 0;
+	uint64_t m_TimeTrack = 0;
 	double m_UnitSize = 1.0;
 	SimulationSolver m_Solver = SimulationSolver::RKF45;
 	SimulationTechnique m_Technique = SimulationTechnique::BARNESHUT;

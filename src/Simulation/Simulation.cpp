@@ -9,6 +9,7 @@
 
 #define EPS 0.0000000000001 // epsilon for numerical stability
 #define G 0.0000000000667430
+#define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
 
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
@@ -347,6 +348,7 @@ void Simulation::Start() {
 	}
     m_Started = true;
 	m_Paused = false;
+	m_TimeTrack = TIMENOW();
 }
 
 void Simulation::Pause() {
@@ -382,8 +384,15 @@ void Simulation::Checkup() {
 		for (int i = 0; i < m_SubProcesses.size(); i++) {
 			m_SubProcesses[i].join();
 		}
+		m_TimeTrack = TIMENOW() - m_TimeTrack;
 		m_Started = false;
 		m_Paused = false;
-		this->Log("finished simulation!");
+    	std::stringstream logstream;
+    	logstream << "finished simulation in " 
+               << std::setw(2) << std::setfill('0') << (m_TimeTrack / 3600000) << ':'
+               << std::setw(2) << std::setfill('0') << ((m_TimeTrack / 60000) % 60) << ':'
+               << std::setw(2) << std::setfill('0') << ((m_TimeTrack / 1000) % 60) << ':'
+			   << std::setw(3) << std::setfill('0') << (m_TimeTrack % 1000);
+		this->Log(logstream.str());
 	}
 }
