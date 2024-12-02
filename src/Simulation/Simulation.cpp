@@ -169,6 +169,86 @@ void Simulation::ParticleJob(size_t index, size_t range) {
 	}
 }
 
+void Simulation::EdgeJob(std::vector<std::pair<size_t, size_t>> edges, size_t index, size_t range) {
+	m_MutexLock.lock();
+	m_FinishedWorkers[0]++;
+	m_MutexLock.unlock();
+	m_ControllerAlert.notify_all();
+
+	{
+		std::unique_lock<std::mutex> lock(m_MutexLock);
+		m_WorkerAlert.wait(lock, [this] { return m_FinishedWorkers[0] == 0; });
+	}
+
+	uint64_t steps = m_SimulationLength / m_Timestep;
+	for (uint64_t i = 0; i < steps; i++) {
+		// update velocity and position
+		if (index != 0 || range != 0) {
+			for (size_t j = index; j < index + range; j++) {
+				m_ParticleSlice[j].SetPosition(m_ParticleSlice[j].Position() + ((double)m_Timestep * m_ParticleSlice[j].Velocity()));
+				m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
+			}
+		}
+		m_MutexLock.lock();
+		m_FinishedWorkers[1]++;
+		m_MutexLock.unlock();
+		m_ControllerAlert.notify_all();
+		{
+			std::unique_lock<std::mutex> lock(m_MutexLock);
+			m_WorkerAlert.wait(lock, [this] { return m_FinishedWorkers[1] == 0; });
+		}
+
+		// update acceleration
+		for (size_t j = 0; j < edges.size(); j++) {
+			size_t r = edges[j].first;
+			size_t c = edges[j].second;
+			Particle px = m_ParticleSlice[r];
+			Particle py = m_ParticleSlice[c];
+			float dx = m_UnitSize * (py.Position().x - px.Position().x);
+			float dy = m_UnitSize * (py.Position().y - px.Position().y);
+			float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+			glm::dvec3 pxa = { 0, 0, 0 };
+			glm::dvec3 pya = { 0, 0, 0 };
+			pxa.x = G * (dx * inv_r3) * py.Mass();
+			pxa.y = G * (dy * inv_r3) * py.Mass();
+			pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
+			pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
+			m_ForceMatrix[r][c] = pxa;
+			m_ForceMatrix[c][r] = pya;
+		}
+		m_MutexLock.lock();
+		m_FinishedWorkers[2]++;
+		m_MutexLock.unlock();
+		m_ControllerAlert.notify_all();
+		{
+			std::unique_lock<std::mutex> lock(m_MutexLock);
+			m_WorkerAlert.wait(lock, [this] { return m_FinishedWorkers[2] == 0; });
+		}
+
+		// update velocity
+		if (index != 0 || range != 0) {
+			for (size_t j = index; j < index + range; j++) {
+				glm::dvec3 accel = { 0.0, 0.0, 0.0 };
+				for (size_t k = 0; k < m_Particles.size(); k++) {
+					accel.x += m_ForceMatrix[j][k].x;
+					accel.y += m_ForceMatrix[j][k].y;
+					accel.z += m_ForceMatrix[j][k].z;
+				}
+				m_ParticleSlice[j].SetAcceleration(accel);
+				m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
+			}
+		}
+		m_MutexLock.lock();
+		m_FinishedWorkers[0]++;
+		m_MutexLock.unlock();
+		m_ControllerAlert.notify_all();
+		{
+			std::unique_lock<std::mutex> lock(m_MutexLock);
+			m_WorkerAlert.wait(lock, [this] { return m_FinishedWorkers[0] == 0; });
+		}
+	}
+}
+
 void Simulation::Log(std::string log) {
     m_Logs.push_back(GetCurrentTimeString() + " " + log); 
     if (m_Logs.size() > 10000) 
@@ -198,6 +278,11 @@ void Simulation::Start() {
 		}
 		bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
 		size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
+		size_t optimal_workers = m_Particles.size() % jobsize != 0 ? (m_Particles.size() / jobsize) + 1 : m_Particles.size() / jobsize;
+		if (optimal_workers != m_NumLocalWorkers) {
+			this->Log("more workers than possible jobs needed. truncating additional workers...");
+			m_NumLocalWorkers = optimal_workers;
+		}
 		for (int i = 0; i < m_NumLocalWorkers; i++) {
 			if (i == m_NumLocalWorkers - 1 && uneven) {
 				m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, (m_Particles.size() % jobsize)));
@@ -206,7 +291,56 @@ void Simulation::Start() {
 			}
 		}
 	} else if (m_Technique == SimulationTechnique::EDGE) {
-
+		m_MainProcess = std::thread(&Simulation::Simulate, this);
+		m_SubProcesses.clear();
+		m_FinishedWorkers.push_back(0);
+		m_FinishedWorkers.push_back(0);
+		m_FinishedWorkers.push_back(0);
+		m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
+		size_t numedges = ((m_Particles.size() * m_Particles.size()) - m_Particles.size()) / 2;
+		if (m_NumLocalWorkers > numedges) {
+			m_NumLocalWorkers = numedges;
+			this->Log("more workers than possible jobs detected. truncating extra workers...");
+		}
+		bool uneven = numedges % m_NumLocalWorkers != 0;
+		size_t jobsize = uneven ? (numedges / m_NumLocalWorkers) + 1 : numedges / m_NumLocalWorkers;
+		size_t optimal_workers = numedges % jobsize != 0 ? (numedges / jobsize) + 1 : numedges / jobsize;
+		if (optimal_workers != m_NumLocalWorkers) {
+			this->Log("more workers than possible jobs needed. truncating additional workers...");
+			m_NumLocalWorkers = optimal_workers;
+		}
+		size_t second_jobsize = m_Particles.size() % optimal_workers != 0 ? (m_Particles.size() / optimal_workers) + 1 : m_Particles.size() / optimal_workers;
+		size_t p_ind = 0;
+		std::vector<std::pair<size_t, size_t>> edges;
+		for (size_t r = 0; r < m_Particles.size(); r++) {
+			for (size_t c = 0; c < m_Particles.size(); c++) {
+				if (c <= r) c = r + 1;
+				if (c >= m_Particles.size()) continue;
+				if (edges.size() >= jobsize) {
+					size_t range = second_jobsize;
+					size_t ind = p_ind;
+					if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
+					if (p_ind >= m_Particles.size()) {
+						ind = 0;
+						range = 0;
+					}
+					m_SubProcesses.push_back(std::thread(&Simulation::EdgeJob, this, edges, ind, range));
+					p_ind += range;
+					edges.clear();
+				}
+				edges.push_back(std::pair<size_t, size_t>(r, c));
+			}
+		}
+		if (edges.size() > 0) {
+			size_t range = second_jobsize;
+			size_t ind = p_ind;
+			if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
+			if (p_ind >= m_Particles.size()) {
+				ind = 0;
+				range = 0;
+			}
+			m_SubProcesses.push_back(std::thread(&Simulation::EdgeJob, this, edges, ind, range));
+		}
 	} else {
 		this->Log("Technique selected has not been implemented. Unable to start simulation.");
 		return;
@@ -245,7 +379,7 @@ void Simulation::Prime() {
 void Simulation::Checkup() {
 	if (m_Finished) {
 		m_MainProcess.join();
-		for (int i = 0; i < m_NumLocalWorkers; i++) {
+		for (int i = 0; i < m_SubProcesses.size(); i++) {
 			m_SubProcesses[i].join();
 		}
 		m_Started = false;

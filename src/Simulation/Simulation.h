@@ -80,6 +80,7 @@ public:
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
 	void ParticleJob(size_t index, size_t range);
+	void EdgeJob(std::vector<std::pair<size_t, size_t>> edges, size_t index, size_t range);
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;

@@ -26,6 +26,6 @@ private:
 	glm::dvec3 m_Acceleration = { 0, 0, 0 };
 	glm::dvec3 m_Position = { 0, 0, 0 };
 	glm::dvec3 m_Velocity = { 0, 0, 0 };
-	double m_Mass;
+	double m_Mass = 0.0;
 	double m_Radius = 0.5f;
 };
