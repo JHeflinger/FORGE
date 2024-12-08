@@ -1,0 +1,6019 @@
+Sources:
+  []
+Sinks:
+  []
+Grids:
+  []
+Particles:
+  - ID: 1
+    Name: Particle
+    Position: [88.45199216926966, -85.54906528940403, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.52766157327327
+    Radius: 0.5
+  - ID: 2
+    Name: Particle
+    Position: [-98.34199051153108, -88.47558260068531, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.13677758132613
+    Radius: 0.5
+  - ID: 3
+    Name: Particle
+    Position: [83.74630668430456, -69.1848529405442, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.469967583856786
+    Radius: 0.5
+  - ID: 4
+    Name: Particle
+    Position: [-17.361211023077885, -80.19520796469294, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.30429069492824
+    Radius: 0.5
+  - ID: 5
+    Name: Particle
+    Position: [-4.212333327763957, -12.14445031247405, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.477749535362076
+    Radius: 0.5
+  - ID: 6
+    Name: Particle
+    Position: [-59.17031460140962, -7.096608865839897, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.28991816039404
+    Radius: 0.5
+  - ID: 7
+    Name: Particle
+    Position: [-34.58150532819688, -8.191771492448694, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.4566443835087
+    Radius: 0.5
+  - ID: 8
+    Name: Particle
+    Position: [24.819125055309414, 98.71496291917813, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.230487420589906
+    Radius: 0.5
+  - ID: 9
+    Name: Particle
+    Position: [-51.553773137219494, 63.36105642091337, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.344915061693825
+    Radius: 0.5
+  - ID: 10
+    Name: Particle
+    Position: [-95.12996921975243, 39.57191623758419, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 87.0079907316821
+    Radius: 0.5
+  - ID: 11
+    Name: Particle
+    Position: [5.131875270609811, 9.721286319995713, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.60184224049978
+    Radius: 0.5
+  - ID: 12
+    Name: Particle
+    Position: [-49.60686427134495, 62.18362090168398, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.16572127442253
+    Radius: 0.5
+  - ID: 13
+    Name: Particle
+    Position: [29.48626314440955, 88.0937569231989, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.71010190060396
+    Radius: 0.5
+  - ID: 14
+    Name: Particle
+    Position: [-61.48196327330619, -93.45233791767176, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.675209032385084
+    Radius: 0.5
+  - ID: 15
+    Name: Particle
+    Position: [-87.8725504550928, -18.307381672963885, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.52654725780192
+    Radius: 0.5
+  - ID: 16
+    Name: Particle
+    Position: [-79.80311127999977, 57.97903986098075, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.877127911136768
+    Radius: 0.5
+  - ID: 17
+    Name: Particle
+    Position: [40.893047162208916, 74.38895521627364, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 51.813144879145725
+    Radius: 0.5
+  - ID: 18
+    Name: Particle
+    Position: [-74.40156353104382, 25.103245333733042, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.63047527716459
+    Radius: 0.5
+  - ID: 19
+    Name: Particle
+    Position: [-60.41304382049124, 88.74029601726289, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.11723339169907
+    Radius: 0.5
+  - ID: 20
+    Name: Particle
+    Position: [-77.50078758986606, -51.22866535075907, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.755839251861648
+    Radius: 0.5
+  - ID: 21
+    Name: Particle
+    Position: [-40.706120145445304, 46.74062906787927, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.78200276447239
+    Radius: 0.5
+  - ID: 22
+    Name: Particle
+    Position: [93.45712386284103, -17.17454890153833, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.33004477860877
+    Radius: 0.5
+  - ID: 23
+    Name: Particle
+    Position: [-89.6961999471346, 9.888067071779986, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.46051598667755
+    Radius: 0.5
+  - ID: 24
+    Name: Particle
+    Position: [-71.50558234138136, 40.550890054501366, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.02762545872254
+    Radius: 0.5
+  - ID: 25
+    Name: Particle
+    Position: [42.51905133526839, -13.943413412212749, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.29971935211407
+    Radius: 0.5
+  - ID: 26
+    Name: Particle
+    Position: [69.78610748147801, 41.17034930193725, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.6410759749485
+    Radius: 0.5
+  - ID: 27
+    Name: Particle
+    Position: [-15.66666557251186, 8.533191546802826, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.7130110131723
+    Radius: 0.5
+  - ID: 28
+    Name: Particle
+    Position: [-50.51947103582985, -97.52959973242614, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.51336349403326
+    Radius: 0.5
+  - ID: 29
+    Name: Particle
+    Position: [28.368183350792805, -83.71812561065981, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.96047643467338
+    Radius: 0.5
+  - ID: 30
+    Name: Particle
+    Position: [99.6679649597819, 82.77331827413065, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.14502254594164
+    Radius: 0.5
+  - ID: 31
+    Name: Particle
+    Position: [96.58459092866661, -5.699635118452477, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.26972650321076
+    Radius: 0.5
+  - ID: 32
+    Name: Particle
+    Position: [-78.91339321354327, -75.90503333368841, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.88920348460789
+    Radius: 0.5
+  - ID: 33
+    Name: Particle
+    Position: [-77.62154335223251, -66.62178305564186, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.55761210784585
+    Radius: 0.5
+  - ID: 34
+    Name: Particle
+    Position: [19.61658710390583, 41.98986586608649, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.717862531687416
+    Radius: 0.5
+  - ID: 35
+    Name: Particle
+    Position: [7.211334377595492, -78.84452301957545, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.62307581787469
+    Radius: 0.5
+  - ID: 36
+    Name: Particle
+    Position: [-6.048945709978113, -99.87817502643223, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.90285228380692
+    Radius: 0.5
+  - ID: 37
+    Name: Particle
+    Position: [53.37376453652618, -0.9356634259106755, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.07391018627324
+    Radius: 0.5
+  - ID: 38
+    Name: Particle
+    Position: [42.59872272010247, -44.4127038225409, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.57646917682276
+    Radius: 0.5
+  - ID: 39
+    Name: Particle
+    Position: [-69.83858973814323, -73.66705827747546, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.8953726579382
+    Radius: 0.5
+  - ID: 40
+    Name: Particle
+    Position: [-82.77101810277054, 56.577678246424625, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.01666041270417
+    Radius: 0.5
+  - ID: 41
+    Name: Particle
+    Position: [94.74824387800419, -30.57698105017066, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.773142456147077
+    Radius: 0.5
+  - ID: 42
+    Name: Particle
+    Position: [-36.991266608411635, -60.02697181542778, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.26287682272122
+    Radius: 0.5
+  - ID: 43
+    Name: Particle
+    Position: [30.028310391220856, 87.79162424081994, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.79508352425883
+    Radius: 0.5
+  - ID: 44
+    Name: Particle
+    Position: [-27.971885899322373, -66.31984900497538, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.93925414791578
+    Radius: 0.5
+  - ID: 45
+    Name: Particle
+    Position: [78.81862576732038, 19.042292961137306, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.01891548860684
+    Radius: 0.5
+  - ID: 46
+    Name: Particle
+    Position: [7.948763090147565, 93.71743653796895, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.44183790357606
+    Radius: 0.5
+  - ID: 47
+    Name: Particle
+    Position: [16.79953456163068, -23.449723811909536, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.39122665540451
+    Radius: 0.5
+  - ID: 48
+    Name: Particle
+    Position: [-55.69250647474235, 19.905290363605488, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.974707003514165
+    Radius: 0.5
+  - ID: 49
+    Name: Particle
+    Position: [41.15042213606691, -96.17489212025004, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.43108098502967
+    Radius: 0.5
+  - ID: 50
+    Name: Particle
+    Position: [-44.30295664809554, -36.116676056357534, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.82804580026811
+    Radius: 0.5
+  - ID: 51
+    Name: Particle
+    Position: [-31.533330542073116, -21.400252396789327, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.115197608851101
+    Radius: 0.5
+  - ID: 52
+    Name: Particle
+    Position: [-71.0274135116246, -80.77230356281511, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.455760520602517
+    Radius: 0.5
+  - ID: 53
+    Name: Particle
+    Position: [0.37746768262340424, -47.747565063471484, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.44855533481828
+    Radius: 0.5
+  - ID: 54
+    Name: Particle
+    Position: [-10.312753784819947, 38.86944498612263, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.34751284169168
+    Radius: 0.5
+  - ID: 55
+    Name: Particle
+    Position: [6.6087966128228715, -87.59417894226185, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.51032921390178
+    Radius: 0.5
+  - ID: 56
+    Name: Particle
+    Position: [-48.66740303667909, -56.39699809039384, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.55287191539115
+    Radius: 0.5
+  - ID: 57
+    Name: Particle
+    Position: [11.859547733391878, -97.89869793398502, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.14769856163635
+    Radius: 0.5
+  - ID: 58
+    Name: Particle
+    Position: [11.991574363589791, 2.1077052689724383, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.7631315533103
+    Radius: 0.5
+  - ID: 59
+    Name: Particle
+    Position: [-60.904534839917645, -88.56207601101826, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.803535012564986
+    Radius: 0.5
+  - ID: 60
+    Name: Particle
+    Position: [14.899060788310265, -12.756736356010933, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.77371311756458
+    Radius: 0.5
+  - ID: 61
+    Name: Particle
+    Position: [87.9549006939134, 51.87172420540003, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.07975503320797
+    Radius: 0.5
+  - ID: 62
+    Name: Particle
+    Position: [-49.86843243562309, -89.04666875835842, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 71.16630546356518
+    Radius: 0.5
+  - ID: 63
+    Name: Particle
+    Position: [-64.68298121471398, -73.4692972499505, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.98804005613867
+    Radius: 0.5
+  - ID: 64
+    Name: Particle
+    Position: [59.03216385651393, 25.70405607150714, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.4798624168237
+    Radius: 0.5
+  - ID: 65
+    Name: Particle
+    Position: [-98.38555825739755, 37.583794563997486, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.84633894962647
+    Radius: 0.5
+  - ID: 66
+    Name: Particle
+    Position: [-25.71261043407273, 82.50975104197411, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.63662048579097
+    Radius: 0.5
+  - ID: 67
+    Name: Particle
+    Position: [-70.1510273154323, 26.867918725986357, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.68407973575103
+    Radius: 0.5
+  - ID: 68
+    Name: Particle
+    Position: [70.37179345614473, -79.48573364326526, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 51.55578469232136
+    Radius: 0.5
+  - ID: 69
+    Name: Particle
+    Position: [44.953652513200836, -97.60147411628265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.9129875020272
+    Radius: 0.5
+  - ID: 70
+    Name: Particle
+    Position: [-51.899426110126015, 67.19037884948992, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.74879335509062
+    Radius: 0.5
+  - ID: 71
+    Name: Particle
+    Position: [11.924860189040402, 62.49182694005481, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.0330926697348
+    Radius: 0.5
+  - ID: 72
+    Name: Particle
+    Position: [89.16141387944711, -82.21041719830356, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.33563155860273
+    Radius: 0.5
+  - ID: 73
+    Name: Particle
+    Position: [55.55900134401463, 28.71353938513451, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.44654298697565
+    Radius: 0.5
+  - ID: 74
+    Name: Particle
+    Position: [43.5129549789489, 79.65625638329496, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.39459398136103
+    Radius: 0.5
+  - ID: 75
+    Name: Particle
+    Position: [4.20577213682563, -14.647332598740846, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.92222315503578
+    Radius: 0.5
+  - ID: 76
+    Name: Particle
+    Position: [20.730026391643847, -64.04811596506673, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.394480361286696
+    Radius: 0.5
+  - ID: 77
+    Name: Particle
+    Position: [78.64161891092655, 35.44021695371211, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.39387499935292
+    Radius: 0.5
+  - ID: 78
+    Name: Particle
+    Position: [-16.91927515712308, -89.39251644509997, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.71241549644449
+    Radius: 0.5
+  - ID: 79
+    Name: Particle
+    Position: [71.58081678313152, -84.1350358717738, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.45881873783242
+    Radius: 0.5
+  - ID: 80
+    Name: Particle
+    Position: [91.00824253249695, -61.32578409243112, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.76479105233225
+    Radius: 0.5
+  - ID: 81
+    Name: Particle
+    Position: [-70.07768755360112, -75.20540221132546, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.26406903005047
+    Radius: 0.5
+  - ID: 82
+    Name: Particle
+    Position: [-25.177429184741484, 45.58117595477728, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.78088224762477
+    Radius: 0.5
+  - ID: 83
+    Name: Particle
+    Position: [-85.54839204801745, -35.27074919686761, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.53118243761071
+    Radius: 0.5
+  - ID: 84
+    Name: Particle
+    Position: [-60.212294608639596, -9.211007828753566, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.248635658741165
+    Radius: 0.5
+  - ID: 85
+    Name: Particle
+    Position: [99.07655533729363, -30.540981655078994, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.69672559901176
+    Radius: 0.5
+  - ID: 86
+    Name: Particle
+    Position: [14.24359908841582, 40.03933820776865, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.84821598221772
+    Radius: 0.5
+  - ID: 87
+    Name: Particle
+    Position: [1.383777096822854, 2.9376883273636736, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.72469728634579
+    Radius: 0.5
+  - ID: 88
+    Name: Particle
+    Position: [63.94102873727107, 82.68063942598906, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.85058496918316
+    Radius: 0.5
+  - ID: 89
+    Name: Particle
+    Position: [59.042964672502904, -64.6516076295367, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.6232985575723
+    Radius: 0.5
+  - ID: 90
+    Name: Particle
+    Position: [79.55405458017293, -16.05474810932668, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.391415473277853
+    Radius: 0.5
+  - ID: 91
+    Name: Particle
+    Position: [-89.04774179493766, 51.37294585786404, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.0327472991483
+    Radius: 0.5
+  - ID: 92
+    Name: Particle
+    Position: [61.31537848717983, 99.00651185571587, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.06231156831869
+    Radius: 0.5
+  - ID: 93
+    Name: Particle
+    Position: [9.179791671458219, 30.65591694448122, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.73523174622201
+    Radius: 0.5
+  - ID: 94
+    Name: Particle
+    Position: [-23.751426213831024, 55.60620198302388, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.59416067183594
+    Radius: 0.5
+  - ID: 95
+    Name: Particle
+    Position: [51.14936733245145, 37.71988164923832, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.06952123200387
+    Radius: 0.5
+  - ID: 96
+    Name: Particle
+    Position: [89.67945820439039, 58.967130582009275, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.61089277752461
+    Radius: 0.5
+  - ID: 97
+    Name: Particle
+    Position: [85.63564004500259, 92.34425481924896, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.03623717744565
+    Radius: 0.5
+  - ID: 98
+    Name: Particle
+    Position: [5.635806840933938, -83.70553092902739, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.15335126540054
+    Radius: 0.5
+  - ID: 99
+    Name: Particle
+    Position: [96.96601891087354, -7.348163213876106, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.32890309731039
+    Radius: 0.5
+  - ID: 100
+    Name: Particle
+    Position: [-49.059135652377094, 1.1592789543963846, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.67820474963484
+    Radius: 0.5
+  - ID: 101
+    Name: Particle
+    Position: [-60.35030573447284, 79.80701717568243, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.606144824448492
+    Radius: 0.5
+  - ID: 102
+    Name: Particle
+    Position: [-54.533666678419415, -36.508970767250744, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.41961211718953
+    Radius: 0.5
+  - ID: 103
+    Name: Particle
+    Position: [-39.00540575447358, 17.1370354916817, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.89296648067484
+    Radius: 0.5
+  - ID: 104
+    Name: Particle
+    Position: [17.8445449993105, 91.80311822689825, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.25502138273282
+    Radius: 0.5
+  - ID: 105
+    Name: Particle
+    Position: [-2.205272381653714, 66.64439886112007, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.55410897216333
+    Radius: 0.5
+  - ID: 106
+    Name: Particle
+    Position: [-3.808732658031815, -6.282588976615216, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.01889905048288
+    Radius: 0.5
+  - ID: 107
+    Name: Particle
+    Position: [43.08124246579419, -15.711214591072874, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 65.63475475838865
+    Radius: 0.5
+  - ID: 108
+    Name: Particle
+    Position: [-87.89985624105262, -73.84387993032043, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.856189584799694
+    Radius: 0.5
+  - ID: 109
+    Name: Particle
+    Position: [-89.88804753337641, -93.69192022058526, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.2027059027439
+    Radius: 0.5
+  - ID: 110
+    Name: Particle
+    Position: [-29.72354971973104, -98.48939889823495, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.46541514958118
+    Radius: 0.5
+  - ID: 111
+    Name: Particle
+    Position: [-32.90063420503651, -28.547904967834953, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.63563562234245
+    Radius: 0.5
+  - ID: 112
+    Name: Particle
+    Position: [-47.31439473299331, -62.5201472203617, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.74687571785613
+    Radius: 0.5
+  - ID: 113
+    Name: Particle
+    Position: [-67.23039373038333, -82.59103077276642, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.791753965358254
+    Radius: 0.5
+  - ID: 114
+    Name: Particle
+    Position: [-77.0429263984459, 8.850370149851443, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.749043220978184
+    Radius: 0.5
+  - ID: 115
+    Name: Particle
+    Position: [39.212584594232055, -33.678771254160836, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.94929963789065
+    Radius: 0.5
+  - ID: 116
+    Name: Particle
+    Position: [56.888895438120755, -78.35040757051961, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.23888959679023
+    Radius: 0.5
+  - ID: 117
+    Name: Particle
+    Position: [-78.60067365621677, -76.81733465057145, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.038233195441816
+    Radius: 0.5
+  - ID: 118
+    Name: Particle
+    Position: [-41.48448333645649, 35.30054859388915, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.21993534435185
+    Radius: 0.5
+  - ID: 119
+    Name: Particle
+    Position: [95.5454443585821, 63.737009205024265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.70732439257745
+    Radius: 0.5
+  - ID: 120
+    Name: Particle
+    Position: [-48.45517060713682, 59.55280139264093, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.10120908758097
+    Radius: 0.5
+  - ID: 121
+    Name: Particle
+    Position: [70.58854204896159, 15.244481993089636, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.88288609407626
+    Radius: 0.5
+  - ID: 122
+    Name: Particle
+    Position: [28.032405786044308, 38.175254197124985, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.64316091155473
+    Radius: 0.5
+  - ID: 123
+    Name: Particle
+    Position: [-91.75038786019935, -95.85117134492633, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.18128010754481
+    Radius: 0.5
+  - ID: 124
+    Name: Particle
+    Position: [-58.452510323517195, 19.331784279745662, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.09063268058195
+    Radius: 0.5
+  - ID: 125
+    Name: Particle
+    Position: [-69.9764405560352, -89.00150659492077, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.85771359213355
+    Radius: 0.5
+  - ID: 126
+    Name: Particle
+    Position: [-34.89431741052236, -66.13748178512797, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.028884013125715
+    Radius: 0.5
+  - ID: 127
+    Name: Particle
+    Position: [-83.51912841214546, 67.22025595895889, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.47907998893805
+    Radius: 0.5
+  - ID: 128
+    Name: Particle
+    Position: [9.902568104417938, 44.23699594366644, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.914076373025875
+    Radius: 0.5
+  - ID: 129
+    Name: Particle
+    Position: [-78.02843665710593, 17.64512224755734, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.647864801538523
+    Radius: 0.5
+  - ID: 130
+    Name: Particle
+    Position: [-90.13406466738006, -93.09746293886833, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.61773505056694
+    Radius: 0.5
+  - ID: 131
+    Name: Particle
+    Position: [-52.50814250097176, -71.47996274451589, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.74448584287764
+    Radius: 0.5
+  - ID: 132
+    Name: Particle
+    Position: [-8.912821081908163, -13.466775239346248, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.80716169639015
+    Radius: 0.5
+  - ID: 133
+    Name: Particle
+    Position: [-54.26653419089122, -54.00275859773254, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.29549647168957
+    Radius: 0.5
+  - ID: 134
+    Name: Particle
+    Position: [-10.841288670538901, 22.889403817715007, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.597998472148504
+    Radius: 0.5
+  - ID: 135
+    Name: Particle
+    Position: [54.587575318493634, 79.20711652122628, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.17393165013593
+    Radius: 0.5
+  - ID: 136
+    Name: Particle
+    Position: [-46.33380335574346, 64.28886159073014, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.52322274697383
+    Radius: 0.5
+  - ID: 137
+    Name: Particle
+    Position: [-36.32651993287092, -34.94032583913571, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.442196456120215
+    Radius: 0.5
+  - ID: 138
+    Name: Particle
+    Position: [12.30768818896901, -12.025247259959244, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.100119519675903
+    Radius: 0.5
+  - ID: 139
+    Name: Particle
+    Position: [26.16636779229664, -32.09623534795803, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.89338060722035
+    Radius: 0.5
+  - ID: 140
+    Name: Particle
+    Position: [-75.08523885027145, -36.80613595323208, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.201599169571026
+    Radius: 0.5
+  - ID: 141
+    Name: Particle
+    Position: [-28.716625514754227, -23.75801836845679, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.43231336525366
+    Radius: 0.5
+  - ID: 142
+    Name: Particle
+    Position: [-67.46479960196487, 68.69422178659184, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.40874868573668
+    Radius: 0.5
+  - ID: 143
+    Name: Particle
+    Position: [61.56474379929787, 74.88564145719963, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.53862393416181
+    Radius: 0.5
+  - ID: 144
+    Name: Particle
+    Position: [-78.78121835035365, 65.48728148129527, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.72964266035586
+    Radius: 0.5
+  - ID: 145
+    Name: Particle
+    Position: [95.94218008459464, 2.042503945777213, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.139581835418895
+    Radius: 0.5
+  - ID: 146
+    Name: Particle
+    Position: [36.501341958913684, 91.20421656165263, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.705425968645315
+    Radius: 0.5
+  - ID: 147
+    Name: Particle
+    Position: [79.80672302645988, -83.79539941676958, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.28932554857922
+    Radius: 0.5
+  - ID: 148
+    Name: Particle
+    Position: [-6.1746936342507155, -39.784759109235424, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.34926237256494
+    Radius: 0.5
+  - ID: 149
+    Name: Particle
+    Position: [15.509306024140784, -9.195799651475852, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.939862680795926
+    Radius: 0.5
+  - ID: 150
+    Name: Particle
+    Position: [-24.382666244745053, 59.33711349153123, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.54766997630954
+    Radius: 0.5
+  - ID: 151
+    Name: Particle
+    Position: [-20.18384824905523, 60.55640031802736, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.91352453145083
+    Radius: 0.5
+  - ID: 152
+    Name: Particle
+    Position: [32.62902760985065, 50.107204814552944, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.472557438435544
+    Radius: 0.5
+  - ID: 153
+    Name: Particle
+    Position: [-42.17891044306845, -23.693251875679564, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.69359064989092
+    Radius: 0.5
+  - ID: 154
+    Name: Particle
+    Position: [4.222138531459791, 78.60613411001239, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.57824666799634
+    Radius: 0.5
+  - ID: 155
+    Name: Particle
+    Position: [34.61563546720387, 0.2790319874931555, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.84080428116873
+    Radius: 0.5
+  - ID: 156
+    Name: Particle
+    Position: [-88.57972602153986, 78.89276241059989, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.38846713518672
+    Radius: 0.5
+  - ID: 157
+    Name: Particle
+    Position: [70.53789336302205, 21.81849955820256, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.96129456442901
+    Radius: 0.5
+  - ID: 158
+    Name: Particle
+    Position: [-11.10810680213828, -37.58962581067025, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.10029593493555
+    Radius: 0.5
+  - ID: 159
+    Name: Particle
+    Position: [-24.174987553065463, -92.46504556351742, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.062868661837
+    Radius: 0.5
+  - ID: 160
+    Name: Particle
+    Position: [-53.3905177071895, -81.32524610712593, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 12.08843908383686
+    Radius: 0.5
+  - ID: 161
+    Name: Particle
+    Position: [82.7591423178607, 50.51693211546362, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.55139622083688
+    Radius: 0.5
+  - ID: 162
+    Name: Particle
+    Position: [30.885482776373806, 70.05121584114801, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.46688910012307
+    Radius: 0.5
+  - ID: 163
+    Name: Particle
+    Position: [2.0065582297976903, 15.419655510242848, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.37788291293879
+    Radius: 0.5
+  - ID: 164
+    Name: Particle
+    Position: [-51.88197760300288, 63.93054334611236, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.54479104352028
+    Radius: 0.5
+  - ID: 165
+    Name: Particle
+    Position: [93.69165590971483, 31.257045338259672, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.94172918107729
+    Radius: 0.5
+  - ID: 166
+    Name: Particle
+    Position: [90.01368399079689, -65.60866638170755, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.40131311884001
+    Radius: 0.5
+  - ID: 167
+    Name: Particle
+    Position: [-37.477370649409345, 76.63677726221349, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.713034690820606
+    Radius: 0.5
+  - ID: 168
+    Name: Particle
+    Position: [55.07192304860354, -48.95560479526209, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.86938044348215
+    Radius: 0.5
+  - ID: 169
+    Name: Particle
+    Position: [8.209984863950439, 78.56968229229929, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.441816200377854
+    Radius: 0.5
+  - ID: 170
+    Name: Particle
+    Position: [-70.42529784388667, 15.880562049292294, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.93174295920281
+    Radius: 0.5
+  - ID: 171
+    Name: Particle
+    Position: [3.3514416194039, -37.82850483239242, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.74434051778945
+    Radius: 0.5
+  - ID: 172
+    Name: Particle
+    Position: [-26.36895567274344, 36.1039742328947, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.0105823700183
+    Radius: 0.5
+  - ID: 173
+    Name: Particle
+    Position: [-89.08005866543833, -36.892889772292904, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.031155885070476
+    Radius: 0.5
+  - ID: 174
+    Name: Particle
+    Position: [65.45743060311676, 90.99085240227615, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.85962200198322
+    Radius: 0.5
+  - ID: 175
+    Name: Particle
+    Position: [59.083540231255995, -8.428058349386774, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.94010836556807
+    Radius: 0.5
+  - ID: 176
+    Name: Particle
+    Position: [-59.59080894193809, -46.53811580063001, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.84681014056828
+    Radius: 0.5
+  - ID: 177
+    Name: Particle
+    Position: [78.22901204386548, -56.38774428241848, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.109001227966136
+    Radius: 0.5
+  - ID: 178
+    Name: Particle
+    Position: [88.43399613243054, 86.58613037004571, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.62986671141393
+    Radius: 0.5
+  - ID: 179
+    Name: Particle
+    Position: [73.80625551137555, -13.01847572618638, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.837044562461884
+    Radius: 0.5
+  - ID: 180
+    Name: Particle
+    Position: [14.449727388253052, -9.96200727783092, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.8943228882494
+    Radius: 0.5
+  - ID: 181
+    Name: Particle
+    Position: [-88.70223669713373, 81.8399890391128, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.151413657485834
+    Radius: 0.5
+  - ID: 182
+    Name: Particle
+    Position: [36.24568859933939, 77.34893485579357, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.45595803835163
+    Radius: 0.5
+  - ID: 183
+    Name: Particle
+    Position: [70.5026008946059, -7.68500255893602, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.43215938062626
+    Radius: 0.5
+  - ID: 184
+    Name: Particle
+    Position: [37.411765730143344, -27.076028523479835, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.20413332026577
+    Radius: 0.5
+  - ID: 185
+    Name: Particle
+    Position: [39.270793306200545, -81.47837596541635, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.642390179156564
+    Radius: 0.5
+  - ID: 186
+    Name: Particle
+    Position: [68.34141886456689, -25.570703432785848, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.7284606877524
+    Radius: 0.5
+  - ID: 187
+    Name: Particle
+    Position: [37.02028162458896, 34.00600887548529, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.72128704505509
+    Radius: 0.5
+  - ID: 188
+    Name: Particle
+    Position: [91.93146214471452, 57.23160665144968, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.26576437203654
+    Radius: 0.5
+  - ID: 189
+    Name: Particle
+    Position: [11.363792482766797, -20.36164389216721, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.291742670711942
+    Radius: 0.5
+  - ID: 190
+    Name: Particle
+    Position: [-91.63268107236593, 51.1181641127817, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.009565030143207
+    Radius: 0.5
+  - ID: 191
+    Name: Particle
+    Position: [43.30603189885264, -9.166185690985145, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.783974696378852
+    Radius: 0.5
+  - ID: 192
+    Name: Particle
+    Position: [38.991435669089725, 55.79275962236247, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.19061257916323
+    Radius: 0.5
+  - ID: 193
+    Name: Particle
+    Position: [-15.305075398181089, 70.83104272483067, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.089879680321733
+    Radius: 0.5
+  - ID: 194
+    Name: Particle
+    Position: [83.19466127560833, -57.069724095588036, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.491283432726169
+    Radius: 0.5
+  - ID: 195
+    Name: Particle
+    Position: [6.778706514108251, 57.577219486212584, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.755614008252138
+    Radius: 0.5
+  - ID: 196
+    Name: Particle
+    Position: [-54.9880047947211, -35.689364354933176, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.41809800837013
+    Radius: 0.5
+  - ID: 197
+    Name: Particle
+    Position: [-31.451544398244934, -0.9608596986096387, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.048358033862606
+    Radius: 0.5
+  - ID: 198
+    Name: Particle
+    Position: [44.01266127181398, -78.92737862675973, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.07572123009984
+    Radius: 0.5
+  - ID: 199
+    Name: Particle
+    Position: [53.75895111821558, 41.5500781959266, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.79307263028118
+    Radius: 0.5
+  - ID: 200
+    Name: Particle
+    Position: [-95.51594045635399, -49.259881112021134, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.46078717079635
+    Radius: 0.5
+  - ID: 201
+    Name: Particle
+    Position: [-33.72598950705952, -34.22622970625078, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.62050559707565
+    Radius: 0.5
+  - ID: 202
+    Name: Particle
+    Position: [-19.93735866801933, 33.05479799778584, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.278604813183097
+    Radius: 0.5
+  - ID: 203
+    Name: Particle
+    Position: [39.05422443766514, 27.456401973103354, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.15947876573937
+    Radius: 0.5
+  - ID: 204
+    Name: Particle
+    Position: [-71.84652067392648, 53.10245921675269, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.2243892585778
+    Radius: 0.5
+  - ID: 205
+    Name: Particle
+    Position: [-82.08636068369275, 63.60282853140879, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.03277370066956
+    Radius: 0.5
+  - ID: 206
+    Name: Particle
+    Position: [79.66823298922907, -12.990205076498683, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.15099916323388
+    Radius: 0.5
+  - ID: 207
+    Name: Particle
+    Position: [-70.181829615184, 10.334814980847156, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.1297082249016
+    Radius: 0.5
+  - ID: 208
+    Name: Particle
+    Position: [17.83988659252404, 70.59841798829197, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.76697057359718
+    Radius: 0.5
+  - ID: 209
+    Name: Particle
+    Position: [-94.05769709172202, 10.470903578121522, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.66033801048365
+    Radius: 0.5
+  - ID: 210
+    Name: Particle
+    Position: [84.24057260149536, 74.62078400188042, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.01892250026704
+    Radius: 0.5
+  - ID: 211
+    Name: Particle
+    Position: [-24.376981922680784, 80.58430088410682, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 87.26852832189653
+    Radius: 0.5
+  - ID: 212
+    Name: Particle
+    Position: [2.5686248446492357, -43.69542014925641, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.33226262197567
+    Radius: 0.5
+  - ID: 213
+    Name: Particle
+    Position: [86.55401593458336, -13.089577513753042, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.00200169867245
+    Radius: 0.5
+  - ID: 214
+    Name: Particle
+    Position: [-20.058969917471984, -66.3388790173806, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.752051205296
+    Radius: 0.5
+  - ID: 215
+    Name: Particle
+    Position: [-48.68753380568045, -67.97695944036153, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.3214418489826
+    Radius: 0.5
+  - ID: 216
+    Name: Particle
+    Position: [-61.11456098886705, -62.635267093271295, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.64301833262768
+    Radius: 0.5
+  - ID: 217
+    Name: Particle
+    Position: [-24.365999650062648, -87.37485184636627, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.15449092786025
+    Radius: 0.5
+  - ID: 218
+    Name: Particle
+    Position: [40.30057751947203, -57.96606249580445, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.42747123602874
+    Radius: 0.5
+  - ID: 219
+    Name: Particle
+    Position: [-96.7850919910694, -45.90146721594435, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.92144130494309
+    Radius: 0.5
+  - ID: 220
+    Name: Particle
+    Position: [-80.49835489241781, 31.577734821283002, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.83693767470675
+    Radius: 0.5
+  - ID: 221
+    Name: Particle
+    Position: [18.484144980852307, 14.42066602331775, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.50227987270537
+    Radius: 0.5
+  - ID: 222
+    Name: Particle
+    Position: [95.89708445035694, 58.85170794092497, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.57008518510451
+    Radius: 0.5
+  - ID: 223
+    Name: Particle
+    Position: [49.41031080073725, -94.87677889739268, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.73827528871178
+    Radius: 0.5
+  - ID: 224
+    Name: Particle
+    Position: [-2.1024989502495686, 54.618422028919895, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.793198640348976
+    Radius: 0.5
+  - ID: 225
+    Name: Particle
+    Position: [-30.87230219571657, -69.15725396213426, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.32670196008013
+    Radius: 0.5
+  - ID: 226
+    Name: Particle
+    Position: [98.22808317802313, 42.336583343660635, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.00043125606733
+    Radius: 0.5
+  - ID: 227
+    Name: Particle
+    Position: [25.369198907908583, 75.27119036863789, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.89989140282384
+    Radius: 0.5
+  - ID: 228
+    Name: Particle
+    Position: [43.791162708198726, 86.3708992895929, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.27984849614595
+    Radius: 0.5
+  - ID: 229
+    Name: Particle
+    Position: [-90.92076400774958, -71.65316496759834, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.12950344147574
+    Radius: 0.5
+  - ID: 230
+    Name: Particle
+    Position: [-34.40528171703643, 35.55649350996987, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.90835073238254
+    Radius: 0.5
+  - ID: 231
+    Name: Particle
+    Position: [32.06603699360616, 62.34067591970813, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.941862018853644
+    Radius: 0.5
+  - ID: 232
+    Name: Particle
+    Position: [-60.65231073962292, 28.091769655606385, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.273022217451626
+    Radius: 0.5
+  - ID: 233
+    Name: Particle
+    Position: [52.478718899655036, 91.03862974312219, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.7648180450137
+    Radius: 0.5
+  - ID: 234
+    Name: Particle
+    Position: [-62.82821713953766, 73.85341378249811, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.15236105931068
+    Radius: 0.5
+  - ID: 235
+    Name: Particle
+    Position: [96.71097374963298, -71.76517767921105, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.71558565568034
+    Radius: 0.5
+  - ID: 236
+    Name: Particle
+    Position: [-83.49578302503313, -65.38995526177422, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.09552257740103
+    Radius: 0.5
+  - ID: 237
+    Name: Particle
+    Position: [31.272495060329618, -8.410501174265491, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.67058315690079
+    Radius: 0.5
+  - ID: 238
+    Name: Particle
+    Position: [-98.53805365657135, 27.42819043012119, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.30302038074413
+    Radius: 0.5
+  - ID: 239
+    Name: Particle
+    Position: [36.79816334056804, -76.74136636106066, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.19429983404466
+    Radius: 0.5
+  - ID: 240
+    Name: Particle
+    Position: [-74.79000028583143, -4.372352330930809, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.5663145633026
+    Radius: 0.5
+  - ID: 241
+    Name: Particle
+    Position: [-2.3388061501936193, -46.6193785619535, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.95325038783393
+    Radius: 0.5
+  - ID: 242
+    Name: Particle
+    Position: [28.978911330405822, -76.02080371271228, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.028485767605037
+    Radius: 0.5
+  - ID: 243
+    Name: Particle
+    Position: [-53.67556332006349, -85.39452887648824, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.19175948577177
+    Radius: 0.5
+  - ID: 244
+    Name: Particle
+    Position: [4.700876245599673, 47.59557313499346, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.35787017823433
+    Radius: 0.5
+  - ID: 245
+    Name: Particle
+    Position: [-42.329927371942944, -97.46951048791969, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 80.28520003728423
+    Radius: 0.5
+  - ID: 246
+    Name: Particle
+    Position: [37.31336049333541, -6.266850780986104, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.46501197335212
+    Radius: 0.5
+  - ID: 247
+    Name: Particle
+    Position: [68.77377429088762, -59.72306662431188, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.973983363715597
+    Radius: 0.5
+  - ID: 248
+    Name: Particle
+    Position: [-19.788446374499458, -14.833061930178943, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.35940723504476
+    Radius: 0.5
+  - ID: 249
+    Name: Particle
+    Position: [1.5592487582180468, 64.93936924594149, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.777659896009894
+    Radius: 0.5
+  - ID: 250
+    Name: Particle
+    Position: [67.6130724804897, -64.81994792052647, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.01778814792408
+    Radius: 0.5
+  - ID: 251
+    Name: Particle
+    Position: [-49.191737106731836, 51.74218908641808, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.03458267322975
+    Radius: 0.5
+  - ID: 252
+    Name: Particle
+    Position: [61.94776046087634, -26.152108939494667, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.22382699832966
+    Radius: 0.5
+  - ID: 253
+    Name: Particle
+    Position: [-58.821547962755446, -25.232092245010932, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.75818419443796
+    Radius: 0.5
+  - ID: 254
+    Name: Particle
+    Position: [2.920263459951016, -9.954302350221184, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.35605754205942
+    Radius: 0.5
+  - ID: 255
+    Name: Particle
+    Position: [-72.80131146294666, 31.360892910233844, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.160748782324465
+    Radius: 0.5
+  - ID: 256
+    Name: Particle
+    Position: [42.657711636962716, -96.2094186724747, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.06242444789997
+    Radius: 0.5
+  - ID: 257
+    Name: Particle
+    Position: [13.418193826778108, 47.829009290940746, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.32973101012658
+    Radius: 0.5
+  - ID: 258
+    Name: Particle
+    Position: [-19.62258215933592, 79.78098762860728, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.39325883804365
+    Radius: 0.5
+  - ID: 259
+    Name: Particle
+    Position: [-50.6495574331761, 39.05582891979685, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.79058353102053
+    Radius: 0.5
+  - ID: 260
+    Name: Particle
+    Position: [-80.39706323643152, -2.552766271670933, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.22098512410557
+    Radius: 0.5
+  - ID: 261
+    Name: Particle
+    Position: [-8.136765790833238, -26.256545814076503, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.134978287314965
+    Radius: 0.5
+  - ID: 262
+    Name: Particle
+    Position: [-7.815973466852725, -27.81066901475866, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.25773141996866
+    Radius: 0.5
+  - ID: 263
+    Name: Particle
+    Position: [48.33507256654971, -56.76646650022397, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.014239958472032
+    Radius: 0.5
+  - ID: 264
+    Name: Particle
+    Position: [-60.626504794438986, -4.021422928774058, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.537315184813854
+    Radius: 0.5
+  - ID: 265
+    Name: Particle
+    Position: [-24.195160956349397, -27.917298968460898, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.77588520959603
+    Radius: 0.5
+  - ID: 266
+    Name: Particle
+    Position: [92.62682423906747, 63.90232455806972, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.020447498751825
+    Radius: 0.5
+  - ID: 267
+    Name: Particle
+    Position: [-42.7807489675621, -42.39119247542418, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.69066879246299
+    Radius: 0.5
+  - ID: 268
+    Name: Particle
+    Position: [-72.03417814564561, -74.81087501665051, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.73095472892905
+    Radius: 0.5
+  - ID: 269
+    Name: Particle
+    Position: [-95.79788553696302, -58.134982225994094, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.15551707283944
+    Radius: 0.5
+  - ID: 270
+    Name: Particle
+    Position: [-20.699362970092423, 11.365597716905455, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.965924980125735
+    Radius: 0.5
+  - ID: 271
+    Name: Particle
+    Position: [-97.60800621959235, -36.303095002002614, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.27285955829058
+    Radius: 0.5
+  - ID: 272
+    Name: Particle
+    Position: [99.25292773308996, 57.58759162934501, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.28564142616537
+    Radius: 0.5
+  - ID: 273
+    Name: Particle
+    Position: [80.68113442382926, 57.49002573675958, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.059733381866984
+    Radius: 0.5
+  - ID: 274
+    Name: Particle
+    Position: [51.77017765572094, -10.419818686481747, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.36616240481288
+    Radius: 0.5
+  - ID: 275
+    Name: Particle
+    Position: [28.587784650755367, 46.00010435566054, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.95240543085102
+    Radius: 0.5
+  - ID: 276
+    Name: Particle
+    Position: [-46.45964839562904, -50.85313038784325, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.6462418007324
+    Radius: 0.5
+  - ID: 277
+    Name: Particle
+    Position: [26.322062351500094, -5.002960795896996, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.82662374725504
+    Radius: 0.5
+  - ID: 278
+    Name: Particle
+    Position: [-71.47644431473307, -55.92940341819974, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.9727809993525
+    Radius: 0.5
+  - ID: 279
+    Name: Particle
+    Position: [37.50123267079951, -5.944878857612565, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.378762598104544
+    Radius: 0.5
+  - ID: 280
+    Name: Particle
+    Position: [0.08229691841444264, 6.798297222955952, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.38662566208899
+    Radius: 0.5
+  - ID: 281
+    Name: Particle
+    Position: [96.09821505378719, -89.52418767055303, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.084745809196901
+    Radius: 0.5
+  - ID: 282
+    Name: Particle
+    Position: [48.621437723138996, -9.65800836002964, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.979134039195511
+    Radius: 0.5
+  - ID: 283
+    Name: Particle
+    Position: [-26.994827256148128, 41.55270362639379, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.28541397021795
+    Radius: 0.5
+  - ID: 284
+    Name: Particle
+    Position: [2.74763304161236, 58.54567479140246, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.15262773568842
+    Radius: 0.5
+  - ID: 285
+    Name: Particle
+    Position: [-85.09483822512243, -73.39082203589024, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.08326276907527
+    Radius: 0.5
+  - ID: 286
+    Name: Particle
+    Position: [40.840379191268795, 44.99335906944472, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.707939705655694
+    Radius: 0.5
+  - ID: 287
+    Name: Particle
+    Position: [-8.332131511911257, -57.890308097484635, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.36063237760758
+    Radius: 0.5
+  - ID: 288
+    Name: Particle
+    Position: [55.23776332169018, -21.540160517886036, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.09886296012895
+    Radius: 0.5
+  - ID: 289
+    Name: Particle
+    Position: [66.70471424853324, 3.0385291695856864, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.11202392439208
+    Radius: 0.5
+  - ID: 290
+    Name: Particle
+    Position: [-58.89345762700078, -65.83783078809537, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.05476882453617
+    Radius: 0.5
+  - ID: 291
+    Name: Particle
+    Position: [-7.5204460867232825, -87.1351578673448, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.910681586577258
+    Radius: 0.5
+  - ID: 292
+    Name: Particle
+    Position: [-41.35200257224412, 44.841786100071204, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.34115566497056
+    Radius: 0.5
+  - ID: 293
+    Name: Particle
+    Position: [69.13711289768662, -75.71350637973904, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.924439342520998
+    Radius: 0.5
+  - ID: 294
+    Name: Particle
+    Position: [51.68319169852788, -41.276797780998265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.6268850883702
+    Radius: 0.5
+  - ID: 295
+    Name: Particle
+    Position: [52.040319097043295, 97.18527585511174, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.638131822711415
+    Radius: 0.5
+  - ID: 296
+    Name: Particle
+    Position: [35.477383063762574, 78.98344027651652, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.591883251752456
+    Radius: 0.5
+  - ID: 297
+    Name: Particle
+    Position: [-4.5882004745057685, 47.32763659959426, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.39289723707171
+    Radius: 0.5
+  - ID: 298
+    Name: Particle
+    Position: [-12.87057444300686, 35.47960264245796, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.64543538733537
+    Radius: 0.5
+  - ID: 299
+    Name: Particle
+    Position: [48.26922486392829, -86.31792919340029, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.584717725125492
+    Radius: 0.5
+  - ID: 300
+    Name: Particle
+    Position: [20.10685918931931, 63.0513196389949, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.88494596055733
+    Radius: 0.5
+  - ID: 301
+    Name: Particle
+    Position: [50.62151854327021, -4.628802314194445, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.05524801278685
+    Radius: 0.5
+  - ID: 302
+    Name: Particle
+    Position: [-90.79234066420321, 46.74509678442524, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.09301001835651
+    Radius: 0.5
+  - ID: 303
+    Name: Particle
+    Position: [8.32083542652802, 19.746933073953613, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.468437877338225
+    Radius: 0.5
+  - ID: 304
+    Name: Particle
+    Position: [6.050345638882689, -12.541876469500934, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.46458231099089
+    Radius: 0.5
+  - ID: 305
+    Name: Particle
+    Position: [-66.70593867882626, -17.346429349201273, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.258550549440187
+    Radius: 0.5
+  - ID: 306
+    Name: Particle
+    Position: [-20.46233835851406, -91.1856549892484, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.604916808023816
+    Radius: 0.5
+  - ID: 307
+    Name: Particle
+    Position: [-91.10093189542778, 34.3645955767505, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.83653809034669
+    Radius: 0.5
+  - ID: 308
+    Name: Particle
+    Position: [-69.92195759222338, -45.23262119968088, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.8352127587498
+    Radius: 0.5
+  - ID: 309
+    Name: Particle
+    Position: [83.26043606016432, 59.23542784926383, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.14766846959097
+    Radius: 0.5
+  - ID: 310
+    Name: Particle
+    Position: [-29.43095306813983, 28.575242644962458, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.78725073193321
+    Radius: 0.5
+  - ID: 311
+    Name: Particle
+    Position: [62.66189585876336, 63.407287531856724, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.43930405677378
+    Radius: 0.5
+  - ID: 312
+    Name: Particle
+    Position: [86.93159823147698, -28.495858682889846, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.954531675046653
+    Radius: 0.5
+  - ID: 313
+    Name: Particle
+    Position: [99.91704882486036, 63.75409652508216, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.8184941493269
+    Radius: 0.5
+  - ID: 314
+    Name: Particle
+    Position: [-9.737823984058508, -80.97476248024695, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.496297580775444
+    Radius: 0.5
+  - ID: 315
+    Name: Particle
+    Position: [-68.69181990316046, 1.4779365209808333, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.91751944660085
+    Radius: 0.5
+  - ID: 316
+    Name: Particle
+    Position: [-71.16121070130141, 58.466788426296034, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.66079039962563
+    Radius: 0.5
+  - ID: 317
+    Name: Particle
+    Position: [-91.76813701991793, 91.80473767251044, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.17436390593721
+    Radius: 0.5
+  - ID: 318
+    Name: Particle
+    Position: [54.12965216194482, 45.29070907869365, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 78.20496734708549
+    Radius: 0.5
+  - ID: 319
+    Name: Particle
+    Position: [45.07382098086282, -0.24370716965280792, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.39630404180816
+    Radius: 0.5
+  - ID: 320
+    Name: Particle
+    Position: [22.001917435433185, -35.51582902815973, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.961164126650694
+    Radius: 0.5
+  - ID: 321
+    Name: Particle
+    Position: [97.49784153051172, 76.03500987470625, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.674398748699204
+    Radius: 0.5
+  - ID: 322
+    Name: Particle
+    Position: [7.947284019220177, 98.59593625022094, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.6696246549219
+    Radius: 0.5
+  - ID: 323
+    Name: Particle
+    Position: [-30.210942299808437, -33.11503589431513, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.799803569298525
+    Radius: 0.5
+  - ID: 324
+    Name: Particle
+    Position: [-41.101510310285036, -91.65540675310251, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.00486264064365
+    Radius: 0.5
+  - ID: 325
+    Name: Particle
+    Position: [-75.01416891025542, -43.03388945146025, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.7972194180871
+    Radius: 0.5
+  - ID: 326
+    Name: Particle
+    Position: [82.90766630603713, -30.151609895382265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.73701416620003
+    Radius: 0.5
+  - ID: 327
+    Name: Particle
+    Position: [32.61318694990047, -64.92482962747789, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.69994463158239
+    Radius: 0.5
+  - ID: 328
+    Name: Particle
+    Position: [36.592440190249135, 78.8446868244014, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.8806167260535
+    Radius: 0.5
+  - ID: 329
+    Name: Particle
+    Position: [41.2615607793816, -53.33302057592086, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.62646605063782
+    Radius: 0.5
+  - ID: 330
+    Name: Particle
+    Position: [-74.71035100840413, 76.87005266329032, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.24777521019679
+    Radius: 0.5
+  - ID: 331
+    Name: Particle
+    Position: [-99.63841027763918, 84.06105025682811, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 71.31092653627482
+    Radius: 0.5
+  - ID: 332
+    Name: Particle
+    Position: [35.41816415210661, -30.571453686953816, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.25938056362136
+    Radius: 0.5
+  - ID: 333
+    Name: Particle
+    Position: [88.33894646066193, 77.81906786664683, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.62858935133929
+    Radius: 0.5
+  - ID: 334
+    Name: Particle
+    Position: [27.074814374576704, 82.14465121462496, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.518545974786619
+    Radius: 0.5
+  - ID: 335
+    Name: Particle
+    Position: [41.0989990660874, 44.1943804020774, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.74338828799968
+    Radius: 0.5
+  - ID: 336
+    Name: Particle
+    Position: [53.01192363747765, -74.82922042818669, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.56689741122598
+    Radius: 0.5
+  - ID: 337
+    Name: Particle
+    Position: [-58.74898267699433, -14.040907422122245, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.9959909408082
+    Radius: 0.5
+  - ID: 338
+    Name: Particle
+    Position: [-24.075095158043382, 11.177760858621028, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.64372579733148
+    Radius: 0.5
+  - ID: 339
+    Name: Particle
+    Position: [27.204487043031577, -73.08002364333532, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.97623984685103
+    Radius: 0.5
+  - ID: 340
+    Name: Particle
+    Position: [-41.040651516912476, 97.1509421833247, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.89061383239923
+    Radius: 0.5
+  - ID: 341
+    Name: Particle
+    Position: [-20.8279350157067, 93.27165992646778, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.15589834210444
+    Radius: 0.5
+  - ID: 342
+    Name: Particle
+    Position: [94.4688738490772, 1.5580176520800393, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.40668626957955
+    Radius: 0.5
+  - ID: 343
+    Name: Particle
+    Position: [-59.3509606494498, -88.3387456290884, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.9140226842248
+    Radius: 0.5
+  - ID: 344
+    Name: Particle
+    Position: [-23.503423341546295, -16.428967987642437, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.34325719588198
+    Radius: 0.5
+  - ID: 345
+    Name: Particle
+    Position: [-15.992176152857127, -75.62597677140477, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.20459637656394
+    Radius: 0.5
+  - ID: 346
+    Name: Particle
+    Position: [46.53693827034982, -81.73533037199803, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.24319820259348
+    Radius: 0.5
+  - ID: 347
+    Name: Particle
+    Position: [5.909450062844485, -72.30078876831472, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.82597948994868
+    Radius: 0.5
+  - ID: 348
+    Name: Particle
+    Position: [74.01901520919063, -59.56910998479847, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.442856904462305
+    Radius: 0.5
+  - ID: 349
+    Name: Particle
+    Position: [11.079203057647675, 34.925669344484334, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.32229510702626
+    Radius: 0.5
+  - ID: 350
+    Name: Particle
+    Position: [59.187790187886435, 80.97004574389021, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.17636891777681
+    Radius: 0.5
+  - ID: 351
+    Name: Particle
+    Position: [-59.34955180049069, -10.824059395331304, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.343867070522382
+    Radius: 0.5
+  - ID: 352
+    Name: Particle
+    Position: [43.79720997732113, 19.807173791413234, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.18667081259785
+    Radius: 0.5
+  - ID: 353
+    Name: Particle
+    Position: [23.415918781847438, -99.11385162459803, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.327003588293472
+    Radius: 0.5
+  - ID: 354
+    Name: Particle
+    Position: [-64.02342988453572, -15.616228148138006, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.06552090792577
+    Radius: 0.5
+  - ID: 355
+    Name: Particle
+    Position: [8.153855523605984, -24.136360485557546, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.1922200244075
+    Radius: 0.5
+  - ID: 356
+    Name: Particle
+    Position: [-36.257142555779254, -61.611753316259275, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.49546856010315
+    Radius: 0.5
+  - ID: 357
+    Name: Particle
+    Position: [83.17823498510455, -4.8870595327141615, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.59150490587744
+    Radius: 0.5
+  - ID: 358
+    Name: Particle
+    Position: [84.36312316802474, -67.16596280161738, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.26571947389502
+    Radius: 0.5
+  - ID: 359
+    Name: Particle
+    Position: [74.42447945223472, -68.92783871854311, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.560519957909044
+    Radius: 0.5
+  - ID: 360
+    Name: Particle
+    Position: [-32.69707655950931, -83.72138797714497, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.313006871287
+    Radius: 0.5
+  - ID: 361
+    Name: Particle
+    Position: [-53.638073526654836, -52.05222486729952, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.19863584586957
+    Radius: 0.5
+  - ID: 362
+    Name: Particle
+    Position: [84.51627371205626, -15.56797264516321, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.522015496005956
+    Radius: 0.5
+  - ID: 363
+    Name: Particle
+    Position: [-97.28887897439402, -89.94283115558036, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.05805977391232
+    Radius: 0.5
+  - ID: 364
+    Name: Particle
+    Position: [-88.14323552862919, -78.92612334214446, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.635814664568564
+    Radius: 0.5
+  - ID: 365
+    Name: Particle
+    Position: [-82.54212015292276, -13.729663785494722, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.3585698878708
+    Radius: 0.5
+  - ID: 366
+    Name: Particle
+    Position: [-18.776718322986397, -85.25918709788039, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.02042214750696
+    Radius: 0.5
+  - ID: 367
+    Name: Particle
+    Position: [-91.61894103016306, -25.538886129857374, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.35232632009019
+    Radius: 0.5
+  - ID: 368
+    Name: Particle
+    Position: [-68.36512415518698, 0.07704658706198586, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.16753690928971
+    Radius: 0.5
+  - ID: 369
+    Name: Particle
+    Position: [94.83997311292921, 75.08244156290976, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.92540440799046
+    Radius: 0.5
+  - ID: 370
+    Name: Particle
+    Position: [93.54309054435552, 30.91815747166845, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.45211556978387
+    Radius: 0.5
+  - ID: 371
+    Name: Particle
+    Position: [34.15438105816162, 56.802624384847746, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.57014183066718
+    Radius: 0.5
+  - ID: 372
+    Name: Particle
+    Position: [-4.2735185346602975, 93.42310088890707, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.48814211673499
+    Radius: 0.5
+  - ID: 373
+    Name: Particle
+    Position: [48.282519985994696, -91.66039005003483, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.565971923208235
+    Radius: 0.5
+  - ID: 374
+    Name: Particle
+    Position: [-21.309671778578632, 7.7791717967259615, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.96678090220365
+    Radius: 0.5
+  - ID: 375
+    Name: Particle
+    Position: [-76.6611761934809, -54.9633178349944, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.86570118384356
+    Radius: 0.5
+  - ID: 376
+    Name: Particle
+    Position: [2.857969074846608, -98.91089011237713, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.0950187144112
+    Radius: 0.5
+  - ID: 377
+    Name: Particle
+    Position: [-44.15814566929939, -89.99051781402996, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.43380757106014
+    Radius: 0.5
+  - ID: 378
+    Name: Particle
+    Position: [-57.41853326998747, -88.1572284620542, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.38655289382794
+    Radius: 0.5
+  - ID: 379
+    Name: Particle
+    Position: [-17.500702410549152, -96.79903691679357, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.53608385834062
+    Radius: 0.5
+  - ID: 380
+    Name: Particle
+    Position: [-69.25328803659403, -51.750817607284525, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.22663338512167
+    Radius: 0.5
+  - ID: 381
+    Name: Particle
+    Position: [35.56990818363121, 45.360445907785135, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.54711934826137
+    Radius: 0.5
+  - ID: 382
+    Name: Particle
+    Position: [-13.856412145819831, 41.24677269769822, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.0320679729038
+    Radius: 0.5
+  - ID: 383
+    Name: Particle
+    Position: [27.129099749812056, 69.32053195541786, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.22548353615993
+    Radius: 0.5
+  - ID: 384
+    Name: Particle
+    Position: [-22.61080693212716, 52.045464578480846, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.12426378329342
+    Radius: 0.5
+  - ID: 385
+    Name: Particle
+    Position: [-78.02049726257592, 72.98399474751201, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.90213417239069
+    Radius: 0.5
+  - ID: 386
+    Name: Particle
+    Position: [62.38635511027954, 69.03143279506767, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.288374980284843
+    Radius: 0.5
+  - ID: 387
+    Name: Particle
+    Position: [92.95321882749639, 19.280387892291543, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.74547647843645
+    Radius: 0.5
+  - ID: 388
+    Name: Particle
+    Position: [-18.037717712124632, 16.05708039453164, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.765671662205104
+    Radius: 0.5
+  - ID: 389
+    Name: Particle
+    Position: [0.030221653350295696, 69.27282259947282, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.89183083803076
+    Radius: 0.5
+  - ID: 390
+    Name: Particle
+    Position: [-30.703747014121845, 17.548960799488526, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.9413260543052
+    Radius: 0.5
+  - ID: 391
+    Name: Particle
+    Position: [41.41970772559168, 63.956975046668276, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.909477739448185
+    Radius: 0.5
+  - ID: 392
+    Name: Particle
+    Position: [-48.30318373891265, 93.52383774930416, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.63102944346994
+    Radius: 0.5
+  - ID: 393
+    Name: Particle
+    Position: [79.34607342117755, 50.5714425151931, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.87196363271043
+    Radius: 0.5
+  - ID: 394
+    Name: Particle
+    Position: [-65.08064924242478, -86.23709522659607, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.03212506652409
+    Radius: 0.5
+  - ID: 395
+    Name: Particle
+    Position: [-92.5196446506799, -71.98251667838235, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.084643747926533
+    Radius: 0.5
+  - ID: 396
+    Name: Particle
+    Position: [98.87916759475246, -71.50007733323882, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.646239727369725
+    Radius: 0.5
+  - ID: 397
+    Name: Particle
+    Position: [26.13827737048004, -30.7152822597824, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.67014823343226
+    Radius: 0.5
+  - ID: 398
+    Name: Particle
+    Position: [60.12386844964544, -52.19051367188739, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.288162263594536
+    Radius: 0.5
+  - ID: 399
+    Name: Particle
+    Position: [8.650180202144327, 92.43277085951246, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.31855160281617
+    Radius: 0.5
+  - ID: 400
+    Name: Particle
+    Position: [-65.11333707101846, -64.2259885867668, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.41747901340472
+    Radius: 0.5
+  - ID: 401
+    Name: Particle
+    Position: [-55.16357796463956, 9.893865809589684, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.33981812000356
+    Radius: 0.5
+  - ID: 402
+    Name: Particle
+    Position: [-12.56430574814675, 39.97400340770102, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.22224951791154
+    Radius: 0.5
+  - ID: 403
+    Name: Particle
+    Position: [-3.3004067939863972, 1.0353070228377987, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.81039246322214
+    Radius: 0.5
+  - ID: 404
+    Name: Particle
+    Position: [-25.580796213299536, 81.0196814772664, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.28163208180254
+    Radius: 0.5
+  - ID: 405
+    Name: Particle
+    Position: [-61.262445880114136, 59.70190007357192, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.81898422579242
+    Radius: 0.5
+  - ID: 406
+    Name: Particle
+    Position: [60.0809204679891, -55.98499381663085, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.63280549468104
+    Radius: 0.5
+  - ID: 407
+    Name: Particle
+    Position: [-57.98556457989208, -52.70942191085845, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.593576588803867
+    Radius: 0.5
+  - ID: 408
+    Name: Particle
+    Position: [34.196947467104366, -15.593282035913376, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.45599865496071
+    Radius: 0.5
+  - ID: 409
+    Name: Particle
+    Position: [66.33056141010672, 42.73541665010302, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.39027544398925
+    Radius: 0.5
+  - ID: 410
+    Name: Particle
+    Position: [-24.34118744725579, -60.70997833924139, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.25576392473502
+    Radius: 0.5
+  - ID: 411
+    Name: Particle
+    Position: [3.4304483888087276, -15.79511227107298, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.499768304299252
+    Radius: 0.5
+  - ID: 412
+    Name: Particle
+    Position: [79.60671310756956, -75.69642113086414, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.72092063892589
+    Radius: 0.5
+  - ID: 413
+    Name: Particle
+    Position: [71.2840828512227, -86.80487839251904, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.37791232360167
+    Radius: 0.5
+  - ID: 414
+    Name: Particle
+    Position: [91.37800951156626, 87.40001992199817, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.22626538672655
+    Radius: 0.5
+  - ID: 415
+    Name: Particle
+    Position: [-58.34150320034448, 64.92829149538417, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.23753384271252
+    Radius: 0.5
+  - ID: 416
+    Name: Particle
+    Position: [79.39700375071087, 34.680892825643554, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.65197895109965
+    Radius: 0.5
+  - ID: 417
+    Name: Particle
+    Position: [-20.70533851296163, 53.293943506344476, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.14178629037323
+    Radius: 0.5
+  - ID: 418
+    Name: Particle
+    Position: [-53.985562323131205, -4.170654817905927, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.30632303858045
+    Radius: 0.5
+  - ID: 419
+    Name: Particle
+    Position: [-22.20347578530894, 60.10769432797588, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.80271942906322
+    Radius: 0.5
+  - ID: 420
+    Name: Particle
+    Position: [-31.983507286673245, -76.95944957989886, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.9920208389788
+    Radius: 0.5
+  - ID: 421
+    Name: Particle
+    Position: [32.397437968739695, 64.63073385648798, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.753113645125104
+    Radius: 0.5
+  - ID: 422
+    Name: Particle
+    Position: [0.643120702392082, -30.542497480931317, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.69235353162662
+    Radius: 0.5
+  - ID: 423
+    Name: Particle
+    Position: [-49.58321501317808, -78.45754055368634, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.50231351128996
+    Radius: 0.5
+  - ID: 424
+    Name: Particle
+    Position: [-75.68183336108856, 0.8600012305561222, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.552726758898658
+    Radius: 0.5
+  - ID: 425
+    Name: Particle
+    Position: [94.46015299542034, 84.01927235155821, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.23809382535683
+    Radius: 0.5
+  - ID: 426
+    Name: Particle
+    Position: [33.825481891835125, 77.14182069002496, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.88134977690886
+    Radius: 0.5
+  - ID: 427
+    Name: Particle
+    Position: [-49.02170196918363, 63.29386007016666, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.81813425316278
+    Radius: 0.5
+  - ID: 428
+    Name: Particle
+    Position: [58.15163817616036, -63.30296054622051, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.4677527502442
+    Radius: 0.5
+  - ID: 429
+    Name: Particle
+    Position: [-14.0092175250782, -21.353134440684343, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 78.73169551053783
+    Radius: 0.5
+  - ID: 430
+    Name: Particle
+    Position: [-71.76484616179587, -53.05527659026974, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.033352695956314
+    Radius: 0.5
+  - ID: 431
+    Name: Particle
+    Position: [44.6629796678489, 74.99195710569947, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.21995534421033
+    Radius: 0.5
+  - ID: 432
+    Name: Particle
+    Position: [-68.653743318004, -71.6515147148763, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.24213247625798
+    Radius: 0.5
+  - ID: 433
+    Name: Particle
+    Position: [2.226057158259948, -3.255716948563432, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.972391202182834
+    Radius: 0.5
+  - ID: 434
+    Name: Particle
+    Position: [95.41410596441028, 82.32419105784066, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.216073101523868
+    Radius: 0.5
+  - ID: 435
+    Name: Particle
+    Position: [-57.442625026933136, -38.20775229682209, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.57433155029356
+    Radius: 0.5
+  - ID: 436
+    Name: Particle
+    Position: [75.11332555058868, 32.82252387886709, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.58353709000209
+    Radius: 0.5
+  - ID: 437
+    Name: Particle
+    Position: [21.13305974365069, -93.1833209723584, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.41649999309381
+    Radius: 0.5
+  - ID: 438
+    Name: Particle
+    Position: [-64.50993896857109, -81.74978250549108, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.8468905044433
+    Radius: 0.5
+  - ID: 439
+    Name: Particle
+    Position: [97.28918079812024, 54.865284625851785, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.0083856726101
+    Radius: 0.5
+  - ID: 440
+    Name: Particle
+    Position: [-39.41237173765939, -59.11885375035506, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.84013168265444
+    Radius: 0.5
+  - ID: 441
+    Name: Particle
+    Position: [89.3219220433352, 66.9361650651407, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.94118000729034
+    Radius: 0.5
+  - ID: 442
+    Name: Particle
+    Position: [79.69461951599243, 60.11101799055356, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.99545395396746
+    Radius: 0.5
+  - ID: 443
+    Name: Particle
+    Position: [-84.65337380978958, 52.65831099636458, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.51319254510915
+    Radius: 0.5
+  - ID: 444
+    Name: Particle
+    Position: [4.706178516416685, 93.9770407423917, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.914840860496493
+    Radius: 0.5
+  - ID: 445
+    Name: Particle
+    Position: [-57.94533348995794, -94.16764276298284, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.11241009042048
+    Radius: 0.5
+  - ID: 446
+    Name: Particle
+    Position: [-2.4073966997320895, -34.767166984231395, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.58870239762544
+    Radius: 0.5
+  - ID: 447
+    Name: Particle
+    Position: [-28.645694502930397, 70.07693494237787, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.5738545318217
+    Radius: 0.5
+  - ID: 448
+    Name: Particle
+    Position: [44.773572189759136, 70.81395187025223, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.459815938315558
+    Radius: 0.5
+  - ID: 449
+    Name: Particle
+    Position: [75.24854598769176, -27.931027864720363, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.17557006657682
+    Radius: 0.5
+  - ID: 450
+    Name: Particle
+    Position: [-8.24190006330035, -90.44305482126786, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.77073695956793
+    Radius: 0.5
+  - ID: 451
+    Name: Particle
+    Position: [69.3018341745269, -29.87653079686497, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.781954929602529
+    Radius: 0.5
+  - ID: 452
+    Name: Particle
+    Position: [81.5160163688644, 77.16817510865573, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.06765907706795
+    Radius: 0.5
+  - ID: 453
+    Name: Particle
+    Position: [22.638748499039835, -14.834727418594511, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.66101478381227
+    Radius: 0.5
+  - ID: 454
+    Name: Particle
+    Position: [-5.697394342633004, 45.086904083383985, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.65006500786498
+    Radius: 0.5
+  - ID: 455
+    Name: Particle
+    Position: [70.58340467625462, -6.924752028597837, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.83940920612886
+    Radius: 0.5
+  - ID: 456
+    Name: Particle
+    Position: [-82.70666827098253, 62.433567318460234, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.02782409846025
+    Radius: 0.5
+  - ID: 457
+    Name: Particle
+    Position: [22.661446756433975, 89.35889013144043, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 12.915481230249322
+    Radius: 0.5
+  - ID: 458
+    Name: Particle
+    Position: [-48.54397552625369, 47.838801525431904, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.8682396916435
+    Radius: 0.5
+  - ID: 459
+    Name: Particle
+    Position: [57.486423135429334, -44.379382895882436, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.06341040907033
+    Radius: 0.5
+  - ID: 460
+    Name: Particle
+    Position: [-90.84328038192842, -53.146967366313014, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.211382517565
+    Radius: 0.5
+  - ID: 461
+    Name: Particle
+    Position: [23.072914982983832, 85.25904812398949, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.234894773144571
+    Radius: 0.5
+  - ID: 462
+    Name: Particle
+    Position: [-39.40302693306694, -43.94212850096355, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 80.74339384784943
+    Radius: 0.5
+  - ID: 463
+    Name: Particle
+    Position: [82.88775222958117, -3.4722601301277507, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.41638383502611
+    Radius: 0.5
+  - ID: 464
+    Name: Particle
+    Position: [43.77326140952607, 0.15167646067175156, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.234026625795007
+    Radius: 0.5
+  - ID: 465
+    Name: Particle
+    Position: [-61.46262874603554, -36.95971130375104, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.18156491699135
+    Radius: 0.5
+  - ID: 466
+    Name: Particle
+    Position: [-23.01884855889415, -0.897814621550296, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.70740722246387
+    Radius: 0.5
+  - ID: 467
+    Name: Particle
+    Position: [91.16848207585912, 95.58399302107966, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.165177136501505
+    Radius: 0.5
+  - ID: 468
+    Name: Particle
+    Position: [5.912971134089062, -39.79722070157921, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.43380827663186
+    Radius: 0.5
+  - ID: 469
+    Name: Particle
+    Position: [42.47041521356422, 71.47831628692356, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.59642218188643
+    Radius: 0.5
+  - ID: 470
+    Name: Particle
+    Position: [71.37910551730943, 29.057969617263552, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.954768278296424
+    Radius: 0.5
+  - ID: 471
+    Name: Particle
+    Position: [7.273238624403163, -93.94215464060123, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.91600827670591
+    Radius: 0.5
+  - ID: 472
+    Name: Particle
+    Position: [-23.97262044206265, 25.279080416343703, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 71.46173268924693
+    Radius: 0.5
+  - ID: 473
+    Name: Particle
+    Position: [-43.17906189379605, -41.83468794706935, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.70311215997032
+    Radius: 0.5
+  - ID: 474
+    Name: Particle
+    Position: [-12.312343791421924, -12.066688848138597, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.37582830875115
+    Radius: 0.5
+  - ID: 475
+    Name: Particle
+    Position: [69.63465549083628, -83.21420100041293, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.29603610880065
+    Radius: 0.5
+  - ID: 476
+    Name: Particle
+    Position: [37.29627506075596, 94.66751330462594, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.72654185486433
+    Radius: 0.5
+  - ID: 477
+    Name: Particle
+    Position: [-98.10948963719109, -27.383056938097056, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.659079725969384
+    Radius: 0.5
+  - ID: 478
+    Name: Particle
+    Position: [-85.71985479843809, 85.94233963123767, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.3821619340009
+    Radius: 0.5
+  - ID: 479
+    Name: Particle
+    Position: [-11.617385186130363, -53.04838597456411, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.99833519063372
+    Radius: 0.5
+  - ID: 480
+    Name: Particle
+    Position: [-18.143654274230954, 83.65932842834164, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.59719669716338
+    Radius: 0.5
+  - ID: 481
+    Name: Particle
+    Position: [44.77433683425488, 76.22325772138831, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.845096601119913
+    Radius: 0.5
+  - ID: 482
+    Name: Particle
+    Position: [-94.68538343715684, 1.9578291221506134, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.16843965692248
+    Radius: 0.5
+  - ID: 483
+    Name: Particle
+    Position: [67.41995906413189, -75.56331851127449, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.67486768038454
+    Radius: 0.5
+  - ID: 484
+    Name: Particle
+    Position: [33.006509543422965, -23.21588585905019, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.66153790304834
+    Radius: 0.5
+  - ID: 485
+    Name: Particle
+    Position: [-58.42136003600107, 52.79549974247578, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.40448036881659
+    Radius: 0.5
+  - ID: 486
+    Name: Particle
+    Position: [95.61262690935675, -54.50336835487333, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.47129357351432
+    Radius: 0.5
+  - ID: 487
+    Name: Particle
+    Position: [-78.37968805604223, 90.31638141334713, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.48765861698438
+    Radius: 0.5
+  - ID: 488
+    Name: Particle
+    Position: [1.073705134116551, -2.9138886000565236, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.01901722838976
+    Radius: 0.5
+  - ID: 489
+    Name: Particle
+    Position: [-31.462176871653796, -62.13862498340195, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.79083538623696
+    Radius: 0.5
+  - ID: 490
+    Name: Particle
+    Position: [-1.166425490750811, 99.3859009596265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.516229269057714
+    Radius: 0.5
+  - ID: 491
+    Name: Particle
+    Position: [-6.352868385730787, 28.521628789497186, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.46302799036776
+    Radius: 0.5
+  - ID: 492
+    Name: Particle
+    Position: [52.43947585302348, 32.73248334598523, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.87972487804768
+    Radius: 0.5
+  - ID: 493
+    Name: Particle
+    Position: [-39.3031143731829, 20.476898647292614, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.032606077497185
+    Radius: 0.5
+  - ID: 494
+    Name: Particle
+    Position: [49.466887410932145, 56.69200981829647, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.680071467953915
+    Radius: 0.5
+  - ID: 495
+    Name: Particle
+    Position: [-11.041074569086874, 37.905815426531916, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.835162014669452
+    Radius: 0.5
+  - ID: 496
+    Name: Particle
+    Position: [-36.6416425935947, -19.158175774713285, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.6995965911135
+    Radius: 0.5
+  - ID: 497
+    Name: Particle
+    Position: [-10.600415912782623, -19.389203681361167, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.28930720989079
+    Radius: 0.5
+  - ID: 498
+    Name: Particle
+    Position: [-66.78590546759239, -51.56331124702731, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.85670751978226
+    Radius: 0.5
+  - ID: 499
+    Name: Particle
+    Position: [-12.233077203742425, 67.20163975179983, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.537969414179955
+    Radius: 0.5
+  - ID: 500
+    Name: Particle
+    Position: [-48.41499019591697, -79.1380326061971, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.89178004518341
+    Radius: 0.5
+  - ID: 501
+    Name: Particle
+    Position: [-50.98540242829186, 11.018351365808712, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.415760937087605
+    Radius: 0.5
+  - ID: 502
+    Name: Particle
+    Position: [91.23680457479139, 81.78825415622484, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.405933289117485
+    Radius: 0.5
+  - ID: 503
+    Name: Particle
+    Position: [90.04146720292479, -77.80822758200404, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.551150615173746
+    Radius: 0.5
+  - ID: 504
+    Name: Particle
+    Position: [16.655357522625238, 59.84461720817694, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.81507003140423
+    Radius: 0.5
+  - ID: 505
+    Name: Particle
+    Position: [-0.15022381425340825, 0.45780960902024503, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.08958155072419
+    Radius: 0.5
+  - ID: 506
+    Name: Particle
+    Position: [-45.86551011192353, 72.93996227202106, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.33934502443674
+    Radius: 0.5
+  - ID: 507
+    Name: Particle
+    Position: [-40.933494797181005, 87.0149161806961, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.764032349989606
+    Radius: 0.5
+  - ID: 508
+    Name: Particle
+    Position: [42.2943867272827, -68.37867932620634, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.515515428125042
+    Radius: 0.5
+  - ID: 509
+    Name: Particle
+    Position: [51.340068161214845, -80.92160492873428, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.555185130136845
+    Radius: 0.5
+  - ID: 510
+    Name: Particle
+    Position: [-71.61408413993638, -75.26220568256367, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.02572922162551
+    Radius: 0.5
+  - ID: 511
+    Name: Particle
+    Position: [27.257068718240134, -27.933077568093935, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.99408131307815
+    Radius: 0.5
+  - ID: 512
+    Name: Particle
+    Position: [-81.78280768509394, 67.06761816715604, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.83067059220621
+    Radius: 0.5
+  - ID: 513
+    Name: Particle
+    Position: [65.62045530858362, 99.41212142634356, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.10379078880711
+    Radius: 0.5
+  - ID: 514
+    Name: Particle
+    Position: [16.82312677345257, 86.23004604749687, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.17735322094825
+    Radius: 0.5
+  - ID: 515
+    Name: Particle
+    Position: [19.23329613840066, 52.12936309952511, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.9949035985013
+    Radius: 0.5
+  - ID: 516
+    Name: Particle
+    Position: [-66.26592127109667, 24.33417036117342, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.460128394696405
+    Radius: 0.5
+  - ID: 517
+    Name: Particle
+    Position: [0.5698325149243715, -16.228789575135337, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.05076105168926
+    Radius: 0.5
+  - ID: 518
+    Name: Particle
+    Position: [-46.2789422304926, -14.3216633230562, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.83316635436631
+    Radius: 0.5
+  - ID: 519
+    Name: Particle
+    Position: [-11.979499346269122, -55.09566479694692, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.99493202923112
+    Radius: 0.5
+  - ID: 520
+    Name: Particle
+    Position: [20.454425371307167, 32.022144520757905, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.14997149945502
+    Radius: 0.5
+  - ID: 521
+    Name: Particle
+    Position: [-49.02335509472986, -29.796157936454875, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.69902005402848
+    Radius: 0.5
+  - ID: 522
+    Name: Particle
+    Position: [-89.38558167842069, 58.41510096257039, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.4627074063168
+    Radius: 0.5
+  - ID: 523
+    Name: Particle
+    Position: [60.68590021869406, 32.68984028276549, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.790527891417355
+    Radius: 0.5
+  - ID: 524
+    Name: Particle
+    Position: [14.438708625147115, 78.33427588433776, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.19512486333259
+    Radius: 0.5
+  - ID: 525
+    Name: Particle
+    Position: [15.132048476229514, 64.83990492077078, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.92313260071406
+    Radius: 0.5
+  - ID: 526
+    Name: Particle
+    Position: [70.65542326450972, -31.32948316851116, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.61631859484703
+    Radius: 0.5
+  - ID: 527
+    Name: Particle
+    Position: [47.907710131631575, 25.420945783386756, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.365656837631978
+    Radius: 0.5
+  - ID: 528
+    Name: Particle
+    Position: [95.73951643234454, 41.16221487818066, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.366354916698004
+    Radius: 0.5
+  - ID: 529
+    Name: Particle
+    Position: [-24.06330400348014, 59.86041679423272, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.84359212188673
+    Radius: 0.5
+  - ID: 530
+    Name: Particle
+    Position: [40.243616876119376, 18.309323776108343, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 65.81357314532549
+    Radius: 0.5
+  - ID: 531
+    Name: Particle
+    Position: [-31.749942460671193, 30.432221001492053, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.98054572385024
+    Radius: 0.5
+  - ID: 532
+    Name: Particle
+    Position: [-67.39070589529636, -62.78278665451178, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.62746445957355
+    Radius: 0.5
+  - ID: 533
+    Name: Particle
+    Position: [-50.7578226493592, 6.551891690355944, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.38139187201614
+    Radius: 0.5
+  - ID: 534
+    Name: Particle
+    Position: [-30.41482758904253, 57.06795083334697, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.8550805277569
+    Radius: 0.5
+  - ID: 535
+    Name: Particle
+    Position: [34.38649277031482, 22.80148312985351, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 51.62437333962289
+    Radius: 0.5
+  - ID: 536
+    Name: Particle
+    Position: [71.11940046419986, -86.39842439682923, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.22501061860315
+    Radius: 0.5
+  - ID: 537
+    Name: Particle
+    Position: [-31.24711296790956, -81.27711969450122, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.43696246068872
+    Radius: 0.5
+  - ID: 538
+    Name: Particle
+    Position: [-43.93961615366566, -77.21904075611533, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.80016287928169
+    Radius: 0.5
+  - ID: 539
+    Name: Particle
+    Position: [38.38176795606441, -50.00045820452883, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.139971634257826
+    Radius: 0.5
+  - ID: 540
+    Name: Particle
+    Position: [68.62406944530727, -35.48839133041426, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.36050376038696
+    Radius: 0.5
+  - ID: 541
+    Name: Particle
+    Position: [64.09404618324311, 20.948141123613667, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.5350394547953
+    Radius: 0.5
+  - ID: 542
+    Name: Particle
+    Position: [-63.46888331362208, 92.89875464902991, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.870316112319024
+    Radius: 0.5
+  - ID: 543
+    Name: Particle
+    Position: [74.29529391738231, 33.22700555445243, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.83347472353417
+    Radius: 0.5
+  - ID: 544
+    Name: Particle
+    Position: [24.401439019434193, 24.913345987704787, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.14403066356627
+    Radius: 0.5
+  - ID: 545
+    Name: Particle
+    Position: [-58.0142311524674, 54.003458518059574, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.9884193855171
+    Radius: 0.5
+  - ID: 546
+    Name: Particle
+    Position: [21.8362180545643, 15.781039762291854, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.13627347246426
+    Radius: 0.5
+  - ID: 547
+    Name: Particle
+    Position: [57.25820062746598, -87.10041041661103, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 71.11076576844269
+    Radius: 0.5
+  - ID: 548
+    Name: Particle
+    Position: [-91.75722855196722, -91.70968503024237, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.35611472214568
+    Radius: 0.5
+  - ID: 549
+    Name: Particle
+    Position: [57.65363436092926, -10.221134463665038, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.355071103912431
+    Radius: 0.5
+  - ID: 550
+    Name: Particle
+    Position: [81.60048171366566, 10.4319699283065, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.522860146607904
+    Radius: 0.5
+  - ID: 551
+    Name: Particle
+    Position: [-80.47321833109416, 46.83982430613065, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.336535124465016
+    Radius: 0.5
+  - ID: 552
+    Name: Particle
+    Position: [-66.92170078331803, -38.90798264256532, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.940618404969147
+    Radius: 0.5
+  - ID: 553
+    Name: Particle
+    Position: [-71.84913440385722, -44.469864739369605, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 80.39404530642585
+    Radius: 0.5
+  - ID: 554
+    Name: Particle
+    Position: [-76.15814698506603, 31.815907744348948, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.946894006987876
+    Radius: 0.5
+  - ID: 555
+    Name: Particle
+    Position: [-80.51740268361453, -52.55818555039282, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.4607972573368
+    Radius: 0.5
+  - ID: 556
+    Name: Particle
+    Position: [7.982110945381038, -40.09202059105246, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.84088038520738
+    Radius: 0.5
+  - ID: 557
+    Name: Particle
+    Position: [-46.99395531475184, -71.6725706934529, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.086629533986102
+    Radius: 0.5
+  - ID: 558
+    Name: Particle
+    Position: [-49.58480169217736, -46.02034276211444, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.379732738087114
+    Radius: 0.5
+  - ID: 559
+    Name: Particle
+    Position: [74.78887344312238, -54.830182673248814, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.55102367597314
+    Radius: 0.5
+  - ID: 560
+    Name: Particle
+    Position: [57.228436603436364, -91.44549957592159, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.17872030261448
+    Radius: 0.5
+  - ID: 561
+    Name: Particle
+    Position: [-44.69047628344944, -32.57553462969898, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.516169972233264
+    Radius: 0.5
+  - ID: 562
+    Name: Particle
+    Position: [-21.493301549218003, -26.053203170987075, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.3713511844955
+    Radius: 0.5
+  - ID: 563
+    Name: Particle
+    Position: [-88.58830492206687, -34.039310089185165, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.69195471384691
+    Radius: 0.5
+  - ID: 564
+    Name: Particle
+    Position: [-30.221798381584605, 58.99099871547463, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.78533373179569
+    Radius: 0.5
+  - ID: 565
+    Name: Particle
+    Position: [-6.870990399786933, -93.84854626865571, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.97606335497352
+    Radius: 0.5
+  - ID: 566
+    Name: Particle
+    Position: [-14.770980408746397, 19.32787050768887, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.9588215976923
+    Radius: 0.5
+  - ID: 567
+    Name: Particle
+    Position: [-21.876475957234902, 83.58701138954166, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.142068318901398
+    Radius: 0.5
+  - ID: 568
+    Name: Particle
+    Position: [-3.4104408456033326, 39.96729985444617, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.3343804683668
+    Radius: 0.5
+  - ID: 569
+    Name: Particle
+    Position: [-23.849998875215192, 62.90146188318738, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.08761639723277
+    Radius: 0.5
+  - ID: 570
+    Name: Particle
+    Position: [77.06982796864051, 89.11081677142744, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.55275074500111
+    Radius: 0.5
+  - ID: 571
+    Name: Particle
+    Position: [25.904469495801322, -30.361015241290673, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.91519832692228
+    Radius: 0.5
+  - ID: 572
+    Name: Particle
+    Position: [-3.5252056673305248, 4.2003626257642, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 51.40396575661651
+    Radius: 0.5
+  - ID: 573
+    Name: Particle
+    Position: [67.31175032732583, 66.89331423080225, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.728708988638537
+    Radius: 0.5
+  - ID: 574
+    Name: Particle
+    Position: [-27.30538647311667, -0.35435081787940703, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.1999979181484
+    Radius: 0.5
+  - ID: 575
+    Name: Particle
+    Position: [-51.16845832801593, -52.901621872243695, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.566216895459615
+    Radius: 0.5
+  - ID: 576
+    Name: Particle
+    Position: [-72.15844447691155, -49.91653277700776, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.2993166874206
+    Radius: 0.5
+  - ID: 577
+    Name: Particle
+    Position: [68.69467922903362, -73.73115377396135, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.99767102925166
+    Radius: 0.5
+  - ID: 578
+    Name: Particle
+    Position: [-82.66112668929217, -82.88069958678892, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.289288809188367
+    Radius: 0.5
+  - ID: 579
+    Name: Particle
+    Position: [-26.984001213634627, -5.758617166571085, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.50240083228533
+    Radius: 0.5
+  - ID: 580
+    Name: Particle
+    Position: [2.2435244230592417, 56.94642965908395, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.8375971836632
+    Radius: 0.5
+  - ID: 581
+    Name: Particle
+    Position: [47.662914172566786, -64.0871645471124, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.61293989213584
+    Radius: 0.5
+  - ID: 582
+    Name: Particle
+    Position: [26.35706220790675, 28.075730058779328, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.88479921287761
+    Radius: 0.5
+  - ID: 583
+    Name: Particle
+    Position: [79.26953817927912, 13.479764399424823, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.431293888006403
+    Radius: 0.5
+  - ID: 584
+    Name: Particle
+    Position: [-49.641995226868055, 98.80535563916524, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.1011172580065
+    Radius: 0.5
+  - ID: 585
+    Name: Particle
+    Position: [-37.20532677791297, -39.01720934240138, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.40204809654253
+    Radius: 0.5
+  - ID: 586
+    Name: Particle
+    Position: [30.728614997847842, -86.83788346671233, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.189731174617947
+    Radius: 0.5
+  - ID: 587
+    Name: Particle
+    Position: [21.057781278229896, -1.0558123868625415, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 57.65041501095501
+    Radius: 0.5
+  - ID: 588
+    Name: Particle
+    Position: [98.36704782778659, -2.4432582187598655, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.213487852927859
+    Radius: 0.5
+  - ID: 589
+    Name: Particle
+    Position: [-92.17341899892222, -12.800214025838457, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.98647407366789
+    Radius: 0.5
+  - ID: 590
+    Name: Particle
+    Position: [81.81300422296835, -87.75165727532905, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 80.60853836537474
+    Radius: 0.5
+  - ID: 591
+    Name: Particle
+    Position: [72.20273163771088, 91.28365587872972, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.93532511949469
+    Radius: 0.5
+  - ID: 592
+    Name: Particle
+    Position: [83.108466722912, 2.830228883918636, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.0455324876018
+    Radius: 0.5
+  - ID: 593
+    Name: Particle
+    Position: [17.64070465091889, 18.62193996444516, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.51860109971139
+    Radius: 0.5
+  - ID: 594
+    Name: Particle
+    Position: [-53.23959685832227, 75.67522129405495, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.9041342456492
+    Radius: 0.5
+  - ID: 595
+    Name: Particle
+    Position: [-90.34386765153502, -44.145651681906806, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.50018246592484
+    Radius: 0.5
+  - ID: 596
+    Name: Particle
+    Position: [72.24500734695499, 89.36561530925135, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.02999919062418
+    Radius: 0.5
+  - ID: 597
+    Name: Particle
+    Position: [82.3432789265579, -47.379813660983785, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.10799991170073
+    Radius: 0.5
+  - ID: 598
+    Name: Particle
+    Position: [-84.89491005697197, 7.764919808806269, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.86660653923624
+    Radius: 0.5
+  - ID: 599
+    Name: Particle
+    Position: [-43.2763926348249, -9.58047702986886, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.99546687860133
+    Radius: 0.5
+  - ID: 600
+    Name: Particle
+    Position: [-16.573942103728868, 58.07482042766395, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.419584722763396
+    Radius: 0.5
+  - ID: 601
+    Name: Particle
+    Position: [-81.40279800687047, -36.217043390054606, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.67662849794636
+    Radius: 0.5
+  - ID: 602
+    Name: Particle
+    Position: [3.000927438315898, -29.11275048108861, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.93526834483944
+    Radius: 0.5
+  - ID: 603
+    Name: Particle
+    Position: [-24.34585554758337, -99.79192525427342, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.31252517993714
+    Radius: 0.5
+  - ID: 604
+    Name: Particle
+    Position: [-39.13540951968963, -33.38114246278181, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.97286597068182
+    Radius: 0.5
+  - ID: 605
+    Name: Particle
+    Position: [97.33947844131066, 99.40271764893686, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.35325372925445
+    Radius: 0.5
+  - ID: 606
+    Name: Particle
+    Position: [71.44454295384696, -17.848072059543796, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.5838921548951
+    Radius: 0.5
+  - ID: 607
+    Name: Particle
+    Position: [45.35286122399563, -66.22063174601571, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.68750304979369
+    Radius: 0.5
+  - ID: 608
+    Name: Particle
+    Position: [-5.617673272354452, 40.414574429712445, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.51417086823443
+    Radius: 0.5
+  - ID: 609
+    Name: Particle
+    Position: [7.429506295170668, -99.41994268243062, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.80654178906566
+    Radius: 0.5
+  - ID: 610
+    Name: Particle
+    Position: [44.875570779236, 25.139958644505, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 87.03407396890535
+    Radius: 0.5
+  - ID: 611
+    Name: Particle
+    Position: [95.56526039288192, -60.32026333286813, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.17121931363705
+    Radius: 0.5
+  - ID: 612
+    Name: Particle
+    Position: [68.97897561620016, 13.255522502528677, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 78.97097497975437
+    Radius: 0.5
+  - ID: 613
+    Name: Particle
+    Position: [86.0482730893109, -13.438177185350725, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.45090420448966
+    Radius: 0.5
+  - ID: 614
+    Name: Particle
+    Position: [24.964591393854562, -22.138416833217576, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.89897878657666
+    Radius: 0.5
+  - ID: 615
+    Name: Particle
+    Position: [27.804243534555866, -11.657337834820282, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.50723606645006
+    Radius: 0.5
+  - ID: 616
+    Name: Particle
+    Position: [-3.028565846067295, 83.92945957038938, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.580321517761345
+    Radius: 0.5
+  - ID: 617
+    Name: Particle
+    Position: [-32.71268548353284, -97.59783681101139, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.43341666279945
+    Radius: 0.5
+  - ID: 618
+    Name: Particle
+    Position: [-54.33675492138506, 41.67692729756368, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.72106807022094
+    Radius: 0.5
+  - ID: 619
+    Name: Particle
+    Position: [-98.84766834677944, -83.51386250613223, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.89670003410843
+    Radius: 0.5
+  - ID: 620
+    Name: Particle
+    Position: [91.68089570232638, 2.0978886443074884, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.62129716805697
+    Radius: 0.5
+  - ID: 621
+    Name: Particle
+    Position: [-17.491268505109318, -45.14841899714328, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.049383730354947
+    Radius: 0.5
+  - ID: 622
+    Name: Particle
+    Position: [-62.364697597636145, -58.52469019812436, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.177937390411714
+    Radius: 0.5
+  - ID: 623
+    Name: Particle
+    Position: [-94.35901350717084, -20.970354868677376, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.782799088110778
+    Radius: 0.5
+  - ID: 624
+    Name: Particle
+    Position: [38.952730164856064, -33.980861245594156, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.253420472948232
+    Radius: 0.5
+  - ID: 625
+    Name: Particle
+    Position: [-18.297711314867882, -9.342263510572806, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.065133102605934
+    Radius: 0.5
+  - ID: 626
+    Name: Particle
+    Position: [-32.66620083910399, -17.468669462817203, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.088727546478815
+    Radius: 0.5
+  - ID: 627
+    Name: Particle
+    Position: [-41.48722547834696, -81.41894283202814, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.66580868060258
+    Radius: 0.5
+  - ID: 628
+    Name: Particle
+    Position: [21.310608950191053, -41.16808867725048, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.45679971933711
+    Radius: 0.5
+  - ID: 629
+    Name: Particle
+    Position: [21.79025571285966, 58.988457824154665, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.23507845247845
+    Radius: 0.5
+  - ID: 630
+    Name: Particle
+    Position: [-75.75230229270007, -46.69461646249209, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.01868788199423
+    Radius: 0.5
+  - ID: 631
+    Name: Particle
+    Position: [98.06749253833931, -42.797937710635914, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.48281883223436
+    Radius: 0.5
+  - ID: 632
+    Name: Particle
+    Position: [-82.597927214488, 37.348075740529254, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.445504190865
+    Radius: 0.5
+  - ID: 633
+    Name: Particle
+    Position: [-42.40143002350018, 87.26175223745824, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.43527530427174
+    Radius: 0.5
+  - ID: 634
+    Name: Particle
+    Position: [2.253583552650909, -64.64271587545296, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.36774334830814
+    Radius: 0.5
+  - ID: 635
+    Name: Particle
+    Position: [17.13629388432645, -43.49448759888654, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.89373777030197
+    Radius: 0.5
+  - ID: 636
+    Name: Particle
+    Position: [90.01779540698959, -70.54406756329423, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.40364883051176
+    Radius: 0.5
+  - ID: 637
+    Name: Particle
+    Position: [41.56920244721732, 22.810673893066237, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.36368809395285
+    Radius: 0.5
+  - ID: 638
+    Name: Particle
+    Position: [-29.817854179046392, 95.09416321047749, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.829176964201684
+    Radius: 0.5
+  - ID: 639
+    Name: Particle
+    Position: [-0.4399657562709649, 8.947075084841941, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.069022302617874
+    Radius: 0.5
+  - ID: 640
+    Name: Particle
+    Position: [20.325004516722316, -92.70995061414608, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.671424737966944
+    Radius: 0.5
+  - ID: 641
+    Name: Particle
+    Position: [40.117254589703265, 86.53871086693033, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.58604491980279
+    Radius: 0.5
+  - ID: 642
+    Name: Particle
+    Position: [-55.44249993048751, 33.57431824392782, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.478976753928215
+    Radius: 0.5
+  - ID: 643
+    Name: Particle
+    Position: [-76.52947236949939, 61.090565104603286, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.817529694844417
+    Radius: 0.5
+  - ID: 644
+    Name: Particle
+    Position: [68.82895884797401, -34.31243692389371, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.11794779669762
+    Radius: 0.5
+  - ID: 645
+    Name: Particle
+    Position: [32.812893119172344, -50.13209100911804, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.96671317290124
+    Radius: 0.5
+  - ID: 646
+    Name: Particle
+    Position: [27.35815561451345, -25.66752950981612, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.24586488363946
+    Radius: 0.5
+  - ID: 647
+    Name: Particle
+    Position: [-99.6919859041644, 40.76132771074046, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.49318731231152
+    Radius: 0.5
+  - ID: 648
+    Name: Particle
+    Position: [89.6009548444741, 85.93343559288095, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.733267816922933
+    Radius: 0.5
+  - ID: 649
+    Name: Particle
+    Position: [-55.47313826615405, -1.2259988021301638, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.712165714713734
+    Radius: 0.5
+  - ID: 650
+    Name: Particle
+    Position: [89.44114196043174, 99.31595922929034, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.55821549831185
+    Radius: 0.5
+  - ID: 651
+    Name: Particle
+    Position: [-0.4079616762413991, -58.69310195797244, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.72262642913372
+    Radius: 0.5
+  - ID: 652
+    Name: Particle
+    Position: [59.85880975707295, 52.84174580031734, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.43527554824934
+    Radius: 0.5
+  - ID: 653
+    Name: Particle
+    Position: [74.97459621654176, -27.488381934841115, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.9072226162256
+    Radius: 0.5
+  - ID: 654
+    Name: Particle
+    Position: [-2.8347908293338406, 59.611417559002206, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.69917181133472
+    Radius: 0.5
+  - ID: 655
+    Name: Particle
+    Position: [45.923829937657956, 8.626864173484535, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.69826967898647
+    Radius: 0.5
+  - ID: 656
+    Name: Particle
+    Position: [-0.13680202952006937, 61.47481816159478, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.37368627128665
+    Radius: 0.5
+  - ID: 657
+    Name: Particle
+    Position: [66.88399268599329, -55.872683602751884, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.24679303828563
+    Radius: 0.5
+  - ID: 658
+    Name: Particle
+    Position: [1.295007906504992, -70.76094041664047, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.88482486173403
+    Radius: 0.5
+  - ID: 659
+    Name: Particle
+    Position: [11.618622362815728, -46.658752340699515, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.22041382214093
+    Radius: 0.5
+  - ID: 660
+    Name: Particle
+    Position: [-9.710917853283547, -59.41621218912545, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.64897018911941
+    Radius: 0.5
+  - ID: 661
+    Name: Particle
+    Position: [-50.08612304660387, -37.78082252493664, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.67860677651377
+    Radius: 0.5
+  - ID: 662
+    Name: Particle
+    Position: [50.21842046269035, -87.56102253139903, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.003732617728048
+    Radius: 0.5
+  - ID: 663
+    Name: Particle
+    Position: [-49.44666005519429, 99.82238766456885, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.53580090805534
+    Radius: 0.5
+  - ID: 664
+    Name: Particle
+    Position: [18.934393337489126, 60.73486891869368, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.28531838705267
+    Radius: 0.5
+  - ID: 665
+    Name: Particle
+    Position: [-55.35681948773132, -4.139056747923675, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.60424468707127
+    Radius: 0.5
+  - ID: 666
+    Name: Particle
+    Position: [20.255788531710195, 98.10639525349288, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.5132382691675
+    Radius: 0.5
+  - ID: 667
+    Name: Particle
+    Position: [41.77170627264658, -88.80860785796906, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.4256578734272
+    Radius: 0.5
+  - ID: 668
+    Name: Particle
+    Position: [-35.524496310748546, -1.418806448776337, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.355589336282268
+    Radius: 0.5
+  - ID: 669
+    Name: Particle
+    Position: [48.565260381229535, 77.15971590388008, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.602942762031464
+    Radius: 0.5
+  - ID: 670
+    Name: Particle
+    Position: [80.98603334415532, -40.62219777721974, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.130793354852536
+    Radius: 0.5
+  - ID: 671
+    Name: Particle
+    Position: [39.41795798851345, -73.48204077196192, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.16223466709267
+    Radius: 0.5
+  - ID: 672
+    Name: Particle
+    Position: [83.75349813724768, -43.45074297822187, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.57919689502936
+    Radius: 0.5
+  - ID: 673
+    Name: Particle
+    Position: [-98.21270441746745, -72.96304281448161, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.224268891885057
+    Radius: 0.5
+  - ID: 674
+    Name: Particle
+    Position: [43.4332797267617, -74.95295065051117, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.52273037864967
+    Radius: 0.5
+  - ID: 675
+    Name: Particle
+    Position: [-65.77364278205033, 3.8477478593873116, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.966801483322435
+    Radius: 0.5
+  - ID: 676
+    Name: Particle
+    Position: [-96.57176971793963, 49.82775744478221, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.48262902154211
+    Radius: 0.5
+  - ID: 677
+    Name: Particle
+    Position: [-52.788571036512224, 36.85617033358369, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.903899060863342
+    Radius: 0.5
+  - ID: 678
+    Name: Particle
+    Position: [42.567163429210524, 58.47336264203619, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.39311277551777
+    Radius: 0.5
+  - ID: 679
+    Name: Particle
+    Position: [-72.97683807504234, -0.2061335057597944, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.75301966736822
+    Radius: 0.5
+  - ID: 680
+    Name: Particle
+    Position: [-74.55306604493563, 44.66608733871399, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.4739640752893
+    Radius: 0.5
+  - ID: 681
+    Name: Particle
+    Position: [-52.89179606115937, -4.5558409179269574, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.01271253590089
+    Radius: 0.5
+  - ID: 682
+    Name: Particle
+    Position: [-80.35935685051732, -28.68309053599664, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.75935450482373
+    Radius: 0.5
+  - ID: 683
+    Name: Particle
+    Position: [-93.49854864154332, 62.04685015488539, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.113586158454353
+    Radius: 0.5
+  - ID: 684
+    Name: Particle
+    Position: [16.55141819045633, 55.39186910615277, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.64566058153085
+    Radius: 0.5
+  - ID: 685
+    Name: Particle
+    Position: [9.36055484562901, -57.028362332343164, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.48463498712812
+    Radius: 0.5
+  - ID: 686
+    Name: Particle
+    Position: [40.89873618656381, 91.61846362280605, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.6613831143184
+    Radius: 0.5
+  - ID: 687
+    Name: Particle
+    Position: [79.34284182157441, 79.53336122639146, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.07352482337724
+    Radius: 0.5
+  - ID: 688
+    Name: Particle
+    Position: [-93.81444590052219, -42.29288933948845, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.63578874313755
+    Radius: 0.5
+  - ID: 689
+    Name: Particle
+    Position: [-0.8944637468235328, 0.7124761639759214, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.701107178741026
+    Radius: 0.5
+  - ID: 690
+    Name: Particle
+    Position: [-63.81548537833059, -10.847289954754885, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.70215350757792
+    Radius: 0.5
+  - ID: 691
+    Name: Particle
+    Position: [-80.19433452434012, -72.7547910149416, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.59246513360623
+    Radius: 0.5
+  - ID: 692
+    Name: Particle
+    Position: [-90.01864734053105, -55.63002204780081, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.526696045147634
+    Radius: 0.5
+  - ID: 693
+    Name: Particle
+    Position: [-86.52945108739345, 18.197682380506677, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.04534383652023
+    Radius: 0.5
+  - ID: 694
+    Name: Particle
+    Position: [92.28771156098426, 94.11250686442412, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.37179195973198
+    Radius: 0.5
+  - ID: 695
+    Name: Particle
+    Position: [-5.032398975285986, 48.28836371441412, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 87.57719924869265
+    Radius: 0.5
+  - ID: 696
+    Name: Particle
+    Position: [41.46520450771982, 93.25896107383929, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.48507779271758
+    Radius: 0.5
+  - ID: 697
+    Name: Particle
+    Position: [74.07832977145793, -88.73660264953706, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.81205944170921
+    Radius: 0.5
+  - ID: 698
+    Name: Particle
+    Position: [-23.470026702284216, 44.383503632171625, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.469914111577204
+    Radius: 0.5
+  - ID: 699
+    Name: Particle
+    Position: [67.61378842624904, -90.4319756022195, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.672324357731895
+    Radius: 0.5
+  - ID: 700
+    Name: Particle
+    Position: [18.641233318860316, 71.3944671065901, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.68292713803424
+    Radius: 0.5
+  - ID: 701
+    Name: Particle
+    Position: [78.90507088373994, 13.589891453512593, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.87587677314835
+    Radius: 0.5
+  - ID: 702
+    Name: Particle
+    Position: [3.9400705410843386, -19.512232287000387, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.94017669067006
+    Radius: 0.5
+  - ID: 703
+    Name: Particle
+    Position: [-52.178111224992165, 28.734388466037473, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 88.88615630682938
+    Radius: 0.5
+  - ID: 704
+    Name: Particle
+    Position: [63.51040537008552, -82.36323683784879, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.897611137158236
+    Radius: 0.5
+  - ID: 705
+    Name: Particle
+    Position: [23.045993607273928, 45.37489800487907, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.921606525652166
+    Radius: 0.5
+  - ID: 706
+    Name: Particle
+    Position: [-96.11849284381222, -17.135634053098244, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.40105675464221
+    Radius: 0.5
+  - ID: 707
+    Name: Particle
+    Position: [-73.97824352450687, -94.69333668613756, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.9300847772587
+    Radius: 0.5
+  - ID: 708
+    Name: Particle
+    Position: [-43.71899082751229, -84.79687236314123, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.00986000875741
+    Radius: 0.5
+  - ID: 709
+    Name: Particle
+    Position: [17.057528399907753, -28.088463396870566, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.08704001133387
+    Radius: 0.5
+  - ID: 710
+    Name: Particle
+    Position: [70.47010866610623, 7.9516638370740225, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.120422042232818
+    Radius: 0.5
+  - ID: 711
+    Name: Particle
+    Position: [-1.3803059246831282, 32.55676975748963, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.539647415829132
+    Radius: 0.5
+  - ID: 712
+    Name: Particle
+    Position: [20.76045764914751, -79.5797358721481, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.546096180028005
+    Radius: 0.5
+  - ID: 713
+    Name: Particle
+    Position: [46.59351554776859, 9.352537349077878, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 33.63783802086634
+    Radius: 0.5
+  - ID: 714
+    Name: Particle
+    Position: [-94.83421223686533, -94.50500131259909, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.840399389676527
+    Radius: 0.5
+  - ID: 715
+    Name: Particle
+    Position: [-63.065446111883496, -15.115284351085904, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.56533972851719
+    Radius: 0.5
+  - ID: 716
+    Name: Particle
+    Position: [-71.41876115612399, -41.23850612313029, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.12522101299462
+    Radius: 0.5
+  - ID: 717
+    Name: Particle
+    Position: [74.82103512433866, -79.13834490527576, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.835360506210154
+    Radius: 0.5
+  - ID: 718
+    Name: Particle
+    Position: [-31.82973348725109, -34.38638905987561, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.049654188779215
+    Radius: 0.5
+  - ID: 719
+    Name: Particle
+    Position: [50.75531198006547, -45.21070619580294, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.63856705536594
+    Radius: 0.5
+  - ID: 720
+    Name: Particle
+    Position: [-29.032239850846864, -68.62102893021616, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.90258077691031
+    Radius: 0.5
+  - ID: 721
+    Name: Particle
+    Position: [19.908323215912716, -8.30553958008899, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.082579608489663
+    Radius: 0.5
+  - ID: 722
+    Name: Particle
+    Position: [-10.914379846904183, 69.96323619224697, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.58015213313448
+    Radius: 0.5
+  - ID: 723
+    Name: Particle
+    Position: [-8.337820663639903, 45.934041543614455, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.490167029926464
+    Radius: 0.5
+  - ID: 724
+    Name: Particle
+    Position: [92.75938601681449, 32.99907175671956, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.29336329476086
+    Radius: 0.5
+  - ID: 725
+    Name: Particle
+    Position: [26.34124262718612, -68.43808357494888, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.841183761143146
+    Radius: 0.5
+  - ID: 726
+    Name: Particle
+    Position: [-3.5384872584597815, 89.53851797065528, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.95011933526898
+    Radius: 0.5
+  - ID: 727
+    Name: Particle
+    Position: [-14.341664847209728, 50.99440926394746, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.19613258753695
+    Radius: 0.5
+  - ID: 728
+    Name: Particle
+    Position: [66.05131127953089, -2.2320811418613573, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.708778124866114
+    Radius: 0.5
+  - ID: 729
+    Name: Particle
+    Position: [8.869313942182018, -23.643117071682497, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.407457333165176
+    Radius: 0.5
+  - ID: 730
+    Name: Particle
+    Position: [-1.4281461578880936, -73.11498893080955, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.352161292504732
+    Radius: 0.5
+  - ID: 731
+    Name: Particle
+    Position: [34.69924506558257, 84.61575525925232, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.720557743929316
+    Radius: 0.5
+  - ID: 732
+    Name: Particle
+    Position: [-13.292652314223474, -21.156403353679124, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.70801147011456
+    Radius: 0.5
+  - ID: 733
+    Name: Particle
+    Position: [44.87667597540889, -20.131350262616564, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.029784033732994
+    Radius: 0.5
+  - ID: 734
+    Name: Particle
+    Position: [-23.152037260116614, 52.46438424666988, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.56761662730383
+    Radius: 0.5
+  - ID: 735
+    Name: Particle
+    Position: [45.66561503772277, 63.75830057633101, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 76.27408159637423
+    Radius: 0.5
+  - ID: 736
+    Name: Particle
+    Position: [53.04918175099101, 32.898662623584386, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.65179889879333
+    Radius: 0.5
+  - ID: 737
+    Name: Particle
+    Position: [-5.072445573974349, -85.6635011972491, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.298370862350545
+    Radius: 0.5
+  - ID: 738
+    Name: Particle
+    Position: [-61.58029394139053, 69.89574565184606, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.33982093175416
+    Radius: 0.5
+  - ID: 739
+    Name: Particle
+    Position: [-75.5919643134796, -63.902758367396494, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.17759119710911
+    Radius: 0.5
+  - ID: 740
+    Name: Particle
+    Position: [65.50192927241821, -91.72716503272211, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.3584083011242
+    Radius: 0.5
+  - ID: 741
+    Name: Particle
+    Position: [6.569521909362038, -97.57195493604756, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 31.219300534567644
+    Radius: 0.5
+  - ID: 742
+    Name: Particle
+    Position: [50.22017787678985, 25.968815499966055, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.753963968964857
+    Radius: 0.5
+  - ID: 743
+    Name: Particle
+    Position: [9.66824508527786, -92.75236079906477, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.64211280971026
+    Radius: 0.5
+  - ID: 744
+    Name: Particle
+    Position: [-69.16450689971452, 78.08866950773859, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.4438387732072
+    Radius: 0.5
+  - ID: 745
+    Name: Particle
+    Position: [-43.1701448664864, -40.08573674909981, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.56216527957795
+    Radius: 0.5
+  - ID: 746
+    Name: Particle
+    Position: [36.75738389492838, -67.1547660629922, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.27399777619738
+    Radius: 0.5
+  - ID: 747
+    Name: Particle
+    Position: [-85.1427419308656, 39.70839847721081, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.439164871612373
+    Radius: 0.5
+  - ID: 748
+    Name: Particle
+    Position: [-39.64526326124731, 94.91725182402615, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.32314998734488
+    Radius: 0.5
+  - ID: 749
+    Name: Particle
+    Position: [-25.969841532049358, 63.617013231353496, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.3062912836507
+    Radius: 0.5
+  - ID: 750
+    Name: Particle
+    Position: [45.45160630913537, -9.595050561645849, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.865334405244823
+    Radius: 0.5
+  - ID: 751
+    Name: Particle
+    Position: [1.1823635273424458, 94.65695439607168, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.58568345930148
+    Radius: 0.5
+  - ID: 752
+    Name: Particle
+    Position: [35.75492625696964, 52.38946211195565, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.27807718378605
+    Radius: 0.5
+  - ID: 753
+    Name: Particle
+    Position: [-30.96941875188257, 81.16113654348837, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.96913295295532
+    Radius: 0.5
+  - ID: 754
+    Name: Particle
+    Position: [77.15290548270383, -3.166749170024616, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.137787010086434
+    Radius: 0.5
+  - ID: 755
+    Name: Particle
+    Position: [79.58380005673456, -18.633246753840353, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.462950727758326
+    Radius: 0.5
+  - ID: 756
+    Name: Particle
+    Position: [-74.39534589202728, 11.783946811632347, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.94618012251172
+    Radius: 0.5
+  - ID: 757
+    Name: Particle
+    Position: [78.82326803620779, 35.19822119207626, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.22586780211341
+    Radius: 0.5
+  - ID: 758
+    Name: Particle
+    Position: [5.411324474728588, -15.521565956624059, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.755398131328526
+    Radius: 0.5
+  - ID: 759
+    Name: Particle
+    Position: [-10.569735377716214, 14.42765700115092, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.472994129836735
+    Radius: 0.5
+  - ID: 760
+    Name: Particle
+    Position: [-37.909111619155425, 48.598580008297574, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.41939278894873
+    Radius: 0.5
+  - ID: 761
+    Name: Particle
+    Position: [24.32111594600184, 82.21243248665368, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.602675689547326
+    Radius: 0.5
+  - ID: 762
+    Name: Particle
+    Position: [48.89435273762783, -15.179707717947878, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.054690086359617
+    Radius: 0.5
+  - ID: 763
+    Name: Particle
+    Position: [45.413478648258945, 31.075449694001605, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.91720807495678
+    Radius: 0.5
+  - ID: 764
+    Name: Particle
+    Position: [-7.457020973739191, 28.574460738895482, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.63920973767618
+    Radius: 0.5
+  - ID: 765
+    Name: Particle
+    Position: [-25.00758689034201, 1.1346953372844126, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.338305185384794
+    Radius: 0.5
+  - ID: 766
+    Name: Particle
+    Position: [75.94991418139256, 16.186382296107382, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.54570446182847
+    Radius: 0.5
+  - ID: 767
+    Name: Particle
+    Position: [45.89909685396859, -74.67094619626937, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.06275341521533
+    Radius: 0.5
+  - ID: 768
+    Name: Particle
+    Position: [8.758184358906206, -7.35665324018251, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.220524306916147
+    Radius: 0.5
+  - ID: 769
+    Name: Particle
+    Position: [-79.26450109890479, 75.63447170333438, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.46020148001908
+    Radius: 0.5
+  - ID: 770
+    Name: Particle
+    Position: [-65.87969014948052, -42.33257598182698, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.96599523639011
+    Radius: 0.5
+  - ID: 771
+    Name: Particle
+    Position: [-74.03250755091028, 51.69299492234393, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.30389947001828
+    Radius: 0.5
+  - ID: 772
+    Name: Particle
+    Position: [30.853706121124816, 47.600771210284194, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.299138001908638
+    Radius: 0.5
+  - ID: 773
+    Name: Particle
+    Position: [-52.32030203206492, 67.19041032399491, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.358535037932977
+    Radius: 0.5
+  - ID: 774
+    Name: Particle
+    Position: [9.198433401141955, -32.78696717273091, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.24418995972288
+    Radius: 0.5
+  - ID: 775
+    Name: Particle
+    Position: [-48.32894037890956, 10.601200310754393, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 13.51455312565177
+    Radius: 0.5
+  - ID: 776
+    Name: Particle
+    Position: [82.48658275735474, 36.390531105744856, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.987472768180513
+    Radius: 0.5
+  - ID: 777
+    Name: Particle
+    Position: [-62.33164354549634, -18.298948307070376, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.13068160399805
+    Radius: 0.5
+  - ID: 778
+    Name: Particle
+    Position: [-1.9228184254055378, -3.9659973726307953, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.921205359261931
+    Radius: 0.5
+  - ID: 779
+    Name: Particle
+    Position: [48.50883431178238, -88.32938362555053, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.40661893682186
+    Radius: 0.5
+  - ID: 780
+    Name: Particle
+    Position: [14.434556543234777, -55.41078207697594, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.8470788239902
+    Radius: 0.5
+  - ID: 781
+    Name: Particle
+    Position: [32.11225639634034, -16.909384326316612, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.788379610022815
+    Radius: 0.5
+  - ID: 782
+    Name: Particle
+    Position: [-50.05650956789074, -23.879258171050125, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.315657479041555
+    Radius: 0.5
+  - ID: 783
+    Name: Particle
+    Position: [80.60953582984189, 19.60680014458569, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.82145268362548
+    Radius: 0.5
+  - ID: 784
+    Name: Particle
+    Position: [-95.97968025303891, 21.159509182597304, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.085891456098075
+    Radius: 0.5
+  - ID: 785
+    Name: Particle
+    Position: [4.064077771099164, -1.3567348473515466, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 35.523328142659594
+    Radius: 0.5
+  - ID: 786
+    Name: Particle
+    Position: [-53.21012251268715, 27.22407789414079, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.474721744750179
+    Radius: 0.5
+  - ID: 787
+    Name: Particle
+    Position: [14.789762023598385, -41.29351354459272, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.741903031382215
+    Radius: 0.5
+  - ID: 788
+    Name: Particle
+    Position: [34.801353800141186, 98.97564039698949, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.41395787734203
+    Radius: 0.5
+  - ID: 789
+    Name: Particle
+    Position: [87.89164680782025, 82.94440625296693, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.305760554012352
+    Radius: 0.5
+  - ID: 790
+    Name: Particle
+    Position: [-12.680226198965912, 92.72461792774334, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.261778731236525
+    Radius: 0.5
+  - ID: 791
+    Name: Particle
+    Position: [-88.19715645622239, -5.574420047196526, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.05932624790178
+    Radius: 0.5
+  - ID: 792
+    Name: Particle
+    Position: [8.275036737195919, -96.64849672757414, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.35836956668692
+    Radius: 0.5
+  - ID: 793
+    Name: Particle
+    Position: [-68.3106795622884, -33.8433566587192, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.044516973610598
+    Radius: 0.5
+  - ID: 794
+    Name: Particle
+    Position: [-49.8006695176054, 88.16887792847407, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.66937939253418
+    Radius: 0.5
+  - ID: 795
+    Name: Particle
+    Position: [11.965803549305562, -78.61256247285802, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.318760405901367
+    Radius: 0.5
+  - ID: 796
+    Name: Particle
+    Position: [98.75226318307057, -35.752914473900404, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.81496656444352
+    Radius: 0.5
+  - ID: 797
+    Name: Particle
+    Position: [-47.977908526781654, 94.85114436978583, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.81188963299554
+    Radius: 0.5
+  - ID: 798
+    Name: Particle
+    Position: [-88.33107360309005, -11.861075662628906, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.25734639396173
+    Radius: 0.5
+  - ID: 799
+    Name: Particle
+    Position: [80.60636229850604, 3.4368469178033934, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.20362733848211
+    Radius: 0.5
+  - ID: 800
+    Name: Particle
+    Position: [33.463473652409135, -48.250878371498814, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.97536765453003
+    Radius: 0.5
+  - ID: 801
+    Name: Particle
+    Position: [-96.45202369479262, -80.65141483913831, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.84263238056157
+    Radius: 0.5
+  - ID: 802
+    Name: Particle
+    Position: [64.16482218327374, -31.716412851659342, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.405634455922712
+    Radius: 0.5
+  - ID: 803
+    Name: Particle
+    Position: [-29.029708007943043, -85.79404645458528, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.99099760415491
+    Radius: 0.5
+  - ID: 804
+    Name: Particle
+    Position: [-64.73563812806285, 42.629665495423836, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 98.77467527695788
+    Radius: 0.5
+  - ID: 805
+    Name: Particle
+    Position: [-19.339756568277394, -75.91994991141256, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.881622699572645
+    Radius: 0.5
+  - ID: 806
+    Name: Particle
+    Position: [-70.70852957019733, 57.6216587042118, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.418811787442095
+    Radius: 0.5
+  - ID: 807
+    Name: Particle
+    Position: [-70.04574468576246, -15.741878654631122, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 51.886368538142385
+    Radius: 0.5
+  - ID: 808
+    Name: Particle
+    Position: [-61.55354463927139, 81.40424521423779, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.760584230217468
+    Radius: 0.5
+  - ID: 809
+    Name: Particle
+    Position: [28.129001053769912, -2.79191113991304, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.43612277815446
+    Radius: 0.5
+  - ID: 810
+    Name: Particle
+    Position: [31.599465729337993, 77.68539612431792, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.83999075201938
+    Radius: 0.5
+  - ID: 811
+    Name: Particle
+    Position: [98.17334513412763, -62.185111339377805, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.850184277731245
+    Radius: 0.5
+  - ID: 812
+    Name: Particle
+    Position: [-46.40220278443306, 39.40474383312548, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.08828052057878
+    Radius: 0.5
+  - ID: 813
+    Name: Particle
+    Position: [-30.905825864258716, 70.24008347738155, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.4991194464091
+    Radius: 0.5
+  - ID: 814
+    Name: Particle
+    Position: [65.29297041530529, -59.219012003690864, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.176374059425164
+    Radius: 0.5
+  - ID: 815
+    Name: Particle
+    Position: [-96.17573772766777, -93.51980898382509, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 16.649153026884576
+    Radius: 0.5
+  - ID: 816
+    Name: Particle
+    Position: [31.950624603119252, -62.98663013175862, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.3116858880431
+    Radius: 0.5
+  - ID: 817
+    Name: Particle
+    Position: [-30.403417280266567, 44.11393163307662, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.53268419014272
+    Radius: 0.5
+  - ID: 818
+    Name: Particle
+    Position: [-81.44332414521051, -4.083495890023343, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.41162849453885
+    Radius: 0.5
+  - ID: 819
+    Name: Particle
+    Position: [29.504480395761163, -1.5037823550865, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.56045713904197
+    Radius: 0.5
+  - ID: 820
+    Name: Particle
+    Position: [-82.61027583553485, -21.876116271784895, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.15937557721992
+    Radius: 0.5
+  - ID: 821
+    Name: Particle
+    Position: [20.76513129606184, 67.10694606436047, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.81301337758309
+    Radius: 0.5
+  - ID: 822
+    Name: Particle
+    Position: [3.548184868093074, -92.54622758709708, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.81766836146175
+    Radius: 0.5
+  - ID: 823
+    Name: Particle
+    Position: [-72.42235040324098, -45.54033861082938, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.606864704899344
+    Radius: 0.5
+  - ID: 824
+    Name: Particle
+    Position: [-15.230359653232512, 55.09929004331667, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.20773249657971
+    Radius: 0.5
+  - ID: 825
+    Name: Particle
+    Position: [-48.73062599465881, -88.40493355541426, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.06110073331551
+    Radius: 0.5
+  - ID: 826
+    Name: Particle
+    Position: [-2.8680105781202343, -19.05357174798968, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.617155219052435
+    Radius: 0.5
+  - ID: 827
+    Name: Particle
+    Position: [65.33524663081064, 18.789063944293034, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.58562194288166
+    Radius: 0.5
+  - ID: 828
+    Name: Particle
+    Position: [-66.16092909634652, -86.01345127013799, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.685658669951536
+    Radius: 0.5
+  - ID: 829
+    Name: Particle
+    Position: [-77.10632786168767, -75.09228416125981, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.45853494544687
+    Radius: 0.5
+  - ID: 830
+    Name: Particle
+    Position: [72.08823567202762, 94.95309592530432, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.1872751929194
+    Radius: 0.5
+  - ID: 831
+    Name: Particle
+    Position: [32.02419596750792, 72.59231854819294, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.067345942622005
+    Radius: 0.5
+  - ID: 832
+    Name: Particle
+    Position: [-87.56286176852078, 52.423249582987665, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.349645299881194
+    Radius: 0.5
+  - ID: 833
+    Name: Particle
+    Position: [-41.50459070352645, 20.730042953459105, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 21.57749884460434
+    Radius: 0.5
+  - ID: 834
+    Name: Particle
+    Position: [-79.5307845157871, -27.252586595005, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.04984964329468
+    Radius: 0.5
+  - ID: 835
+    Name: Particle
+    Position: [94.00370217318468, 34.23579547333233, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.215599521927079
+    Radius: 0.5
+  - ID: 836
+    Name: Particle
+    Position: [-2.848410271214405, -19.85143764327175, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.666655025437755
+    Radius: 0.5
+  - ID: 837
+    Name: Particle
+    Position: [23.540087779083606, -24.616737685095387, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 41.83920007068414
+    Radius: 0.5
+  - ID: 838
+    Name: Particle
+    Position: [58.36732356686221, 86.49159266574554, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.84341875426693
+    Radius: 0.5
+  - ID: 839
+    Name: Particle
+    Position: [87.17892321672659, 54.792365613227275, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.53928784134509
+    Radius: 0.5
+  - ID: 840
+    Name: Particle
+    Position: [-93.55887915414351, -20.55150848870801, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.66509806202087
+    Radius: 0.5
+  - ID: 841
+    Name: Particle
+    Position: [92.84150877314795, 41.18370144043112, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.208261742987805
+    Radius: 0.5
+  - ID: 842
+    Name: Particle
+    Position: [-99.21022301476705, -33.906601759889796, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.17130491762673
+    Radius: 0.5
+  - ID: 843
+    Name: Particle
+    Position: [-79.76364762889902, 49.17126442646514, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.00055337053944
+    Radius: 0.5
+  - ID: 844
+    Name: Particle
+    Position: [-95.35633496655184, -18.384143698131908, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 93.74539873986245
+    Radius: 0.5
+  - ID: 845
+    Name: Particle
+    Position: [-98.91930781795264, -57.79005132290833, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.478660473812084
+    Radius: 0.5
+  - ID: 846
+    Name: Particle
+    Position: [68.6378652072215, 2.962074788166788, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.43217125534339
+    Radius: 0.5
+  - ID: 847
+    Name: Particle
+    Position: [-88.53144011863256, 74.11645403957135, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 14.3582362056024
+    Radius: 0.5
+  - ID: 848
+    Name: Particle
+    Position: [5.986845620246257, -80.00174079791284, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.68725381761283
+    Radius: 0.5
+  - ID: 849
+    Name: Particle
+    Position: [42.64623913846651, -12.493225738100477, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.95927157768694
+    Radius: 0.5
+  - ID: 850
+    Name: Particle
+    Position: [46.89731059804595, 45.902485380205746, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 24.1978971816338
+    Radius: 0.5
+  - ID: 851
+    Name: Particle
+    Position: [54.574686555221376, -29.08974477257243, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.61525646395135
+    Radius: 0.5
+  - ID: 852
+    Name: Particle
+    Position: [-94.53893097093022, 67.03740864437913, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.11514199305026
+    Radius: 0.5
+  - ID: 853
+    Name: Particle
+    Position: [58.28182032875381, -99.19176148947808, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.10988646520568
+    Radius: 0.5
+  - ID: 854
+    Name: Particle
+    Position: [-65.51247329580681, 94.61396533079233, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.34782458760475
+    Radius: 0.5
+  - ID: 855
+    Name: Particle
+    Position: [76.0327908014637, 45.709931852203965, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 77.05541344079613
+    Radius: 0.5
+  - ID: 856
+    Name: Particle
+    Position: [-96.50673723130765, -27.639899003584816, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.947828844106223
+    Radius: 0.5
+  - ID: 857
+    Name: Particle
+    Position: [-80.30114639314314, -38.87142338170266, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 97.21555036705561
+    Radius: 0.5
+  - ID: 858
+    Name: Particle
+    Position: [58.78020529372051, 97.31331040609984, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.32243177950245
+    Radius: 0.5
+  - ID: 859
+    Name: Particle
+    Position: [-61.98112027063636, -69.181969379452, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 96.7759420794673
+    Radius: 0.5
+  - ID: 860
+    Name: Particle
+    Position: [26.760727950115566, 39.04575735055454, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.824725389146366
+    Radius: 0.5
+  - ID: 861
+    Name: Particle
+    Position: [79.7295060395328, 64.70514456028323, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.533881155846025
+    Radius: 0.5
+  - ID: 862
+    Name: Particle
+    Position: [0.7610326606859417, 79.8905926361864, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.724848289151282
+    Radius: 0.5
+  - ID: 863
+    Name: Particle
+    Position: [30.200508757750384, 45.88761214098946, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.76727138617188
+    Radius: 0.5
+  - ID: 864
+    Name: Particle
+    Position: [-54.15219217226224, -91.4452651993079, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.108705249720764
+    Radius: 0.5
+  - ID: 865
+    Name: Particle
+    Position: [84.18017634159435, -30.29646870409269, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 36.2178801542948
+    Radius: 0.5
+  - ID: 866
+    Name: Particle
+    Position: [-83.53418372322994, -46.50246271556399, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.71386850406273
+    Radius: 0.5
+  - ID: 867
+    Name: Particle
+    Position: [-51.547643192000066, 20.21606105683385, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.02504495803771
+    Radius: 0.5
+  - ID: 868
+    Name: Particle
+    Position: [25.479356364727664, 9.772495034034662, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 39.121915098940754
+    Radius: 0.5
+  - ID: 869
+    Name: Particle
+    Position: [-4.748584711278255, 33.49220135679164, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.00351081592767
+    Radius: 0.5
+  - ID: 870
+    Name: Particle
+    Position: [21.48003052821248, -26.81522237132623, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.45593986885353
+    Radius: 0.5
+  - ID: 871
+    Name: Particle
+    Position: [-41.741416557049526, 58.708678486111694, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 91.20288113533032
+    Radius: 0.5
+  - ID: 872
+    Name: Particle
+    Position: [-42.660539583843125, 12.554712704357925, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.37311889394135
+    Radius: 0.5
+  - ID: 873
+    Name: Particle
+    Position: [-34.69563341948165, 70.71133037171577, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.9248056201732
+    Radius: 0.5
+  - ID: 874
+    Name: Particle
+    Position: [58.14697870302058, 55.81884103058928, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.46049880516272
+    Radius: 0.5
+  - ID: 875
+    Name: Particle
+    Position: [16.737971532897532, -53.12358638426493, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.72136932156101
+    Radius: 0.5
+  - ID: 876
+    Name: Particle
+    Position: [27.314652384454348, 74.98757752061098, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.45106333551598
+    Radius: 0.5
+  - ID: 877
+    Name: Particle
+    Position: [-42.77918701895433, -63.87252146927367, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 78.83416071864718
+    Radius: 0.5
+  - ID: 878
+    Name: Particle
+    Position: [-8.039788752199286, -82.94056050091862, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.00682540988205
+    Radius: 0.5
+  - ID: 879
+    Name: Particle
+    Position: [74.43380938200863, 33.93091671565273, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.22646422404372
+    Radius: 0.5
+  - ID: 880
+    Name: Particle
+    Position: [-76.70645265203875, 29.3812399785495, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.80360331138257
+    Radius: 0.5
+  - ID: 881
+    Name: Particle
+    Position: [-89.99162366500705, -85.29960128039593, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.62622035804203
+    Radius: 0.5
+  - ID: 882
+    Name: Particle
+    Position: [42.122114576353766, -74.51528871705646, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.217111298187774
+    Radius: 0.5
+  - ID: 883
+    Name: Particle
+    Position: [-36.3925766203494, -50.0463538093268, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.61029022186645
+    Radius: 0.5
+  - ID: 884
+    Name: Particle
+    Position: [20.033387311432648, 80.90758879870373, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.10507936533281
+    Radius: 0.5
+  - ID: 885
+    Name: Particle
+    Position: [-91.44855811693138, -39.887090128700244, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.49710722390355
+    Radius: 0.5
+  - ID: 886
+    Name: Particle
+    Position: [34.3201742965187, -93.13762693264012, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.455386158241666
+    Radius: 0.5
+  - ID: 887
+    Name: Particle
+    Position: [-86.68103395658177, 77.35013926206099, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.76162454955137
+    Radius: 0.5
+  - ID: 888
+    Name: Particle
+    Position: [78.74844749824862, 74.57379576067322, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.69182087138377
+    Radius: 0.5
+  - ID: 889
+    Name: Particle
+    Position: [17.563150732601926, -22.40084987544138, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.555911089765225
+    Radius: 0.5
+  - ID: 890
+    Name: Particle
+    Position: [46.24538409422405, 79.76080512318916, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 40.35076706694334
+    Radius: 0.5
+  - ID: 891
+    Name: Particle
+    Position: [42.167552320718556, -48.03466201215427, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.58462739561062
+    Radius: 0.5
+  - ID: 892
+    Name: Particle
+    Position: [-99.10432034242666, -61.3986874708965, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.72509272115157
+    Radius: 0.5
+  - ID: 893
+    Name: Particle
+    Position: [68.80838015379615, -61.627791009943664, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 89.71705080420872
+    Radius: 0.5
+  - ID: 894
+    Name: Particle
+    Position: [30.61346820652963, 95.89617134334827, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.92614114363776
+    Radius: 0.5
+  - ID: 895
+    Name: Particle
+    Position: [-39.36666852907362, -72.63561851279188, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.11035402763424
+    Radius: 0.5
+  - ID: 896
+    Name: Particle
+    Position: [96.53528958554699, -24.06408853908016, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 81.37006351232
+    Radius: 0.5
+  - ID: 897
+    Name: Particle
+    Position: [-51.191932394255055, -6.680909818142382, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.32496887775662
+    Radius: 0.5
+  - ID: 898
+    Name: Particle
+    Position: [-1.0709689220188778, -91.12527859802245, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 92.00612458331223
+    Radius: 0.5
+  - ID: 899
+    Name: Particle
+    Position: [-19.67090292185398, 14.829520225885062, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 74.75916464715085
+    Radius: 0.5
+  - ID: 900
+    Name: Particle
+    Position: [-1.2939922905775774, 35.98749856419755, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.36796029093508
+    Radius: 0.5
+  - ID: 901
+    Name: Particle
+    Position: [12.676210823318996, 53.641379129257274, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.96142658337774
+    Radius: 0.5
+  - ID: 902
+    Name: Particle
+    Position: [-76.41689813782216, -96.87259498393375, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.4306107157129
+    Radius: 0.5
+  - ID: 903
+    Name: Particle
+    Position: [-95.62600313486706, 65.3293290720571, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 48.829452317901925
+    Radius: 0.5
+  - ID: 904
+    Name: Particle
+    Position: [-10.104188954834868, -37.396616282990934, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.10625449571155
+    Radius: 0.5
+  - ID: 905
+    Name: Particle
+    Position: [-14.627680480906065, -7.359192260849426, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.10781653856069
+    Radius: 0.5
+  - ID: 906
+    Name: Particle
+    Position: [81.47593511535348, -96.88677687157423, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 17.75510524386311
+    Radius: 0.5
+  - ID: 907
+    Name: Particle
+    Position: [32.097793771313576, -47.63348156370044, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 65.16132042647143
+    Radius: 0.5
+  - ID: 908
+    Name: Particle
+    Position: [9.5789582437896, -98.10522563911053, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.4398250983657
+    Radius: 0.5
+  - ID: 909
+    Name: Particle
+    Position: [51.90345892374131, -94.93138546131843, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 64.33985588160476
+    Radius: 0.5
+  - ID: 910
+    Name: Particle
+    Position: [-16.920885482505497, -77.79685312586773, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.382207564312
+    Radius: 0.5
+  - ID: 911
+    Name: Particle
+    Position: [-12.821215225757726, 21.84924950702039, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.99677086766049
+    Radius: 0.5
+  - ID: 912
+    Name: Particle
+    Position: [47.5934420782753, -97.62832242476136, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.74215695643835
+    Radius: 0.5
+  - ID: 913
+    Name: Particle
+    Position: [37.93834553748215, -64.77698313834937, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 66.98376766107324
+    Radius: 0.5
+  - ID: 914
+    Name: Particle
+    Position: [92.57840348900231, 29.510674436493787, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 45.142292300770855
+    Radius: 0.5
+  - ID: 915
+    Name: Particle
+    Position: [-39.474675791363126, -68.47214644344601, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 94.73439579580631
+    Radius: 0.5
+  - ID: 916
+    Name: Particle
+    Position: [74.47448466027441, -84.92873847646207, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.7969057509493
+    Radius: 0.5
+  - ID: 917
+    Name: Particle
+    Position: [-82.39100606393272, -27.92699526548661, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 85.21053143944366
+    Radius: 0.5
+  - ID: 918
+    Name: Particle
+    Position: [95.20564727018942, 17.530566617294312, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.48228784192192
+    Radius: 0.5
+  - ID: 919
+    Name: Particle
+    Position: [-52.346920795877885, -96.3047810494833, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 83.09158764858874
+    Radius: 0.5
+  - ID: 920
+    Name: Particle
+    Position: [99.92064646610831, 90.64591954251156, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.722037203549093
+    Radius: 0.5
+  - ID: 921
+    Name: Particle
+    Position: [-89.5641733481577, -21.767484988104457, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 42.557120624564085
+    Radius: 0.5
+  - ID: 922
+    Name: Particle
+    Position: [30.231285655427996, 34.214024692326376, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.40057335217458
+    Radius: 0.5
+  - ID: 923
+    Name: Particle
+    Position: [-75.617280738058, 38.77420441141595, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 61.867950199464886
+    Radius: 0.5
+  - ID: 924
+    Name: Particle
+    Position: [-60.53840795551988, -63.189600253861265, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.360393991635675
+    Radius: 0.5
+  - ID: 925
+    Name: Particle
+    Position: [-60.59306719294328, -19.320740950591613, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.02365442249871
+    Radius: 0.5
+  - ID: 926
+    Name: Particle
+    Position: [-8.133177440725106, 90.50707783873716, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 60.77834568988127
+    Radius: 0.5
+  - ID: 927
+    Name: Particle
+    Position: [68.20331847658247, -71.40463863584134, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.71620385719546
+    Radius: 0.5
+  - ID: 928
+    Name: Particle
+    Position: [-70.29416296811098, 92.41264534854113, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 43.099065157981485
+    Radius: 0.5
+  - ID: 929
+    Name: Particle
+    Position: [-83.57309126174792, 44.86874497888377, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 29.576377864639507
+    Radius: 0.5
+  - ID: 930
+    Name: Particle
+    Position: [2.8136647612007124, 68.83299305708789, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 19.28986158048384
+    Radius: 0.5
+  - ID: 931
+    Name: Particle
+    Position: [65.23372402579528, 10.898506260588391, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.6188455701139
+    Radius: 0.5
+  - ID: 932
+    Name: Particle
+    Position: [-38.32595905660732, 24.706852904617833, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.6380189922988
+    Radius: 0.5
+  - ID: 933
+    Name: Particle
+    Position: [12.591222614666947, 77.79448566372679, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 34.568117409629764
+    Radius: 0.5
+  - ID: 934
+    Name: Particle
+    Position: [87.87769699886485, 48.33158340470675, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.36964652076628
+    Radius: 0.5
+  - ID: 935
+    Name: Particle
+    Position: [33.03141388472014, -26.7917900401562, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.49290795753985
+    Radius: 0.5
+  - ID: 936
+    Name: Particle
+    Position: [-96.28576554635495, 67.40482329727544, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 58.31992285612668
+    Radius: 0.5
+  - ID: 937
+    Name: Particle
+    Position: [44.49389670495188, 38.321335490739216, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 73.32909000777298
+    Radius: 0.5
+  - ID: 938
+    Name: Particle
+    Position: [-29.92913654336138, 52.079330869694616, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.68018303138811
+    Radius: 0.5
+  - ID: 939
+    Name: Particle
+    Position: [9.595389421896144, -77.97718474020408, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.20102335727796
+    Radius: 0.5
+  - ID: 940
+    Name: Particle
+    Position: [83.33231589148505, 96.00511685946341, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 69.46188546555994
+    Radius: 0.5
+  - ID: 941
+    Name: Particle
+    Position: [-38.406423203451624, -34.601661693156686, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 75.32633795766628
+    Radius: 0.5
+  - ID: 942
+    Name: Particle
+    Position: [-39.84129983309015, 34.764126626701284, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.48315525565049
+    Radius: 0.5
+  - ID: 943
+    Name: Particle
+    Position: [2.6575442746777753, -50.41108624514394, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.44233941187156
+    Radius: 0.5
+  - ID: 944
+    Name: Particle
+    Position: [-33.62123895942604, -59.24891642718491, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 63.85689196063135
+    Radius: 0.5
+  - ID: 945
+    Name: Particle
+    Position: [1.963953021130635, 92.41819868167133, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 46.340925501483824
+    Radius: 0.5
+  - ID: 946
+    Name: Particle
+    Position: [-16.448627234479886, 42.8240419248346, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.385817334198908
+    Radius: 0.5
+  - ID: 947
+    Name: Particle
+    Position: [27.888604861000374, 55.05252185568315, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 25.507572142601827
+    Radius: 0.5
+  - ID: 948
+    Name: Particle
+    Position: [49.484257844157156, -42.85239130060761, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.509117708021872
+    Radius: 0.5
+  - ID: 949
+    Name: Particle
+    Position: [-44.44454458175811, -26.726055495605763, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 55.94359089049085
+    Radius: 0.5
+  - ID: 950
+    Name: Particle
+    Position: [9.625929349443552, -72.56375997272823, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 26.08347334268907
+    Radius: 0.5
+  - ID: 951
+    Name: Particle
+    Position: [-21.49877256362703, 10.1858082469372, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.241306068789575
+    Radius: 0.5
+  - ID: 952
+    Name: Particle
+    Position: [68.87936946891102, 24.794464500295987, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.106108110648478
+    Radius: 0.5
+  - ID: 953
+    Name: Particle
+    Position: [65.49544745758746, 81.09927969398933, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.864581626437584
+    Radius: 0.5
+  - ID: 954
+    Name: Particle
+    Position: [-79.45733534563817, -57.09550797890191, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 10.038019734000743
+    Radius: 0.5
+  - ID: 955
+    Name: Particle
+    Position: [22.2700231785482, 42.07924897221321, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 22.774575622716625
+    Radius: 0.5
+  - ID: 956
+    Name: Particle
+    Position: [-17.800240154298933, 18.666638583820443, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 50.02884383450557
+    Radius: 0.5
+  - ID: 957
+    Name: Particle
+    Position: [0.8490452053930682, -96.24591780959778, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 30.945217937006404
+    Radius: 0.5
+  - ID: 958
+    Name: Particle
+    Position: [34.068355767921275, -8.33692969971409, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 79.47564347811613
+    Radius: 0.5
+  - ID: 959
+    Name: Particle
+    Position: [48.87609934406623, -11.343697657763158, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.89002637382537
+    Radius: 0.5
+  - ID: 960
+    Name: Particle
+    Position: [7.729660340075867, 83.55807202250415, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 27.826675907840563
+    Radius: 0.5
+  - ID: 961
+    Name: Particle
+    Position: [91.23469214693779, -79.87204554575044, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.35229893743473
+    Radius: 0.5
+  - ID: 962
+    Name: Particle
+    Position: [32.892434622996575, 14.020639724086962, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 70.3067642923682
+    Radius: 0.5
+  - ID: 963
+    Name: Particle
+    Position: [-4.936148172472727, 59.3906897145859, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 82.81512083952542
+    Radius: 0.5
+  - ID: 964
+    Name: Particle
+    Position: [-1.3182680913142946, -52.41218328302717, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 38.6943417317502
+    Radius: 0.5
+  - ID: 965
+    Name: Particle
+    Position: [23.14263965781889, 78.02833207383594, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.285822990988976
+    Radius: 0.5
+  - ID: 966
+    Name: Particle
+    Position: [-72.56968664225731, -29.097215643208614, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.06972934296233
+    Radius: 0.5
+  - ID: 967
+    Name: Particle
+    Position: [28.203422229304152, -25.405066490998934, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 65.9693090388109
+    Radius: 0.5
+  - ID: 968
+    Name: Particle
+    Position: [3.9973975672008777, 75.18090823810661, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.722650895988934
+    Radius: 0.5
+  - ID: 969
+    Name: Particle
+    Position: [-7.140294372014225, -56.74376986961087, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.972999650957416
+    Radius: 0.5
+  - ID: 970
+    Name: Particle
+    Position: [20.879945737473022, -34.5011498007201, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 90.16076936574389
+    Radius: 0.5
+  - ID: 971
+    Name: Particle
+    Position: [58.76960396126887, 86.90253707920621, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 49.27731340572422
+    Radius: 0.5
+  - ID: 972
+    Name: Particle
+    Position: [-30.421720186860355, -8.314225569328812, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 72.23408312817853
+    Radius: 0.5
+  - ID: 973
+    Name: Particle
+    Position: [35.01429594328778, -68.58650951372013, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.825870979749304
+    Radius: 0.5
+  - ID: 974
+    Name: Particle
+    Position: [22.855395969782435, 33.52150117696024, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 86.52375775927626
+    Radius: 0.5
+  - ID: 975
+    Name: Particle
+    Position: [29.658413093140524, 27.26194467471639, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 99.28601343535048
+    Radius: 0.5
+  - ID: 976
+    Name: Particle
+    Position: [-67.44293252690272, 6.384419134910573, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 84.38181114687048
+    Radius: 0.5
+  - ID: 977
+    Name: Particle
+    Position: [80.85795435182942, -22.059288960372285, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.513353116550586
+    Radius: 0.5
+  - ID: 978
+    Name: Particle
+    Position: [10.25039479933983, -41.16588467507343, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 23.419514045476856
+    Radius: 0.5
+  - ID: 979
+    Name: Particle
+    Position: [85.22978346374643, 2.787948734792849, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 67.60483719331664
+    Radius: 0.5
+  - ID: 980
+    Name: Particle
+    Position: [-78.15724958516405, 1.8275412219441023, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 52.93127739591961
+    Radius: 0.5
+  - ID: 981
+    Name: Particle
+    Position: [-9.320675948607416, 32.20332256195624, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 15.125655453836808
+    Radius: 0.5
+  - ID: 982
+    Name: Particle
+    Position: [23.813089871999352, 7.280776285146402, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.13603791381263
+    Radius: 0.5
+  - ID: 983
+    Name: Particle
+    Position: [-78.87956056275914, -91.06055600903893, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 37.92686822219737
+    Radius: 0.5
+  - ID: 984
+    Name: Particle
+    Position: [-22.351927956582387, 86.24067290608411, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 68.13299944402314
+    Radius: 0.5
+  - ID: 985
+    Name: Particle
+    Position: [53.906788106165834, 63.10547412320912, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.2890104578135
+    Radius: 0.5
+  - ID: 986
+    Name: Particle
+    Position: [45.563451390250606, 23.733750498707494, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.62668123495546
+    Radius: 0.5
+  - ID: 987
+    Name: Particle
+    Position: [4.0039762088971855, -90.2863338629027, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 59.98412844228237
+    Radius: 0.5
+  - ID: 988
+    Name: Particle
+    Position: [-82.57330769818843, -40.91183724001024, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 87.83835749826898
+    Radius: 0.5
+  - ID: 989
+    Name: Particle
+    Position: [89.00996818122402, 75.78745969098969, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 56.24027777658991
+    Radius: 0.5
+  - ID: 990
+    Name: Particle
+    Position: [25.906029462566465, -81.70089192279188, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 11.089517214692584
+    Radius: 0.5
+  - ID: 991
+    Name: Particle
+    Position: [71.00822990153253, 37.44535216024593, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 53.18158392120314
+    Radius: 0.5
+  - ID: 992
+    Name: Particle
+    Position: [-72.49401987500599, -17.65351636094981, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 28.73704200751862
+    Radius: 0.5
+  - ID: 993
+    Name: Particle
+    Position: [-88.8454789928332, -82.1043302062975, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 95.20354129966337
+    Radius: 0.5
+  - ID: 994
+    Name: Particle
+    Position: [19.516044562035106, 72.32949539210546, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 18.704128507650807
+    Radius: 0.5
+  - ID: 995
+    Name: Particle
+    Position: [93.16734710349093, -33.37635719001844, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 32.355272649617646
+    Radius: 0.5
+  - ID: 996
+    Name: Particle
+    Position: [76.53371367440172, -79.06071999645297, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 44.006227891772994
+    Radius: 0.5
+  - ID: 997
+    Name: Particle
+    Position: [-47.20121836460955, 80.99445910437836, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 54.215123482054636
+    Radius: 0.5
+  - ID: 998
+    Name: Particle
+    Position: [-74.28748013875605, -74.03459112676296, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 47.655810944077324
+    Radius: 0.5
+  - ID: 999
+    Name: Particle
+    Position: [46.15607805467792, -24.091940264486112, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 20.805196163999305
+    Radius: 0.5
+  - ID: 1000
+    Name: Particle
+    Position: [41.66858647001945, -10.177061507985186, 0]
+    Velocity: [0.0, 0.0, 0]
+    Mass: 62.27634120684552
+    Radius: 0.5
+Length Unit: 3
+Simulation Length: 20000000
+Safeguard Cache Enabled: true
+Simulation Record Enabled: true
+Solver: 2
+Technique: 3
+Bounds: [128, 64]
+Dynamic Timestep: false
+Timestep: 3000
+Local Workers: 9
+Remote Workers: 8
+Unit Size: 1
