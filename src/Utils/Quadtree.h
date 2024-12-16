@@ -6,7 +6,7 @@ struct Quad {
     double x;
     double y;
     double radius;
-    bool Contains(Ref<Particle> particle) {
+    bool Contains(Particle* particle) {
         return particle->Position().x >= x - radius &&
             particle->Position().x < x + radius &&
             particle->Position().y >= y - radius &&
@@ -22,14 +22,16 @@ class Quadtree {
 public:
     Quadtree(const Quad &boundary) : m_Boundary(boundary) {}
 public:
-    void Insert(Ref<Particle> particle);
+    void Insert(Particle* particle);
     void CalculateCenterOfMass();
 public:
+    void SerialCalculateForce(Particle &p, double unitsize);
+    void SerialApplyForce(Particle &p, Particle &other, double unitsize);
     void DrawTree();
     void DrawBoundary();
 private:
     void Subdivide();
-    void InsertIntoChildren(Ref<Particle> particle);
+    void InsertIntoChildren(Particle* particle);
 public:
     Quad m_Boundary = { 0 };
     Particle m_CenterOfMass;
@@ -38,5 +40,5 @@ public:
     Scope<Quadtree> m_NE = nullptr;
     Scope<Quadtree> m_SW = nullptr;
     Scope<Quadtree> m_SE = nullptr;
-    Ref<Particle> m_Particle = nullptr;
+    Particle* m_Particle = nullptr;
 };

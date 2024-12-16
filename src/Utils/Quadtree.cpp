@@ -2,7 +2,12 @@
 #include "Core/Log.h"
 #include "Renderer/Renderer.h"
 
-void Quadtree::Insert(Ref<Particle> particle) {
+#define THETA 0.5
+#ifndef G
+#define G 0.0000000000667430
+#endif
+
+void Quadtree::Insert(Particle* particle) {
     if (!m_Boundary.Contains(particle)) return;
     if (m_Leaf) {
         if (!m_Particle) {
@@ -45,6 +50,37 @@ void Quadtree::CalculateCenterOfMass() {
         m_CenterOfMass.SetMass(totalMass);
         m_CenterOfMass.SetPosition({ cmX / totalMass, cmY / totalMass, 0.0 });
     }
+}
+
+void Quadtree::SerialCalculateForce(Particle &p, double unitsize) {
+    if (m_Leaf) {
+        if (m_Particle && m_Particle != &p)
+            SerialApplyForce(p, *m_Particle, unitsize);
+        return;
+    }
+    double dx = unitsize * (m_CenterOfMass.Position().x - p.Position().x);
+    double dy = unitsize * (m_CenterOfMass.Position().y - p.Position().y);
+    double distance = std::sqrt(dx*dx + dy*dy);
+    if (m_Boundary.radius / distance < THETA) {
+        Particle vm = m_CenterOfMass;
+        SerialApplyForce(p, vm, unitsize);
+    } else {
+        if (m_NW) m_NW->SerialCalculateForce(p, unitsize);
+        if (m_NE) m_NE->SerialCalculateForce(p, unitsize);
+        if (m_SW) m_SW->SerialCalculateForce(p, unitsize);
+        if (m_SE) m_SE->SerialCalculateForce(p, unitsize);
+    }
+}
+
+void Quadtree::SerialApplyForce(Particle &p, Particle &other, double unitsize) {
+    double dx = unitsize * (other.Position().x - p.Position().x);
+    double dy = unitsize * (other.Position().y - p.Position().y);
+	double inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+	glm::dvec3 pa = { 0, 0, 0 };
+    glm::dvec3 olda = p.Acceleration();
+	pa.x = olda.x + (G * (dx * inv_r3) * other.Mass());
+	pa.y = olda.y + (G * (dy * inv_r3) * other.Mass());
+    p.SetAcceleration(pa);
 }
 
 void Quadtree::DrawTree() {
@@ -90,7 +126,7 @@ void Quadtree::Subdivide() {
     m_SE = CreateScope<Quadtree>(m_Boundary.SE());
 }
 
-void Quadtree::InsertIntoChildren(Ref<Particle> particle) {
+void Quadtree::InsertIntoChildren(Particle* particle) {
     if (m_NW->m_Boundary.Contains(particle)) m_NW->Insert(particle);
     if (m_NE->m_Boundary.Contains(particle)) m_NE->Insert(particle);
     if (m_SW->m_Boundary.Contains(particle)) m_SW->Insert(particle);

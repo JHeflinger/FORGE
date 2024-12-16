@@ -76,7 +76,8 @@ public:
 	void Resume();
 	void Abort();
 	void Checkup();
-	void Simulate();
+	void AccurateSimulate();
+	void ApproximateSimulate();
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:

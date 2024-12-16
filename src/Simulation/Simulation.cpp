@@ -12,15 +12,16 @@
 #include "Renderer/Renderer.h"
 
 #define EPS 0.0000000000001 // epsilon for numerical stability
+#ifndef G
 #define G 0.0000000000667430
+#endif
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
-#define THETA
 
 void Simulation::remove_this_function() {
 	Quad space = { 0, 0, 100.0 };
 	Quadtree tree(space);
 	for (size_t i = 0; i < m_Particles.size(); i++) {
-		tree.Insert(m_Particles[i]);
+		tree.Insert(&(*m_Particles[i]));
 	}
 	tree.DrawTree();
 }
@@ -40,14 +41,13 @@ std::string GetCurrentTimeString() {
     return timeStream.str();
 }
 
-void Simulation::Simulate() {
+void Simulation::AccurateSimulate() {
 	std::vector<std::vector<Particle>> simulation_progress;
 	m_ParticleSlice.clear();
 	for (size_t i = 0; i < m_Particles.size(); i++) m_ParticleSlice.push_back(*m_Particles[i]);
-
-	uint64_t steps = m_SimulationLength / m_Timestep;
 	simulation_progress.push_back(m_ParticleSlice);
 
+	uint64_t steps = m_SimulationLength / m_Timestep;
 	if (m_UnitSize <= 0) m_UnitSize = EPS;
 
 	// wait for local workers to be ready
@@ -106,6 +106,56 @@ void Simulation::Simulate() {
 	m_FinishedWorkers[0] = 0;
 	m_MutexLock.unlock();
 	m_WorkerAlert.notify_all();
+}
+
+void Simulation::ApproximateSimulate() {
+	std::vector<std::vector<Particle>> simulation_progress;
+	m_ParticleSlice.clear();
+	for (size_t i = 0; i < m_Particles.size(); i++) m_ParticleSlice.push_back(*m_Particles[i]);
+	simulation_progress.push_back(m_ParticleSlice);
+
+	uint64_t steps = m_SimulationLength / m_Timestep;
+	if (m_UnitSize <= 0) m_UnitSize = EPS;
+
+	for (uint64_t i = 0; i < steps; i++) {
+		// update velocity and position
+		for (size_t j = 0; j < m_Particles.size(); j++) {
+			m_ParticleSlice[j].SetPosition(m_ParticleSlice[j].Position() + ((double)m_Timestep * m_ParticleSlice[j].Velocity()));
+			m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
+		}
+
+		// reset accleration
+		for (size_t j = 0; j < m_Particles.size(); j++) {
+			m_ParticleSlice[j].SetAcceleration({0.0, 0.0, 0.0});
+		}
+
+		// create quadtree
+		Quad space = { 0, 0, 100.0 };
+		Quadtree tree(space);
+		for (size_t j = 0; j < m_Particles.size(); j++) {
+			tree.Insert(&(*m_Particles[j]));
+		}
+
+		// use quadtree to calculate acceleration
+		tree.CalculateCenterOfMass();
+		for (size_t j = 0; j < m_Particles.size(); j++) {
+			tree.SerialCalculateForce(m_ParticleSlice[j], m_UnitSize);
+		}
+
+		// update velocity
+		for (size_t j = 0; j < m_Particles.size(); j++) {
+			m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
+		}
+		
+		simulation_progress.push_back(std::vector<Particle>(m_ParticleSlice));
+		m_MutexLock.lock();
+		m_Progress = (float)((float)(i + 1) / (float)steps);
+		m_MutexLock.unlock();
+	}
+    m_MutexLock.lock();
+	m_Finished = true;
+	m_SimulationRecord = simulation_progress;
+	m_MutexLock.unlock();
 }
 
 void Simulation::ParticleJob(size_t index, size_t range) {
@@ -281,7 +331,7 @@ bool Simulation::Paused() {
 void Simulation::Start() {
     this->Log("starting simulation...");
 	if (m_Technique == SimulationTechnique::PARTICLE) {
-		m_MainProcess = std::thread(&Simulation::Simulate, this);
+		m_MainProcess = std::thread(&Simulation::AccurateSimulate, this);
 		m_SubProcesses.clear();
 		m_FinishedWorkers.push_back(0);
 		m_FinishedWorkers.push_back(0);
@@ -306,7 +356,7 @@ void Simulation::Start() {
 			}
 		}
 	} else if (m_Technique == SimulationTechnique::EDGE) {
-		m_MainProcess = std::thread(&Simulation::Simulate, this);
+		m_MainProcess = std::thread(&Simulation::AccurateSimulate, this);
 		m_SubProcesses.clear();
 		m_FinishedWorkers.push_back(0);
 		m_FinishedWorkers.push_back(0);
@@ -357,7 +407,8 @@ void Simulation::Start() {
 			m_SubProcesses.push_back(std::thread(&Simulation::EdgeJob, this, edges, ind, range));
 		}
 	} else if (m_Technique == SimulationTechnique::BARNESHUT) {
-
+		m_MainProcess = std::thread(&Simulation::ApproximateSimulate, this);
+		m_SubProcesses.clear();
 	} else {
 		this->Log("Technique selected has not been implemented. Unable to start simulation.");
 		return;

@@ -19,7 +19,6 @@ public:
 	double Radius() { return m_Radius; }
 	void SetRadius(double radius) { m_Radius = radius; }
 	double* RawRadius() { return &m_Radius; }
-public:
 	glm::dvec3 Acceleration() { return m_Acceleration; }
 	void SetAcceleration(glm::dvec3 acceleration) { m_Acceleration = acceleration; }
 private:
