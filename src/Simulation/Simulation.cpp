@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "Utils/Quadtree.h"
 #include "Core/Log.h"
 #include <iostream>
 #include <iomanip>
@@ -7,9 +8,22 @@
 #include <ctime>
 #include <cmath>
 
+// TODO: remove
+#include "Renderer/Renderer.h"
+
 #define EPS 0.0000000000001 // epsilon for numerical stability
 #define G 0.0000000000667430
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
+#define THETA
+
+void Simulation::remove_this_function() {
+	Quad space = { 0, 0, 100.0 };
+	Quadtree tree(space);
+	for (int i = 0; i < m_Particles.size(); i++) {
+		tree.Insert(m_Particles[i]);
+	}
+	tree.DrawTree();
+}
 
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
@@ -342,6 +356,8 @@ void Simulation::Start() {
 			}
 			m_SubProcesses.push_back(std::thread(&Simulation::EdgeJob, this, edges, ind, range));
 		}
+	} else if (m_Technique == SimulationTechnique::BARNESHUT) {
+
 	} else {
 		this->Log("Technique selected has not been implemented. Unable to start simulation.");
 		return;

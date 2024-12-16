@@ -71,7 +71,7 @@ void ControlPanel::Update(Editor* context) {
 	    context->GetSimulation()->SetSolver((SimulationSolver)current_solver);
     ImGui::Dummy({0, gapsize});
 	int current_technique = (int)context->GetSimulation()->Technique();
-    const char* technique_options[] = { "Barnes-Hut", "Gridspace", "Naive Particle", "Edge Distribution" };
+    const char* technique_options[] = { "Barnes-Hut", "Naive Particle", "Edge Distribution" };
     if (ImGui::Combo("##simulationtechnique", &current_technique, technique_options, IM_ARRAYSIZE(technique_options)))
 	    context->GetSimulation()->SetTechnique((SimulationTechnique)current_technique);
     ImGui::Dummy({0, gapsize});

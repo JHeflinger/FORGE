@@ -25,9 +25,8 @@ enum class SimulationSolver {
 
 enum class SimulationTechnique {
 	BARNESHUT = 0,
-	GRIDSPACE = 1,
-	PARTICLE = 2,
-	EDGE = 3,
+	PARTICLE = 1,
+	EDGE = 2,
 };
 
 class Simulation {
@@ -36,6 +35,8 @@ public:
     std::vector<Ref<Sink>>& Sinks() { return m_Sinks; }
     std::vector<Ref<Particle>>& Particles() { return m_Particles; }
     std::vector<Ref<Grid>>& Grids() { return m_Grids; }
+public:
+	void remove_this_function();
 public:
     std::string Filepath() { return m_Filepath; }
     void SetFilepath(std::string path) { m_Filepath = path; }
