@@ -19,7 +19,7 @@
 void Simulation::remove_this_function() {
 	Quad space = { 0, 0, 100.0 };
 	Quadtree tree(space);
-	for (int i = 0; i < m_Particles.size(); i++) {
+	for (size_t i = 0; i < m_Particles.size(); i++) {
 		tree.Insert(m_Particles[i]);
 	}
 	tree.DrawTree();

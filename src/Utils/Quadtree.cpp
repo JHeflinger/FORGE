@@ -14,6 +14,7 @@ void Quadtree::Insert(Ref<Particle> particle) {
             InsertIntoChildren(particle);
             m_Particle = nullptr;
             m_Leaf = false;
+            return;
         }
     }
     InsertIntoChildren(particle);
