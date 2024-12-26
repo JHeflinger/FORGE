@@ -79,7 +79,7 @@ cc_binary(
 
 
 cc_binary(
-    name = "forge_profile",
+    name = "forge_profile_bin",
     srcs = ["src/main.cpp"],
     data = [
         "//:assets",
@@ -87,17 +87,29 @@ cc_binary(
         "//:settings.fconf",
     ],
     deps = [":ForgeLib"],
-    copts = ["-pg"],
-    linkopts = ["-pg"],
+    copts = ["-g"],
+    linkopts = ["-g"],
 )
 
-genrule(
+# genrule(
+#     name = "profile_forge",
+#     srcs = [":forge_profile_bin"],
+#     outs = ["profiles"],
+#     cmd = """
+#         echo "potato $(location :forge_profile) potato" &&
+#         mkdir profiles_callgrind &&
+#         valgrind --tool=callgrind  --trace-children=yes --callgrind-out-file=profiles_callgrind/callgrind.out.%pD $(location :forge_profile)
+#     """,
+# )
+
+sh_binary(
     name = "profile_forge",
-    srcs = [":forge_profile"],
-    outs = ["profiles"],
-    cmd = """
-        echo "potato $(location :forge_profile) potato" &&
-        mkdir profiles_callgrind &&
-        valgrind --tool=callgrind  --trace-children=yes --callgrind-out-file=profiles_callgrind/callgrind.out.%pD $(location :forge_profile)
-    """,
+    srcs = ["//:scripts/callgrind_wrapper.sh"],
+    data = [
+        "//:forge_profile_bin"
+    ],
+    args = [
+        "$(location :forge_profile_bin)",
+    ]
 )
+
