@@ -1,5 +1,6 @@
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
+# load("//:profile_transition.bzl", "cc_binary_with_profiling")
 
 cc_library(
     name = "ForgeLib",
@@ -74,4 +75,29 @@ cc_binary(
         "//:settings.fconf",
     ],
     deps = [":ForgeLib"],
+)
+
+
+cc_binary(
+    name = "forge_profile",
+    srcs = ["src/main.cpp"],
+    data = [
+        "//:assets",
+        "//:imgui.ini",
+        "//:settings.fconf",
+    ],
+    deps = [":ForgeLib"],
+    copts = ["-pg"],
+    linkopts = ["-pg"],
+)
+
+genrule(
+    name = "profile_forge",
+    srcs = [":forge_profile"],
+    outs = ["profiles"],
+    cmd = """
+        echo "potato $(location :forge_profile) potato" &&
+        mkdir profiles_callgrind &&
+        valgrind --tool=callgrind  --trace-children=yes --callgrind-out-file=profiles_callgrind/callgrind.out.%pD $(location :forge_profile)
+    """,
 )
