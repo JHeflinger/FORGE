@@ -28,8 +28,8 @@ for i in range(cloudsize):
     newp = ""
     newp += "  - ID: " + str(i + 1) + "\n"
     newp += "    Name: Particle\n"
-    newp += f"    Position: [{random()*cloudradius*2 - cloudradius}, {random()*cloudradius*2 - cloudradius}, 0]\n"
-    newp += f"    Velocity: [{random()*(maxv - minv) + minv}, {random()*(maxv - minv) + minv}, 0]\n"
+    newp += f"    Position: [{random()*cloudradius*2 - cloudradius}, {random()*cloudradius*2 - cloudradius}, {random()*cloudradius*2 - cloudradius}]\n"
+    newp += f"    Velocity: [{random()*(maxv - minv) + minv}, {random()*(maxv - minv) + minv}, {random()*(maxv - minv) + minv}]\n"
     newp += f"    Mass: {random()*(maxm - minm) + minm}\n"
     newp += f"    Radius: {radius}\n"
     new.append(newp)

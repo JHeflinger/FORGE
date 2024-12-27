@@ -23,7 +23,7 @@ void Simulation::remove_this_function() {
 	for (size_t i = 0; i < m_Particles.size(); i++) {
 		tree.Insert(&(*m_Particles[i]));
 	}
-	tree.DrawTree();
+	//tree.DrawTree();
 }
 
 std::string GetCurrentTimeString() {
