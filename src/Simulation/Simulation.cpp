@@ -18,11 +18,11 @@
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
 
 void Simulation::remove_this_function() {
-	Quad space = { 0, 0, 100.0 };
-	Quadtree tree(space);
-	for (size_t i = 0; i < m_Particles.size(); i++) {
-		tree.Insert(&(*m_Particles[i]));
-	}
+	//Quad space = { 0, 0, 100.0 };
+	//Quadtree tree(space);
+	//for (size_t i = 0; i < m_Particles.size(); i++) {
+	//	tree.Insert(&(*m_Particles[i]));
+	//}
 	//tree.DrawTree();
 }
 
@@ -192,13 +192,16 @@ void Simulation::ParticleJob(size_t index, size_t range) {
 				Particle py = m_ParticleSlice[k];
 				float dx = m_UnitSize * (py.Position().x - px.Position().x);
 				float dy = m_UnitSize * (py.Position().y - px.Position().y);
-				float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+				float dz = m_UnitSize * (py.Position().z - px.Position().z);
+				float inv_r3 = std::pow((dx*dx) + (dy*dy) + (dz*dz) + (3*3), -1.5);
 				glm::dvec3 pxa = { 0, 0, 0 };
 				glm::dvec3 pya = { 0, 0, 0 };
 				pxa.x = G * (dx * inv_r3) * py.Mass();
 				pxa.y = G * (dy * inv_r3) * py.Mass();
+				pxa.z = G * (dz * inv_r3) * py.Mass();
 				pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
 				pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
+				pya.z = -1.0 * pxa.z * px.Mass() / py.Mass();
 				m_ForceMatrix[j][k] = pxa;
 				m_ForceMatrix[k][j] = pya;
 			}
@@ -271,13 +274,16 @@ void Simulation::EdgeJob(std::vector<std::pair<size_t, size_t>> edges, size_t in
 			Particle py = m_ParticleSlice[c];
 			float dx = m_UnitSize * (py.Position().x - px.Position().x);
 			float dy = m_UnitSize * (py.Position().y - px.Position().y);
-			float inv_r3 = std::pow((dx*dx) + (dy*dy) + (3*3), -1.5);
+			float dz = m_UnitSize * (py.Position().z - px.Position().z);
+			float inv_r3 = std::pow((dx*dx) + (dy*dy) + (dz*dz) + (3*3), -1.5);
 			glm::dvec3 pxa = { 0, 0, 0 };
 			glm::dvec3 pya = { 0, 0, 0 };
 			pxa.x = G * (dx * inv_r3) * py.Mass();
 			pxa.y = G * (dy * inv_r3) * py.Mass();
+			pxa.z = G * (dz * inv_r3) * py.Mass();
 			pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
 			pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
+			pya.z = -1.0 * pxa.z * px.Mass() / py.Mass();
 			m_ForceMatrix[r][c] = pxa;
 			m_ForceMatrix[c][r] = pya;
 		}
