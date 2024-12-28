@@ -29,6 +29,25 @@ enum class SimulationTechnique {
 	EDGE = 2,
 };
 
+enum class WorkerStage {
+	SETUP,
+	VP_HALFSTEP,
+	V_HALFSTEP,
+	A_STEP
+};
+
+struct WorkerMetadata {
+	uint32_t id;
+	WorkerStage stage;
+	SimulationTechnique type;
+	bool local;
+};
+
+struct WorkerScheduler {
+	std::vector<std::condition_variable> conditions;
+	std::vector<WorkerMetadata> metadata;
+};
+
 class Simulation {
 public:
     std::vector<Ref<Source>>& Sources() { return m_Sources; }
@@ -92,6 +111,7 @@ private:
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
+	WorkerScheduler m_Scheduler;
 	std::vector<std::vector<glm::dvec3>> m_ForceMatrix;
 	std::vector<Particle> m_ParticleSlice;
 	std::vector<std::thread> m_SubProcesses;

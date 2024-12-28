@@ -336,6 +336,46 @@ bool Simulation::Paused() {
 
 void Simulation::Start() {
     this->Log("starting simulation...");
+	if (false && m_Technique == SimulationTechnique::PARTICLE) {
+		// clear any lingering subprocesses
+		m_SubProcesses.clear();
+
+		// prep force matrix
+		m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
+
+		// optimize the number of workers
+		if (m_NumLocalWorkers > m_Particles.size()) {
+			m_NumLocalWorkers = m_Particles.size();
+			this->Log("more workers than possible jobs detected. truncating extra workers...");
+		}
+		bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
+		size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
+		size_t optimal_workers = m_Particles.size() % jobsize != 0 ? (m_Particles.size() / jobsize) + 1 : m_Particles.size() / jobsize;
+		if (optimal_workers != m_NumLocalWorkers) {
+			this->Log("more workers than possible jobs needed. truncating additional workers...");
+			m_NumLocalWorkers = optimal_workers;
+		}
+
+		// set up scheduler
+		m_Scheduler.metadata.clear();
+		m_Scheduler.conditions.clear();
+		for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
+			m_Scheduler.metadata.push_back({ i, WorkerStage::SETUP, SimulationTechnique::PARTICLE, true });
+			m_Scheduler.conditions.push_back(std::condition_variable{});
+		}
+
+		// create subprocesses
+		for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
+			//if (i == m_NumLocalWorkers - 1 && uneven) {
+			//	m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, (m_Particles.size() % jobsize)));
+			//} else {
+			//	m_SubProcesses.push_back(std::thread(&Simulation::ParticleJob, this, i * jobsize, jobsize));
+			//}
+		}
+
+		// create main process
+		//m_MainProcess = std::thread(&Simulation::Simulate, this);
+	}
 	if (m_Technique == SimulationTechnique::PARTICLE) {
 		m_MainProcess = std::thread(&Simulation::AccurateSimulate, this);
 		m_SubProcesses.clear();
