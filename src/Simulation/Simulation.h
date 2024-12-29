@@ -48,6 +48,7 @@ struct WorkerMetadata {
 	bool local;
 	bool finished;
 	ParticleJobData particles;
+	std::vector<std::pair<size_t, size_t>> edges;
 };
 
 struct WorkerScheduler {
@@ -102,14 +103,12 @@ public:
 	void Resume();
 	void Abort();
 	void Checkup();
-	void AccurateSimulate();
 	void ApproximateSimulate();
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
 	void Simulate();
-	void WorkerJob(size_t index);
-	void EdgeJob(std::vector<std::pair<size_t, size_t>> edges, size_t index, size_t range);
+	void LocalJob(size_t index);
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
