@@ -59,10 +59,6 @@ void Editor::Render() {
 	for (auto panel : m_Panels) {
         panel->Render();
     }
-	// TODO: remove
-	{
-		m_Simulation->remove_this_function();
-	}
 	Renderer::EndScene();
 }
 

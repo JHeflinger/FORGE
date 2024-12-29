@@ -33,19 +33,28 @@ enum class WorkerStage {
 	SETUP,
 	VP_HALFSTEP,
 	V_HALFSTEP,
-	A_STEP
+	A_STEP,
+	KILL
+};
+
+struct ParticleJobData {
+	size_t index;
+	size_t size;
 };
 
 struct WorkerMetadata {
-	uint32_t id;
 	WorkerStage stage;
 	SimulationTechnique type;
 	bool local;
+	bool finished;
+	ParticleJobData particles;
 };
 
 struct WorkerScheduler {
-	std::vector<std::condition_variable> conditions;
+	std::vector<Scope<std::condition_variable>> worker_alerts;
+	std::condition_variable controller_alert;
 	std::vector<WorkerMetadata> metadata;
+	std::mutex lock;
 };
 
 class Simulation {
@@ -54,8 +63,6 @@ public:
     std::vector<Ref<Sink>>& Sinks() { return m_Sinks; }
     std::vector<Ref<Particle>>& Particles() { return m_Particles; }
     std::vector<Ref<Grid>>& Grids() { return m_Grids; }
-public:
-	void remove_this_function();
 public:
     std::string Filepath() { return m_Filepath; }
     void SetFilepath(std::string path) { m_Filepath = path; }
@@ -100,7 +107,8 @@ public:
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
-	void ParticleJob(size_t index, size_t range);
+	void Simulate();
+	void WorkerJob(size_t index);
 	void EdgeJob(std::vector<std::pair<size_t, size_t>> edges, size_t index, size_t range);
 private:
     std::vector<Ref<Source>> m_Sources;
