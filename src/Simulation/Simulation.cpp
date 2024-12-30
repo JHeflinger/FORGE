@@ -28,58 +28,6 @@ std::string GetCurrentTimeString() {
     return timeStream.str();
 }
 
-void Simulation::ApproximateSimulate() {
-	std::vector<std::vector<Particle>> simulation_progress;
-	m_ParticleSlice.clear();
-	for (size_t i = 0; i < m_Particles.size(); i++) m_ParticleSlice.push_back(*m_Particles[i]);
-	simulation_progress.push_back(m_ParticleSlice);
-
-	uint64_t steps = m_SimulationLength / m_Timestep;
-	if (m_UnitSize <= 0) m_UnitSize = EPS;
-
-	for (uint64_t i = 0; i < steps; i++) {
-		// update velocity and position
-		for (size_t j = 0; j < m_Particles.size(); j++) {
-			m_ParticleSlice[j].SetPosition(m_ParticleSlice[j].Position() + ((double)m_Timestep * m_ParticleSlice[j].Velocity()));
-			m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
-		}
-
-		// reset accleration
-		for (size_t j = 0; j < m_Particles.size(); j++) {
-			m_ParticleSlice[j].SetAcceleration({0.0, 0.0, 0.0});
-		}
-
-		// create quadtree
-		Oct space = { 0, 0, 0, 1000.0 };
-		size_t treesize = 0;
-		Octtree tree(space, &treesize);
-		for (size_t j = 0; j < m_Particles.size(); j++) {
-			//tree.Insert(&(*m_Particles[j]));
-			tree.Insert(&m_ParticleSlice[j]);
-		}
-
-		// use quadtree to calculate acceleration
-		tree.CalculateCenterOfMass();
-		for (size_t j = 0; j < m_Particles.size(); j++) {
-			tree.SerialCalculateForce(m_ParticleSlice[j], m_UnitSize);
-		}
-
-		// update velocity
-		for (size_t j = 0; j < m_Particles.size(); j++) {
-			m_ParticleSlice[j].SetVelocity(m_ParticleSlice[j].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[j].Acceleration())/m_UnitSize);
-		}
-		
-		simulation_progress.push_back(std::vector<Particle>(m_ParticleSlice));
-		m_MutexLock.lock();
-		m_Progress = (float)((float)(i + 1) / (float)steps);
-		m_MutexLock.unlock();
-	}
-    m_MutexLock.lock();
-	m_Finished = true;
-	m_SimulationRecord = simulation_progress;
-	m_MutexLock.unlock();
-}
-
 void Simulation::Log(std::string log) {
     m_Logs.push_back(GetCurrentTimeString() + " " + log); 
     if (m_Logs.size() > 10000) 
@@ -147,7 +95,15 @@ void Simulation::Simulate() {
 	for (uint64_t i = 0; i < steps; i++) {
 		if (m_Technique == SimulationTechnique::BARNESHUT) {
 			// create enough of the octtree to paralellize
-			Oct space = { 0, 0, 0, 1000.0 };
+			double xdif = ((m_Scheduler.bounds.xmax - m_Scheduler.bounds.xmin) / 2.0);
+			double ydif	= ((m_Scheduler.bounds.ymax - m_Scheduler.bounds.ymin) / 2.0);
+			double zdif	= ((m_Scheduler.bounds.zmax - m_Scheduler.bounds.zmin) / 2.0);
+			Oct space = {
+				xdif + m_Scheduler.bounds.xmin,
+				ydif + m_Scheduler.bounds.ymin,
+				zdif + m_Scheduler.bounds.zmin,
+				(xdif > ydif ? (xdif > zdif ? xdif : zdif) : (ydif > zdif ? ydif : zdif))
+			};
 			size_t treesize = 0;
 			size_t ignoreind = 0;
 			Octtree tree(space, &treesize);
@@ -204,6 +160,18 @@ void Simulation::Simulate() {
 		// launch the update step to apply forces to particles
 		LAUNCH_UPDATE_STEP(WorkerStage::UPDATE);
 		WAIT_ON_WORKERS();
+
+		// recalculate overall bounds
+		m_Scheduler.bounds.Reset();
+		for (size_t j = 0; j < m_NumLocalWorkers; j++) {
+			BoundaryData b = m_Scheduler.metadata[j].bounds;
+			if (b.xmin < m_Scheduler.bounds.xmin) m_Scheduler.bounds.xmin = b.xmin;
+			if (b.ymin < m_Scheduler.bounds.ymin) m_Scheduler.bounds.ymin = b.ymin;
+			if (b.zmin < m_Scheduler.bounds.zmin) m_Scheduler.bounds.zmin = b.zmin;
+			if (b.xmax > m_Scheduler.bounds.xmax) m_Scheduler.bounds.xmax = b.xmax;
+			if (b.ymax > m_Scheduler.bounds.ymax) m_Scheduler.bounds.ymax = b.ymax;
+			if (b.zmax > m_Scheduler.bounds.zmax) m_Scheduler.bounds.zmax = b.zmax;
+		}
 
 		// update simulation progress
 		simulation_progress.push_back(std::vector<Particle>(m_ParticleSlice));
@@ -288,6 +256,7 @@ void Simulation::LocalJob(size_t index) {
 				}
 				break;
 			case WorkerStage::UPDATE:
+				m_Scheduler.metadata[index].bounds.Reset();
 				for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
 					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
 					m_ParticleSlice[i].SetPosition(m_ParticleSlice[i].Position() + ((double)m_Timestep * m_ParticleSlice[i].Velocity()));
@@ -302,6 +271,13 @@ void Simulation::LocalJob(size_t index) {
 						m_ParticleSlice[i].SetAcceleration(accel);
 					}
 					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
+					glm::dvec3 pos = m_ParticleSlice[i].Position();
+					if (pos.x < m_Scheduler.metadata[index].bounds.xmin) m_Scheduler.metadata[index].bounds.xmin = pos.x - 0.001;
+					if (pos.y < m_Scheduler.metadata[index].bounds.ymin) m_Scheduler.metadata[index].bounds.ymin = pos.y - 0.001;
+					if (pos.z < m_Scheduler.metadata[index].bounds.zmin) m_Scheduler.metadata[index].bounds.zmin = pos.z - 0.001;
+					if (pos.x > m_Scheduler.metadata[index].bounds.xmax) m_Scheduler.metadata[index].bounds.xmax = pos.x + 0.001;
+					if (pos.y > m_Scheduler.metadata[index].bounds.ymax) m_Scheduler.metadata[index].bounds.ymax = pos.y + 0.001;
+					if (pos.z > m_Scheduler.metadata[index].bounds.zmax) m_Scheduler.metadata[index].bounds.zmax = pos.z + 0.001;
 				}
 				break;
 			case WorkerStage::OCTTREE:
@@ -340,131 +316,138 @@ void Simulation::LocalJob(size_t index) {
 
 void Simulation::Start() {
     this->Log("starting simulation...");
-	if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::BARNESHUT) {
-		// clear any lingering subprocesses
-		m_SubProcesses.clear();
 
-		// prep force matrix
-		m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
+	// clear any lingering subprocesses
+	m_SubProcesses.clear();
 
-		if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::BARNESHUT) {
-			// optimize the number of workers for particles
-			if (m_NumLocalWorkers > m_Particles.size()) {
-				m_NumLocalWorkers = m_Particles.size();
-				this->Log("more workers than possible jobs detected. truncating extra workers...");
-			}
-			bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
-			size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
-			size_t optimal_workers = m_Particles.size() % jobsize != 0 ? (m_Particles.size() / jobsize) + 1 : m_Particles.size() / jobsize;
-			if (optimal_workers != m_NumLocalWorkers) {
-				this->Log("more workers than possible jobs needed. truncating additional workers...");
-				m_NumLocalWorkers = optimal_workers;
-			}
+	// prep force matrix
+	m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
 
-			// set up scheduler
-			m_Scheduler.metadata.clear();
-			m_Scheduler.worker_alerts.clear();
-			for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
-				ParticleJobData data = { i * jobsize, jobsize };
-				if (i == m_NumLocalWorkers - 1 && uneven) data.size = m_Particles.size() % jobsize;
-				m_Scheduler.metadata.push_back({
-					WorkerStage::SETUP,
-					true,
-					false,
-					data,
-					{},
-					{},
-					0
-				});
-				m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
-			}
-		} else {
-			// calculate number of edges and optimal jobsize
-			size_t numedges = ((m_Particles.size() * m_Particles.size()) - m_Particles.size()) / 2;
-			if (m_NumLocalWorkers > numedges) {
-				m_NumLocalWorkers = numedges;
-				this->Log("more workers than possible jobs detected. truncating extra workers...");
-			}
-			bool uneven = numedges % m_NumLocalWorkers != 0;
-			size_t jobsize = uneven ? (numedges / m_NumLocalWorkers) + 1 : numedges / m_NumLocalWorkers;
-			size_t optimal_workers = numedges % jobsize != 0 ? (numedges / jobsize) + 1 : numedges / jobsize;
-			if (optimal_workers != m_NumLocalWorkers) {
-				this->Log("more workers than possible jobs needed. truncating additional workers...");
-				m_NumLocalWorkers = optimal_workers;
-			}
-			size_t second_jobsize = m_Particles.size() % optimal_workers != 0 ? (m_Particles.size() / optimal_workers) + 1 : m_Particles.size() / optimal_workers;
-		
-			// set up scheduler
-			m_Scheduler.metadata.clear();
-			m_Scheduler.worker_alerts.clear();
+	// reset and calculate initial bounds
+	m_Scheduler.bounds.Reset();
+	for (size_t i = 0; i < m_Particles.size(); i++) {
+		glm::dvec3 pos = m_Particles[i]->Position();
+		if (pos.x < m_Scheduler.bounds.xmin) m_Scheduler.bounds.xmin = pos.x - 0.001;
+		if (pos.y < m_Scheduler.bounds.ymin) m_Scheduler.bounds.ymin = pos.y - 0.001;
+		if (pos.z < m_Scheduler.bounds.zmin) m_Scheduler.bounds.zmin = pos.z - 0.001;
+		if (pos.x > m_Scheduler.bounds.xmax) m_Scheduler.bounds.xmax = pos.x + 0.001;
+		if (pos.y > m_Scheduler.bounds.ymax) m_Scheduler.bounds.ymax = pos.y + 0.001;
+		if (pos.z > m_Scheduler.bounds.zmax) m_Scheduler.bounds.zmax = pos.z + 0.001;
+	}
+
+	if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::BARNESHUT) {
+		// optimize the number of workers for particles
+		if (m_NumLocalWorkers > m_Particles.size()) {
+			m_NumLocalWorkers = m_Particles.size();
+			this->Log("more workers than possible jobs detected. truncating extra workers...");
+		}
+		bool uneven = m_Particles.size() % m_NumLocalWorkers != 0;
+		size_t jobsize = uneven ? (m_Particles.size() / m_NumLocalWorkers) + 1 : m_Particles.size() / m_NumLocalWorkers;
+		size_t optimal_workers = m_Particles.size() % jobsize != 0 ? (m_Particles.size() / jobsize) + 1 : m_Particles.size() / jobsize;
+		if (optimal_workers != m_NumLocalWorkers) {
+			this->Log("more workers than possible jobs needed. truncating additional workers...");
+			m_NumLocalWorkers = optimal_workers;
+		}
+
+		// set up scheduler
+		m_Scheduler.metadata.clear();
+		m_Scheduler.worker_alerts.clear();
+		for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
+			ParticleJobData data = { i * jobsize, jobsize };
+			if (i == m_NumLocalWorkers - 1 && uneven) data.size = m_Particles.size() % jobsize;
 			m_Scheduler.metadata.push_back({
 				WorkerStage::SETUP,
 				true,
 				false,
-				{ 0, 0 },
+				data,
 				{},
 				{},
 				0
 			});
 			m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
-			size_t p_ind = 0;
-			for (size_t r = 0; r < m_Particles.size(); r++) {
-				for (size_t c = 0; c < m_Particles.size(); c++) {
-					if (c <= r) c = r + 1;
-					if (c >= m_Particles.size()) continue;
-					if (m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.size() >= jobsize) {
-						size_t range = second_jobsize;
-						size_t ind = p_ind;
-						if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
-						if (p_ind >= m_Particles.size()) {
-							ind = 0;
-							range = 0;
-						}
-						m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].particles = { ind, range };
-						p_ind += range;
-						m_Scheduler.metadata.push_back({
-							WorkerStage::SETUP,
-							true,
-							false,
-							{ 0, 0 },
-							{},
-							{},
-							0
-						});
-						m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
-					}
-					m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.push_back(std::pair<size_t, size_t>(r, c));
-				}
-			}
-			if (m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.size() > 0) {
-				size_t range = second_jobsize;
-				size_t ind = p_ind;
-				if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
-				if (p_ind >= m_Particles.size()) {
-					ind = 0;
-					range = 0;
-				}
-				m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].particles = { ind, range };
-			}
-
-			// verify creation
-			if (m_NumLocalWorkers != m_Scheduler.metadata.size()) FATAL("Invalid job creation detected");
 		}
-
-		// create subprocesses
-		for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
-			m_SubProcesses.push_back(std::thread(&Simulation::LocalJob, this, i));
-		}
-
-		// create main process
-		m_MainProcess = std::thread(&Simulation::Simulate, this);
-	} else if (m_Technique == SimulationTechnique::BARNESHUT) {
-		m_MainProcess = std::thread(&Simulation::ApproximateSimulate, this);
-		m_SubProcesses.clear();
 	} else {
-		this->Log("Technique selected has not been implemented. Unable to start simulation.");
-		return;
+		// calculate number of edges and optimal jobsize
+		size_t numedges = ((m_Particles.size() * m_Particles.size()) - m_Particles.size()) / 2;
+		if (m_NumLocalWorkers > numedges) {
+			m_NumLocalWorkers = numedges;
+			this->Log("more workers than possible jobs detected. truncating extra workers...");
+		}
+		bool uneven = numedges % m_NumLocalWorkers != 0;
+		size_t jobsize = uneven ? (numedges / m_NumLocalWorkers) + 1 : numedges / m_NumLocalWorkers;
+		size_t optimal_workers = numedges % jobsize != 0 ? (numedges / jobsize) + 1 : numedges / jobsize;
+		if (optimal_workers != m_NumLocalWorkers) {
+			this->Log("more workers than possible jobs needed. truncating additional workers...");
+			m_NumLocalWorkers = optimal_workers;
+		}
+		size_t second_jobsize = m_Particles.size() % optimal_workers != 0 ? (m_Particles.size() / optimal_workers) + 1 : m_Particles.size() / optimal_workers;
+	
+		// set up scheduler
+		m_Scheduler.metadata.clear();
+		m_Scheduler.worker_alerts.clear();
+		m_Scheduler.metadata.push_back({
+			WorkerStage::SETUP,
+			true,
+			false,
+			{ 0, 0 },
+			{},
+			{},
+			0
+		});
+		m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
+		size_t p_ind = 0;
+		for (size_t r = 0; r < m_Particles.size(); r++) {
+			for (size_t c = 0; c < m_Particles.size(); c++) {
+				if (c <= r) c = r + 1;
+				if (c >= m_Particles.size()) continue;
+				if (m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.size() >= jobsize) {
+					size_t range = second_jobsize;
+					size_t ind = p_ind;
+					if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
+					if (p_ind >= m_Particles.size()) {
+						ind = 0;
+						range = 0;
+					}
+					m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].particles = { ind, range };
+					p_ind += range;
+					m_Scheduler.metadata.push_back({
+						WorkerStage::SETUP,
+						true,
+						false,
+						{ 0, 0 },
+						{},
+						{},
+						0
+					});
+					m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
+				}
+				m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.push_back(std::pair<size_t, size_t>(r, c));
+			}
+		}
+		if (m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].edges.size() > 0) {
+			size_t range = second_jobsize;
+			size_t ind = p_ind;
+			if (p_ind + range > m_Particles.size()) range = m_Particles.size() - p_ind;
+			if (p_ind >= m_Particles.size()) {
+				ind = 0;
+				range = 0;
+			}
+			m_Scheduler.metadata[m_Scheduler.metadata.size() - 1].particles = { ind, range };
+		}
+
+		// verify creation
+		if (m_NumLocalWorkers != m_Scheduler.metadata.size()) FATAL("Invalid job creation detected");
 	}
+
+	// create subprocesses
+	for (uint32_t i = 0; i < m_NumLocalWorkers; i++) {
+		m_SubProcesses.push_back(std::thread(&Simulation::LocalJob, this, i));
+	}
+
+	// create main process
+	m_MainProcess = std::thread(&Simulation::Simulate, this);
+	
+	// start tracking
     m_Started = true;
 	m_Paused = false;
 	m_TimeTrack = TIMENOW();

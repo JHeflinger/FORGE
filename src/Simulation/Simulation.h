@@ -9,6 +9,7 @@
 #include <vector>
 #include <mutex>
 #include <thread>
+#include <limits>
 #include <condition_variable>
 
 enum class SimulationLengthUnit {
@@ -44,6 +45,23 @@ struct ParticleJobData {
 	size_t size;
 };
 
+struct BoundaryData {
+	double xmin;
+	double xmax;
+	double ymin;
+	double ymax;
+	double zmin;
+	double zmax;
+	void Reset() {
+		xmin = std::numeric_limits<double>::max();
+		ymin = std::numeric_limits<double>::max();
+		zmin = std::numeric_limits<double>::max();
+		xmax = std::numeric_limits<double>::lowest();
+		ymax = std::numeric_limits<double>::lowest();
+		zmax = std::numeric_limits<double>::lowest();
+	}
+};
+
 struct WorkerMetadata {
 	WorkerStage stage;
 	bool local;
@@ -52,6 +70,7 @@ struct WorkerMetadata {
 	std::vector<std::pair<size_t, size_t>> edges;
 	Octtree* trees[8];
 	size_t ignore;
+	BoundaryData bounds;
 };
 
 struct WorkerScheduler {
@@ -59,6 +78,7 @@ struct WorkerScheduler {
 	std::condition_variable controller_alert;
 	std::vector<WorkerMetadata> metadata;
 	std::mutex lock;
+	BoundaryData bounds;
 };
 
 class Simulation {
@@ -106,7 +126,6 @@ public:
 	void Resume();
 	void Abort();
 	void Checkup();
-	void ApproximateSimulate();
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
