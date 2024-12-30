@@ -27,7 +27,9 @@ struct Oct {
 
 class Octtree {
 public:
-    Octtree(const Oct &boundary) : m_Boundary(boundary) {}
+    Octtree(const Oct &boundary, size_t* sizeref) : m_Boundary(boundary), m_SizeRef(sizeref) { if (m_SizeRef != nullptr) (*m_SizeRef)++; }
+public:
+    void GetLeaves(std::vector<Octtree*>* leaves);
 public:
     void Insert(Particle* particle);
     void CalculateCenterOfMass();
@@ -38,6 +40,7 @@ private:
     void Subdivide();
     void InsertIntoChildren(Particle* particle);
 public:
+    size_t* m_SizeRef = nullptr;
     Oct m_Boundary = { 0 };
     Particle m_CenterOfMass;
     bool m_Leaf = true;

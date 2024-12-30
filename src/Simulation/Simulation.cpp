@@ -51,9 +51,11 @@ void Simulation::ApproximateSimulate() {
 
 		// create quadtree
 		Oct space = { 0, 0, 0, 1000.0 };
-		Octtree tree(space);
+		size_t treesize = 0;
+		Octtree tree(space, &treesize);
 		for (size_t j = 0; j < m_Particles.size(); j++) {
-			tree.Insert(&(*m_Particles[j]));
+			//tree.Insert(&(*m_Particles[j]));
+			tree.Insert(&m_ParticleSlice[j]);
 		}
 
 		// use quadtree to calculate acceleration
@@ -108,6 +110,16 @@ void Simulation::Simulate() {
 		m_Scheduler.metadata[j].stage = step; \
 		m_Scheduler.worker_alerts[j]->notify_all(); \
 	}
+	#define RESET_METADATA_TREES(trees) { \
+		trees[0] = nullptr; \
+		trees[1] = nullptr; \
+		trees[2] = nullptr; \
+		trees[3] = nullptr; \
+		trees[4] = nullptr; \
+		trees[5] = nullptr; \
+		trees[6] = nullptr; \
+		trees[7] = nullptr; \
+	}
 
 	// set up simulation progress and current particle slice
 	std::vector<std::vector<Particle>> simulation_progress;
@@ -134,10 +146,53 @@ void Simulation::Simulate() {
 	// simulate over a loop
 	for (uint64_t i = 0; i < steps; i++) {
 		if (m_Technique == SimulationTechnique::BARNESHUT) {
-			// TODO:
-			// create octtree until we have enough buckets for number of workers 
-			// then parallelize buckets to grab remaining particles
-			// then appply quadtree when done
+			// create enough of the octtree to paralellize
+			Oct space = { 0, 0, 0, 1000.0 };
+			size_t treesize = 0;
+			size_t ignoreind = 0;
+			Octtree tree(space, &treesize);
+			while (treesize < m_NumLocalWorkers) {
+				tree.Insert(&m_ParticleSlice[ignoreind]);
+				ignoreind++;
+			}
+
+			// parallelize the rest of the octtree creation
+			std::vector<Octtree*> leaves;
+			tree.GetLeaves(&leaves);
+			for (size_t j = 0; j < leaves.size(); j++) {
+				if (j == m_NumLocalWorkers - 1) {
+					RESET_METADATA_TREES(m_Scheduler.metadata[j].trees);
+					for (size_t k = j; k < leaves.size(); k++) {
+						leaves[k]->m_SizeRef = nullptr;
+						m_Scheduler.metadata[j].trees[k - j] = leaves[k];
+					}
+					m_Scheduler.metadata[j].ignore = ignoreind;
+					m_Scheduler.metadata[j].finished = false;
+					m_Scheduler.metadata[j].stage = WorkerStage::OCTTREE;
+					m_Scheduler.worker_alerts[j]->notify_all();
+					break;
+				} else {
+					RESET_METADATA_TREES(m_Scheduler.metadata[j].trees);
+					leaves[j]->m_SizeRef = nullptr;
+					m_Scheduler.metadata[j].trees[0] = leaves[j];
+					m_Scheduler.metadata[j].ignore = ignoreind;
+					m_Scheduler.metadata[j].finished = false;
+					m_Scheduler.metadata[j].stage = WorkerStage::OCTTREE;
+					m_Scheduler.worker_alerts[j]->notify_all();
+				}
+			}
+			WAIT_ON_WORKERS();
+
+			// apply quadtree
+			tree.CalculateCenterOfMass();
+			for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) {
+				m_Scheduler.metadata[j].finished = false;
+				m_Scheduler.metadata[j].stage = WorkerStage::APPLY;
+				RESET_METADATA_TREES(m_Scheduler.metadata[j].trees);
+				m_Scheduler.metadata[j].trees[0] = &tree;
+				m_Scheduler.worker_alerts[j]->notify_all();
+			}
+			WAIT_ON_WORKERS();
 		} else if (m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::PARTICLE) {
 			// launch the update acceleration step
 			LAUNCH_NAIVE_STEP(WorkerStage::FORCEMATRIX);
@@ -169,6 +224,7 @@ void Simulation::Simulate() {
 	#undef WAIT_ON_WORKERS
 	#undef LAUNCH_NAIVE_STEP
 	#undef LAUNCH_UPDATE_STEP
+	#undef RESET_METADATA_TREES
 }
 
 void Simulation::LocalJob(size_t index) {
@@ -249,10 +305,22 @@ void Simulation::LocalJob(size_t index) {
 				}
 				break;
 			case WorkerStage::OCTTREE:
-				// TODO:
+				for (size_t i = 0; i < 8; i++) {
+					Octtree* tree = m_Scheduler.metadata[index].trees[i];
+					if (tree != nullptr) {
+						for (size_t j = m_Scheduler.metadata[index].ignore; j < m_Particles.size(); j++) {
+							if (tree->m_Boundary.Contains(&m_ParticleSlice[j])) tree->Insert(&m_ParticleSlice[j]);
+						}
+					} else {
+						break;
+					}
+				}
 				break;
 			case WorkerStage::APPLY:
-				// TODO:
+				for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
+					m_ParticleSlice[i].SetAcceleration({0.0, 0.0, 0.0});
+					m_Scheduler.metadata[index].trees[0]->SerialCalculateForce(m_ParticleSlice[i], m_UnitSize);
+				}
 				break;
 			default:
 				FATAL("Unknown worker stage");
@@ -272,14 +340,14 @@ void Simulation::LocalJob(size_t index) {
 
 void Simulation::Start() {
     this->Log("starting simulation...");
-	if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::EDGE) {
+	if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::BARNESHUT) {
 		// clear any lingering subprocesses
 		m_SubProcesses.clear();
 
 		// prep force matrix
 		m_ForceMatrix.resize(m_Particles.size(), std::vector<glm::dvec3>(m_Particles.size(), {0, 0, 0}));
 
-		if (m_Technique == SimulationTechnique::PARTICLE) {
+		if (m_Technique == SimulationTechnique::PARTICLE || m_Technique == SimulationTechnique::BARNESHUT) {
 			// optimize the number of workers for particles
 			if (m_NumLocalWorkers > m_Particles.size()) {
 				m_NumLocalWorkers = m_Particles.size();
@@ -305,8 +373,8 @@ void Simulation::Start() {
 					false,
 					data,
 					{},
-					nullptr,
-					nullptr
+					{},
+					0
 				});
 				m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 			}
@@ -335,8 +403,8 @@ void Simulation::Start() {
 				false,
 				{ 0, 0 },
 				{},
-				nullptr,
-				nullptr
+				{},
+				0
 			});
 			m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 			size_t p_ind = 0;
@@ -360,8 +428,8 @@ void Simulation::Start() {
 							false,
 							{ 0, 0 },
 							{},
-							nullptr,
-							nullptr
+							{},
+							0
 						});
 						m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 					}

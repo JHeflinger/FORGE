@@ -7,6 +7,21 @@
 #define G 0.0000000000667430
 #endif
 
+void Octtree::GetLeaves(std::vector<Octtree*>* leaves) {
+    if (m_Leaf) {
+        leaves->push_back(this);
+    } else {
+        m_TNW->GetLeaves(leaves);
+        m_TNE->GetLeaves(leaves);
+        m_TSW->GetLeaves(leaves);
+        m_TSE->GetLeaves(leaves);
+        m_BNW->GetLeaves(leaves);
+        m_BNE->GetLeaves(leaves);
+        m_BSW->GetLeaves(leaves);
+        m_BSE->GetLeaves(leaves);
+    }
+}
+
 void Octtree::Insert(Particle* particle) {
     if (!m_Boundary.Contains(particle)) return;
     if (m_Leaf) {
@@ -97,14 +112,15 @@ void Octtree::SerialApplyForce(Particle &p, Particle &other, double unitsize) {
 }
 
 void Octtree::Subdivide() {
-    m_TNW = CreateScope<Octtree>(m_Boundary.TNW());
-    m_TNE = CreateScope<Octtree>(m_Boundary.TNE());
-    m_TSW = CreateScope<Octtree>(m_Boundary.TSW());
-    m_TSE = CreateScope<Octtree>(m_Boundary.TSE());
-    m_BNW = CreateScope<Octtree>(m_Boundary.BNW());
-    m_BNE = CreateScope<Octtree>(m_Boundary.BNE());
-    m_BSW = CreateScope<Octtree>(m_Boundary.BSW());
-    m_BSE = CreateScope<Octtree>(m_Boundary.BSE());
+    m_TNW = CreateScope<Octtree>(m_Boundary.TNW(), m_SizeRef);
+    m_TNE = CreateScope<Octtree>(m_Boundary.TNE(), m_SizeRef);
+    m_TSW = CreateScope<Octtree>(m_Boundary.TSW(), m_SizeRef);
+    m_TSE = CreateScope<Octtree>(m_Boundary.TSE(), m_SizeRef);
+    m_BNW = CreateScope<Octtree>(m_Boundary.BNW(), m_SizeRef);
+    m_BNE = CreateScope<Octtree>(m_Boundary.BNE(), m_SizeRef);
+    m_BSW = CreateScope<Octtree>(m_Boundary.BSW(), m_SizeRef);
+    m_BSE = CreateScope<Octtree>(m_Boundary.BSE(), m_SizeRef);
+    if (m_SizeRef != nullptr) (*m_SizeRef)--;
 }
 
 void Octtree::InsertIntoChildren(Particle* particle) {

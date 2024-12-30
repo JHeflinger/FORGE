@@ -50,8 +50,8 @@ struct WorkerMetadata {
 	bool finished;
 	ParticleJobData particles;
 	std::vector<std::pair<size_t, size_t>> edges;
-	Scope<Octtree> tree;
-	Scope<Octtree> merger;
+	Octtree* trees[8];
+	size_t ignore;
 };
 
 struct WorkerScheduler {
