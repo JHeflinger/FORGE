@@ -135,7 +135,9 @@ void Simulation::Simulate() {
 	for (uint64_t i = 0; i < steps; i++) {
 		if (m_Technique == SimulationTechnique::BARNESHUT) {
 			// TODO:
-			// all of this
+			// create octtree until we have enough buckets for number of workers 
+			// then parallelize buckets to grab remaining particles
+			// then appply quadtree when done
 		} else if (m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::PARTICLE) {
 			// launch the update acceleration step
 			LAUNCH_NAIVE_STEP(WorkerStage::FORCEMATRIX);
@@ -246,10 +248,7 @@ void Simulation::LocalJob(size_t index) {
 					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
 				}
 				break;
-			case WorkerStage::QUADTREE:
-				// TODO:
-				break;
-			case WorkerStage::MERGE:
+			case WorkerStage::OCTTREE:
 				// TODO:
 				break;
 			case WorkerStage::APPLY:

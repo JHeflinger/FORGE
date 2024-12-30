@@ -34,8 +34,7 @@ enum class WorkerStage {
 	SETUP,
 	UPDATE,
 	FORCEMATRIX,
-	QUADTREE,
-	MERGE,
+	OCTTREE,
 	APPLY,
 	KILL
 };
