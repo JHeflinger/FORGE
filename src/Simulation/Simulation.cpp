@@ -1,5 +1,4 @@
 #include "Simulation.h"
-#include "Utils/Quadtree.h"
 #include "Core/Log.h"
 #include <iostream>
 #include <iomanip>
@@ -51,8 +50,8 @@ void Simulation::ApproximateSimulate() {
 		}
 
 		// create quadtree
-		Quad space = { 0, 0, 100.0 };
-		Quadtree tree(space);
+		Oct space = { 0, 0, 0, 1000.0 };
+		Octtree tree(space);
 		for (size_t j = 0; j < m_Particles.size(); j++) {
 			tree.Insert(&(*m_Particles[j]));
 		}
@@ -134,23 +133,19 @@ void Simulation::Simulate() {
 
 	// simulate over a loop
 	for (uint64_t i = 0; i < steps; i++) {
-		// launch the step to update velocity and position by half
-		LAUNCH_UPDATE_STEP(WorkerStage::VP_HALFSTEP);
-		WAIT_ON_WORKERS();
-		
 		if (m_Technique == SimulationTechnique::BARNESHUT) {
 			// TODO:
 			// all of this
 		} else if (m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::PARTICLE) {
 			// launch the update acceleration step
-			LAUNCH_NAIVE_STEP(WorkerStage::A_STEP);
+			LAUNCH_NAIVE_STEP(WorkerStage::FORCEMATRIX);
 			WAIT_ON_WORKERS();
 		} else {
 			FATAL("Unhandled technique");
 		}
 
-		// launch the update velocity by half step
-		LAUNCH_UPDATE_STEP(WorkerStage::V_HALFSTEP);
+		// launch the update step to apply forces to particles
+		LAUNCH_UPDATE_STEP(WorkerStage::UPDATE);
 		WAIT_ON_WORKERS();
 
 		// update simulation progress
@@ -187,31 +182,8 @@ void Simulation::LocalJob(size_t index) {
 				return;
 			case WorkerStage::SETUP:
 				break;
-			case WorkerStage::VP_HALFSTEP:
-				for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
-					m_ParticleSlice[i].SetPosition(m_ParticleSlice[i].Position() + ((double)m_Timestep * m_ParticleSlice[i].Velocity()));
-					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
-				}
-				break;
-			case WorkerStage::V_HALFSTEP:
-				for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
-					if (m_Scheduler.metadata[index].type == SimulationTechnique::EDGE || 
-						m_Scheduler.metadata[index].type == SimulationTechnique::PARTICLE) {
-						glm::dvec3 accel = { 0.0, 0.0, 0.0 };
-						for (size_t j = 0; j < m_Particles.size(); j++) {
-							accel.x += m_ForceMatrix[i][j].x;
-							accel.y += m_ForceMatrix[i][j].y;
-							accel.z += m_ForceMatrix[i][j].z;
-						}
-						m_ParticleSlice[i].SetAcceleration(accel);
-					}
-					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
-				}
-				break;
-			case WorkerStage::A_STEP:
-				if (m_Scheduler.metadata[index].type == SimulationTechnique::BARNESHUT) {
-					// TODO:
-				} else if (m_Scheduler.metadata[index].type == SimulationTechnique::EDGE) {
+			case WorkerStage::FORCEMATRIX:
+				if (m_Technique == SimulationTechnique::EDGE) {
 					for (size_t i = 0; i < m_Scheduler.metadata[index].edges.size(); i++) {
 						size_t r = m_Scheduler.metadata[index].edges[i].first;
 						size_t c = m_Scheduler.metadata[index].edges[i].second;
@@ -232,7 +204,7 @@ void Simulation::LocalJob(size_t index) {
 						m_ForceMatrix[r][c] = pxa;
 						m_ForceMatrix[c][r] = pya;
 					}
-				} else if (m_Scheduler.metadata[index].type == SimulationTechnique::PARTICLE) {
+				} else if (m_Technique == SimulationTechnique::PARTICLE) {
 					for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
 						for (size_t j = i + 1; j < m_Particles.size(); j++) {
 							Particle px = m_ParticleSlice[i];
@@ -256,6 +228,32 @@ void Simulation::LocalJob(size_t index) {
 				} else {
 					FATAL("Unhandled technique");
 				}
+				break;
+			case WorkerStage::UPDATE:
+				for (size_t i = m_Scheduler.metadata[index].particles.index; i < m_Scheduler.metadata[index].particles.index + m_Scheduler.metadata[index].particles.size; i++) {
+					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
+					m_ParticleSlice[i].SetPosition(m_ParticleSlice[i].Position() + ((double)m_Timestep * m_ParticleSlice[i].Velocity()));
+					if (m_Technique == SimulationTechnique::EDGE || 
+						m_Technique == SimulationTechnique::PARTICLE) {
+						glm::dvec3 accel = { 0.0, 0.0, 0.0 };
+						for (size_t j = 0; j < m_Particles.size(); j++) {
+							accel.x += m_ForceMatrix[i][j].x;
+							accel.y += m_ForceMatrix[i][j].y;
+							accel.z += m_ForceMatrix[i][j].z;
+						}
+						m_ParticleSlice[i].SetAcceleration(accel);
+					}
+					m_ParticleSlice[i].SetVelocity(m_ParticleSlice[i].Velocity() + (0.5 * m_Timestep * m_ParticleSlice[i].Acceleration())/m_UnitSize);
+				}
+				break;
+			case WorkerStage::QUADTREE:
+				// TODO:
+				break;
+			case WorkerStage::MERGE:
+				// TODO:
+				break;
+			case WorkerStage::APPLY:
+				// TODO:
 				break;
 			default:
 				FATAL("Unknown worker stage");
@@ -304,11 +302,12 @@ void Simulation::Start() {
 				if (i == m_NumLocalWorkers - 1 && uneven) data.size = m_Particles.size() % jobsize;
 				m_Scheduler.metadata.push_back({
 					WorkerStage::SETUP,
-					SimulationTechnique::PARTICLE,
 					true,
 					false,
 					data,
-					{}
+					{},
+					nullptr,
+					nullptr
 				});
 				m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 			}
@@ -333,11 +332,12 @@ void Simulation::Start() {
 			m_Scheduler.worker_alerts.clear();
 			m_Scheduler.metadata.push_back({
 				WorkerStage::SETUP,
-				SimulationTechnique::EDGE,
 				true,
 				false,
 				{ 0, 0 },
-				{}
+				{},
+				nullptr,
+				nullptr
 			});
 			m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 			size_t p_ind = 0;
@@ -357,11 +357,12 @@ void Simulation::Start() {
 						p_ind += range;
 						m_Scheduler.metadata.push_back({
 							WorkerStage::SETUP,
-							SimulationTechnique::EDGE,
 							true,
 							false,
 							{ 0, 0 },
-							{}
+							{},
+							nullptr,
+							nullptr
 						});
 						m_Scheduler.worker_alerts.push_back(CreateScope<std::condition_variable>());
 					}

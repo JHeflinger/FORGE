@@ -3,6 +3,7 @@
 #include "Simulation/Particle.h"
 #include "Simulation/Sink.h"
 #include "Simulation/Source.h"
+#include "Simulation/Octtree.h"
 #include "Core/Safety.h"
 #include "glm/glm.hpp"
 #include <vector>
@@ -31,9 +32,11 @@ enum class SimulationTechnique {
 
 enum class WorkerStage {
 	SETUP,
-	VP_HALFSTEP,
-	V_HALFSTEP,
-	A_STEP,
+	UPDATE,
+	FORCEMATRIX,
+	QUADTREE,
+	MERGE,
+	APPLY,
 	KILL
 };
 
@@ -44,11 +47,12 @@ struct ParticleJobData {
 
 struct WorkerMetadata {
 	WorkerStage stage;
-	SimulationTechnique type;
 	bool local;
 	bool finished;
 	ParticleJobData particles;
 	std::vector<std::pair<size_t, size_t>> edges;
+	Scope<Octtree> tree;
+	Scope<Octtree> merger;
 };
 
 struct WorkerScheduler {

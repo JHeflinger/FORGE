@@ -64,7 +64,7 @@ Simulation Length: 20000000
 Safeguard Cache Enabled: true
 Simulation Record Enabled: true
 Solver: 2
-Technique: 3
+Technique: 2
 Bounds: [128, 64]
 Dynamic Timestep: false
 Timestep: 3000
