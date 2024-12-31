@@ -56,3 +56,52 @@ http_archive(
         "https://github.com/bazelbuild/buildtools/archive/refs/tags/4.2.2.tar.gz",
     ],
 )
+
+http_archive(
+    name = "com_github_grpc_grpc",
+    strip_prefix = "grpc-f39cd0fe176a53d3f2ad14c8710b025f3629ab97",
+    urls = [
+        "https://github.com/grpc/grpc/archive/f39cd0fe176a53d3f2ad14c8710b025f3629ab97.tar.gz",
+    ],
+)
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+
+## GRPC extra_deps - pulled from above repo.
+load("@bazel_features//:deps.bzl", "bazel_features_deps")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+load("@com_envoyproxy_protoc_gen_validate//:dependencies.bzl", "go_third_party")
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+load("@envoy_api//bazel:repositories.bzl", "api_dependencies")
+load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+load("@rules_proto//proto:repositories.bzl", "rules_proto_dependencies")
+load("@rules_python//python:repositories.bzl", "py_repositories")
+
+rules_proto_dependencies()
+
+bazel_features_deps()
+
+api_dependencies()
+
+go_third_party()
+
+apple_rules_dependencies(ignore_version_differences = False)
+
+apple_support_dependencies()
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    grpc = True,
+    python = True,
+)
+
+google_cloud_cpp_deps()
+
+py_repositories()
