@@ -145,10 +145,6 @@ private:
 	std::vector<Particle> m_ParticleSlice;
 	std::vector<std::thread> m_SubProcesses;
 	std::thread m_MainProcess;
-	std::mutex m_MutexLock;
-	std::condition_variable m_WorkerAlert;
-	std::condition_variable m_ControllerAlert;
-	std::vector<uint32_t> m_FinishedWorkers;
 	float m_Progress = 0.0f;
 	bool m_Started = false;
 	bool m_Paused = false;

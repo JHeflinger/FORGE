@@ -9,13 +9,11 @@ ControlPanel::ControlPanel() {
 
 void ControlPanel::Initialize() {
     WARN("Currently there is no substantial implementation for"
-		    "\n\t- Simulation length"
 		    "\n\t- Simulation cache settings"
 		    "\n\t- Simulation recording"
 		    "\n\t- Simulation solver"
 		    "\n\t- Bounds"
 		    "\n\t- Timestep"
-		    "\n\t- Local Workers"
 		    "\n\t- Remote Workers");
 }
 

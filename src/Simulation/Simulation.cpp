@@ -47,17 +47,17 @@ void Simulation::Simulate() {
 		std::unique_lock<std::mutex> lock(m_Scheduler.lock); \
 		m_Scheduler.controller_alert.wait(lock, [this, &j] { return m_Scheduler.metadata[j].finished; }); \
 	}
-	#define LAUNCH_NAIVE_STEP(step)	for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) { \
+	#define LAUNCH_NAIVE_STEP(step)	m_Scheduler.lock.lock(); for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) { \
 		m_Scheduler.metadata[j].finished = false; \
 		m_Scheduler.metadata[j].stage = step; \
 		m_Scheduler.worker_alerts[j]->notify_all(); \
-	}
-	#define LAUNCH_UPDATE_STEP(step) for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) { \
+	} m_Scheduler.lock.unlock();
+	#define LAUNCH_UPDATE_STEP(step) m_Scheduler.lock.lock(); for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) { \
 		if (m_Scheduler.metadata[j].particles.index == 0 && m_Scheduler.metadata[j].particles.size == 0) continue; \
 		m_Scheduler.metadata[j].finished = false; \
 		m_Scheduler.metadata[j].stage = step; \
 		m_Scheduler.worker_alerts[j]->notify_all(); \
-	}
+	} m_Scheduler.lock.unlock();
 	#define RESET_METADATA_TREES(trees) { \
 		trees[0] = nullptr; \
 		trees[1] = nullptr; \
@@ -115,6 +115,7 @@ void Simulation::Simulate() {
 			// parallelize the rest of the octtree creation
 			std::vector<Octtree*> leaves;
 			tree.GetLeaves(&leaves);
+			m_Scheduler.lock.lock();
 			for (size_t j = 0; j < leaves.size(); j++) {
 				if (j == m_NumLocalWorkers - 1) {
 					RESET_METADATA_TREES(m_Scheduler.metadata[j].trees);
@@ -137,10 +138,12 @@ void Simulation::Simulate() {
 					m_Scheduler.worker_alerts[j]->notify_all();
 				}
 			}
+			m_Scheduler.lock.unlock();
 			WAIT_ON_WORKERS();
 
 			// apply quadtree
 			tree.CalculateCenterOfMass();
+			m_Scheduler.lock.lock();
 			for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) {
 				m_Scheduler.metadata[j].finished = false;
 				m_Scheduler.metadata[j].stage = WorkerStage::APPLY;
@@ -148,6 +151,7 @@ void Simulation::Simulate() {
 				m_Scheduler.metadata[j].trees[0] = &tree;
 				m_Scheduler.worker_alerts[j]->notify_all();
 			}
+			m_Scheduler.lock.unlock();
 			WAIT_ON_WORKERS();
 		} else if (m_Technique == SimulationTechnique::EDGE || m_Technique == SimulationTechnique::PARTICLE) {
 			// launch the update acceleration step
@@ -175,19 +179,19 @@ void Simulation::Simulate() {
 
 		// update simulation progress
 		simulation_progress.push_back(std::vector<Particle>(m_ParticleSlice));
-		m_MutexLock.lock();
+		m_Scheduler.lock.lock();
 		m_Progress = (float)((float)(i + 1) / (float)steps);
-		m_MutexLock.unlock();
+		m_Scheduler.lock.unlock();
 	}
 
 	// kill all subprocesses
 	LAUNCH_NAIVE_STEP(WorkerStage::KILL);
 	
 	// notify done and finalize simulation record
-    m_MutexLock.lock();
+    m_Scheduler.lock.lock();
 	m_Finished = true;
 	m_SimulationRecord = simulation_progress;
-	m_MutexLock.unlock();
+	m_Scheduler.lock.unlock();
 
 	#undef WAIT_ON_WORKERS
 	#undef LAUNCH_NAIVE_STEP
@@ -302,12 +306,11 @@ void Simulation::LocalJob(size_t index) {
 				FATAL("Unknown worker stage");
 				break;
 		}
-
 		// lock, update, and wait to continue
 		m_Scheduler.lock.lock();
 		m_Scheduler.metadata[index].finished = true;
-		m_Scheduler.lock.unlock();
 		m_Scheduler.controller_alert.notify_all();
+		m_Scheduler.lock.unlock();
 		WAITJOB();
 	}
 
@@ -455,7 +458,7 @@ void Simulation::Start() {
 
 void Simulation::Pause() {
     this->Log("pausing simulation...");
-
+	m_Scheduler.controller_alert.notify_all();
     this->Log("paused simulation");
     m_Paused = true; 
 }
