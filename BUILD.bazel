@@ -1,6 +1,26 @@
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
+load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 # load("//:profile_transition.bzl", "cc_binary_with_profiling")
+
+proto_library(
+    name = "forge_proto",
+    srcs = ["forge.proto"],
+)
+
+cc_proto_library(
+    name = "forge_cc_proto",
+    deps = [":forge_proto"],
+)
+
+cc_grpc_library(
+    name = "forge_cc_grpc",
+    srcs = [":forge_proto"],
+    grpc_only = True,
+    deps = [":forge_cc_proto"],
+)
 
 cc_library(
     name = "ForgeLib",
@@ -35,6 +55,8 @@ cc_library(
         "//vendor:glad",
         "@spdlog",
         "@yaml-cpp",
+        ":forge_cc_grpc",
+        # "@com_github_grpc_grpc//:grpc++",
     ] + select({
         "@bazel_tools//src/conditions:windows": [
             "//vendor:win_glm",
