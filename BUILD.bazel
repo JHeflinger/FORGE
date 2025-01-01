@@ -2,7 +2,7 @@ load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier")
 load("@aspect_bazel_lib//lib:run_binary.bzl", "run_binary")
 load("@rules_proto//proto:defs.bzl", "proto_library")
 load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_proto_library")
-load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
+load("@grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 # load("//:profile_transition.bzl", "cc_binary_with_profiling")
 
 proto_library(
