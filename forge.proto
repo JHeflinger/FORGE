@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service ForgeNet {
+    rpc HelloPoopshit(Shit) returns (Poop) {}
+}
+
+message Shit {
+    string msg = 1;
+}
+
+message Poop {
+    string msg = 1;
+}
