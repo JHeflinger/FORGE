@@ -2,6 +2,9 @@
 #include "Simulation/Particle.h"
 #include "Core/Safety.h"
 
+#define GRAVITY 0.0000000000667430
+#define THETA 0.5
+
 struct Oct {
     double x;
     double y;
@@ -27,7 +30,7 @@ struct Oct {
 
 class Octtree {
 public:
-    Octtree(const Oct &boundary, size_t* sizeref) : m_Boundary(boundary), m_SizeRef(sizeref) { if (m_SizeRef != nullptr) (*m_SizeRef)++; }
+    Octtree(const Oct &boundary, size_t* sizeref) { m_Boundary = boundary; m_SizeRef = sizeref; if (m_SizeRef != nullptr) (*m_SizeRef)++; }
 public:
     void GetLeaves(std::vector<Octtree*>* leaves);
 public:
@@ -41,7 +44,7 @@ private:
     void InsertIntoChildren(Particle* particle);
 public:
     size_t* m_SizeRef = nullptr;
-    Oct m_Boundary = { 0 };
+    Oct m_Boundary;
     Particle m_CenterOfMass;
     bool m_Leaf = true;
     Scope<Octtree> m_TNW = nullptr;

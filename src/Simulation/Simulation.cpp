@@ -8,10 +8,9 @@
 #include <cmath>
 
 #define EPS 0.0000000000001 // epsilon for numerical stability
-#ifndef G
-#define G 0.0000000000667430
-#endif
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
+
+#include "forge.grpc.pb.h"
 
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
@@ -225,9 +224,9 @@ void Simulation::LocalJob(size_t index) {
 						float inv_r3 = std::pow((dx*dx) + (dy*dy) + (dz*dz) + (3*3), -1.5);
 						glm::dvec3 pxa = { 0, 0, 0 };
 						glm::dvec3 pya = { 0, 0, 0 };
-						pxa.x = G * (dx * inv_r3) * py.Mass();
-						pxa.y = G * (dy * inv_r3) * py.Mass();
-						pxa.z = G * (dz * inv_r3) * py.Mass();
+						pxa.x = GRAVITY * (dx * inv_r3) * py.Mass();
+						pxa.y = GRAVITY * (dy * inv_r3) * py.Mass();
+						pxa.z = GRAVITY * (dz * inv_r3) * py.Mass();
 						pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
 						pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
 						pya.z = -1.0 * pxa.z * px.Mass() / py.Mass();
@@ -245,9 +244,9 @@ void Simulation::LocalJob(size_t index) {
 							float inv_r3 = std::pow((dx*dx) + (dy*dy) + (dz*dz) + (3*3), -1.5);
 							glm::dvec3 pxa = { 0, 0, 0 };
 							glm::dvec3 pya = { 0, 0, 0 };
-							pxa.x = G * (dx * inv_r3) * py.Mass();
-							pxa.y = G * (dy * inv_r3) * py.Mass();
-							pxa.z = G * (dz * inv_r3) * py.Mass();
+							pxa.x = GRAVITY * (dx * inv_r3) * py.Mass();
+							pxa.y = GRAVITY * (dy * inv_r3) * py.Mass();
+							pxa.z = GRAVITY * (dz * inv_r3) * py.Mass();
 							pya.x = -1.0 * pxa.x * px.Mass() / py.Mass();
 							pya.y = -1.0 * pxa.y * px.Mass() / py.Mass();
 							pya.z = -1.0 * pxa.z * px.Mass() / py.Mass();

@@ -2,11 +2,6 @@
 #include "Core/Log.h"
 #include "Renderer/Renderer.h"
 
-#define THETA 0.5
-#ifndef G
-#define G 0.0000000000667430
-#endif
-
 void Octtree::GetLeaves(std::vector<Octtree*>* leaves) {
     if (m_Leaf) {
         leaves->push_back(this);
@@ -105,9 +100,9 @@ void Octtree::SerialApplyForce(Particle &p, Particle &other, double unitsize) {
 	double inv_r3 = std::pow((dx*dx) + (dy*dy) + (dz*dz) + (3*3), -1.5);
 	glm::dvec3 pa = { 0, 0, 0 };
     glm::dvec3 olda = p.Acceleration();
-	pa.x = olda.x + (G * (dx * inv_r3) * other.Mass());
-	pa.y = olda.y + (G * (dy * inv_r3) * other.Mass());
-	pa.z = olda.z + (G * (dz * inv_r3) * other.Mass());
+	pa.x = olda.x + (GRAVITY * (dx * inv_r3) * other.Mass());
+	pa.y = olda.y + (GRAVITY * (dy * inv_r3) * other.Mass());
+	pa.z = olda.z + (GRAVITY * (dz * inv_r3) * other.Mass());
     p.SetAcceleration(pa);
 }
 
