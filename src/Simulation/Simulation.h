@@ -4,6 +4,7 @@
 #include "Simulation/Sink.h"
 #include "Simulation/Source.h"
 #include "Simulation/Octtree.h"
+#include "Simulation/Network.h"
 #include "Core/Safety.h"
 #include "glm/glm.hpp"
 #include <vector>
@@ -81,6 +82,11 @@ struct WorkerScheduler {
 	BoundaryData bounds;
 };
 
+struct ClientMetadata {
+	std::string ip = "Unregistered Client";
+	bool connected = false;
+};
+
 class Simulation {
 public:
     std::vector<Ref<Source>>& Sources() { return m_Sources; }
@@ -131,6 +137,9 @@ public:
 public:
 	void Simulate();
 	void LocalJob(size_t index);
+public:
+	void ResetClients();
+	std::vector<ClientMetadata>& Clients() { return m_Clients; }
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
@@ -139,6 +148,8 @@ private:
 	std::vector<std::string> m_Logs;
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
+private:
+	std::vector<ClientMetadata> m_Clients;
 private:
 	WorkerScheduler m_Scheduler;
 	std::vector<std::vector<glm::dvec3>> m_ForceMatrix;

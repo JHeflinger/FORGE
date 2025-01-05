@@ -244,6 +244,8 @@ void Editor::DrawPrompts() {
 			const char* length_units[] = { "ticks", "us", "ms", "s" };
 			const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
 			char tbuffer[2048];
+			std::vector<ClientMetadata> clients = m_Simulation->Clients();
+			size_t connected = 0;
 			ImGui::SetItemDefaultFocus();
 			switch (s_substate) {
 				case 0:
@@ -316,9 +318,35 @@ void Editor::DrawPrompts() {
 					break;
 				case 1:
 					ImGui::Dummy({0, 2});
-					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("   Remote workers not supported yet... defaulting to local mode   ").x / 2.0));
-					ImGui::Text("   Remote workers not supported yet... defaulting to local mode   ");
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Connect Remote Workers").x / 2.0));
+					ImGui::Text("Connect Remote Workers");
 					ImGui::Dummy({0, 2});
+					ImGui::Separator();
+					ImGui::Dummy({0, 2});
+					for (size_t i = 0; i < clients.size(); i++) {
+						if (clients[i].connected) connected++;
+					}
+					snprintf(tbuffer, 2048, "%lu/%lu Workers Connected", (long unsigned int)connected, (long unsigned int)m_Simulation->NumRemoteWorkers());
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize(tbuffer).x / 2.0f));
+					ImGui::Text(tbuffer);
+					ImGui::Dummy({0, 2});
+					ImGui::BeginChild("rworkers", {0, 300}, true, ImGuiWindowFlags_HorizontalScrollbar);
+					for (size_t i = 0; i < clients.size(); i++) {
+						float ypos = ImGui::GetCursorPosY();
+						ImGui::Text(clients[i].ip.c_str());
+						ImGui::SetCursorPosY(ypos);
+						if (!clients[i].connected) {
+							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+							ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("waiting for connection").x);
+							ImGui::Text("waiting for connection");
+						} else {
+							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
+							ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("connected").x);
+							ImGui::Text("connected");
+						}
+						ImGui::PopStyleColor();
+					}
+					ImGui::EndChild();
 					break;
 				case 2:
 					ImGui::Dummy({0, 2});
@@ -387,12 +415,20 @@ void Editor::DrawPrompts() {
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
 			if (s_substate != 2) {
+				bool disabled = false;
+				if (s_substate == 1 && connected != m_Simulation->NumRemoteWorkers()) disabled = true;
+				if (disabled) ImGui::BeginDisabled();
 				if (ImGui::Button("Next", {60, 25})) {
 					s_substate++;
 					if (s_substate == 2) {
 						m_Simulation->Prime();
+					} else if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
+						s_substate++;
+					} else if (s_substate == 1) {
+						m_Simulation->ResetClients();
 					}
 				}
+				if (disabled) ImGui::EndDisabled();
 			} else {
 				if (!m_Simulation->Finished())
 					ImGui::BeginDisabled();
@@ -413,7 +449,10 @@ void Editor::DrawPrompts() {
 				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::BeginDisabled();
 				if (ImGui::Button("Back", {60, 25})) {
-					s_substate--;
+					s_substate--; 
+					if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
+						s_substate--;
+					}
 				}
 				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::EndDisabled();

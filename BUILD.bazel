@@ -56,7 +56,7 @@ cc_library(
         "@spdlog",
         "@yaml-cpp",
         ":forge_cc_grpc",
-        # "@com_github_grpc_grpc//:grpc++",
+		"@grpc"
     ] + select({
         "@bazel_tools//src/conditions:windows": [
             "//vendor:win_glm",

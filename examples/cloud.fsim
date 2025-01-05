@@ -6013,7 +6013,7 @@ Solver: 2
 Technique: 0
 Bounds: [128, 64]
 Dynamic Timestep: false
-Timestep: 3000
+Timestep: 6000
 Local Workers: 9
-Remote Workers: 8
+Remote Workers: 100
 Unit Size: 1

@@ -1,13 +1,13 @@
 syntax = "proto3";
 
 service ForgeNet {
-    rpc HelloPoopshit(Shit) returns (Poop) {}
+    rpc Connect (ConnectionRequest) returns (ConnectionResponse);
 }
 
-message Shit {
-    string msg = 1;
+message ConnectionRequest {
+	string message = 1;
 }
 
-message Poop {
-    string msg = 1;
+message ConnectionResponse {
+	string reply = 1;
 }

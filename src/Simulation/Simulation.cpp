@@ -10,8 +10,6 @@
 #define EPS 0.0000000000001 // epsilon for numerical stability
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
 
-#include "forge.grpc.pb.h"
-
 std::string GetCurrentTimeString() {
     auto now = std::chrono::system_clock::now();
 	auto duration = now.time_since_epoch();
@@ -314,6 +312,14 @@ void Simulation::LocalJob(size_t index) {
 	}
 
 	#undef WAITJOB
+}
+
+void Simulation::ResetClients() {
+	m_Clients.clear();
+	for (size_t i = 0; i < m_NumRemoteWorkers; i++) {
+		ClientMetadata data;
+		m_Clients.push_back(data);
+	}
 }
 
 void Simulation::Start() {
