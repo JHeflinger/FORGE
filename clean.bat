@@ -1,2 +1,2 @@
 @echo off
-bazel clean --expunge
+"./basilisk_executables/bazelisk-windows-amd64.exe" clean --expunge
