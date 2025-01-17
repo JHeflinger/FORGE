@@ -4,7 +4,6 @@
 #include <memory>
 #include <string>
 #include <grpcpp/grpcpp.h>
-#include <grpcpp/server_context.h>
 #include "forge.grpc.pb.h"
 
 class Network final : public ForgeNet::Service {

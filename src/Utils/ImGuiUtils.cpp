@@ -11,7 +11,7 @@ bool ImGuiUtils::DrawVec2Control(const std::string& label, glm::dvec2& values, f
 
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, columnWidth);
-	ImGui::Text(label.c_str());
+	ImGui::Text("%s", label.c_str());
 	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
@@ -69,7 +69,7 @@ bool ImGuiUtils::DrawVec4Control(const std::string& label, glm::dvec4& values, f
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, columnWidth);
 	ImGui::Dummy(ImVec2(0, 10.0f));
-	ImGui::Text(label.c_str());
+	ImGui::Text("%s", label.c_str());
 	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(2, ImGui::CalcItemWidth());
@@ -159,7 +159,7 @@ bool ImGuiUtils::DrawVec3Control(const std::string& label, glm::dvec3& values, f
 
 	ImGui::Columns(2);
 	ImGui::SetColumnWidth(0, columnWidth);
-	ImGui::Text(label.c_str());
+	ImGui::Text("%s", label.c_str());
 	ImGui::NextColumn();
 
 	ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());

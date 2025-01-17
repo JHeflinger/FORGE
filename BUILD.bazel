@@ -58,6 +58,8 @@ cc_library(
             "-lGL",
             "-lGLU",
             "-lglut",
+            "-lgrpc",
+            "-lgrpc++",
         ],
     }),
     deps = [
