@@ -315,13 +315,30 @@ void Simulation::LocalJob(size_t index) {
 	#undef WAITJOB
 }
 
+void Simulation::Host() {
+	ResetClients();
+	m_Network = CreateRef<Network>(this);
+	grpc::ServerBuilder builder;
+	builder.AddListeningPort(m_HostAddress, grpc::InsecureServerCredentials());
+	builder.RegisterService(&(*m_Network));
+	Scope<grpc::Server> server = builder.BuildAndStart();
+	m_ServerData.running = true;
+}
+
 void Simulation::ResetClients() {
+	m_ServerData.num_clients = 0;
 	m_Clients.clear();
 	for (size_t i = 0; i < m_NumRemoteWorkers; i++) {
 		ClientMetadata data;
 		m_Clients.push_back(data);
 	}
-	m_Network = CreateRef<Network>(this);
+}
+
+bool Simulation::RegisterClient(std::string& ipaddr) {
+	if (m_ServerData.num_clients >= m_Clients.size()) return false;
+	m_Clients[m_ServerData.num_clients].connected = true;
+	m_Clients[m_ServerData.num_clients].ip = ipaddr;
+	return true;
 }
 
 void Simulation::Start() {

@@ -89,9 +89,10 @@ void Editor::DrawMenuBar() {
 				m_Prompt = EditorPrompts::SAVE;
 			if (ImGui::MenuItem("Save As", "Ctrl+Shift+S"))
 				m_Prompt = EditorPrompts::SAVEAS;
-			if (ImGui::MenuItem("Run", "Ctrl+R")) {
+			if (ImGui::MenuItem("Run", "Ctrl+R"))
 				m_Prompt = EditorPrompts::RUN;
-			}
+			if (ImGui::MenuItem("Join", "Ctrl+J"))
+				m_Prompt = EditorPrompts::JOIN;
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Panels")) {
@@ -131,6 +132,9 @@ void Editor::ProcessInput() {
 				m_InputPrimer = false;
 			} else if (Input::IsKeyPressed(KeyCode::R)) {
 				m_Prompt = EditorPrompts::RUN;
+				m_InputPrimer = false;
+			} else if (Input::IsKeyPressed(KeyCode::J)) {
+				m_Prompt = EditorPrompts::JOIN;
 				m_InputPrimer = false;
 			}
 		}
@@ -425,7 +429,7 @@ void Editor::DrawPrompts() {
 					} else if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
 						s_substate++;
 					} else if (s_substate == 1) {
-						m_Simulation->ResetClients();
+						m_Simulation->Host();
 					}
 				}
 				if (disabled) ImGui::EndDisabled();
@@ -457,6 +461,77 @@ void Editor::DrawPrompts() {
 				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::EndDisabled();
 			}
+			ImGui::EndPopup();
+		}
+		break;
+	case EditorPrompts::JOIN:
+		ImGui::OpenPopup("Join Simulation");
+		ImGui::SetNextWindowPos(ImGui::GetMainViewport()->GetCenter(), ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+		ImGui::SetNextWindowSize({600, 0});
+		if (ImGui::BeginPopupModal("Join Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+    		float gapsize = 8.0f;
+			ImGui::SetItemDefaultFocus();
+
+			// more here
+			ImGui::Dummy({0, 2});
+			ImGui::Text("Confirm Simulation Details");
+
+			ImGui::Dummy({0, 10});
+			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
+			//	ImGui::BeginDisabled();
+			if (ImGui::Button("Cancel", {60, 25})) {
+				m_Prompt = EditorPrompts::NONE;
+				//s_substate = 0; 
+				ImGui::CloseCurrentPopup();
+			}
+			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
+			//	ImGui::EndDisabled();
+			/*
+			ImGui::SameLine();
+			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
+			if (s_substate != 2) {
+				bool disabled = false;
+				if (s_substate == 1 && connected != m_Simulation->NumRemoteWorkers()) disabled = true;
+				if (disabled) ImGui::BeginDisabled();
+				if (ImGui::Button("Next", {60, 25})) {
+					s_substate++;
+					if (s_substate == 2) {
+						m_Simulation->Prime();
+					} else if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
+						s_substate++;
+					} else if (s_substate == 1) {
+						m_Simulation->Host();
+					}
+				}
+				if (disabled) ImGui::EndDisabled();
+			} else {
+				if (!m_Simulation->Finished())
+					ImGui::BeginDisabled();
+				if (ImGui::Button("Finish", {60, 25})) {
+					m_Prompt = EditorPrompts::NONE;
+					s_substate = 0; 
+					ImGui::CloseCurrentPopup();
+				}
+				if (!m_Simulation->Finished())
+					ImGui::EndDisabled();
+				if (m_Simulation->Started() && !m_Simulation->Paused()) {
+					m_Simulation->Checkup();
+				}
+			}
+			if (s_substate > 0) {
+				ImGui::SameLine();
+				ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 135);
+				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
+					ImGui::BeginDisabled();
+				if (ImGui::Button("Back", {60, 25})) {
+					s_substate--; 
+					if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
+						s_substate--;
+					}
+				}
+				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
+					ImGui::EndDisabled();
+			}*/
 			ImGui::EndPopup();
 		}
 		break;

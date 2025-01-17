@@ -86,6 +86,11 @@ struct ClientMetadata {
 	bool connected = false;
 };
 
+struct ServerMetadata {
+	bool running = false;
+	size_t num_clients = 0;
+};
+
 class Network;
 
 class Simulation {
@@ -139,7 +144,9 @@ public:
 	void Simulate();
 	void LocalJob(size_t index);
 public:
+	void Host();
 	void ResetClients();
+	bool RegisterClient(std::string& ipaddr);
 	std::vector<ClientMetadata>& Clients() { return m_Clients; }
 private:
     std::vector<Ref<Source>> m_Sources;
@@ -150,6 +157,8 @@ private:
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
+	ServerMetadata m_ServerData;
+	std::string m_HostAddress = "0.0.0.0:50051";
 	std::vector<ClientMetadata> m_Clients;
 	Ref<Network> m_Network;
 private:

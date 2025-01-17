@@ -5,9 +5,9 @@ service ForgeNet {
 }
 
 message ConnectionRequest {
-	string message = 1;
+	string ip = 1;
 }
 
 message ConnectionResponse {
-	string reply = 1;
+	string ip = 1;
 }

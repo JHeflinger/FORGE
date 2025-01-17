@@ -14,7 +14,8 @@ enum class EditorPrompts {
     SAVE,
     SAVEAS,
     OPEN,
-    RUN
+    RUN,
+    JOIN
 };
 
 enum class EditorPlaybackState {
