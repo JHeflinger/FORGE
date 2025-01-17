@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "Core/Log.h"
 #include "Renderer/Renderer.h"
 #include "Panels/ViewportPanel.h"
 #include "Panels/OverviewPanel.h"
@@ -145,6 +146,8 @@ void Editor::ProcessInput() {
 
 void Editor::DrawPrompts() {
 	static int s_substate = 0;
+	static char s_ip_addr_buffer[16] = "127.0.0.1";
+	static char s_port_buffer[6] = "50051";
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	switch (m_Prompt) {
@@ -473,38 +476,49 @@ void Editor::DrawPrompts() {
 			ImGui::SetItemDefaultFocus();
 
 			// more here
-			ImGui::Dummy({0, 2});
-			ImGui::Text("Confirm Simulation Details");
+			switch (s_substate) {
+				case 0:
+					ImGui::Dummy({0, 2});
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Join a Remote Simulation").x / 2.0));
+					ImGui::Text("Join a Remote Simulation");
+					ImGui::Dummy({0, 2});
+					ImGui::Separator();
+					ImGui::Dummy({0, 2});
+					ImGui::Columns(2);
+					ImGui::SetColumnWidth(0, 450);
+					ImGui::Text("Simulation Host IP Address");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Simulation Host Port");
+					ImGui::NextColumn();
+					ImGui::InputText("##host_ip", s_ip_addr_buffer, sizeof(s_ip_addr_buffer));
+					ImGui::InputText("##host_port", s_port_buffer, sizeof(s_port_buffer));
+					ImGui::Columns(1);
+					ImGui::Dummy({0, 150});
+					ImGui::Separator();
+					break;
+				default: break;
+			}
 
 			ImGui::Dummy({0, 10});
 			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 			//	ImGui::BeginDisabled();
 			if (ImGui::Button("Cancel", {60, 25})) {
 				m_Prompt = EditorPrompts::NONE;
-				//s_substate = 0; 
+				s_substate = 0; 
 				ImGui::CloseCurrentPopup();
 			}
 			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 			//	ImGui::EndDisabled();
-			/*
+			
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
-			if (s_substate != 2) {
-				bool disabled = false;
-				if (s_substate == 1 && connected != m_Simulation->NumRemoteWorkers()) disabled = true;
-				if (disabled) ImGui::BeginDisabled();
-				if (ImGui::Button("Next", {60, 25})) {
-					s_substate++;
-					if (s_substate == 2) {
-						m_Simulation->Prime();
-					} else if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
-						s_substate++;
-					} else if (s_substate == 1) {
-						m_Simulation->Host();
-					}
+			if (s_substate == 0) {
+				if (ImGui::Button("Connect", {60, 25})) {
+					std::string ipaddr(s_ip_addr_buffer);
+					std::string port(s_port_buffer);
+					INFO("{}", m_Simulation->Connect(ipaddr, port));
 				}
-				if (disabled) ImGui::EndDisabled();
-			} else {
+			} /*else {
 				if (!m_Simulation->Finished())
 					ImGui::BeginDisabled();
 				if (ImGui::Button("Finish", {60, 25})) {

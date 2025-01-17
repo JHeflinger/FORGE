@@ -11,6 +11,7 @@
 #include <thread>
 #include <limits>
 #include <condition_variable>
+#include <grpcpp/grpcpp.h>
 
 enum class SimulationLengthUnit {
 	TICKS = 0,
@@ -144,7 +145,9 @@ public:
 	void Simulate();
 	void LocalJob(size_t index);
 public:
+	bool Connect(std::string& ipaddr, std::string& port);
 	void Host();
+	void ServerJob();
 	void ResetClients();
 	bool RegisterClient(std::string& ipaddr);
 	std::vector<ClientMetadata>& Clients() { return m_Clients; }
@@ -157,7 +160,9 @@ private:
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
+	std::thread m_ServerProcess;
 	ServerMetadata m_ServerData;
+	Scope<grpc::Server> m_Server;
 	std::string m_HostAddress = "0.0.0.0:50051";
 	std::vector<ClientMetadata> m_Clients;
 	Ref<Network> m_Network;

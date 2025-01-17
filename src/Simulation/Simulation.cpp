@@ -315,14 +315,30 @@ void Simulation::LocalJob(size_t index) {
 	#undef WAITJOB
 }
 
+bool Simulation::Connect(std::string& ipaddr, std::string& port) {
+	Ref<grpc::Channel> channel = grpc::CreateChannel("127.0.0.1:50051", grpc::InsecureChannelCredentials());
+	Scope<ForgeNet::Stub> stub = ForgeNet::NewStub(channel);
+	ConnectionRequest request;
+	ConnectionResponse response;
+	grpc::ClientContext context;
+	request.set_ip("1.1.1.1:3billion");
+	grpc::Status status = stub->Connect(&context, request, &response);
+	return true;
+}
+
 void Simulation::Host() {
 	ResetClients();
 	m_Network = CreateRef<Network>(this);
 	grpc::ServerBuilder builder;
 	builder.AddListeningPort(m_HostAddress, grpc::InsecureServerCredentials());
 	builder.RegisterService(&(*m_Network));
-	Scope<grpc::Server> server = builder.BuildAndStart();
+	m_Server = builder.BuildAndStart();
 	m_ServerData.running = true;
+	m_ServerProcess = std::thread(&Simulation::ServerJob, this);
+}
+
+void Simulation::ServerJob() {
+	m_Server->Wait();
 }
 
 void Simulation::ResetClients() {
