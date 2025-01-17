@@ -58,8 +58,6 @@ cc_library(
             "-lGL",
             "-lGLU",
             "-lglut",
-            "-lgrpc",
-            "-lgrpc++",
         ],
     }),
     deps = [
@@ -67,7 +65,7 @@ cc_library(
         "@spdlog",
         "@yaml-cpp",
         ":forge_cc_grpc",
-		"@grpc"
+		"@grpc//:grpc++"
     ] + select({
         "@bazel_tools//src/conditions:windows": [
             "//vendor:win_glm",
