@@ -6015,5 +6015,5 @@ Bounds: [128, 64]
 Dynamic Timestep: false
 Timestep: 6000
 Local Workers: 9
-Remote Workers: 100
+Remote Workers: 1
 Unit Size: 1

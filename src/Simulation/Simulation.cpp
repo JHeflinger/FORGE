@@ -1,4 +1,5 @@
 #include "Simulation.h"
+#include "Simulation/Network.h"
 #include "Core/Log.h"
 #include <iostream>
 #include <iomanip>
@@ -320,6 +321,7 @@ void Simulation::ResetClients() {
 		ClientMetadata data;
 		m_Clients.push_back(data);
 	}
+	m_Network = CreateRef<Network>(this);
 }
 
 void Simulation::Start() {

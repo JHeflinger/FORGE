@@ -75,7 +75,7 @@ void PlaybackPanel::Update(Editor* context) {
 	float progress = 100.0f * context->PlaybackProgression();
 	char buffer[1024];
 	snprintf(buffer, 1023, "%.3f%%%% complete", progress);
-    ImGui::Text(buffer);
+    ImGui::Text("%s", buffer);
 	ImGui::Columns(1);
 	if (!simfinished)
 		ImGui::EndDisabled();

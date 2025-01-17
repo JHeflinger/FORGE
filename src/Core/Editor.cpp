@@ -104,7 +104,7 @@ void Editor::DrawMenuBar() {
 		std::string lastSaved = "Last Saved " + GetLastSavedString() + " ago";
 		ImGui::SetCursorPosX(ImGui::GetCursorPosX() - ImGui::CalcTextSize(lastSaved.c_str()).x - 5);
 		ImGui::PushStyleColor(ImGuiCol_Text, {0.6, 0.6, 0.6, 1});
-		ImGui::Text(lastSaved.c_str());
+		ImGui::Text("%s", lastSaved.c_str());
 		ImGui::PopStyleColor();
 		ImGui::EndMenuBar();
 	}
@@ -274,7 +274,7 @@ void Editor::DrawPrompts() {
 					ImGui::NextColumn();
 					ImGui::SetColumnWidth(0, 200);
 					snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Length(), length_units[(int)m_Simulation->LengthUnit()]);
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Dummy({0, gapsize});
 					if (m_Simulation->SafeguardCacheEnabled()) {
 						snprintf(tbuffer, 2048, "TRUE");
@@ -283,7 +283,7 @@ void Editor::DrawPrompts() {
 						snprintf(tbuffer, 2048, "FALSE");
 						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
 					}
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::PopStyleColor();
 					ImGui::Dummy({0, gapsize});
 					if (m_Simulation->SimulationRecordEnabled()) {
@@ -293,25 +293,25 @@ void Editor::DrawPrompts() {
 						snprintf(tbuffer, 2048, "FALSE");
 						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
 					}
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::PopStyleColor();
 					ImGui::Dummy({0, gapsize});
-					ImGui::Text(solver_options[(int)m_Simulation->Solver()]);
+					ImGui::Text("%s", solver_options[(int)m_Simulation->Solver()]);
 					ImGui::Dummy({0, gapsize});
 					snprintf(tbuffer, 2048, "%.3f by %.3f", m_Simulation->Bounds().x, m_Simulation->Bounds().y);
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Dummy({0, gapsize});
 					if (m_Simulation->DynamicTimestep())
 						snprintf(tbuffer, 2048, "DYNAMIC");
 					else
 						snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)m_Simulation->Timestep(), length_units[(int)m_Simulation->LengthUnit()]);
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Dummy({0, gapsize});
 					snprintf(tbuffer, 2048, "%lu", (long unsigned int)m_Simulation->NumLocalWorkers());
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Dummy({0, gapsize});
 					snprintf(tbuffer, 2048, "%lu", (long unsigned int)m_Simulation->NumRemoteWorkers());
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Columns(1);
 					ImGui::Dummy({0, 2});
 					ImGui::Separator();
@@ -328,12 +328,12 @@ void Editor::DrawPrompts() {
 					}
 					snprintf(tbuffer, 2048, "%lu/%lu Workers Connected", (long unsigned int)connected, (long unsigned int)m_Simulation->NumRemoteWorkers());
 					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize(tbuffer).x / 2.0f));
-					ImGui::Text(tbuffer);
+					ImGui::Text("%s", tbuffer);
 					ImGui::Dummy({0, 2});
 					ImGui::BeginChild("rworkers", {0, 300}, true, ImGuiWindowFlags_HorizontalScrollbar);
 					for (size_t i = 0; i < clients.size(); i++) {
 						float ypos = ImGui::GetCursorPosY();
-						ImGui::Text(clients[i].ip.c_str());
+						ImGui::Text("%s", clients[i].ip.c_str());
 						ImGui::SetCursorPosY(ypos);
 						if (!clients[i].connected) {
 							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
@@ -360,7 +360,7 @@ void Editor::DrawPrompts() {
 					ImGui::Dummy({0, 2});
 					ImGui::BeginChild("logs", {0, 300}, true, ImGuiWindowFlags_HorizontalScrollbar);
 					for (size_t i = 0; i < m_Simulation->Logs().size(); i++)
-						ImGui::Text(m_Simulation->Logs()[i].c_str());
+						ImGui::Text("%s", m_Simulation->Logs()[i].c_str());
 					ImGui::EndChild();
 					ImGui::Dummy({0, 2});
 					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Simulation Progress").x / 2.0f));

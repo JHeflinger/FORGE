@@ -4,7 +4,6 @@
 #include "Simulation/Sink.h"
 #include "Simulation/Source.h"
 #include "Simulation/Octtree.h"
-#include "Simulation/Network.h"
 #include "Core/Safety.h"
 #include "glm/glm.hpp"
 #include <vector>
@@ -87,6 +86,8 @@ struct ClientMetadata {
 	bool connected = false;
 };
 
+class Network;
+
 class Simulation {
 public:
     std::vector<Ref<Source>>& Sources() { return m_Sources; }
@@ -150,6 +151,7 @@ private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
 	std::vector<ClientMetadata> m_Clients;
+	Ref<Network> m_Network;
 private:
 	WorkerScheduler m_Scheduler;
 	std::vector<std::vector<glm::dvec3>> m_ForceMatrix;

@@ -100,7 +100,7 @@ void ControlPanel::Update(Editor* context) {
 	if (ImGui::DragScalar("##timestep", ImGuiDataType_U64, &timestep, 1.0f))
 	    context->GetSimulation()->SetTimestep(timestep);
 	ImGui::SameLine();
-    ImGui::Text(length_units[current_length_unit]);
+    ImGui::Text("%s", length_units[current_length_unit]);
     if (dynamic_timestep) {
         ImGui::EndDisabled();
 	}
