@@ -316,14 +316,28 @@ void Simulation::LocalJob(size_t index) {
 }
 
 bool Simulation::Connect(std::string& ipaddr, std::string& port) {
-	Ref<grpc::Channel> channel = grpc::CreateChannel("127.0.0.1:50051", grpc::InsecureChannelCredentials());
+	Ref<grpc::Channel> channel = grpc::CreateChannel(ipaddr + ":" + port, grpc::InsecureChannelCredentials());
 	Scope<ForgeNet::Stub> stub = ForgeNet::NewStub(channel);
 	ConnectionRequest request;
 	ConnectionResponse response;
 	grpc::ClientContext context;
-	request.set_ip("1.1.1.1:3billion");
+
+	char hostname[1024] = { 0 };
+	struct addrinfo hints, *res;
+    std::memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET; // AF_INET for IPv4, AF_INET6 for IPv6, AF_UNSPEC for both
+    hints.ai_socktype = SOCK_STREAM;
+    if (getaddrinfo(hostname, nullptr, &hints, &res) != 0) {
+        FATAL("Unable to get ip address");
+        exit(1);
+    }
+    char ip[INET_ADDRSTRLEN];
+    struct sockaddr_in* addr = (struct sockaddr_in*)res->ai_addr;
+    inet_ntop(AF_INET, &addr->sin_addr, ip, sizeof(ip));
+
+	request.set_ip(std::string(ip) + ":" + port);
 	grpc::Status status = stub->Connect(&context, request, &response);
-	return true;
+	return status.ok();
 }
 
 void Simulation::Host() {

@@ -85,6 +85,7 @@ struct WorkerScheduler {
 struct ClientMetadata {
 	std::string ip = "Unregistered Client";
 	bool connected = false;
+	bool ready = false;
 };
 
 struct ServerMetadata {

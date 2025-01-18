@@ -148,6 +148,7 @@ void Editor::DrawPrompts() {
 	static int s_substate = 0;
 	static char s_ip_addr_buffer[16] = "127.0.0.1";
 	static char s_port_buffer[6] = "50051";
+	static bool s_connection_failure = false;
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	switch (m_Prompt) {
@@ -343,13 +344,19 @@ void Editor::DrawPrompts() {
 						ImGui::Text("%s", clients[i].ip.c_str());
 						ImGui::SetCursorPosY(ypos);
 						if (!clients[i].connected) {
-							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
 							ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("waiting for connection").x);
 							ImGui::Text("waiting for connection");
 						} else {
-							ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
-							ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("connected").x);
-							ImGui::Text("connected");
+							if (!clients[i].ready) {
+								ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));
+								ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("verifying").x);
+								ImGui::Text("verifying");
+							} else {
+								ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.0f, 1.0f, 0.0f, 1.0f));
+								ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - ImGui::CalcTextSize("connected").x);
+								ImGui::Text("connected");
+							}
 						}
 						ImGui::PopStyleColor();
 					}
@@ -493,7 +500,16 @@ void Editor::DrawPrompts() {
 					ImGui::InputText("##host_ip", s_ip_addr_buffer, sizeof(s_ip_addr_buffer));
 					ImGui::InputText("##host_port", s_port_buffer, sizeof(s_port_buffer));
 					ImGui::Columns(1);
-					ImGui::Dummy({0, 150});
+					if (s_connection_failure) {
+						ImGui::Dummy({0, 10});
+						ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Unable to connect").x / 2.0));
+						ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+						ImGui::Text("Unable to connect");
+						ImGui::PopStyleColor();
+						ImGui::Dummy({0, 132 - ImGui::CalcTextSize("Unable to connect").y});
+					} else {
+						ImGui::Dummy({0, 150});
+					}
 					ImGui::Separator();
 					break;
 				default: break;
@@ -516,7 +532,12 @@ void Editor::DrawPrompts() {
 				if (ImGui::Button("Connect", {60, 25})) {
 					std::string ipaddr(s_ip_addr_buffer);
 					std::string port(s_port_buffer);
-					INFO("{}", m_Simulation->Connect(ipaddr, port));
+					if (m_Simulation->Connect(ipaddr, port)) {
+						s_connection_failure = false;
+						s_substate++;
+					} else {
+						s_connection_failure = true;
+					}
 				}
 			} /*else {
 				if (!m_Simulation->Finished())
