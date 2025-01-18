@@ -315,9 +315,9 @@ void Simulation::LocalJob(size_t index) {
 	#undef WAITJOB
 }
 
-bool Simulation::Connect(std::string& ipaddr, std::string& port) {
-	Ref<grpc::Channel> channel = grpc::CreateChannel(ipaddr + ":" + port, grpc::InsecureChannelCredentials());
-	Scope<ForgeNet::Stub> stub = ForgeNet::NewStub(channel);
+bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details) {
+	m_Channel = grpc::CreateChannel(ipaddr + ":" + port, grpc::InsecureChannelCredentials());
+	m_Stub = ForgeNet::NewStub(m_Channel);
 	ConnectionRequest request;
 	ConnectionResponse response;
 	grpc::ClientContext context;
@@ -336,7 +336,29 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port) {
     inet_ntop(AF_INET, &addr->sin_addr, ip, sizeof(ip));
 
 	request.set_ip(std::string(ip) + ":" + port);
-	grpc::Status status = stub->Connect(&context, request, &response);
+	request.set_local_workers(size);
+	grpc::Status status = m_Stub->Connect(&context, request, &response);
+	if (status.ok()) {
+		details->length = response.simulation_length();
+		details->unit = response.length_unit();
+		details->safeguard = response.enable_safeguard_cache();
+		details->record = response.enable_simulation_record();
+		details->solver = response.simulation_solver();
+		details->boundx = response.bounds_x();
+		details->boundy = response.bounds_y();
+		details->timestep = response.timestep();
+		m_ClientID = response.id();
+		return true;
+	}
+	return false;
+}
+
+bool Simulation::Verify() {
+	VerifyRequest request;
+	Empty response;
+	grpc::ClientContext context;
+	request.set_id(m_ClientID);
+	grpc::Status status = m_Stub->Verify(&context, request, &response);
 	return status.ok();
 }
 
@@ -364,11 +386,17 @@ void Simulation::ResetClients() {
 	}
 }
 
-bool Simulation::RegisterClient(std::string& ipaddr) {
+bool Simulation::RegisterClient(std::string& ipaddr, uint32_t size) {
 	if (m_ServerData.num_clients >= m_Clients.size()) return false;
 	m_Clients[m_ServerData.num_clients].connected = true;
 	m_Clients[m_ServerData.num_clients].ip = ipaddr;
+	m_Clients[m_ServerData.num_clients].size = size;
+	m_ServerData.num_clients++;
 	return true;
+}
+
+void Simulation::VerifyClient(uint64_t id) {
+	m_Clients[id].ready = true;
 }
 
 void Simulation::Start() {

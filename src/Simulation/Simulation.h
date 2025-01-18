@@ -3,6 +3,7 @@
 #include "Simulation/Particle.h"
 #include "Simulation/Sink.h"
 #include "Simulation/Source.h"
+#include "Simulation/Packets.h"
 #include "Simulation/Octtree.h"
 #include "Core/Safety.h"
 #include "glm/glm.hpp"
@@ -12,6 +13,7 @@
 #include <limits>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
+#include <forge.grpc.pb.h>
 
 enum class SimulationLengthUnit {
 	TICKS = 0,
@@ -86,6 +88,7 @@ struct ClientMetadata {
 	std::string ip = "Unregistered Client";
 	bool connected = false;
 	bool ready = false;
+	uint32_t size = 0;
 };
 
 struct ServerMetadata {
@@ -146,12 +149,15 @@ public:
 	void Simulate();
 	void LocalJob(size_t index);
 public:
-	bool Connect(std::string& ipaddr, std::string& port);
+	bool Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details);
+	bool Verify();
 	void Host();
 	void ServerJob();
 	void ResetClients();
-	bool RegisterClient(std::string& ipaddr);
+	bool RegisterClient(std::string& ipaddr, uint32_t size);
+	void VerifyClient(uint64_t id);
 	std::vector<ClientMetadata>& Clients() { return m_Clients; }
+	ServerMetadata ServerData() { return m_ServerData; }
 private:
     std::vector<Ref<Source>> m_Sources;
     std::vector<Ref<Sink>> m_Sinks;
@@ -161,6 +167,9 @@ private:
 private:
 	std::vector<std::vector<Particle>> m_SimulationRecord;
 private:
+	Scope<ForgeNet::Stub> m_Stub;
+	Ref<grpc::Channel> m_Channel;
+	size_t m_ClientID = 0;
 	std::thread m_ServerProcess;
 	ServerMetadata m_ServerData;
 	Scope<grpc::Server> m_Server;

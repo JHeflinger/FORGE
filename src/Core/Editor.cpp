@@ -1,5 +1,4 @@
 #include "Editor.h"
-#include "Core/Log.h"
 #include "Renderer/Renderer.h"
 #include "Panels/ViewportPanel.h"
 #include "Panels/OverviewPanel.h"
@@ -148,7 +147,12 @@ void Editor::DrawPrompts() {
 	static int s_substate = 0;
 	static char s_ip_addr_buffer[16] = "127.0.0.1";
 	static char s_port_buffer[6] = "50051";
+	static int s_local_workers = 1;
 	static bool s_connection_failure = false;
+	static SimulationDetails s_remote_details = { 0 };
+	const char* length_units[] = { "ticks", "us", "ms", "s" };
+	const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
+	char tbuffer[2048];
 	ImGuiIO& io = ImGui::GetIO();
 	auto boldFont = io.Fonts->Fonts[0];
 	switch (m_Prompt) {
@@ -249,9 +253,6 @@ void Editor::DrawPrompts() {
 		ImGui::SetNextWindowSize({600, 0});
 		if (ImGui::BeginPopupModal("Run Simulation", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
     		float gapsize = 8.0f;
-			const char* length_units[] = { "ticks", "us", "ms", "s" };
-			const char* solver_options[] = { "RKF45", "Euler", "LeapFrog" };
-			char tbuffer[2048];
 			std::vector<ClientMetadata> clients = m_Simulation->Clients();
 			size_t connected = 0;
 			ImGui::SetItemDefaultFocus();
@@ -423,6 +424,7 @@ void Editor::DrawPrompts() {
 				m_Prompt = EditorPrompts::NONE;
 				s_substate = 0; 
 				ImGui::CloseCurrentPopup();
+				// TODO: shut down network service
 			}
 			if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 				ImGui::EndDisabled();
@@ -450,6 +452,7 @@ void Editor::DrawPrompts() {
 					m_Prompt = EditorPrompts::NONE;
 					s_substate = 0; 
 					ImGui::CloseCurrentPopup();
+					// TODO: shut down network service
 				}
 				if (!m_Simulation->Finished())
 					ImGui::EndDisabled();
@@ -467,6 +470,7 @@ void Editor::DrawPrompts() {
 					if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
 						s_substate--;
 					}
+					// TODO: shut down network service
 				}
 				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
 					ImGui::EndDisabled();
@@ -482,7 +486,6 @@ void Editor::DrawPrompts() {
     		float gapsize = 8.0f;
 			ImGui::SetItemDefaultFocus();
 
-			// more here
 			switch (s_substate) {
 				case 0:
 					ImGui::Dummy({0, 2});
@@ -496,9 +499,14 @@ void Editor::DrawPrompts() {
 					ImGui::Text("Simulation Host IP Address");
 					ImGui::Dummy({0, gapsize});
 					ImGui::Text("Simulation Host Port");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Available Workers");
 					ImGui::NextColumn();
 					ImGui::InputText("##host_ip", s_ip_addr_buffer, sizeof(s_ip_addr_buffer));
+					ImGui::Dummy({0, 2});
 					ImGui::InputText("##host_port", s_port_buffer, sizeof(s_port_buffer));
+					ImGui::Dummy({0, 2});
+					ImGui::DragInt("##remotelocalworkers", &s_local_workers, 1, 1, INT_MAX);
 					ImGui::Columns(1);
 					if (s_connection_failure) {
 						ImGui::Dummy({0, 10});
@@ -512,61 +520,129 @@ void Editor::DrawPrompts() {
 					}
 					ImGui::Separator();
 					break;
+				case 1:
+					ImGui::Dummy({0, 2});
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Verify Simulation Details").x / 2.0));
+					ImGui::Text("Verify Simulation Details");
+					ImGui::Dummy({0, 2});
+					ImGui::Separator();
+					ImGui::Columns(2);
+					ImGui::SetColumnWidth(0, 200);
+					ImGui::Text("Simulation Length");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Safeguard Cache Enabled");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Simulation Record Enabled");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Simulation Solver");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Bounds");
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("Timestep");
+					ImGui::NextColumn();
+					ImGui::SetColumnWidth(0, 200);
+					snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)s_remote_details.length, length_units[s_remote_details.unit]);
+					ImGui::Text("%s", tbuffer);
+					ImGui::Dummy({0, gapsize});
+					if (s_remote_details.safeguard) {
+						snprintf(tbuffer, 2048, "TRUE");
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,255,0,255));
+					} else {
+						snprintf(tbuffer, 2048, "FALSE");
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
+					}
+					ImGui::Text("%s", tbuffer);
+					ImGui::PopStyleColor();
+					ImGui::Dummy({0, gapsize});
+					if (s_remote_details.record) {
+						snprintf(tbuffer, 2048, "TRUE");
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,255,0,255));
+					} else {
+						snprintf(tbuffer, 2048, "FALSE");
+						ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(155,155,155,255));
+					}
+					ImGui::Text("%s", tbuffer);
+					ImGui::PopStyleColor();
+					ImGui::Dummy({0, gapsize});
+					ImGui::Text("%s", solver_options[s_remote_details.solver]);
+					ImGui::Dummy({0, gapsize});
+					snprintf(tbuffer, 2048, "%.3f by %.3f", s_remote_details.boundx, s_remote_details.boundy);
+					ImGui::Text("%s", tbuffer);
+					ImGui::Dummy({0, gapsize});
+					snprintf(tbuffer, 2048, "%llu %s", (long long unsigned int)s_remote_details.timestep, length_units[s_remote_details.unit]);
+					ImGui::Text("%s", tbuffer);
+					ImGui::Columns(1);
+					ImGui::Dummy({0, 2});
+					ImGui::Separator();
+					break;
+				case 2:
+					ImGui::Dummy({0, 2});
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Monitor Simulation").x / 2.0));
+					ImGui::Text("Monitor Simulation");
+					ImGui::Dummy({0, 2});
+					ImGui::Separator();
+					ImGui::Dummy({0, 2});
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Simulation Log").x / 2.0f));
+					ImGui::Text("Simulation Log");
+					ImGui::Dummy({0, 2});
+					ImGui::BeginChild("logs", {0, 300}, true, ImGuiWindowFlags_HorizontalScrollbar);
+					for (size_t i = 0; i < m_Simulation->Logs().size(); i++)
+						ImGui::Text("%s", m_Simulation->Logs()[i].c_str());
+					ImGui::EndChild();
+					ImGui::Dummy({0, 2});
+					ImGui::SetCursorPosX((ImGui::GetContentRegionAvail().x / 2.0f) - (ImGui::CalcTextSize("Simulation Progress").x / 2.0f));
+					ImGui::Text("Simulation Progress");
+					ImGui::Dummy({0, 2});
+    				ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(0.3f, 0.7f, 0.4f, 1.0f));
+					ImGui::PushFont(boldFont);
+					ImGui::ProgressBar(m_Simulation->Progress(), ImVec2(-1.0f, 0.0f), nullptr);
+					ImGui::PopStyleColor();
+					ImGui::PopFont();
+					ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x - 53);
+					ImGui::Dummy({0, 10});
+					ImGui::Separator();
+					break;
 				default: break;
 			}
 
 			ImGui::Dummy({0, 10});
-			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
-			//	ImGui::BeginDisabled();
 			if (ImGui::Button("Cancel", {60, 25})) {
 				m_Prompt = EditorPrompts::NONE;
 				s_substate = 0; 
 				ImGui::CloseCurrentPopup();
-			}
-			//if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
-			//	ImGui::EndDisabled();
-			
+				// TODO: shut down network service
+			}			
 			ImGui::SameLine();
 			ImGui::SetCursorPosX(ImGui::GetContentRegionAvail().x + 15);
 			if (s_substate == 0) {
 				if (ImGui::Button("Connect", {60, 25})) {
 					std::string ipaddr(s_ip_addr_buffer);
 					std::string port(s_port_buffer);
-					if (m_Simulation->Connect(ipaddr, port)) {
+					if (m_Simulation->Connect(ipaddr, port, s_local_workers, &s_remote_details)) {
 						s_connection_failure = false;
 						s_substate++;
 					} else {
 						s_connection_failure = true;
 					}
 				}
-			} /*else {
+			} else if (s_substate == 1) {
+				if (ImGui::Button("Verify", {60, 25})) {
+					if (m_Simulation->Verify()) {
+						s_substate++;
+					}
+				}
+			} else if (s_substate == 2) {
 				if (!m_Simulation->Finished())
 					ImGui::BeginDisabled();
 				if (ImGui::Button("Finish", {60, 25})) {
 					m_Prompt = EditorPrompts::NONE;
 					s_substate = 0; 
 					ImGui::CloseCurrentPopup();
+					// TODO: shut down network service
 				}
 				if (!m_Simulation->Finished())
 					ImGui::EndDisabled();
-				if (m_Simulation->Started() && !m_Simulation->Paused()) {
-					m_Simulation->Checkup();
-				}
 			}
-			if (s_substate > 0) {
-				ImGui::SameLine();
-				ImGui::SetCursorPosX(ImGui::GetCursorPosX() - 135);
-				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
-					ImGui::BeginDisabled();
-				if (ImGui::Button("Back", {60, 25})) {
-					s_substate--; 
-					if (s_substate == 1 && m_Simulation->NumRemoteWorkers() == 0) {
-						s_substate--;
-					}
-				}
-				if ((s_substate == 2 && m_Simulation->Started()) || (s_substate == 2 && m_Simulation->Finished()))
-					ImGui::EndDisabled();
-			}*/
 			ImGui::EndPopup();
 		}
 		break;

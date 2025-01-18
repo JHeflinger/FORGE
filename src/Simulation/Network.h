@@ -4,7 +4,7 @@
 #include <memory>
 #include <string>
 #include <grpcpp/grpcpp.h>
-#include "forge.grpc.pb.h"
+#include <forge.grpc.pb.h>
 
 class Network final : public ForgeNet::Service {
 public:
@@ -12,6 +12,7 @@ public:
 	~Network() {}
 public:
 	grpc::Status Connect(grpc::ServerContext* context, const ConnectionRequest* request, ConnectionResponse* response) override;
+	grpc::Status Verify(grpc::ServerContext* context, const VerifyRequest* request, Empty* response) override;
 private:
 	Simulation* m_SimulationRef = nullptr;
 };

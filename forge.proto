@@ -2,12 +2,29 @@ syntax = "proto3";
 
 service ForgeNet {
     rpc Connect (ConnectionRequest) returns (ConnectionResponse);
+	rpc Verify (VerifyRequest) returns (Empty);
 }
+
+message VerifyRequest {
+	uint64 id = 1;
+}
+
+message Empty {}
 
 message ConnectionRequest {
 	string ip = 1;
+	uint32 local_workers = 2;
 }
 
 message ConnectionResponse {
 	string ip = 1;
+	uint64 simulation_length = 2;
+	uint32 length_unit = 3;
+	bool enable_safeguard_cache = 4;
+	bool enable_simulation_record = 5;
+	uint32 simulation_solver = 6;
+	double bounds_x = 7;
+	double bounds_y = 8;
+	uint64 timestep = 9;
+	uint64 id = 10;
 }
