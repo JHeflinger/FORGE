@@ -1,10 +1,10 @@
 #pragma once
 #include "Simulation/Simulation.h"
+#include "forge.grpc.pb.h"
 #include <iostream>
 #include <memory>
 #include <string>
 #include <grpcpp/grpcpp.h>
-#include <forge.grpc.pb.h>
 
 class Network final : public ForgeNet::Service {
 public:

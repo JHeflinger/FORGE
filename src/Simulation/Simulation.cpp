@@ -7,6 +7,12 @@
 #include <chrono>
 #include <ctime>
 #include <cmath>
+#ifndef _WIN32
+#include <ifaddrs.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/socket.h>
+#endif
 
 #define EPS 0.0000000000001 // epsilon for numerical stability
 #define TIMENOW() (uint64_t)(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())).count()
@@ -25,6 +31,42 @@ std::string GetCurrentTimeString() {
 			   << std::setw(3) << std::setfill('0') << millis.count() << ']';
     return timeStream.str();
 }
+
+#ifndef _WIN32
+std::string GetIPAddress() {
+    struct ifaddrs *interfaces = nullptr;
+    struct ifaddrs *ifa = nullptr;
+    std::string ipAddress;
+
+    if (getifaddrs(&interfaces) == -1) {
+        perror("getifaddrs");
+        return "";
+    }
+
+    for (ifa = interfaces; ifa != nullptr; ifa = ifa->ifa_next) {
+        if (ifa->ifa_addr == nullptr) {
+            continue;
+        }
+
+        // Check for IPv4 address
+        if (ifa->ifa_addr->sa_family == AF_INET) {
+            char addressBuffer[INET_ADDRSTRLEN];
+            void *addr = &((struct sockaddr_in *)ifa->ifa_addr)->sin_addr;
+
+            inet_ntop(AF_INET, addr, addressBuffer, sizeof(addressBuffer));
+
+            // Skip loopback addresses (127.x.x.x)
+            if (std::strncmp(addressBuffer, "127", 3) != 0) {
+                ipAddress = addressBuffer;
+                break;
+            }
+        }
+    }
+
+    freeifaddrs(interfaces);
+    return ipAddress;
+}
+#endif
 
 void Simulation::Log(std::string log) {
     m_Logs.push_back(GetCurrentTimeString() + " " + log); 
@@ -322,6 +364,9 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
 	ConnectionResponse response;
 	grpc::ClientContext context;
 
+	#ifndef _WIN32
+	request.set_ip(GetIPAddress() + ":" + port);
+	#else
 	char hostname[1024] = { 0 };
 	struct addrinfo hints, *res;
     std::memset(&hints, 0, sizeof(hints));
@@ -336,6 +381,7 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
     inet_ntop(AF_INET, &addr->sin_addr, ip, sizeof(ip));
 
 	request.set_ip(std::string(ip) + ":" + port);
+	#endif
 	request.set_local_workers(size);
 	grpc::Status status = m_Stub->Connect(&context, request, &response);
 	if (status.ok()) {

@@ -6,14 +6,14 @@
 #include "Simulation/Packets.h"
 #include "Simulation/Octtree.h"
 #include "Core/Safety.h"
-#include "glm/glm.hpp"
+#include "forge.grpc.pb.h"
+#include <glm/glm.hpp>
 #include <vector>
 #include <mutex>
 #include <thread>
 #include <limits>
 #include <condition_variable>
 #include <grpcpp/grpcpp.h>
-#include <forge.grpc.pb.h>
 
 enum class SimulationLengthUnit {
 	TICKS = 0,
