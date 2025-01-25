@@ -391,7 +391,8 @@ void Editor::DrawPrompts() {
 						ImGui::BeginDisabled();
 					if (!m_Simulation->Started()) {
 						if (ImGui::Button("START", {60, 25})) {
-							m_Simulation->Start();
+							if (m_Simulation->NumRemoteWorkers() > 0) m_Simulation->StartRemote();
+							else m_Simulation->StartLocal();
 						}
 					} else if (m_Simulation->Paused()) {
 						if (ImGui::Button("RESUME", {60, 25})) {

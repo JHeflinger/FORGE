@@ -82,7 +82,7 @@ bool Simulation::Paused() {
     return m_Paused; 
 }
 
-void Simulation::Simulate() {
+void Simulation::SimulateLocal() {
 	#define WAIT_ON_WORKERS() for (size_t j = 0; j < m_Scheduler.metadata.size(); j++) { \
 		std::unique_lock<std::mutex> lock(m_Scheduler.lock); \
 		m_Scheduler.controller_alert.wait(lock, [this, &j] { return m_Scheduler.metadata[j].finished; }); \
@@ -445,7 +445,11 @@ void Simulation::VerifyClient(uint64_t id) {
 	m_Clients[id].ready = true;
 }
 
-void Simulation::Start() {
+void Simulation::StartRemote() {
+
+}
+
+void Simulation::StartLocal() {
     this->Log("starting simulation...");
 
 	// clear any lingering subprocesses
@@ -576,7 +580,7 @@ void Simulation::Start() {
 	}
 
 	// create main process
-	m_MainProcess = std::thread(&Simulation::Simulate, this);
+	m_MainProcess = std::thread(&Simulation::SimulateLocal, this);
 	
 	// start tracking
     m_Started = true;

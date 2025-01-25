@@ -138,7 +138,8 @@ public:
 	bool Finished() { return m_Finished; }
 	bool Started();
 	bool Paused();
-	void Start();
+	void StartLocal();
+	void StartRemote();
 	void Pause();
 	void Resume();
 	void Abort();
@@ -146,7 +147,7 @@ public:
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
-	void Simulate();
+	void SimulateLocal();
 	void LocalJob(size_t index);
 public:
 	bool Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details);
