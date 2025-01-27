@@ -23,3 +23,57 @@ grpc::Status Network::Verify(grpc::ServerContext* context, const VerifyRequest* 
     m_SimulationRef->VerifyClient(request->id());
     return grpc::Status::OK;
 }
+
+grpc::Status Network::Communicate(grpc::ServerContext* context, grpc::ServerReaderWriter<GenericPacket, GenericPacket>* stream) {
+    GenericPacket in_packet;
+    std::vector<ClientMetadata> clients;
+    while (true) {
+        INFO("hey");
+        uint32_t request = 0;
+        if (m_SimulationRef->GetQueuedRequest(&request)) {
+            PacketHeader purpose = (PacketHeader)request;
+            switch (purpose) {
+                case PacketHeader::DISTRIBUTE_TOPOLOGY:
+                    clients = m_SimulationRef->Clients();
+                    for (size_t i = 0; i < clients.size(); i++) {
+                        GenericPacket out_packet;
+                        out_packet.set_purpose((uint32_t)PacketHeader::TOPOLOGY_RESPONSE);
+                        out_packet.set_strdata(clients[i].ip);
+                        out_packet.set_idxdata(i);
+                        stream->Write(out_packet);
+                    }
+                    break;
+                default:
+                    FATAL("Unknown request detected in server queue");
+                    return grpc::Status::CANCELLED;
+            }
+        }
+        if (stream->Read(&in_packet)) {
+            PacketHeader purpose = (PacketHeader)in_packet.purpose();
+            switch (purpose) {
+                case PacketHeader::QUIT:
+                    return grpc::Status::OK;
+                    break;
+                case PacketHeader::LOG:
+                    m_SimulationRef->Log(in_packet.strdata());
+                    break;
+                // case PacketHeader::TOPOLOGY_REQUEST:
+                //     clients = m_SimulationRef->Clients();
+                //     for (size_t i = 0; i < clients.size(); i++) {
+                //         GenericPacket out_packet;
+                //         out_packet.set_purpose((uint32_t)PacketHeader::TOPOLOGY_RESPONSE);
+                //         out_packet.set_strdata(clients[i].ip);
+                //         out_packet.set_idxdata(i);
+                //         stream->Write(out_packet);
+                //     }
+                //     break;
+                default:
+                    return grpc::Status::CANCELLED;
+            }
+            GenericPacket out_packet;
+            out_packet.set_purpose((uint32_t)PacketHeader::END);
+            stream->Write(out_packet);
+        }
+    }
+    return grpc::Status::OK;
+}

@@ -152,11 +152,15 @@ public:
 public:
 	bool Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details);
 	bool Verify();
+	void Communicate();
 	void Host();
 	void ServerJob();
+	void ClientJob();
 	void ResetClients();
 	bool RegisterClient(std::string& ipaddr, uint32_t size);
 	void VerifyClient(uint64_t id);
+	void QueueRequest(uint32_t request);
+	bool GetQueuedRequest(uint32_t* request); 
 	std::vector<ClientMetadata>& Clients() { return m_Clients; }
 	ServerMetadata ServerData() { return m_ServerData; }
 private:
@@ -172,10 +176,12 @@ private:
 	Ref<grpc::Channel> m_Channel;
 	size_t m_ClientID = 0;
 	std::thread m_ServerProcess;
+	std::thread m_ClientProcess;
 	ServerMetadata m_ServerData;
 	Scope<grpc::Server> m_Server;
 	std::string m_HostAddress = "0.0.0.0:50051";
 	std::vector<ClientMetadata> m_Clients;
+	std::vector<uint32_t> m_ServerRequestQueue;
 	Ref<Network> m_Network;
 private:
 	WorkerScheduler m_Scheduler;

@@ -408,6 +408,10 @@ bool Simulation::Verify() {
 	return status.ok();
 }
 
+void Simulation::Communicate() {
+	m_ClientProcess = std::thread(&Simulation::ClientJob, this);
+}
+
 void Simulation::Host() {
 	ResetClients();
 	m_Network = CreateRef<Network>(this);
@@ -421,6 +425,26 @@ void Simulation::Host() {
 
 void Simulation::ServerJob() {
 	m_Server->Wait();
+}
+
+void Simulation::ClientJob() {
+	grpc::ClientContext context;
+    Scope<grpc::ClientReaderWriter<GenericPacket, GenericPacket>> stream = m_Stub->Communicate(&context);
+	GenericPacket in_packet;
+	while (true) {
+		if (stream->Read(&in_packet)) {
+			PacketHeader purpose = (PacketHeader)in_packet.purpose();
+			INFO("hey i got something?");
+			switch (purpose) {
+				case PacketHeader::TOPOLOGY_RESPONSE:
+					this->Log("got some topology information");
+					break;
+				default: 
+					this->Log("An unexpected packet was read");
+					break;
+			}
+		}
+	}
 }
 
 void Simulation::ResetClients() {
@@ -445,8 +469,38 @@ void Simulation::VerifyClient(uint64_t id) {
 	m_Clients[id].ready = true;
 }
 
-void Simulation::StartRemote() {
+void Simulation::QueueRequest(uint32_t request) {
+	m_Scheduler.lock.lock();
+	m_ServerRequestQueue.insert(m_ServerRequestQueue.begin(), 0);
+	m_Scheduler.lock.unlock();
+}
 
+bool Simulation::GetQueuedRequest(uint32_t* request) {
+	m_Scheduler.lock.lock();
+	if (m_ServerRequestQueue.size() > 0) {
+		*request = m_ServerRequestQueue[m_ServerRequestQueue.size() - 1];
+		m_ServerRequestQueue.pop_back();
+	} else {
+		m_Scheduler.lock.unlock();
+		return false;
+	}
+	m_Scheduler.lock.unlock();
+	return true;
+} 
+
+void Simulation::StartRemote() {
+	// integrate mesh topology
+	this->Log("initializing mesh topology...");
+	QueueRequest((uint32_t)PacketHeader::DISTRIBUTE_TOPOLOGY);
+
+	// configure client metadata (range of work)
+	this->Log("configuring workers...");
+
+	// clear any lingering subprocesses
+	m_SubProcesses.clear();
+
+	// start simulation
+	this->Log("starting simulation...");
 }
 
 void Simulation::StartLocal() {

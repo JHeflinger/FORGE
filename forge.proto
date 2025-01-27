@@ -3,6 +3,13 @@ syntax = "proto3";
 service ForgeNet {
     rpc Connect (ConnectionRequest) returns (ConnectionResponse);
 	rpc Verify (VerifyRequest) returns (Empty);
+	rpc Communicate (stream GenericPacket) returns (stream GenericPacket);
+}
+
+message GenericPacket {
+	uint32 purpose = 1;
+	string strdata = 2;
+	uint64 idxdata = 3;
 }
 
 message VerifyRequest {

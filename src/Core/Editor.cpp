@@ -629,6 +629,7 @@ void Editor::DrawPrompts() {
 			} else if (s_substate == 1) {
 				if (ImGui::Button("Verify", {60, 25})) {
 					if (m_Simulation->Verify()) {
+						m_Simulation->Communicate(); // TODO: combine verify and communicate to reduce possibilty of losing a client in between calls
 						s_substate++;
 					}
 				}
