@@ -358,54 +358,11 @@ void Simulation::LocalJob(size_t index) {
 }
 
 bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details) {
-	m_Channel = grpc::CreateChannel(ipaddr + ":" + port, grpc::InsecureChannelCredentials());
-	m_Stub = ForgeNet::NewStub(m_Channel);
-	ConnectionRequest request;
-	ConnectionResponse response;
-	grpc::ClientContext context;
-
-	#ifndef _WIN32
-	request.set_ip(GetIPAddress() + ":" + port);
-	#else
-	char hostname[1024] = { 0 };
-	struct addrinfo hints, *res;
-    std::memset(&hints, 0, sizeof(hints));
-    hints.ai_family = AF_INET; // AF_INET for IPv4, AF_INET6 for IPv6, AF_UNSPEC for both
-    hints.ai_socktype = SOCK_STREAM;
-    if (getaddrinfo(hostname, nullptr, &hints, &res) != 0) {
-        FATAL("Unable to get ip address");
-        exit(1);
-    }
-    char ip[INET_ADDRSTRLEN];
-    struct sockaddr_in* addr = (struct sockaddr_in*)res->ai_addr;
-    inet_ntop(AF_INET, &addr->sin_addr, ip, sizeof(ip));
-
-	request.set_ip(std::string(ip) + ":" + port);
-	#endif
-	request.set_local_workers(size);
-	grpc::Status status = m_Stub->Connect(&context, request, &response);
-	if (status.ok()) {
-		details->length = response.simulation_length();
-		details->unit = response.length_unit();
-		details->safeguard = response.enable_safeguard_cache();
-		details->record = response.enable_simulation_record();
-		details->solver = response.simulation_solver();
-		details->boundx = response.bounds_x();
-		details->boundy = response.bounds_y();
-		details->timestep = response.timestep();
-		m_ClientID = response.id();
-		return true;
-	}
-	return false;
+	return true;
 }
 
 bool Simulation::Verify() {
-	VerifyRequest request;
-	Empty response;
-	grpc::ClientContext context;
-	request.set_id(m_ClientID);
-	grpc::Status status = m_Stub->Verify(&context, request, &response);
-	return status.ok();
+	return true;
 }
 
 void Simulation::Communicate() {
@@ -415,36 +372,15 @@ void Simulation::Communicate() {
 void Simulation::Host() {
 	ResetClients();
 	m_Network = CreateRef<Network>(this);
-	grpc::ServerBuilder builder;
-	builder.AddListeningPort(m_HostAddress, grpc::InsecureServerCredentials());
-	builder.RegisterService(&(*m_Network));
-	m_Server = builder.BuildAndStart();
-	m_ServerData.running = true;
 	m_ServerProcess = std::thread(&Simulation::ServerJob, this);
 }
 
 void Simulation::ServerJob() {
-	m_Server->Wait();
+
 }
 
 void Simulation::ClientJob() {
-	grpc::ClientContext context;
-    Scope<grpc::ClientReaderWriter<GenericPacket, GenericPacket>> stream = m_Stub->Communicate(&context);
-	GenericPacket in_packet;
-	while (true) {
-		if (stream->Read(&in_packet)) {
-			PacketHeader purpose = (PacketHeader)in_packet.purpose();
-			INFO("hey i got something?");
-			switch (purpose) {
-				case PacketHeader::TOPOLOGY_RESPONSE:
-					this->Log("got some topology information");
-					break;
-				default: 
-					this->Log("An unexpected packet was read");
-					break;
-			}
-		}
-	}
+	
 }
 
 void Simulation::ResetClients() {
@@ -469,29 +405,9 @@ void Simulation::VerifyClient(uint64_t id) {
 	m_Clients[id].ready = true;
 }
 
-void Simulation::QueueRequest(uint32_t request) {
-	m_Scheduler.lock.lock();
-	m_ServerRequestQueue.insert(m_ServerRequestQueue.begin(), 0);
-	m_Scheduler.lock.unlock();
-}
-
-bool Simulation::GetQueuedRequest(uint32_t* request) {
-	m_Scheduler.lock.lock();
-	if (m_ServerRequestQueue.size() > 0) {
-		*request = m_ServerRequestQueue[m_ServerRequestQueue.size() - 1];
-		m_ServerRequestQueue.pop_back();
-	} else {
-		m_Scheduler.lock.unlock();
-		return false;
-	}
-	m_Scheduler.lock.unlock();
-	return true;
-} 
-
 void Simulation::StartRemote() {
 	// integrate mesh topology
 	this->Log("initializing mesh topology...");
-	QueueRequest((uint32_t)PacketHeader::DISTRIBUTE_TOPOLOGY);
 
 	// configure client metadata (range of work)
 	this->Log("configuring workers...");

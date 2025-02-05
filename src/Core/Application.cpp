@@ -9,12 +9,14 @@
 #include "Events/Input.h"
 #include "Utils/FileUtils.h"
 #include "Utils/DialogUtils.h"
+#include "network.pb.h"
 
 Application::Application() {
 	m_Editor = CreateRef<Editor>();
 }
 
 bool Application::Initialize() {
+	GOOGLE_PROTOBUF_VERIFY_VERSION;
 	Log::Init();
 	if (FileUtils::Exists("settings.fconf"))
 		Serializer::DeserializeEditor(m_Editor, FileUtils::Read("settings.fconf"));
@@ -100,6 +102,7 @@ void Application::Update(Timestep ts) {
 }
 
 void Application::Shutdown() {
+	google::protobuf::ShutdownProtobufLibrary();
 	m_Editor->Shutdown();
 	m_GUI->Shutdown();
 }
