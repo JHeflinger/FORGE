@@ -358,6 +358,14 @@ void Simulation::LocalJob(size_t index) {
 }
 
 bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, SimulationDetails* details) {
+	m_Network = CreateRef<Network>(this);
+	uint16_t portnum = 0;
+	try {
+		portnum = std::stoi(port);
+	} catch(const std::exception& e) {
+		return false;
+	}
+	m_Network->Open(ipaddr, portnum);
 	return true;
 }
 
