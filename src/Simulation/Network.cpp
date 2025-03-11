@@ -75,7 +75,7 @@ void Network::TestRecieve() {
         if (!msg.ParseFromArray(buffer, received_bytes)) {
             fatalcount++;
         } else {
-            if (msg.text() != "This is my complex and cool string!" || count == 100000) {
+            if (msg.text() != "This is my complex and cool string!") {
                 evilcount++;
                 WARN("Detected packet loss - recieved \"{}\" instead of \"This is my complex and cool string!\". Overall detected {}/{} corrupt packets and {} fatal errors.", msg.text(), evilcount, count, fatalcount);
             }
