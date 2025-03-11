@@ -366,6 +366,7 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
 		return false;
 	}
 	m_Network->Open(ipaddr, portnum);
+	m_ClientProcess = std::thread(&Simulation::ClientJob, this);
 	return true;
 }
 
@@ -384,11 +385,11 @@ void Simulation::Host() {
 }
 
 void Simulation::ServerJob() {
-
+	m_Network->TestRecieve();
 }
 
 void Simulation::ClientJob() {
-	
+	m_Network->TestSend();
 }
 
 void Simulation::ResetClients() {
