@@ -1,18 +1,29 @@
-MINOR:
-    - camera tweaks
-        a. mouse pan isn't scaling perfectly
-        b. mouse zooming (middle click, not scroll) is by y delta, make it based on both?
-    - maintain serializer
+next work group (verification):
+- send over sim data to clients for verification step
+- send back over client id to the client and have it verify
+- start simulation
 
-MEDIUM:
-    - Hierarchy panel
-    - Simulation control panel
-    - basic texture class
-    - basic quad rendering
+next work group (simulation setup):
+- on start simulation set up all workers in a circular fashion, giving the contact info of the "next" neighbor
+- also distribute and send the particle ranges over
 
-MAJOR:
-    - Simulation class
+next work group (oct-tree prep):
+- start the simulation loop
+- implement oct tree prep
 
-COMPLETED:
-    - viewport resizing squishes things
-    - Serializer
+next work group (tree distribution):
+- implement tree distribution
+
+next work group (tree construction):
+- implement tree construction
+
+next work group (force calculation):
+- implement force calculation
+
+next work group (verify results):
+- touch up and verify that the simulation finishes with the same results
+
+backlog:
+- stop, pause, abort simulation buttons
+- ipv6 support
+- clean up network resources on close

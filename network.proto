@@ -1,5 +1,5 @@
 syntax = "proto3";
 
-message MyMessage {
-    string text = 1;
+message ClientInfo {
+    string ip = 1;
 }

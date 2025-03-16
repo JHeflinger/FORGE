@@ -67,8 +67,11 @@ public:
 	void Open(std::string ip, uint16_t port);
 	void Close();
 public:
-	void TestRecieve();
-	void TestSend();
+	void HostProcess();
+	void ClientProcess();
+public:
+	void SendNetworkInfo();
+	void VerifyConnection();
 private:
 	Simulation* m_SimulationRef = nullptr;
 	Connection m_MainConnection = { 0 };

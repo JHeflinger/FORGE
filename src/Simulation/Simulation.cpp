@@ -366,7 +366,7 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
 		return false;
 	}
 	m_Network->Open(ipaddr, portnum);
-	m_ClientProcess = std::thread(&Simulation::ClientJob, this);
+	m_Network->SendNetworkInfo();
 	return true;
 }
 
@@ -385,11 +385,11 @@ void Simulation::Host() {
 }
 
 void Simulation::ServerJob() {
-	m_Network->TestRecieve();
+	m_Network->HostProcess();
 }
 
 void Simulation::ClientJob() {
-	m_Network->TestSend();
+	m_Network->ClientProcess();
 }
 
 void Simulation::ResetClients() {
@@ -402,6 +402,7 @@ void Simulation::ResetClients() {
 }
 
 bool Simulation::RegisterClient(std::string& ipaddr, uint32_t size) {
+	std::lock_guard<std::mutex> lock(m_Scheduler.lock);
 	if (m_ServerData.num_clients >= m_Clients.size()) return false;
 	m_Clients[m_ServerData.num_clients].connected = true;
 	m_Clients[m_ServerData.num_clients].ip = ipaddr;
