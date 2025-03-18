@@ -50,7 +50,8 @@ void Network::HostProcess() {
         FATAL("Socket creation failed\n");
     }
 
-    struct sockaddr_in server_addr{}, client_addr{};
+    struct sockaddr_in server_addr{};
+    struct sockaddr client_addr{};
     socklen_t client_len = sizeof(client_addr);
 
     server_addr.sin_family = AF_INET;
@@ -63,7 +64,7 @@ void Network::HostProcess() {
 
     while (true) {
         char buffer[MAXIMUM_POSSIBLE_PACKET_LENGTH] = {0}; // TODO: find a better solution to doing this dynamically
-        size_t received_bytes = recvfrom(m_MainConnection.sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&client_addr, &client_len);
+        size_t received_bytes = recvfrom(m_MainConnection.sockfd, buffer, sizeof(buffer), 0, &client_addr, &client_len);
         if (received_bytes < 0) {
             FATAL("Receive failed\n");
         }
@@ -73,7 +74,12 @@ void Network::HostProcess() {
             WARN("Detected a corrupt packet");
         } else {
             std::string ipstr = info.ip();
-            m_SimulationRef->RegisterClient(ipstr, 1);
+            size_t cid = m_SimulationRef->RegisterClient(ipstr, 1);
+            ClientData data;
+            data.set_id(cid);
+            std::string serialized_data;
+            data.SerializeToString(&serialized_data);
+            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &client_addr, sizeof(client_addr));
         }
     }
 }
@@ -97,9 +103,26 @@ void Network::SendNetworkInfo() {
     std::string serialized_data;
     info.SerializeToString(&serialized_data);
     sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.server_addr), sizeof(m_MainConnection.server_addr));
+
+    char buffer[256] = {0};
+    struct sockaddr_in recv_addr{};
+    socklen_t recv_len = sizeof(recv_addr);
+
+    int received_bytes = recvfrom(m_MainConnection.sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&recv_addr, &recv_len);
+    if (received_bytes >= 0) {
+        ClientData response;
+        response.ParseFromArray(buffer, received_bytes);
+        m_ClientID = (size_t)response.id();
+    } else {
+        WARN("Detected a corrupt packet");
+    }
 }
 
 void Network::VerifyConnection() {
+
+}
+
+void Network::ReceiveID() {
 
 }
 

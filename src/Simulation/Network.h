@@ -72,7 +72,9 @@ public:
 public:
 	void SendNetworkInfo();
 	void VerifyConnection();
+	void ReceiveID();
 private:
 	Simulation* m_SimulationRef = nullptr;
 	Connection m_MainConnection = { 0 };
+	size_t m_ClientID = 0;
 };

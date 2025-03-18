@@ -1,8 +1,3 @@
-next work group (verification):
-- send over sim data to clients for verification step
-- send back over client id to the client and have it verify
-- start simulation
-
 next work group (simulation setup):
 - on start simulation set up all workers in a circular fashion, giving the contact info of the "next" neighbor
 - also distribute and send the particle ranges over
@@ -24,6 +19,7 @@ next work group (verify results):
 - touch up and verify that the simulation finishes with the same results
 
 backlog:
+- send over sim data to clients for verification step
 - stop, pause, abort simulation buttons
 - ipv6 support
 - clean up network resources on close

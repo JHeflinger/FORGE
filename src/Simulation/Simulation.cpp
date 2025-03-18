@@ -367,6 +367,7 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
 	}
 	m_Network->Open(ipaddr, portnum);
 	m_Network->SendNetworkInfo();
+	m_Network->ReceiveID();
 	return true;
 }
 
@@ -401,14 +402,14 @@ void Simulation::ResetClients() {
 	}
 }
 
-bool Simulation::RegisterClient(std::string& ipaddr, uint32_t size) {
+size_t Simulation::RegisterClient(std::string& ipaddr, uint32_t size) {
 	std::lock_guard<std::mutex> lock(m_Scheduler.lock);
-	if (m_ServerData.num_clients >= m_Clients.size()) return false;
+	if (m_ServerData.num_clients >= m_Clients.size()) WARN("Extra client detected");
 	m_Clients[m_ServerData.num_clients].connected = true;
 	m_Clients[m_ServerData.num_clients].ip = ipaddr;
 	m_Clients[m_ServerData.num_clients].size = size;
 	m_ServerData.num_clients++;
-	return true;
+	return m_ServerData.num_clients - 1;
 }
 
 void Simulation::VerifyClient(uint64_t id) {

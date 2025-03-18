@@ -3,3 +3,7 @@ syntax = "proto3";
 message ClientInfo {
     string ip = 1;
 }
+
+message ClientData {
+    uint64 id = 1;
+}

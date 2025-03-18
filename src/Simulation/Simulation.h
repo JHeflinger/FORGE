@@ -155,7 +155,7 @@ public:
 	void ServerJob();
 	void ClientJob();
 	void ResetClients();
-	bool RegisterClient(std::string& ipaddr, uint32_t size);
+	size_t RegisterClient(std::string& ipaddr, uint32_t size);
 	void VerifyClient(uint64_t id);
 	std::vector<ClientMetadata>& Clients() { return m_Clients; }
 	ServerMetadata ServerData() { return m_ServerData; }
