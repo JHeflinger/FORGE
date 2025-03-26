@@ -372,6 +372,7 @@ bool Simulation::Connect(std::string& ipaddr, std::string& port, uint32_t size, 
 }
 
 bool Simulation::Verify() {
+	m_Network->VerifyConnection();
 	return true;
 }
 
@@ -417,17 +418,12 @@ void Simulation::VerifyClient(uint64_t id) {
 }
 
 void Simulation::StartRemote() {
-	// integrate mesh topology
-	this->Log("initializing mesh topology...");
-
-	// configure client metadata (range of work)
-	this->Log("configuring workers...");
-
 	// clear any lingering subprocesses
 	m_SubProcesses.clear();
 
 	// start simulation
 	this->Log("starting simulation...");
+	m_Network->SetState(NetworkHostState::TOPOLOGIZE);
 }
 
 void Simulation::StartLocal() {

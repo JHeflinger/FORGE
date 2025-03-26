@@ -2,6 +2,14 @@ syntax = "proto3";
 
 message ClientInfo {
     string ip = 1;
+    uint64 id = 2;
+    bool verify = 3;
+}
+
+message TopologyInfo {
+    uint64 neighbor_id = 1;
+    uint32 neighbor_port = 2;
+    string neighbor_ip = 3;
 }
 
 message ClientData {

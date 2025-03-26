@@ -145,6 +145,8 @@ public:
 	void Prime();
 	std::vector<std::vector<Particle>>& SimulationRecord() { return m_SimulationRecord; }
 public:
+	WorkerScheduler* SchedulerReference() { return &m_Scheduler; }
+public:
 	void SimulateLocal();
 	void LocalJob(size_t index);
 public:

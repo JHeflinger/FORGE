@@ -49,14 +49,21 @@
 #else
     #include <arpa/inet.h>
     #include <sys/socket.h>
+	#include <sys/select.h>
     #include <unistd.h>
 #endif
 
 struct Connection {
 	int sockfd;
-	struct sockaddr_in server_addr;
+	struct sockaddr_in address;
 	std::string ip;
 	uint16_t port;
+};
+
+enum class NetworkHostState {
+	PREPARE = 0,
+	TOPOLOGIZE = 1,
+	CONFIGURE = 2,
 };
 
 class Network {
@@ -69,6 +76,7 @@ public:
 public:
 	void HostProcess();
 	void ClientProcess();
+	void SetState(NetworkHostState state);
 public:
 	void SendNetworkInfo();
 	void VerifyConnection();
@@ -76,5 +84,8 @@ public:
 private:
 	Simulation* m_SimulationRef = nullptr;
 	Connection m_MainConnection = { 0 };
+	Connection m_Neighbor = { 0 };
 	size_t m_ClientID = 0;
+	NetworkHostState m_HostState = NetworkHostState::PREPARE;
+	std::vector<struct sockaddr> m_ClientAddressPoints;
 };

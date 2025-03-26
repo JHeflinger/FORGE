@@ -30,10 +30,10 @@ void Network::Open(std::string ip, uint16_t port) {
     if (m_MainConnection.sockfd < 0) {
         FATAL("Socket creation failed\n");
     }
-    memset(&m_MainConnection.server_addr, 0, sizeof(struct sockaddr_in));
-    m_MainConnection.server_addr.sin_family = AF_INET;
-    m_MainConnection.server_addr.sin_port = htons(port);
-    inet_pton(AF_INET, ip.c_str(), &m_MainConnection.server_addr.sin_addr);
+    memset(&m_MainConnection.address, 0, sizeof(struct sockaddr_in));
+    m_MainConnection.address.sin_family = AF_INET;
+    m_MainConnection.address.sin_port = htons(port);
+    inet_pton(AF_INET, ip.c_str(), &m_MainConnection.address.sin_addr);
 }
 
 void Network::HostProcess() {
@@ -63,29 +63,68 @@ void Network::HostProcess() {
     }
 
     while (true) {
-        char buffer[MAXIMUM_POSSIBLE_PACKET_LENGTH] = {0}; // TODO: find a better solution to doing this dynamically
-        size_t received_bytes = recvfrom(m_MainConnection.sockfd, buffer, sizeof(buffer), 0, &client_addr, &client_len);
-        if (received_bytes < 0) {
-            FATAL("Receive failed\n");
-        }
+        fd_set readfds;
+        FD_ZERO(&readfds);
+        FD_SET(m_MainConnection.sockfd, &readfds);
+        struct timeval timeout;
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 1000; // 1ms timeout
+        m_SimulationRef->SchedulerReference()->lock.lock();
+        NetworkHostState currstate = m_HostState;
+        m_SimulationRef->SchedulerReference()->lock.unlock();
+        if (currstate == NetworkHostState::PREPARE) {
+            int result = select(m_MainConnection.sockfd + 1, &readfds, nullptr, nullptr, &timeout);
+            if (result > 0 && FD_ISSET(m_MainConnection.sockfd, &readfds)) {
+                char buffer[MAXIMUM_POSSIBLE_PACKET_LENGTH] = {0}; // TODO: find a better solution to doing this dynamically
+                size_t received_bytes = recvfrom(m_MainConnection.sockfd, buffer, sizeof(buffer), 0, &client_addr, &client_len);
+                if (received_bytes < 0) {
+                    FATAL("Receive failed\n");
+                }
 
-        ClientInfo info;
-        if (!info.ParseFromArray(buffer, received_bytes)) {
-            WARN("Detected a corrupt packet");
+                ClientInfo info;
+                if (!info.ParseFromArray(buffer, received_bytes)) {
+                    WARN("Detected a corrupt packet");
+                } else {
+                    if (info.verify()) {
+                        m_SimulationRef->VerifyClient(info.id());
+                    } else {
+                        std::string ipstr = info.ip();
+                        size_t cid = m_SimulationRef->RegisterClient(ipstr, 1);
+                        m_ClientAddressPoints.push_back(client_addr);
+                        ClientData data;
+                        data.set_id(cid);
+                        std::string serialized_data;
+                        data.SerializeToString(&serialized_data);
+                        sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &client_addr, sizeof(client_addr));
+                    }
+                }
+            }
+        } else if (currstate == NetworkHostState::TOPOLOGIZE) {
+            std::vector<ClientMetadata> clients = m_SimulationRef->Clients();
+            for (int i = 0; i < clients.size(); i++) {
+                size_t neighbor_id = i == clients.size() - 1 ? 0 : i + 1;
+                TopologyInfo topi;
+                topi.set_neighbor_id((uint64_t)neighbor_id);
+                topi.set_neighbor_port((uint32_t)m_MainConnection.port);
+                topi.set_neighbor_ip(clients[neighbor_id].ip);
+                std::string serialized_data;
+                topi.SerializeToString(&serialized_data);
+                //sendto
+                INFO("test");
+            }
         } else {
-            std::string ipstr = info.ip();
-            size_t cid = m_SimulationRef->RegisterClient(ipstr, 1);
-            ClientData data;
-            data.set_id(cid);
-            std::string serialized_data;
-            data.SerializeToString(&serialized_data);
-            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &client_addr, sizeof(client_addr));
+            WARN("No known network state being handled");
         }
     }
 }
 
 void Network::ClientProcess() {
 
+}
+
+void Network::SetState(NetworkHostState state) {
+    std::unique_lock<std::mutex> lock(m_SimulationRef->SchedulerReference()->lock);
+    m_HostState = state;
 }
 
 void Network::SendNetworkInfo() {
@@ -100,10 +139,24 @@ void Network::SendNetworkInfo() {
         (int)((struct in_addr *)(host->h_addr))->S_un.S_un_b.s_b4);
     ClientInfo info;
     info.set_ip(std::string(hostip));
+    info.set_id(0);
+    info.set_verify(false);
     std::string serialized_data;
     info.SerializeToString(&serialized_data);
-    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.server_addr), sizeof(m_MainConnection.server_addr));
+    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+}
 
+void Network::VerifyConnection() {
+    ClientInfo info;
+    info.set_ip("");
+    info.set_id(m_ClientID);
+    info.set_verify(true);
+    std::string serialized_data;
+    info.SerializeToString(&serialized_data);
+    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+}
+
+void Network::ReceiveID() {
     char buffer[256] = {0};
     struct sockaddr_in recv_addr{};
     socklen_t recv_len = sizeof(recv_addr);
@@ -116,14 +169,6 @@ void Network::SendNetworkInfo() {
     } else {
         WARN("Detected a corrupt packet");
     }
-}
-
-void Network::VerifyConnection() {
-
-}
-
-void Network::ReceiveID() {
-
 }
 
 void Network::Close() {
