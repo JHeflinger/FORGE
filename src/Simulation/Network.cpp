@@ -118,7 +118,9 @@ void Network::HostProcess() {
 }
 
 void Network::ClientProcess() {
-    
+    while (true) {
+        
+    }
 }
 
 void Network::SetState(NetworkHostState state) {
