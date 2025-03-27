@@ -62,8 +62,16 @@ struct Connection {
 
 enum class NetworkHostState {
 	PREPARE = 0,
-	TOPOLOGIZE = 1,
-	CONFIGURE = 2,
+	TOPOLOGIZE,
+	DISTRIBUTE,
+	TREEPREP,
+	TREEDIST,
+	TREEBUILD,
+	EVALUATE,
+};
+
+enum class NetworkClientState {
+	EMPTY = 0,
 };
 
 class Network {
@@ -87,5 +95,6 @@ private:
 	Connection m_Neighbor = { 0 };
 	size_t m_ClientID = 0;
 	NetworkHostState m_HostState = NetworkHostState::PREPARE;
+	NetworkHostState m_ClientState = NetworkHostState::EMPTY;
 	std::vector<struct sockaddr> m_ClientAddressPoints;
 };

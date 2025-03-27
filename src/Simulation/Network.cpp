@@ -109,8 +109,7 @@ void Network::HostProcess() {
                 topi.set_neighbor_ip(clients[neighbor_id].ip);
                 std::string serialized_data;
                 topi.SerializeToString(&serialized_data);
-                //sendto
-                INFO("test");
+                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[neighbor_id]), sizeof(m_ClientAddressPoints[neighbor_id]));
             }
         } else {
             WARN("No known network state being handled");
@@ -119,7 +118,7 @@ void Network::HostProcess() {
 }
 
 void Network::ClientProcess() {
-
+    
 }
 
 void Network::SetState(NetworkHostState state) {
