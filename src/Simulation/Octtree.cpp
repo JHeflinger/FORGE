@@ -106,6 +106,19 @@ void Octtree::SerialApplyForce(Particle &p, Particle &other, double unitsize) {
     p.SetAcceleration(pa);
 }
 
+void Octtree::AsList(std::vector<std::pair<Oct, Particle*>>* list) {
+    std::pair<Oct, Particle*> pair(m_Boundary, m_Particle);
+    list->push_back(pair);
+    if (m_TNW) m_TNW->AsList(list);
+    if (m_TNE) m_TNE->AsList(list);
+    if (m_TSW) m_TSW->AsList(list);
+    if (m_TSE) m_TSE->AsList(list);
+    if (m_BNW) m_BNW->AsList(list);
+    if (m_BNE) m_BNE->AsList(list);
+    if (m_BSW) m_BSW->AsList(list);
+    if (m_BSE) m_BSE->AsList(list);
+}
+
 void Octtree::Subdivide() {
     m_TNW = CreateScope<Octtree>(m_Boundary.TNW(), m_SizeRef);
     m_TNE = CreateScope<Octtree>(m_Boundary.TNE(), m_SizeRef);

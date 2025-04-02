@@ -63,7 +63,9 @@ struct Connection {
 enum class NetworkHostState {
 	PREPARE = 0,
 	TOPOLOGIZE,
+	TOPOLOGIZE_RETURN,
 	DISTRIBUTE,
+	DISTRIBUTE_RETURN,
 	TREEPREP,
 	TREEDIST,
 	TREEBUILD,
@@ -72,6 +74,9 @@ enum class NetworkHostState {
 
 enum class NetworkClientState {
 	EMPTY = 0,
+	RECEIVE_PARTICLES,
+	RECEIVE_TREE,
+	CONSTRUCT_TREE
 };
 
 class Network {
@@ -84,7 +89,8 @@ public:
 public:
 	void HostProcess();
 	void ClientProcess();
-	void SetState(NetworkHostState state);
+	void SetHostState(NetworkHostState state);
+	void SetClientState(NetworkClientState state);
 public:
 	void SendNetworkInfo();
 	void VerifyConnection();
@@ -93,8 +99,15 @@ private:
 	Simulation* m_SimulationRef = nullptr;
 	Connection m_MainConnection = { 0 };
 	Connection m_Neighbor = { 0 };
+	size_t m_NeighborID = 0;
 	size_t m_ClientID = 0;
 	NetworkHostState m_HostState = NetworkHostState::PREPARE;
-	NetworkHostState m_ClientState = NetworkHostState::EMPTY;
+	NetworkClientState m_ClientState = NetworkClientState::EMPTY;
 	std::vector<struct sockaddr> m_ClientAddressPoints;
+private:
+	size_t m_HostSliceInd = 0;
+	size_t m_HostSliceSize = 0;
+private:
+	// Particle m_Seed;
+	// Scope<Octtree> m_Tree;
 };

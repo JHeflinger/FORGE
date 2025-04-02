@@ -423,7 +423,20 @@ void Simulation::StartRemote() {
 
 	// start simulation
 	this->Log("starting simulation...");
-	m_Network->SetState(NetworkHostState::TOPOLOGIZE);
+
+	// reset and calculate initial bounds
+	m_Scheduler.bounds.Reset();
+	for (size_t i = 0; i < m_Particles.size(); i++) {
+		glm::dvec3 pos = m_Particles[i]->Position();
+		if (pos.x < m_Scheduler.bounds.xmin) m_Scheduler.bounds.xmin = pos.x - 0.001;
+		if (pos.y < m_Scheduler.bounds.ymin) m_Scheduler.bounds.ymin = pos.y - 0.001;
+		if (pos.z < m_Scheduler.bounds.zmin) m_Scheduler.bounds.zmin = pos.z - 0.001;
+		if (pos.x > m_Scheduler.bounds.xmax) m_Scheduler.bounds.xmax = pos.x + 0.001;
+		if (pos.y > m_Scheduler.bounds.ymax) m_Scheduler.bounds.ymax = pos.y + 0.001;
+		if (pos.z > m_Scheduler.bounds.zmax) m_Scheduler.bounds.zmax = pos.z + 0.001;
+	}
+
+	m_Network->SetHostState(NetworkHostState::TOPOLOGIZE);
 }
 
 void Simulation::StartLocal() {

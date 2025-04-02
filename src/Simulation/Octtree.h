@@ -31,6 +31,7 @@ struct Oct {
 class Octtree {
 public:
     Octtree(const Oct &boundary, size_t* sizeref) { m_Boundary = boundary; m_SizeRef = sizeref; if (m_SizeRef != nullptr) (*m_SizeRef)++; }
+    void Clear();
 public:
     void GetLeaves(std::vector<Octtree*>* leaves);
 public:
@@ -39,6 +40,8 @@ public:
 public:
     void SerialCalculateForce(Particle &p, double unitsize);
     void SerialApplyForce(Particle &p, Particle &other, double unitsize);
+public:
+    void AsList(std::vector<std::pair<Oct, Particle*>>* list);
 private:
     void Subdivide();
     void InsertIntoChildren(Particle* particle);

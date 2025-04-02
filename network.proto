@@ -15,3 +15,33 @@ message TopologyInfo {
 message ClientData {
     uint64 id = 1;
 }
+
+message AckPack {
+    bool good = 1;
+}
+
+message ParticleTransfer {
+    double ax = 1;
+    double ay = 2;
+    double az = 3;
+    double vx = 4;
+    double vy = 5;
+    double vz = 6;
+    double px = 7;
+    double py = 8;
+    double pz = 9;
+    double mass = 10;
+    uint32 package_size = 11;
+}
+
+message TreeSeed {
+    double px = 1;
+    double py = 2;
+    double pz = 3;
+    double mass = 4;
+    double tx = 5;
+    double ty = 6;
+    double tz = 7;
+    double radius = 8;
+    bool empty = 9;
+}

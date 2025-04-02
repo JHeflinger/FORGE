@@ -23,6 +23,7 @@ backlog:
 - stop, pause, abort simulation buttons
 - ipv6 support
 - clean up network resources on close
+- use the input port not hard coded 50051
 
 questions:
 - is it faster to udp broadcast a bunch of info or just send required info to the proper guys
