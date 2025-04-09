@@ -44,4 +44,34 @@ message TreeSeed {
     double tz = 7;
     double radius = 8;
     bool empty = 9;
+    bool end_sim = 10;
+}
+
+message TreeStage {
+    bool approve = 1;
+    uint64 origin_id = 2;
+    double px = 3;
+    double py = 4;
+    double pz = 5;
+    double mass = 6;
+    bool finished = 7;
+    bool stop = 8;
+    bool added = 9;
+}
+
+message EvaluateStage {
+    bool approve = 1;
+    uint64 origin_id = 2;
+    double px = 3;
+    double py = 4;
+    double pz = 5;
+    double vx = 6;
+    double vy = 7;
+    double vz = 8;
+    double ax = 9;
+    double ay = 10;
+    double az = 11;
+    double mass = 12;
+    bool finished = 13;
+    bool stop = 14;
 }

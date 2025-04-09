@@ -67,16 +67,25 @@ enum class NetworkHostState {
 	DISTRIBUTE,
 	DISTRIBUTE_RETURN,
 	TREEPREP,
+	TREEPREP_RETURN,
 	TREEDIST,
 	TREEBUILD,
+	TREEBUILD_RETURN,
 	EVALUATE,
+	EVALUATE_RETURN,
 };
 
 enum class NetworkClientState {
 	EMPTY = 0,
 	RECEIVE_PARTICLES,
 	RECEIVE_TREE,
-	CONSTRUCT_TREE
+	CONSTRUCT_TREE,
+	EVALUATE_PARTICLES
+};
+
+struct TreeSet {
+	int size;
+	Octtree trees[8];
 };
 
 class Network {
@@ -108,6 +117,7 @@ private:
 	size_t m_HostSliceInd = 0;
 	size_t m_HostSliceSize = 0;
 private:
-	// Particle m_Seed;
-	// Scope<Octtree> m_Tree;
+	TreeSet m_Trees;
+	std::vector<Particle> m_Seeds;
+	size_t m_IgnoreThreshold;
 };

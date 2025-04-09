@@ -133,6 +133,7 @@ public:
 	void Log(std::string log);
 	std::vector<std::string>& Logs() { return m_Logs; }
 	float Progress() { return m_Progress; }
+	void UpdateProgress(float progress) { m_Scheduler.lock.lock(); m_Progress = progress; m_Scheduler.lock.unlock(); }
 	bool Finished() { return m_Finished; }
 	bool Started();
 	bool Paused();

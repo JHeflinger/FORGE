@@ -17,6 +17,21 @@ void Octtree::GetLeaves(std::vector<Octtree*>* leaves) {
     }
 }
 
+void Octtree::Reset(const Oct &boundary, size_t* sizeref) { 
+    m_Boundary = boundary; m_SizeRef = sizeref;
+    if (m_SizeRef != nullptr) (*m_SizeRef)++;
+    m_Leaf = true;
+    m_TNW = nullptr;
+    m_TNE = nullptr;
+    m_TSW = nullptr;
+    m_TSE = nullptr;
+    m_BNW = nullptr;
+    m_BNE = nullptr;
+    m_BSW = nullptr;
+    m_BSE = nullptr;
+    m_Particle = nullptr;
+}
+
 void Octtree::Insert(Particle* particle) {
     if (!m_Boundary.Contains(particle)) return;
     if (m_Leaf) {
@@ -70,7 +85,10 @@ void Octtree::CalculateCenterOfMass() {
 
 void Octtree::SerialCalculateForce(Particle &p, double unitsize) {
     if (m_Leaf) {
-        if (m_Particle && m_Particle != &p)
+        if (m_Particle && 
+            (m_Particle->Position().x != p.Position().x ||
+            m_Particle->Position().y != p.Position().y ||
+            m_Particle->Position().z != p.Position().z))
             SerialApplyForce(p, *m_Particle, unitsize);
         return;
     }

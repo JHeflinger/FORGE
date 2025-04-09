@@ -76,12 +76,27 @@ void Network::HostProcess() {
     server_addr.sin_port = htons(50051);
 
     size_t pack_count = 0;
+    size_t returned_particles = 0;
+    size_t particles_waiting_on = 0;
+
+	uint64_t total_steps = m_SimulationRef->Length() / m_SimulationRef->Timestep();
+    uint64_t current_steps = 0;
 
     if (bind(m_MainConnection.sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         FATAL("Bind failed\n");
     }
 
     while (true) {
+        if (current_steps >= total_steps) {
+            for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                TreeSeed ts;
+                ts.set_end_sim(true);
+                std::string serialized_data;
+                ts.SerializeToString(&serialized_data);
+                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+            }
+            return;
+        }
 
         fd_set readfds;
         FD_ZERO(&readfds);
@@ -203,6 +218,7 @@ void Network::HostProcess() {
 				tree.Insert(&(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1][ignoreind]));
 				ignoreind++;
 			}
+            m_IgnoreThreshold = ignoreind;
             std::vector<std::pair<Oct, Particle*>> plist;
             tree.AsList(&plist);
             for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
@@ -224,19 +240,207 @@ void Network::HostProcess() {
                 ts.SerializeToString(&serialized_data);
                 sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
             }
-            // for (size_t i = m_SimulationRef->Clients().size(); i < m_SimulationRef->Clients().size(); i++) {
-            //     Scope<Octtree> tree = CreateScope<Octtree>(plist[i].first, nullptr);
-            //     if (plist[i].second != nullptr) {
-            //         m_Seed.SetPosition(plist[i].second->Position());
-            //         m_Seed.SetMass(plist[i].second->Mass());
-            //         tree->Insert(m_Seed);
-            //     }
-            //     m_Trees.push_back(tree);
-            // }
-            SetHostState(NetworkHostState::TREEDIST);
+            m_Trees.size = 0;
+            m_Seeds.clear();
+            for (size_t i = m_SimulationRef->Clients().size(); i < plist.size(); i++) {
+                m_Trees.trees[m_Trees.size].Reset(plist[i].first, nullptr);
+                if (plist[i].second != nullptr) {
+                    m_Seeds.emplace_back();
+                    m_Seeds[m_Seeds.size() - 1].SetPosition(plist[i].second->Position());
+                    m_Seeds[m_Seeds.size() - 1].SetMass(plist[i].second->Mass());
+                    m_Trees.trees[m_Trees.size].Insert(&m_Seeds[m_Seeds.size() - 1]);
+                }
+                m_Trees.size++;
+            }
+            SetHostState(NetworkHostState::TREEPREP_RETURN);
             pack_count = 0;
+        } else if (currstate == NetworkHostState::TREEPREP_RETURN) {
+            SAFELY_GET_PACKET();
+            pack_count++;
+            if (pack_count >= m_SimulationRef->Clients().size()) {
+                pack_count = 0;
+                SetHostState(NetworkHostState::TREEDIST);
+                for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                    TreeStage ts;
+                    ts.set_approve(true);
+                    std::string serialized_data;
+                    ts.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+                }
+            }
         } else if (currstate == NetworkHostState::TREEDIST) {
-            INFO("made it 2");
+            particles_waiting_on = 0;
+            std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
+            for (size_t i = m_IgnoreThreshold; i < pslice->size(); i++) {
+                bool contained = false;
+                for (size_t j = 0; j < m_Trees.size; j++) {
+                    if (m_Trees.trees[j].Contains(&(*pslice)[i])) {
+                        m_Trees.trees[j].Insert(&(*pslice)[i]);
+                        contained = true;
+                        break;
+                    }
+                }
+                if (!contained) {
+                    particles_waiting_on++;
+                    TreeStage ts;
+                    ts.set_origin_id((uint64_t)-1);
+                    ts.set_px((*pslice)[i].Position().x);
+                    ts.set_py((*pslice)[i].Position().y);
+                    ts.set_pz((*pslice)[i].Position().z);
+                    ts.set_mass((*pslice)[i].Mass());
+                    std::string serialized_data;
+                    ts.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[0]), sizeof(m_ClientAddressPoints[0]));
+                }
+            }
+            SetHostState(NetworkHostState::TREEBUILD);
+            pack_count = 0;
+            returned_particles = 0;
+        } else if (currstate == NetworkHostState::TREEBUILD) {
+            SAFELY_GET_PACKET();
+            TreeStage ts;
+            if (!ts.ParseFromArray(buffer, received_bytes)) {
+                WARN("Detected a corrupt packet");
+            } else {
+                if (ts.finished()) {
+                    pack_count++;
+                } else {
+                    if (ts.origin_id() == ((uint64_t)-1)) {
+                        returned_particles++;
+                    } else {
+                        if (!ts.added()) {
+                            Particle p;
+                            p.SetPosition({ts.px(), ts.py(), ts.pz()});
+                            p.SetMass(ts.mass());
+                            for (size_t j = 0; j < m_Trees.size; j++) {
+                                if (m_Trees.trees[j].Contains(&p)) {
+                                    m_Seeds.push_back(p);
+                                    m_Trees.trees[j].Insert(&m_Seeds[m_Seeds.size() - 1]);
+                                    ts.set_added(true);
+                                    break;
+                                }
+                            }
+                        }
+                        std::string serialized_data;
+                        ts.SerializeToString(&serialized_data);
+                        sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[0]), sizeof(m_ClientAddressPoints[0]));
+                    }
+                }
+            }
+            if ((returned_particles >= particles_waiting_on) && pack_count >= m_SimulationRef->Clients().size()) {
+                returned_particles = 0;
+                pack_count = 0;
+                SetHostState(NetworkHostState::TREEBUILD_RETURN);
+                for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                    TreeStage stopcommand;
+                    stopcommand.set_stop(true);
+                    std::string serialized_data;
+                    stopcommand.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+                }
+            }
+        } else if (currstate == NetworkHostState::TREEBUILD_RETURN) {
+            SAFELY_GET_PACKET();
+            pack_count++;
+            if (pack_count >= m_SimulationRef->Clients().size()) {
+                pack_count = 0;
+                SetHostState(NetworkHostState::EVALUATE);
+                for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                    EvaluateStage es;
+                    es.set_approve(true);
+                    std::string serialized_data;
+                    es.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+                }
+                std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
+                for (size_t i = 0; i < pslice->size(); i++) {
+                    Particle p = (*pslice)[i];
+                    for (size_t j = 0; j < m_Trees.size; j++) {
+                        m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
+                    }
+                    EvaluateStage es;
+                    es.set_origin_id(m_ClientID);
+                    es.set_px(p.Position().x);
+                    es.set_py(p.Position().y);
+                    es.set_pz(p.Position().z);
+                    es.set_vx(p.Velocity().x);
+                    es.set_vy(p.Velocity().y);
+                    es.set_vz(p.Velocity().z);
+                    es.set_ax(p.Acceleration().x);
+                    es.set_ay(p.Acceleration().y);
+                    es.set_az(p.Acceleration().z);
+                    es.set_mass(p.Mass());
+                    std::string serialized_data;
+                    es.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[0]), sizeof(m_ClientAddressPoints[0]));
+                }
+                m_SimulationRef->SimulationRecord().emplace_back();
+            }
+            for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                EvaluateStage es;
+                es.set_approve(true);
+                std::string serialized_data;
+                es.SerializeToString(&serialized_data);
+                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+            }
+        } else if (currstate == NetworkHostState::EVALUATE) {
+            SAFELY_GET_PACKET();
+            EvaluateStage es;
+            if (!es.ParseFromArray(buffer, received_bytes)) {
+                WARN("Detected a corrupt packet");
+            } else {
+                if (es.finished()) {
+                    pack_count++;
+                } else {
+                    Particle p;
+                    p.SetPosition({es.px(), es.py(), es.pz()});
+                    p.SetVelocity({es.vx(), es.vy(), es.vz()});
+                    p.SetAcceleration({es.ax(), es.ay(), es.az()});
+                    p.SetMass(es.mass());
+                    if (es.origin_id() == ((uint64_t)-1)) {
+                        m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].push_back(p);
+                    } else {
+                        for (size_t j = 0; j < m_Trees.size; j++) {
+                            m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
+                        }
+                        es.set_px(p.Position().x);
+                        es.set_py(p.Position().y);
+                        es.set_pz(p.Position().z);
+                        es.set_vx(p.Velocity().x);
+                        es.set_vy(p.Velocity().y);
+                        es.set_vz(p.Velocity().z);
+                        es.set_ax(p.Acceleration().x);
+                        es.set_ay(p.Acceleration().y);
+                        es.set_az(p.Acceleration().z);
+                        es.set_mass(p.Mass());
+                        std::string serialized_data;
+                        es.SerializeToString(&serialized_data);
+                        sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[0]), sizeof(m_ClientAddressPoints[0]));
+                    }
+                }
+            }
+            if ((m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].size() ==
+                m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 2].size()) &&
+                pack_count >= m_SimulationRef->Clients().size()) {
+                pack_count = 0;
+                SetHostState(NetworkHostState::EVALUATE_RETURN);
+                for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                    EvaluateStage stopcommand;
+                    stopcommand.set_stop(true);
+                    std::string serialized_data;
+                    stopcommand.SerializeToString(&serialized_data);
+                    sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+                }
+            }
+        } else if (currstate == NetworkHostState::EVALUATE_RETURN) {
+            SAFELY_GET_PACKET();
+            pack_count++;
+            if (pack_count >= m_SimulationRef->Clients().size()) {
+                pack_count = 0;
+                SetHostState(NetworkHostState::TREEPREP);
+                current_steps++;
+                m_SimulationRef->UpdateProgress((float)((float)(current_steps + 1) / (float)total_steps));
+            }
         } else {
             WARN("No known network state being handled");
         }
@@ -246,6 +450,10 @@ void Network::HostProcess() {
 void Network::ClientProcess() {
     struct sockaddr other_addr{};
     socklen_t other_len = sizeof(other_addr);
+
+    std::vector<Particle> particles_to_send;
+    size_t returned_particles = 0;
+    size_t particles_waiting_on = 0;
 
     while (true) {
         fd_set readfds;
@@ -314,31 +522,189 @@ void Network::ClientProcess() {
             if (!seed.ParseFromArray(buffer, received_bytes)) {
                 WARN("Detected a corrupt packet");
             } else {
-                // m_TreeSeeds.clear();
-                // m_Trees.clear();
-                // Particle p;
-                // Oct o = {
-                //     seed.tx(),
-                //     seed.ty(),
-                //     seed.tz(),
-                //     seed.radius()
-                // };
-                // m_TreeSeeds.push_back(p);
-                // Scope<Octtree> tree = CreateScope<Octtree>(o, nullptr);
-                // if (!seed.empty()) {
-                //     m_TreeSeeds[m_TreeSeeds.size() - 1].SetPosition({
-                //         seed.px(),
-                //         seed.py(),
-                //         seed.pz(),
-                //     });
-                //     m_TreeSeeds[m_TreeSeeds.size() - 1].SetMass(seed.mass());
-                //     tree->Insert(&m_TreeSeeds[m_TreeSeeds.size() - 1]);
-                // }
-                // m_Trees.push_back(tree);
+                if (seed.end_sim()) {
+                    return;
+                }
+                m_Trees.size = 1;
+                m_Seeds.clear();
+                Oct o = {
+                    seed.tx(),
+                    seed.ty(),
+                    seed.tz(),
+                    seed.radius()
+                };
+                m_Trees.trees[0].Reset(o, nullptr);
+                if (!seed.empty()) {
+                    m_Seeds.emplace_back();
+                    m_Seeds[0].SetPosition({seed.px(), seed.py(), seed.pz()});
+                    m_Seeds[0].SetMass(seed.mass());
+                    m_Trees.trees[0].Insert(&(m_Seeds[0]));
+                }
             }
             SetClientState(NetworkClientState::CONSTRUCT_TREE);
+            SEND_ACK();
+            particles_to_send.clear();
+            particles_waiting_on = 0;
+            std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
+            for (size_t i = 0; i < pslice->size(); i++) {
+                bool contained = false;
+                for (size_t j = 0; j < m_Trees.size; j++) {
+                    if (m_Trees.trees[j].Contains(&(*pslice)[i])) {
+                        m_Trees.trees[j].Insert(&(*pslice)[i]);
+                        contained = true;
+                        break;
+                    }
+                }
+                if (!contained) {
+                    particles_waiting_on++;
+                    particles_to_send.push_back((*pslice)[i]);
+                }
+            }
+            SetHostState(NetworkHostState::TREEBUILD);
+            returned_particles = 0;
         } else if (currstate == NetworkClientState::CONSTRUCT_TREE) {
-            INFO("made it");
+            SAFELY_GET_PACKET();
+            TreeStage ts;
+            if (!ts.ParseFromArray(buffer, received_bytes)) {
+                WARN("Detected a corrupt packet");
+            } else {
+                if (ts.approve()) {
+                    for (size_t i = 0; i < particles_to_send.size(); i++) {
+                        TreeStage tout;
+                        tout.set_origin_id(m_ClientID);
+                        tout.set_px((particles_to_send)[i].Position().x);
+                        tout.set_py((particles_to_send)[i].Position().y);
+                        tout.set_pz((particles_to_send)[i].Position().z);
+                        tout.set_mass((particles_to_send)[i].Mass());
+                        std::string serialized_data;
+                        tout.SerializeToString(&serialized_data);
+                        if (m_NeighborID != ((size_t)-1)) {
+                            WARN("We need to actually do this still");
+                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                        } else {
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                        }
+                    }
+                } else if (ts.stop()) {
+                    SetClientState(NetworkClientState::EVALUATE_PARTICLES);
+                    SEND_ACK();
+                } else {
+                    if (ts.origin_id() == m_ClientID) {
+                        returned_particles++;
+                        if (returned_particles >= particles_waiting_on) {
+                            TreeStage finishcommand;
+                            finishcommand.set_finished(true);
+                            std::string serialized_data;
+                            finishcommand.SerializeToString(&serialized_data);
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                        }
+                    } else {
+                        if (!ts.added()) {
+                            Particle p;
+                            p.SetPosition({ts.px(), ts.py(), ts.pz()});
+                            p.SetMass(ts.mass());
+                            for (size_t j = 0; j < m_Trees.size; j++) {
+                                if (m_Trees.trees[j].Contains(&p)) {
+                                    m_Seeds.push_back(p);
+                                    m_Trees.trees[j].Insert(&m_Seeds[m_Seeds.size() - 1]);
+                                    ts.set_added(true);
+                                    break;
+                                }
+                            }
+                        }
+                        std::string serialized_data;
+                        ts.SerializeToString(&serialized_data);
+                        if (m_NeighborID != ((size_t)-1)) {
+                            WARN("We need to actually do this still");
+                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                        } else {
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                        }
+                    }
+                }
+            }
+        } else if (currstate == NetworkClientState::EVALUATE_PARTICLES) {
+            // TODO: communicate over simulation config
+            SAFELY_GET_PACKET();
+            EvaluateStage es;
+            std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
+            if (!es.ParseFromArray(buffer, received_bytes)) {
+                WARN("Detected a corrupt packet");
+            } else {
+                if (es.approve()) {
+                    for (size_t i = 0; i < pslice->size(); i++) {
+                        Particle p = (*pslice)[i];
+                        for (size_t j = 0; j < m_Trees.size; j++) {
+                            m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
+                        }
+                        EvaluateStage es_out;
+                        es_out.set_origin_id(m_ClientID);
+                        es_out.set_px(p.Position().x);
+                        es_out.set_py(p.Position().y);
+                        es_out.set_pz(p.Position().z);
+                        es_out.set_vx(p.Velocity().x);
+                        es_out.set_vy(p.Velocity().y);
+                        es_out.set_vz(p.Velocity().z);
+                        es_out.set_ax(p.Acceleration().x);
+                        es_out.set_ay(p.Acceleration().y);
+                        es_out.set_az(p.Acceleration().z);
+                        es_out.set_mass(p.Mass());
+                        std::string serialized_data;
+                        es_out.SerializeToString(&serialized_data);
+                        if (m_NeighborID != ((size_t)-1)) {
+                            WARN("We need to actually do this still");
+                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                        } else {
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                        }
+                    }
+                    m_SimulationRef->SimulationRecord().emplace_back();
+                } else {
+                    if (es.stop()) {
+                        SetClientState(NetworkClientState::RECEIVE_TREE);
+                        SEND_ACK();
+                    } else {
+                        Particle p;
+                        p.SetPosition({es.px(), es.py(), es.pz()});
+                        p.SetVelocity({es.vx(), es.vy(), es.vz()});
+                        p.SetAcceleration({es.ax(), es.ay(), es.az()});
+                        p.SetMass(es.mass());
+                        if (es.origin_id() == m_ClientID) {
+                            m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].push_back(p);
+                            if (m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].size() ==
+                                m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 2].size()) {
+                                EvaluateStage es_out;
+                                es_out.set_finished(true);
+                                std::string serialized_data;
+                                es_out.SerializeToString(&serialized_data);
+                                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                            }
+                        } else {
+                            for (size_t j = 0; j < m_Trees.size; j++) {
+                                m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
+                            }
+                            es.set_px(p.Position().x);
+                            es.set_py(p.Position().y);
+                            es.set_pz(p.Position().z);
+                            es.set_vx(p.Velocity().x);
+                            es.set_vy(p.Velocity().y);
+                            es.set_vz(p.Velocity().z);
+                            es.set_ax(p.Acceleration().x);
+                            es.set_ay(p.Acceleration().y);
+                            es.set_az(p.Acceleration().z);
+                            es.set_mass(p.Mass());
+                            std::string serialized_data;
+                            es.SerializeToString(&serialized_data);
+                            if (m_NeighborID != ((size_t)-1)) {
+                                WARN("We need to actually do this still");
+                                sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                            } else {
+                                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                            }
+                        }
+                    }
+                }
+            }            
         } else {
             WARN("No known network state being handled");
         }
@@ -348,11 +714,13 @@ void Network::ClientProcess() {
 void Network::SetHostState(NetworkHostState state) {
     std::unique_lock<std::mutex> lock(m_SimulationRef->SchedulerReference()->lock);
     m_HostState = state;
+    INFO("Host switching to stage {}", (int)m_HostState);
 }
 
 void Network::SetClientState(NetworkClientState state) {
     std::unique_lock<std::mutex> lock(m_SimulationRef->SchedulerReference()->lock);
     m_ClientState = state;
+    INFO("Client switching to stage {}", (int)m_ClientState);
 }
 
 void Network::SendNetworkInfo() {
