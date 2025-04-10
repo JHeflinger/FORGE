@@ -47,6 +47,9 @@ void Network::Open(std::string ip, uint16_t port) {
     if (m_MainConnection.sockfd < 0) {
         FATAL("Socket creation failed\n");
     }
+    int socksize = 1 << 20; // 1 MB
+    setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_SNDBUF, (char*)&socksize, sizeof(socksize));
+    setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socksize, sizeof(socksize));
     memset(&m_MainConnection.address, 0, sizeof(struct sockaddr_in));
     m_MainConnection.address.sin_family = AF_INET;
     m_MainConnection.address.sin_port = htons(port);
@@ -66,6 +69,9 @@ void Network::HostProcess() {
     if (m_MainConnection.sockfd < 0) {
         FATAL("Socket creation failed\n");
     }
+    int socksize = 1 << 20; // 1 MB
+    setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_SNDBUF, (char*)&socksize, sizeof(socksize));
+    setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socksize, sizeof(socksize));
 
     struct sockaddr_in server_addr{};
     struct sockaddr other_addr{};
@@ -87,17 +93,6 @@ void Network::HostProcess() {
     }
 
     while (true) {
-        if (current_steps >= total_steps) {
-            for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
-                TreeSeed ts;
-                ts.set_end_sim(true);
-                std::string serialized_data;
-                ts.SerializeToString(&serialized_data);
-                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
-            }
-            return;
-        }
-
         fd_set readfds;
         FD_ZERO(&readfds);
         FD_SET(m_MainConnection.sockfd, &readfds);
@@ -110,6 +105,36 @@ void Network::HostProcess() {
         char buffer[MAXIMUM_POSSIBLE_PACKET_LENGTH] = {0}; // TODO: find a better solution to doing this dynamically
         int result = 0;
         size_t received_bytes = 0;
+
+        if (current_steps >= total_steps) {
+            for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
+                TreeSeed ts;
+                ts.set_end_sim(true);
+                std::string serialized_data;
+                ts.SerializeToString(&serialized_data);
+                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
+            }
+            pack_count = 0;
+            while (pack_count < m_SimulationRef->Clients().size()) {
+                FD_ZERO(&readfds);
+                FD_SET(m_MainConnection.sockfd, &readfds);
+                timeout.tv_sec = 0;
+                timeout.tv_usec = 1000; // 1ms timeout
+                memset(buffer, 0, MAXIMUM_POSSIBLE_PACKET_LENGTH);
+                SAFELY_GET_PACKET();
+                CompileStage cs;
+                if (!cs.ParseFromArray(buffer, received_bytes)) {
+                    WARN("Detected a corrupt packet");
+                } else {
+                    if (cs.finished()) pack_count++;
+                    Particle p;
+                    p.SetPosition({cs.px(), cs.py(), cs.pz()});
+                    m_SimulationRef->SimulationRecord()[cs.index()].push_back(p);
+                }
+            }
+            m_SimulationRef->Finish();
+            return;
+        }
 
         if (currstate == NetworkHostState::PREPARE) {
             SAFELY_GET_PACKET();
@@ -201,7 +226,6 @@ void Network::HostProcess() {
                 SetHostState(NetworkHostState::TREEPREP);
             }
         } else if (currstate == NetworkHostState::TREEPREP) {
-            // TODO: recalculate bounds (perhaps get bounds from workers from prev awk step?)
 			double xdif = ((m_SimulationRef->SchedulerReference()->bounds.xmax - m_SimulationRef->SchedulerReference()->bounds.xmin) / 2.0);
 			double ydif	= ((m_SimulationRef->SchedulerReference()->bounds.ymax - m_SimulationRef->SchedulerReference()->bounds.ymin) / 2.0);
 			double zdif	= ((m_SimulationRef->SchedulerReference()->bounds.zmax - m_SimulationRef->SchedulerReference()->bounds.zmin) / 2.0);
@@ -211,6 +235,7 @@ void Network::HostProcess() {
 				zdif + m_SimulationRef->SchedulerReference()->bounds.zmin,
 				(xdif > ydif ? (xdif > zdif ? xdif : zdif) : (ydif > zdif ? ydif : zdif))
 			};
+            m_SimulationRef->SchedulerReference()->bounds.Reset();
 			size_t treesize = 0;
 			size_t ignoreind = 0;
 			Octtree tree(space, &treesize);
@@ -355,11 +380,13 @@ void Network::HostProcess() {
                 std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
                 for (size_t i = 0; i < pslice->size(); i++) {
                     Particle p = (*pslice)[i];
+					p.SetVelocity(p.Velocity() + (0.5 * m_SimulationRef->Timestep() * p.Acceleration())/m_SimulationRef->UnitSize());
+                    p.SetAcceleration({ 0.0, 0.0, 0.0 });
                     for (size_t j = 0; j < m_Trees.size; j++) {
                         m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
                     }
                     EvaluateStage es;
-                    es.set_origin_id(m_ClientID);
+                    es.set_origin_id(((uint64_t)-1));
                     es.set_px(p.Position().x);
                     es.set_py(p.Position().y);
                     es.set_pz(p.Position().z);
@@ -376,13 +403,6 @@ void Network::HostProcess() {
                 }
                 m_SimulationRef->SimulationRecord().emplace_back();
             }
-            for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
-                EvaluateStage es;
-                es.set_approve(true);
-                std::string serialized_data;
-                es.SerializeToString(&serialized_data);
-                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, &(m_ClientAddressPoints[i]), sizeof(m_ClientAddressPoints[i]));
-            }
         } else if (currstate == NetworkHostState::EVALUATE) {
             SAFELY_GET_PACKET();
             EvaluateStage es;
@@ -391,6 +411,18 @@ void Network::HostProcess() {
             } else {
                 if (es.finished()) {
                     pack_count++;
+                    if (es.px() < m_SimulationRef->SchedulerReference()->bounds.xmin)
+                        m_SimulationRef->SchedulerReference()->bounds.xmin = es.px();
+                    if (es.py() < m_SimulationRef->SchedulerReference()->bounds.ymin)
+                        m_SimulationRef->SchedulerReference()->bounds.ymin = es.py();
+                    if (es.pz() < m_SimulationRef->SchedulerReference()->bounds.zmin)
+                        m_SimulationRef->SchedulerReference()->bounds.zmin = es.pz();
+                    if (es.vx() > m_SimulationRef->SchedulerReference()->bounds.xmax)
+                        m_SimulationRef->SchedulerReference()->bounds.xmax = es.vx();
+                    if (es.vy() > m_SimulationRef->SchedulerReference()->bounds.ymax)
+                        m_SimulationRef->SchedulerReference()->bounds.ymax = es.vy();
+                    if (es.vz() > m_SimulationRef->SchedulerReference()->bounds.zmax)
+                        m_SimulationRef->SchedulerReference()->bounds.zmax = es.vz();
                 } else {
                     Particle p;
                     p.SetPosition({es.px(), es.py(), es.pz()});
@@ -398,6 +430,14 @@ void Network::HostProcess() {
                     p.SetAcceleration({es.ax(), es.ay(), es.az()});
                     p.SetMass(es.mass());
                     if (es.origin_id() == ((uint64_t)-1)) {
+					    p.SetVelocity(p.Velocity() + (0.5 * m_SimulationRef->Timestep() * p.Acceleration())/m_SimulationRef->UnitSize());
+					    p.SetPosition(p.Position() + ((double)m_SimulationRef->Timestep() * p.Velocity()));
+                        if (p.Position().x < m_SimulationRef->SchedulerReference()->bounds.xmin) m_SimulationRef->SchedulerReference()->bounds.xmin = p.Position().x;
+                        if (p.Position().y < m_SimulationRef->SchedulerReference()->bounds.ymin) m_SimulationRef->SchedulerReference()->bounds.ymin = p.Position().y;
+                        if (p.Position().z < m_SimulationRef->SchedulerReference()->bounds.zmin) m_SimulationRef->SchedulerReference()->bounds.zmin = p.Position().z;
+                        if (p.Position().x > m_SimulationRef->SchedulerReference()->bounds.xmax) m_SimulationRef->SchedulerReference()->bounds.xmax = p.Position().x;
+                        if (p.Position().y > m_SimulationRef->SchedulerReference()->bounds.ymax) m_SimulationRef->SchedulerReference()->bounds.ymax = p.Position().y;
+                        if (p.Position().z > m_SimulationRef->SchedulerReference()->bounds.zmax) m_SimulationRef->SchedulerReference()->bounds.zmax = p.Position().z;
                         m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].push_back(p);
                     } else {
                         for (size_t j = 0; j < m_Trees.size; j++) {
@@ -477,6 +517,9 @@ void Network::ClientProcess() {
                 if (info.neighbor_ip() != "MAIN") {
                     m_NeighborID = info.neighbor_id();
                     m_Neighbor.sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+                    int socksize = 1 << 20; // 1 MB
+                    setsockopt(m_Neighbor.sockfd, SOL_SOCKET, SO_SNDBUF, (char*)&socksize, sizeof(socksize));
+                    setsockopt(m_Neighbor.sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socksize, sizeof(socksize));
                     if (m_Neighbor.sockfd < 0) {
                         FATAL("Socket creation failed\n");
                     }
@@ -523,6 +566,20 @@ void Network::ClientProcess() {
                 WARN("Detected a corrupt packet");
             } else {
                 if (seed.end_sim()) {
+                    for (size_t i = 0; i < m_SimulationRef->SimulationRecord().size(); i++) {
+                        for (size_t j = 0; j < m_SimulationRef->SimulationRecord()[i].size(); j++) {
+                            CompileStage cs;
+                            if (i == m_SimulationRef->SimulationRecord().size() - 1 && j == m_SimulationRef->SimulationRecord()[i].size() - 1)
+                                cs.set_finished(true);
+                            cs.set_px(m_SimulationRef->SimulationRecord()[i][j].Position().x);
+                            cs.set_py(m_SimulationRef->SimulationRecord()[i][j].Position().y);
+                            cs.set_pz(m_SimulationRef->SimulationRecord()[i][j].Position().z);
+                            cs.set_index((uint64_t)i);
+                            std::string serialized_data;
+                            cs.SerializeToString(&serialized_data);
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
+                        }
+                    }
                     return;
                 }
                 m_Trees.size = 1;
@@ -541,6 +598,7 @@ void Network::ClientProcess() {
                     m_Trees.trees[0].Insert(&(m_Seeds[0]));
                 }
             }
+            m_SimulationRef->SchedulerReference()->bounds.Reset();
             SetClientState(NetworkClientState::CONSTRUCT_TREE);
             SEND_ACK();
             particles_to_send.clear();
@@ -560,7 +618,6 @@ void Network::ClientProcess() {
                     particles_to_send.push_back((*pslice)[i]);
                 }
             }
-            SetHostState(NetworkHostState::TREEBUILD);
             returned_particles = 0;
         } else if (currstate == NetworkClientState::CONSTRUCT_TREE) {
             SAFELY_GET_PACKET();
@@ -588,6 +645,7 @@ void Network::ClientProcess() {
                 } else if (ts.stop()) {
                     SetClientState(NetworkClientState::EVALUATE_PARTICLES);
                     SEND_ACK();
+                    m_SimulationRef->SimulationRecord().emplace_back();
                 } else {
                     if (ts.origin_id() == m_ClientID) {
                         returned_particles++;
@@ -627,13 +685,15 @@ void Network::ClientProcess() {
             // TODO: communicate over simulation config
             SAFELY_GET_PACKET();
             EvaluateStage es;
-            std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1]);
             if (!es.ParseFromArray(buffer, received_bytes)) {
                 WARN("Detected a corrupt packet");
             } else {
                 if (es.approve()) {
+                    std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 2]);
                     for (size_t i = 0; i < pslice->size(); i++) {
                         Particle p = (*pslice)[i];
+					    p.SetVelocity(p.Velocity() + (0.5 * m_SimulationRef->Timestep() * p.Acceleration())/m_SimulationRef->UnitSize());
+                        p.SetAcceleration({ 0.0, 0.0, 0.0 });
                         for (size_t j = 0; j < m_Trees.size; j++) {
                             m_Trees.trees[j].SerialCalculateForce(p, m_SimulationRef->UnitSize());
                         }
@@ -658,7 +718,6 @@ void Network::ClientProcess() {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
                     }
-                    m_SimulationRef->SimulationRecord().emplace_back();
                 } else {
                     if (es.stop()) {
                         SetClientState(NetworkClientState::RECEIVE_TREE);
@@ -670,11 +729,25 @@ void Network::ClientProcess() {
                         p.SetAcceleration({es.ax(), es.ay(), es.az()});
                         p.SetMass(es.mass());
                         if (es.origin_id() == m_ClientID) {
+					        p.SetVelocity(p.Velocity() + (0.5 * m_SimulationRef->Timestep() * p.Acceleration())/m_SimulationRef->UnitSize());
+					        p.SetPosition(p.Position() + ((double)m_SimulationRef->Timestep() * p.Velocity()));
+                            if (p.Position().x < m_SimulationRef->SchedulerReference()->bounds.xmin) m_SimulationRef->SchedulerReference()->bounds.xmin = p.Position().x;
+                            if (p.Position().y < m_SimulationRef->SchedulerReference()->bounds.ymin) m_SimulationRef->SchedulerReference()->bounds.ymin = p.Position().y;
+                            if (p.Position().z < m_SimulationRef->SchedulerReference()->bounds.zmin) m_SimulationRef->SchedulerReference()->bounds.zmin = p.Position().z;
+                            if (p.Position().x > m_SimulationRef->SchedulerReference()->bounds.xmax) m_SimulationRef->SchedulerReference()->bounds.xmax = p.Position().x;
+                            if (p.Position().y > m_SimulationRef->SchedulerReference()->bounds.ymax) m_SimulationRef->SchedulerReference()->bounds.ymax = p.Position().y;
+                            if (p.Position().z > m_SimulationRef->SchedulerReference()->bounds.zmax) m_SimulationRef->SchedulerReference()->bounds.zmax = p.Position().z;
                             m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].push_back(p);
                             if (m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 1].size() ==
                                 m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 2].size()) {
                                 EvaluateStage es_out;
                                 es_out.set_finished(true);
+                                es_out.set_px(m_SimulationRef->SchedulerReference()->bounds.xmin); // min bound x
+                                es_out.set_vx(m_SimulationRef->SchedulerReference()->bounds.xmax); // max bound x
+                                es_out.set_py(m_SimulationRef->SchedulerReference()->bounds.ymin); // min bound y
+                                es_out.set_vy(m_SimulationRef->SchedulerReference()->bounds.ymax); // max bound y
+                                es_out.set_pz(m_SimulationRef->SchedulerReference()->bounds.zmin); // min bound z
+                                es_out.set_vz(m_SimulationRef->SchedulerReference()->bounds.zmax); // max bound z
                                 std::string serialized_data;
                                 es_out.SerializeToString(&serialized_data);
                                 sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
@@ -714,13 +787,11 @@ void Network::ClientProcess() {
 void Network::SetHostState(NetworkHostState state) {
     std::unique_lock<std::mutex> lock(m_SimulationRef->SchedulerReference()->lock);
     m_HostState = state;
-    INFO("Host switching to stage {}", (int)m_HostState);
 }
 
 void Network::SetClientState(NetworkClientState state) {
     std::unique_lock<std::mutex> lock(m_SimulationRef->SchedulerReference()->lock);
     m_ClientState = state;
-    INFO("Client switching to stage {}", (int)m_ClientState);
 }
 
 void Network::SendNetworkInfo() {

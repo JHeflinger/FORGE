@@ -75,3 +75,11 @@ message EvaluateStage {
     bool finished = 13;
     bool stop = 14;
 }
+
+message CompileStage {
+    bool finished = 1;
+    double px = 2;
+    double py = 3;
+    double pz = 4;
+    uint64 index = 5;
+}

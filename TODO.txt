@@ -1,24 +1,10 @@
-next work group (simulation setup):
-- on start simulation set up all workers in a circular fashion, giving the contact info of the "next" neighbor
-- also distribute and send the particle ranges over
-
-next work group (oct-tree prep):
-- start the simulation loop
-- implement oct tree prep
-
-next work group (tree distribution):
-- implement tree distribution
-
-next work group (tree construction):
-- implement tree construction
-
-next work group (force calculation):
-- implement force calculation
-
 next work group (verify results):
 - touch up and verify that the simulation finishes with the same results
 
 backlog:
+- linux support
+- packet queue so no udp overflow drop
+- test with more than 2 machines
 - send over sim data to clients for verification step
 - stop, pause, abort simulation buttons
 - ipv6 support
