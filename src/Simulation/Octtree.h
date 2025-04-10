@@ -32,7 +32,6 @@ class Octtree {
 public:
     Octtree() {};
     Octtree(const Oct &boundary, size_t* sizeref) { m_Boundary = boundary; m_SizeRef = sizeref; if (m_SizeRef != nullptr) (*m_SizeRef)++; }
-    void Reset(const Oct &boundary, size_t* sizeref);
     bool Contains(Particle* particle) { return m_Boundary.Contains(particle); }
 public:
     void GetLeaves(std::vector<Octtree*>* leaves);

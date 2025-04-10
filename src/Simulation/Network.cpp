@@ -248,15 +248,15 @@ void Network::HostProcess() {
             tree.AsList(&plist);
             for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
                 TreeSeed ts;
+                ts.set_tx(plist[i].first.x);
+                ts.set_ty(plist[i].first.y);
+                ts.set_tz(plist[i].first.z);
+                ts.set_radius(plist[i].first.radius);
                 if (plist[i].second != nullptr) {
                     ts.set_px(plist[i].second->Position().x);
                     ts.set_py(plist[i].second->Position().y);
                     ts.set_pz(plist[i].second->Position().z);
                     ts.set_mass(plist[i].second->Mass());
-                    ts.set_tx(plist[i].first.x);
-                    ts.set_ty(plist[i].first.y);
-                    ts.set_tz(plist[i].first.z);
-                    ts.set_radius(plist[i].first.radius);
                     ts.set_empty(false);
                 } else {
                     ts.set_empty(true);
@@ -268,7 +268,7 @@ void Network::HostProcess() {
             m_Trees.size = 0;
             m_Seeds.clear();
             for (size_t i = m_SimulationRef->Clients().size(); i < plist.size(); i++) {
-                m_Trees.trees[m_Trees.size].Reset(plist[i].first, nullptr);
+                m_Trees.trees[m_Trees.size] = Octtree(plist[i].first, nullptr);
                 if (plist[i].second != nullptr) {
                     m_Seeds.emplace_back();
                     m_Seeds[m_Seeds.size() - 1].SetPosition(plist[i].second->Position());
@@ -356,6 +356,9 @@ void Network::HostProcess() {
                 returned_particles = 0;
                 pack_count = 0;
                 SetHostState(NetworkHostState::TREEBUILD_RETURN);
+                for (size_t j = 0; j < m_Trees.size; j++) {
+			        m_Trees.trees[j].CalculateCenterOfMass();
+                }
                 for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
                     TreeStage stopcommand;
                     stopcommand.set_stop(true);
@@ -590,7 +593,7 @@ void Network::ClientProcess() {
                     seed.tz(),
                     seed.radius()
                 };
-                m_Trees.trees[0].Reset(o, nullptr);
+                m_Trees.trees[0] = Octtree(o, nullptr);
                 if (!seed.empty()) {
                     m_Seeds.emplace_back();
                     m_Seeds[0].SetPosition({seed.px(), seed.py(), seed.pz()});
@@ -646,6 +649,9 @@ void Network::ClientProcess() {
                     SetClientState(NetworkClientState::EVALUATE_PARTICLES);
                     SEND_ACK();
                     m_SimulationRef->SimulationRecord().emplace_back();
+                    for (size_t j = 0; j < m_Trees.size; j++) {
+                        m_Trees.trees[j].CalculateCenterOfMass();
+                    }
                 } else {
                     if (ts.origin_id() == m_ClientID) {
                         returned_particles++;
