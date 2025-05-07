@@ -801,15 +801,21 @@ void Network::SetClientState(NetworkClientState state) {
 }
 
 void Network::SendNetworkInfo() {
-    char hostname[256];
+    struct sockaddr_in dest;
+    struct sockaddr_in name;
+    socklen_t namelen = sizeof(name);
+	int sock = socket(AF_INET, SOCK_DGRAM, 0);
+    memset(&dest, 0, sizeof(dest));
+    dest.sin_family = AF_INET;
+    dest.sin_port = htons(53);
+    inet_pton(AF_INET, "8.8.8.8", &dest.sin_addr);
+    connect(sock, (struct sockaddr*)&dest, sizeof(dest));
+    getsockname(sock, (struct sockaddr*)&name, &namelen);
+    uint8_t ipv4[4];
+	memcpy(ipv4, &name.sin_addr.s_addr, 4);
+    CLOSESOCK(sock);
     char hostip[256];
-    gethostname(hostname, sizeof(hostname));
-    struct hostent *host = gethostbyname(hostname);
-    sprintf(hostip, "%d.%d.%d.%d",
-        (int)((struct in_addr *)(host->h_addr))->S_un.S_un_b.s_b1,
-        (int)((struct in_addr *)(host->h_addr))->S_un.S_un_b.s_b2,
-        (int)((struct in_addr *)(host->h_addr))->S_un.S_un_b.s_b3,
-        (int)((struct in_addr *)(host->h_addr))->S_un.S_un_b.s_b4);
+    sprintf(hostip, "%d.%d.%d.%d", (int)ipv4[0], (int)ipv4[1], (int)ipv4[2], (int)ipv4[3]);
     ClientInfo info;
     info.set_ip(std::string(hostip));
     info.set_id(0);
