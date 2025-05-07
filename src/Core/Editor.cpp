@@ -145,7 +145,7 @@ void Editor::ProcessInput() {
 
 void Editor::DrawPrompts() {
 	static int s_substate = 0;
-	static char s_ip_addr_buffer[16] = "127.0.0.1";
+	static char s_ip_addr_buffer[16] = "198.168.68.126";
 	static char s_port_buffer[6] = "50051";
 	static int s_local_workers = 1;
 	static bool s_connection_failure = false;
