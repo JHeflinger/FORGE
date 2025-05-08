@@ -54,7 +54,11 @@ void Network::Open(std::string ip, uint16_t port) {
     m_MainConnection.address.sin_family = AF_INET;
     m_MainConnection.address.sin_port = htons(port);
     inet_pton(AF_INET, ip.c_str(), &m_MainConnection.address.sin_addr);
-    if (bind(m_MainConnection.sockfd, (struct sockaddr*)&m_MainConnection.address, sizeof(m_MainConnection.address)) < 0) {
+    struct sockaddr_in server_addr{};
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = INADDR_ANY;
+    server_addr.sin_port = htons(50051);
+    if (bind(m_MainConnection.sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         FATAL("Bind failed\n");
     }
 }
