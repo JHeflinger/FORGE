@@ -135,7 +135,7 @@ public:
 	float Progress() { return m_Progress; }
 	void UpdateProgress(float progress) { m_Scheduler.lock.lock(); m_Progress = progress; m_Scheduler.lock.unlock(); }
 	bool Finished() { return m_Finished; }
-	void Finish() { m_Scheduler.lock.lock(); m_Finished = true; m_Scheduler.lock.unlock(); }
+	void Finish();
 	bool Started();
 	bool Paused();
 	void StartLocal();

@@ -114,6 +114,7 @@ void Network::HostProcess() {
         size_t received_bytes = 0;
 
         if (current_steps >= total_steps) {
+            m_SimulationRef->Finish();
             for (size_t i = 0; i < m_SimulationRef->Clients().size(); i++) {
                 TreeSeed ts;
                 ts.set_end_sim(true);
@@ -139,7 +140,6 @@ void Network::HostProcess() {
                     m_SimulationRef->SimulationRecord()[cs.index()].push_back(p);
                 }
             }
-            m_SimulationRef->Finish();
             return;
         }
 

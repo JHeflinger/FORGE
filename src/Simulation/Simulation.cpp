@@ -437,6 +437,7 @@ void Simulation::StartRemote() {
 	}
 
 	m_Network->SetHostState(NetworkHostState::TOPOLOGIZE);
+	m_TimeTrack = TIMENOW();
 }
 
 void Simulation::StartLocal() {
@@ -603,6 +604,22 @@ void Simulation::Prime() {
 	m_Started = false;
 	m_Paused = false;
 	m_Finished = false;
+}
+
+void Simulation::Finish() {
+	m_Scheduler.lock.lock();
+	m_Finished = true;
+	m_Scheduler.lock.unlock();
+	m_TimeTrack = TIMENOW() - m_TimeTrack;
+	m_Started = false;
+	m_Paused = false;
+    std::stringstream logstream;
+    logstream << "finished simulation in " 
+           << std::setw(2) << std::setfill('0') << (m_TimeTrack / 3600000) << ':'
+           << std::setw(2) << std::setfill('0') << ((m_TimeTrack / 60000) % 60) << ':'
+           << std::setw(2) << std::setfill('0') << ((m_TimeTrack / 1000) % 60) << ':'
+		   << std::setw(3) << std::setfill('0') << (m_TimeTrack % 1000);
+	this->Log(logstream.str());
 }
 
 void Simulation::Checkup() {
