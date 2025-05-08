@@ -1,6 +1,6 @@
 [submodule "vendor/imgui"]
 	path = vendor/imgui
-	url = git@github.com:GreedyGauntlet/imgui.git
+	url = https://github.com/GreedyGauntlet/imgui.git
 	branch = docking
 [submodule "vendor/glm"]
 	path = vendor/glm
