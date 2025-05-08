@@ -47,7 +47,7 @@ void Network::Open(std::string ip, uint16_t port) {
     if (m_MainConnection.sockfd < 0) {
         FATAL("Socket creation failed\n");
     }
-    int socksize = 1 << 20; // 1 MB
+    int socksize = 1 << 25; // 1 MB
     setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_SNDBUF, (char*)&socksize, sizeof(socksize));
     setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socksize, sizeof(socksize));
     memset(&m_MainConnection.address, 0, sizeof(struct sockaddr_in));
@@ -69,7 +69,7 @@ void Network::HostProcess() {
     if (m_MainConnection.sockfd < 0) {
         FATAL("Socket creation failed\n");
     }
-    int socksize = 1 << 20; // 1 MB
+    int socksize = 1 << 25; // 1 MB
     setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_SNDBUF, (char*)&socksize, sizeof(socksize));
     setsockopt(m_MainConnection.sockfd, SOL_SOCKET, SO_RCVBUF, (char*)&socksize, sizeof(socksize));
 
