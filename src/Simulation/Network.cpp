@@ -640,7 +640,7 @@ void Network::ClientProcess() {
                         tout.SerializeToString(&serialized_data);
                         if (m_NeighborID != ((size_t)-1)) {
                             WARN("We need to actually do this still");
-                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
                         } else {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
@@ -680,7 +680,7 @@ void Network::ClientProcess() {
                         ts.SerializeToString(&serialized_data);
                         if (m_NeighborID != ((size_t)-1)) {
                             WARN("We need to actually do this still");
-                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
                         } else {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
@@ -719,7 +719,7 @@ void Network::ClientProcess() {
                         es_out.SerializeToString(&serialized_data);
                         if (m_NeighborID != ((size_t)-1)) {
                             WARN("We need to actually do this still");
-                            sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                            sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
                         } else {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
@@ -776,7 +776,7 @@ void Network::ClientProcess() {
                             es.SerializeToString(&serialized_data);
                             if (m_NeighborID != ((size_t)-1)) {
                                 WARN("We need to actually do this still");
-                                sendto(m_Neighbor.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
+                                sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_Neighbor.address), sizeof(m_Neighbor.address));
                             } else {
                                 sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                             }
