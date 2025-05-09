@@ -1,6 +1,7 @@
 #include "Network.h"
 #include "Core/Log.h"
 #include "network.pb.h"
+#include <chrono>
 
 #ifdef _WIN32
 static bool g_win_started = false;
@@ -504,6 +505,8 @@ void Network::ClientProcess() {
     std::vector<Particle> particles_to_send;
     size_t returned_particles = 0;
     size_t particles_waiting_on = 0;
+    long long nettime = 0;
+    auto totalstart = std::chrono::high_resolution_clock::now();
 
     while (true) {
         fd_set readfds;
@@ -576,6 +579,9 @@ void Network::ClientProcess() {
                 WARN("Detected a corrupt packet");
             } else {
                 if (seed.end_sim()) {
+                    auto totalend = std::chrono::high_resolution_clock::now();
+                    long long tt = std::chrono::duration_cast<std::chrono::microseconds>(totalend - totalstart).count();
+                    WARN("Total time: {} | Calc time: {} | {} ratio", tt, nettime, (float)nettime / (float)tt);
                     for (size_t i = 0; i < m_SimulationRef->SimulationRecord().size(); i++) {
                         for (size_t j = 0; j < m_SimulationRef->SimulationRecord()[i].size(); j++) {
                             CompileStage cs;
@@ -636,6 +642,7 @@ void Network::ClientProcess() {
                 WARN("Detected a corrupt packet");
             } else {
                 if (ts.approve()) {
+                    auto start = std::chrono::high_resolution_clock::now();
                     for (size_t i = 0; i < particles_to_send.size(); i++) {
                         TreeStage tout;
                         tout.set_origin_id(m_ClientID);
@@ -651,13 +658,18 @@ void Network::ClientProcess() {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
                     }
+                    auto end = std::chrono::high_resolution_clock::now();
+                    nettime += std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                 } else if (ts.stop()) {
                     SetClientState(NetworkClientState::EVALUATE_PARTICLES);
                     SEND_ACK();
+                    auto start = std::chrono::high_resolution_clock::now();
                     m_SimulationRef->SimulationRecord().emplace_back();
                     for (size_t j = 0; j < m_Trees.size; j++) {
                         m_Trees.trees[j].CalculateCenterOfMass();
                     }
+                    auto end = std::chrono::high_resolution_clock::now();
+                    nettime += std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                 } else {
                     if (ts.origin_id() == m_ClientID) {
                         returned_particles++;
@@ -670,6 +682,7 @@ void Network::ClientProcess() {
                         }
                     } else {
                         if (!ts.added()) {
+                            auto start = std::chrono::high_resolution_clock::now();
                             Particle p;
                             p.SetPosition({ts.px(), ts.py(), ts.pz()});
                             p.SetMass(ts.mass());
@@ -681,6 +694,8 @@ void Network::ClientProcess() {
                                     break;
                                 }
                             }
+                            auto end = std::chrono::high_resolution_clock::now();
+                            nettime += std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                         }
                         std::string serialized_data;
                         ts.SerializeToString(&serialized_data);
@@ -700,6 +715,7 @@ void Network::ClientProcess() {
                 WARN("Detected a corrupt packet");
             } else {
                 if (es.approve()) {
+                    auto start = std::chrono::high_resolution_clock::now();
                     std::vector<Particle>* pslice = &(m_SimulationRef->SimulationRecord()[m_SimulationRef->SimulationRecord().size() - 2]);
                     for (size_t i = 0; i < pslice->size(); i++) {
                         Particle p = (*pslice)[i];
@@ -728,11 +744,14 @@ void Network::ClientProcess() {
                             sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                         }
                     }
+                    auto end = std::chrono::high_resolution_clock::now();
+                    nettime += std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                 } else {
                     if (es.stop()) {
                         SetClientState(NetworkClientState::RECEIVE_TREE);
                         SEND_ACK();
                     } else {
+                        auto start = std::chrono::high_resolution_clock::now();
                         Particle p;
                         p.SetPosition({es.px(), es.py(), es.pz()});
                         p.SetVelocity({es.vx(), es.vy(), es.vz()});
@@ -784,6 +803,8 @@ void Network::ClientProcess() {
                                 sendto(m_MainConnection.sockfd, serialized_data.data(), serialized_data.size(), 0, (struct sockaddr*)&(m_MainConnection.address), sizeof(m_MainConnection.address));
                             }
                         }
+                        auto end = std::chrono::high_resolution_clock::now();
+                        nettime += std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                     }
                 }
             }            

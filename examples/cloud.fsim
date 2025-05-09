@@ -6006,7 +6006,7 @@ Particles:
     Mass: 52.794063568115234
     Radius: 0.5
 Length Unit: 3
-Simulation Length: 20000000
+Simulation Length: 2000000
 Safeguard Cache Enabled: true
 Simulation Record Enabled: true
 Solver: 2
