@@ -638,5 +638,21 @@ void Simulation::Checkup() {
                << std::setw(2) << std::setfill('0') << ((m_TimeTrack / 1000) % 60) << ':'
 			   << std::setw(3) << std::setfill('0') << (m_TimeTrack % 1000);
 		this->Log(logstream.str());
+		// TODO: Write all particles to file frame by frame.
+		std::ofstream out("/home/Dragonfly/Rose/ConsalviSeniorYearRH/Quarter_3/Rsch3/1000_particle_dta.txt");
+		int frame_counter = 0;
+		for (auto &frame : m_SimulationRecord) {
+			std::cout << "Writing Frame 1." << std::endl;
+			out << "__FRAME" << frame_counter++ << "__" << std::endl;
+			for (auto &particle : frame)
+			{
+				glm::dvec3 pos = particle.Position();
+				double x_pos = pos[0];
+				double y_pos = pos[1];
+				double z_pos = pos[2];
+				out << x_pos << " " << y_pos << " " << z_pos << std::endl;
+			}
+		}
+
 	}
 }
